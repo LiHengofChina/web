@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="./angular.min.js"></script>
+		 
+	</head>
+	<body>
+	
+	
+	
+	
+			<!--
+				注意：不要把  模块 与 模型 混淆
+				
+				"模块" 定义了一个应用程序。
+				"模块" 是  "应用程序" 中 "不同部分的容器"。
+				
+				"模块" 是 "应用控制器" 的 "容器"
+					//意思是说  控制器 在 模块 里面
+				
+				//===控制器 与 模块 的关系？
+				"控制器"  通常属于 "一个模块"	
+				
+				" AngularJS 模块" 让 "所有函数的作用域"  在 "该模块" 下。
+						//这就说明模块的"控制器"不是全局的
+				
+			-->
+
+			<div ng-app="myApp" ng-controller="myCtrl">
+				{{ firstName + " " + lastName }}
+			</div>
+			<script>
+				//创建一个模块
+				var app = angular.module("myApp", []);
+				//创建控制器
+				app.controller("myCtrl", function($scope) {
+					$scope.firstName = "John";
+					$scope.lastName = "Doe";
+				});
+			</script>
+		　
+		
+		 
+		
+	</body>
+</html>
+
+

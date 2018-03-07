@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script 
+				src="./angular.min.js">
+		</script>
+	</head>
+	
+	
+	<body>
+
+	
+		<hr/>
+			<!--		
+				ng-model 指令用于绑定应用程序数据到 HTML 
+				控制器(input, select, textarea)的值。
+				
+			
+			<div ng-app="myApp" ng-controller="myCtrl">
+				名字: <input ng-model="name">
+			</div>
+			<script>
+				//通过这种方式初始化数据
+				var app = angular.module('myApp', []);
+				app.controller('myCtrl', function($scope) {
+					$scope.name = "John Doe";
+				});
+			</script>
+			-->	
+		<hr/>
+		
+		
+		<!-- 双向绑定双向绑定，在修改输入域的值时， AngularJS 属性的值也将修改：
+		<div ng-app="myApp" ng-controller="myCtrl">
+			名字: <input ng-model="name">
+			<h1>你输入了: {{name}}</h1>
+		</div>
+		<script>
+			var app = angular.module('myApp', []);
+			app.controller('myCtrl', function($scope) {
+				$scope.name = "John Doe";
+			});
+		</script>
+		<p>修改输入框的值，标题的名字也会相应修改。</p>	
+		 -->
+		 <hr/>
+		 
+		
+		<!--
+		<form ng-app="" name="myForm">
+			Email:
+			<input type="email" name="myAddress" ng-model="text">
+			<span ng-show="myForm.myAddress.$error.email">
+				不是一个合法的邮箱地址
+			</span>
+		</form>		
+			//，提示信息会在 ng-show 属性返回 true 的情况下显示。
+		-->
+	
+		<hr/>
+	
+		<!--	-->	 
+			<form ng-app="" name="myForm" ng-init="myText = 'test@runoob.com'">
+				Email:
+				<input type="email" name="myAddress" ng-model="myText" required>
+				<p>编辑邮箱地址，查看状态的改变。</p>
+				<h1>状态</h1>
+				<p>Valid: {{myForm.myAddress.$valid}} (如果输入的值是合法的则为 true)。</p>
+				<p>Dirty: {{myForm.myAddress.$dirty}} (如果值改变则为 true)。</p>
+				<p>Touched: {{myForm.myAddress.$touched}} (如果通过触屏点击则为 true)。</p>
+			</form>
+		
+		<hr/>
+		<!-- 
+		
+		<style>
+			input.ng-invalid {
+				background-color: lightblue;
+			}
+		</style>	
+	
+		<form ng-app="" name="myForm">
+			输入你的名字:
+			<input name="myName" ng-model="myText" required>
+		</form>
+		<p>编辑文本域，不同状态背景颜色会发送变化。</p>
+		<p>文本域添加了 required 属性，该值是必须的，如果为空则是不合法的。</p>
+			
+		-->
+		
+	</body>
+
+
+</html>
+

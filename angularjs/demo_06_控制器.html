@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script 
+		src="./angular.min.js">
+		</script>
+	</head>
+
+	<body>
+	
+	<!-- 	
+			AngularJS 控制器
+			ng-controller 指令定义了应用程序控制器。
+			控制器是 JavaScript 对象，
+			由标准的 JavaScript 对象的构造函数 创建。
+		
+		<div ng-app="myApp" ng-controller="myCtrl">
+		名:  <input type="text" ng-model="firstName"><br>
+		姓:  <input type="text" ng-model="lastName"><br>
+		<br>
+		姓名: {{firstName + " " + lastName}}
+		</div>
+
+		<script>
+		var app = angular.module('myApp', []);
+		app.controller('myCtrl', function($scope) {
+			$scope.firstName = "John";
+			$scope.lastName = "Doe";
+		});
+		</script>		
+	-->
+	
+	<!--
+		在控制器中定义方法
+	
+		<div ng-app="myApp" ng-controller="personCtrl">
+		名: <input type="text" ng-model="firstName"><br>
+		姓: <input type="text" ng-model="lastName"><br>
+		<br>
+		姓名: {{fullName()}}
+		</div>
+		<script>
+		var app = angular.module('myApp', []);
+		app.controller('personCtrl', function($scope) {
+			$scope.firstName = "John";
+			$scope.lastName = "Doe";
+			$scope.fullName = function() {
+				return $scope.firstName + " ——————" + $scope.lastName;
+			}
+		});
+		</script>	
+	-->
+	 
+	 
+	 
+	 <!--
+	 外部文件中的控制器  
+	 
+	<div ng-app="myApp" ng-controller="personCtrl">
+		名: <input type="text" ng-model="firstName"><br>
+		姓: <input type="text" ng-model="lastName"><br>
+		<br>
+		姓名: {{firstName + " " + lastName}}
+	</div>
+	<script src="demo_06_01.js">
+	</script>
+ 	  
+	-->
+	 <!--	链式写法
+		<div ng-app="myApp" ng-controller="namesCtrl">
+			<ul>
+				<li ng-repeat="x in names">
+					{{ x.name + ', ' + x.country }}
+				</li>
+			</ul>
+		</div>
+		<script src="demo_06_02.js"></script>
+	-->
+	 
+	</body>			
+</html>
+

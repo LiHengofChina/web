@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="./angular.min.js"></script>
+		<script type="text/javascript" src="./angular-route.js"></script>
+		 
+ 
+	</head>
+	<body>
+	
+		<!--	
+			AngularJS 路由
+			AngularJS 路由允许我们通过不同的 URL 访问不同的内容。
+			
+			通过 AngularJS 
+			可以实现多视图的单页Web应用
+			（single page web application，SPA）。
+			
+			//======================
+			通常我们的URL形式为 http://runoob.com/first/page，
+			但在单页Web应用中 AngularJS 通过 # + 标记 实现，例如：	
+			如：
+					http://runoob.com/#/first
+					http://runoob.com/#/second
+					http://runoob.com/#/third
+					
+			当我们点击以上的任意一个链接时，
+			向服务端请的地址都是一样的 (http://runoob.com/)。 
+			
+			因为 # 号之后的内容在向服务端请求时会被浏览器忽略掉。 
+			所以我们就需要在客户端实现 # 号后面内容的功能实现。
+			
+			AngularJS 路由 就通过 # + 标记 
+			帮助我们区分不同的逻辑页面并将不同的
+			页面绑定到对应的控制器上。	
+			
+		-->
+		 
+	 
+	 
+	 
+	 
+	 
+		<!--	路由功能示例
+					(0).1、载入了实现路由的 js 文件：angular-route.js。
+					(1).包含了 ngRoute 模块作为主应用模块的依赖模块。
+					 
+						angular.module('routingDemoApp',['ngRoute'])
+						//说明：[] 中括号里面添加的是依赖的模块
+						
+					(2).<div ng-view></div>
+							该 div 内的 HTML 内容会根据路由的变化而变化。
+							
+					(3).配置 $routeProvider 用来定义路由规则。
+					
+		-->
+		<div  ng-app='routingDemoApp' >
+			<h2>AngularJS 路由应用</h2>
+			<ul>
+				<li><a href="#/">首页</a></li>
+				<li><a href="#/computers">电脑</a></li>
+				<li><a href="#/printers">打印机</a></li>
+				<li><a href="#/blabla">其他</a></li>
+			</ul>
+			<div ng-view></div>
+			<script>
+				angular.module('routingDemoApp',['ngRoute'])
+				//AngularJS 模块的 config 函数用于配置路由规则。
+				//通过使用 configAPI，
+				 
+									//把 $routeProvider 注入到我们的配置函数
+				.config(['$routeProvider', function($routeProvider){
+				
+					//使用$routeProvider.whenAPI来定义我们的路由规则
+					$routeProvider
+						.when('/',{template:'这是首页页面'})
+						.when('/computers',{template:'这是电脑分类页面'})
+						.when('/printers',{template:'这是打印机页面'})
+						.otherwise({redirectTo:'/'});
+						//when(path,object) & otherwise(object) 函数按顺序定义所有路由，
+						//第一个参数是 URL 或者 URL 正则规则。
+						//第二个参数是路由配置对象。
+						
+				}]);
+			</script>	 
+		</div>
+	 
+	 
+	 
+	 
+	</body>
+</html>
+
+

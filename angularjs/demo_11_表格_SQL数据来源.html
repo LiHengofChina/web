@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="./angular.min.js"></script>
+		 
+	</head>
+	<body>
+		
+			<!--	
+				ng-repeat 指令可以完美的显示表格。
+				另外： $even 和 $odd 奇数和偶数
+			-->
+			<style>
+				table, th , td  {
+					  border: 1px solid grey;
+					  border-collapse: collapse;
+					  padding: 5px;
+				}
+				table tr:nth-child(odd)	{
+					  background-color: #f1f1f1;
+				}
+				table tr:nth-child(even) {
+					  background-color: #ffffff;
+				}
+			</style>
+			<div ng-app="myApp" ng-controller="customersCtrl"> 
+				<table>
+				  <tr ng-repeat="x in names | orderBy:'Country'">
+				  
+					<td>{{ $index + 1}}</td>
+					<td>{{ x.Name }}</td>
+					<td>{{ x.City }}</td>
+					<td>{{ x.Country | uppercase }}</td>
+					
+				  </tr>
+				</table>
+			</div>
+			<script>
+			var app = angular.module('myApp', []);
+			app.controller('customersCtrl', function($scope, $http) {
+				 
+				 $scope.names =  [
+									{"Name":"Alfreds Futterkiste","City":"Berlin","Country":"Germany"},
+									{"Name":"Ana Trujillo Emparedados y helados","City":"México D.F.","Country":"Mexico"},
+									{"Name":"Antonio Moreno Taquería","City":"México D.F.","Country":"Mexico"},
+									{"Name":"Around the Horn","City":"London","Country":"UK"},
+									{"Name":"B's Beverages","City":"London","Country":"UK"},
+									{"Name":"Berglunds snabbköp","City":"Luleå","Country":"Sweden"},
+									{"Name":"Blauer See Delikatessen","City":"Mannheim","Country":"Germany"},
+									{"Name":"Blondel père et fils","City":"Strasbourg","Country":"France"},
+									{"Name":"Bólido Comidas preparadas","City":"Madrid","Country":"Spain"},
+									{"Name":"Bon app'","City":"Marseille","Country":"France"},
+									{"Name":"Bottom-Dollar Marketse","City":"Tsawassen","Country":"Canada"},
+									{"Name":"Cactus Comidas para llevar","City":"Buenos Aires","Country":"Argentina"},
+									{"Name":"Centro comercial Moctezuma","City":"México D.F.","Country":"Mexico"},
+									{"Name":"Chop-suey Chinese","City":"Bern","Country":"Switzerland"},
+									{"Name":"Comércio Mineiro","City":"São Paulo","Country":"Brazil"}
+								];
+								
+				/***
+					也可以使用 PHP 从 MySQL 中获取数据
+					$http.get("http://www.runoob.com/try/angularjs/data/Customers_MySQL.php")
+					.success(function (response) {$scope.names = response.records;});
+				*/				
+				/***
+					也可以使用 ASP.NET 从 MySQL 中获取数据
+					$http.get("http://www.runoob.com/try/angularjs/data/Customers_SQL.aspx")
+					.success(function (response) {$scope.names = response.records;});
+				*/
+				
+				/***
+					如果你需要从不同的服务器（不同域名）
+					上获取数据就需要使用跨域 HTTP 请求。
+					跨域请求在网页上非常常见。
+					很多网页从不同服务器上载入 CSS, 图片，Js脚本等。
+					
+					在现代浏览器中，为了数据的安全，
+					所有请求被严格限制在同一域名下，
+					
+					如果需要调用不同站点的数据，需要通过跨域来解决。
+			
+				*/
+				
+			});
+			</script>		
+			
+	 
+		
+		
+	</body>
+</html>
+
+

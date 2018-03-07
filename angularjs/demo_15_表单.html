@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="./angular.min.js"></script>
+		 
+	</head>
+	<body>
+	
+	
+	
+	
+			<!--
+					AngularJS 表单是输入控件的集合。
+			-->
+			
+			
+			
+			
+			
+			
+			<!--
+				Input 控件使用 ng-model 指令来实现数据绑定。
+				<input type="text" ng-model="firstname">
+				通过以上代码应用有了一个名为 firstname 的属性。
+				它通过 ng-model 指令来绑定到你的应用。
+				firstname 属性可以在 controller 中使用：
+			<div ng-app="myApp" ng-controller="formCtrl">
+			  <form>
+				First Name: <input type="text" ng-model="firstname">
+			  </form>
+			</div>
+			<script>
+				var app = angular.module('myApp', []);
+				app.controller('formCtrl', function($scope) {
+					$scope.firstname = "John";
+				});
+			</script> 
+			-->
+			
+			
+			
+			
+			
+			
+			<!--
+				Checkbox（复选框）
+				checkbox 的值为 true 或 false，
+				可以使用 ng-model 指令绑定，它的值可以用于应用中：
+				<div ng-app="">
+				  <form>
+					选中复选框，显示标题:
+					<input type="checkbox" ng-model="myVar">
+				  </form>
+				  <h1 ng-show="myVar">My Header</h1>
+				</div>
+				<p>标题使用了 ng-show 指令，复选框选中后显示 h1 标签内容。</p>
+			-->		
+					
+
+
+					
+			<!--
+				单选框
+				我们可以使用 ng-model 来绑定单选按钮到你的应用中。
+				单选框使用同一个 ng-model ，
+				可以有不同的值，
+				但只有被选中的单选按钮的值会被使用。
+			<div  ng-app="" >
+				<form>
+				  选择一个选项:
+				  <input type="radio" ng-model="myVar" value="dogs">Dogs
+				  <input type="radio" ng-model="myVar" value="tuts">Tutorials
+				  <input type="radio" ng-model="myVar" value="cars">Cars
+				</form>
+				<div ng-switch="myVar">
+				  <div ng-switch-when="dogs">
+					 <h1>Dogs</h1>
+					 <p>Welcome to a world of dogs.</p>
+				  </div>
+				  <div ng-switch-when="tuts">
+					 <h1>Tutorials</h1>
+					 <p>Learn from examples.</p>
+				  </div>
+				  <div ng-switch-when="cars">
+					 <h1>Cars</h1>
+					 <p>Read about cars.</p>
+				  </div>
+				</div>
+				<p>ng-switch 指令根据单选按钮的选择结果显示或隐藏 HTML 区域。</p>
+			</div>
+			-->
+			
+			
+			
+			
+			<!--
+				下拉菜单
+				使用 ng-model 指令可以将下拉菜单绑定到你的应用中。
+				ng-model 属性的值为你在下拉菜单选中的选项：
+			<div  ng-app="" >
+				<form>  选择一个选项:
+					  <select ng-model="myVar">
+							<option value="">
+							<option value="dogs">Dogs
+							<option value="tuts">Tutorials
+							<option value="cars">Cars
+					  </select>
+				</form>
+				<div ng-switch="myVar">
+					  <div ng-switch-when="dogs">
+						 <h1>Dogs</h1>
+						 <p>Welcome to a world of dogs.</p>
+					  </div>
+					  <div ng-switch-when="tuts">
+						 <h1>Tutorials</h1>
+						 <p>Learn from examples.</p>
+					  </div>
+					  <div ng-switch-when="cars">
+						 <h1>Cars</h1>
+						 <p>Read about cars.</p>
+					  </div>
+				</div>
+				<p>ng-switch 指令根据下拉菜单的选择结果显示或隐藏 HTML 区域。</p>					
+			</div>						
+			-->
+			
+			
+			
+			
+	
+			<!-- -->
+			<div ng-app="myApp" ng-controller="formCtrl">
+			  <form novalidate>
+				First Name:<br>
+					<input type="text" ng-model="user.firstName"><br>
+				Last Name:<br>
+					<input type="text" ng-model="user.lastName">
+				<br><br>
+					<button ng-click="reset()">RESET</button>
+			  </form>
+			  <p>form = {{user}}</p>
+			  <p>master = {{master}}</p>
+			</div>
+			<script>
+				var app = angular.module('myApp', []);
+				app.controller('formCtrl', function($scope) {
+					$scope.master = {firstName: "John", lastName: "Doe"};
+					$scope.reset = function() {
+						$scope.user = angular.copy($scope.master);
+					};
+					$scope.reset();
+				});
+			</script>		
+			
+			
+			
+			
+			
+	</body>
+</html>
+
+

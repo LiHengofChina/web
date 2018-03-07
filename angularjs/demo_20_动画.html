@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="./angular.min.js"></script>
+		<script type="text/javascript" src="./angular-animate.min.js"></script>
+		<style>
+			div {
+			  transition: all linear 0.5s;
+			  background-color: lightblue;
+			  height: 100px;
+			  width: 100%;
+			  position: relative;
+			  top: 0;
+			  left: 0;
+			}
+
+			.ng-hide {
+			  height: 0;
+			  width: 0;
+			  background-color: transparent;
+			  top:-200px;
+			  left: 200px;
+			}
+		</style>		 
+	</head>
+	<body>
+	
+	
+		<!--
+			AngularJS 动画
+			AngularJS 提供了动画效果，可以配合 CSS 使用。
+			AngularJS 使用动画需要引入 angular-animate.min.js 库。	 
+	
+		-->
+		
+		
+		
+		
+		
+		
+		
+		<!--
+			<div ng-app="ngAnimate">
+				<h1>隐藏 DIV: <input type="checkbox" ng-model="myCheck"></h1>
+				<div ng-hide="myCheck"></div>
+			</div>
+		-->
+		
+		
+		
+		
+		<!--  如果我们应用已经设置了应用名，可以把 ngAnimate 直接添加在模型中：	
+			<div ng-app="myApp">
+				<h1>隐藏 DIV: <input type="checkbox" ng-model="myCheck"></h1>
+				<div ng-hide="myCheck"></div>
+				<script>
+					var app = angular.module('myApp', ['ngAnimate']);
+				</script>
+			</div>		
+		-->
+		
+		
+		
+		
+		<!--
+			AngularJS 添加/移除 class 的指令:
+				ng-show、ng-hide、ng-class、ng-view、ng-include、ng-repeat、ng-if、ng-switch	
+		-->
+		
+ 
+ 
+ <!--
+ 在 DIV 元素设置了 .ng-hide 类时,
+ myChange 动画将执行，
+ 它会平滑的将高度从 100px 变为 0:
+-->	
+		<style>
+			@keyframes myChange {
+			  from {
+				  height: 100px;
+			  } to {
+				  height: 0;
+			  }
+			}
+
+			div {
+			  height: 100px;
+			  background-color: lightblue;
+			}
+
+			div.ng-hide {
+			  animation: 0.5s myChange;
+			}
+		</style>		
+		<body ng-app="ngAnimate">
+			隐藏 DIV: <input type="checkbox" ng-model="myCheck">
+			<div ng-hide="myCheck">
+			</div>
+		</body>		
+		
+	 
+	</body>
+</html>
+
+

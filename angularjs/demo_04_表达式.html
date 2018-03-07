@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script 
+		src="./angular.min.js">
+		</script>
+	</head>
+<body>
+
+<div ng-app="" 
+	ng-init="quantity=1;
+			cost=5;
+			firstName='John';
+			lastName='Doe';
+			person={firstName:'John',lastName:'Doe'};
+			points=[1,15,19,2,40]
+			" 
+			
+			
+>
+
+     <p>我的第一个表达式： {{ 5 + 5 }}</p>
+	 
+	 <p>总价： {{ quantity * cost }}</p>
+	 <p>总价： <span ng-bind="quantity * cost"></span></p>
+	 
+	 <p>姓名： {{ firstName + " " + lastName }}</p>
+	 <p>姓名： <span ng-bind="firstName + ' ' + lastName"></span></p>
+	 
+	 <p>姓为 {{ person.lastName }}</p>
+	 <p>姓为 <span ng-bind="person.lastName"></span></p>
+	 
+	 <p>第三个值为 {{ points[2] }}</p>
+	 <p>第三个值为 <span ng-bind="points[2]"></span></p>
+	 
+</div>
+
+
+ 
+	<!--
+	PS:实际当中	使用 ng-init 不是很常见。
+	
+	AngularJS 表达式写在双大括号内：{{ expression }}。
+	AngularJS 表达式把数据绑定到 HTML，这与 ng-bind 指令有异曲同工之妙。
+	AngularJS 将在表达式书写的位置"输出"数据。
+	AngularJS 表达式 很像 JavaScript 表达式：它们可以包含文字、运算符和变量。
+
+	-->
+</body>
+</html>
+
