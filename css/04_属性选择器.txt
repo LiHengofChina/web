@@ -1,0 +1,61 @@
+//================================================== 属性选择器
+//================================================== 属性选择器
+
+	//选择具有特定属性的元素
+	//包含标题（title）的所有元素变为蓝色：
+	[title]
+	{
+		color:blue;
+	}
+
+	<h1 title="Hello world">Hello world</h1>
+	<a title="runoob.com" href="http://www.runoob.com/">runoob.com</a>
+
+//================================================== 属性和值选择器
+//================================================== 属性和值选择器
+	//具有该属性且它的值为指定的值
+	[title=runoob]
+	{
+		border:5px solid green;
+	}
+	
+	<img title="runoob" src="logo.png" width="270" height="50" />
+	
+//================================================== 多值情况一	
+//================================================== 多值情况一	
+	//包涵该值就行
+	[title~=hello]
+	{
+		color:blue;
+	} 
+	<h1 title="hello world">Hello world</h1>
+	<p title="student hello">Hello CSS students!</p>	
+	
+//================================================== 多值情况一	
+//================================================== 多值情况一		
+	//包涵该值，且以该值打头
+	[lang|=en]
+	{
+		color:blue;
+	}	
+	<p lang="en">Hello!</p>
+	<p lang="en-us">Hi!</p>
+	<p lang="en-gb">Ello!</p>	
+//==================================================属性选择器操作表单	
+//==================================================属性选择器操作表单	
+	input[type="text"]
+	{
+		width:150px;
+		display:block;
+		margin-bottom:10px;
+		background-color:yellow;
+	}	
+	<input type="text" name="fname" value="Peter" size="20">
+	<input type="text" name="lname" value="Griffin" size="20">
+	
+	//经常见到但是不认识的东西源自这里
+	
+	
+	
+	
+	
