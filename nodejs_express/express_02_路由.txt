@@ -1,0 +1,24 @@
+https://blog.csdn.net/github_38140984/article/details/83016264
+
+// 路由的使用方式
+// 引入 Express
+const express = require("express");
+
+// 创建服务
+const app = express();
+
+// 创建路由
+app.get("/", function (req, res) {
+    res.end("home");
+});
+app.post("/about", function (req, res) {
+    res.end("about");
+});
+app.all("*", function (req, res) {
+    res.end("Not Found");
+});
+
+
+
+// 监听服务
+app.listen(3000);
