@@ -1,0 +1,52 @@
+//======================================Angular 复习 
+1). AngularJS 模块
+
+	模块定义了一个应用程序。
+	模块是应用程序中"不同部分的容器"。
+	模块是应用控制器的容器。
+	控制器通常属于一个模块。 
+ 
+	<div ng-app="myApp" runoob-directive></div>
+
+	<script>
+		var app = angular.module("myApp", []);
+	</script>
+
+2). 路由
+
+	AngularJS 路由允许我们通过不同的 URL 访问不同的内容。
+	通过 AngularJS 可以实现："多视图的单页Web应用（single page web application，SPA）"
+	通常我们的URL形式为：http://runoob.com/first/page
+	但在单页Web应用中 AngularJS 通过实现，例如：
+		" # + 标记 "
+	示例：
+		http://runoob.com/#/first
+		http://runoob.com/#/second
+		http://runoob.com/#/third
+
+		当我们点击以上的任意一个链接时，
+		向服务端请的地址都是一样的 (http://runoob.com/)。
+	//=====================================================
+	因为 # 号之后的内容在向服务端请求时会被浏览器忽略
+	掉。
+	
+	所以我们就需要在客户端实现 # 号后面内容的功能实现。 
+	AngularJS 路由 就通过 # + 标记。
+	帮助我们区分不同的逻辑页面并将不同的页面绑。
+	定到对应的控制器上。
+	
+	//==========
+	angular.module('routingDemoApp',['ngRoute']).config(['$routeProvider', function($routeProvider){
+	$routeProvider
+		.when('/',{template:'这是首页页面'})
+		.when('/computers',{template:'这是电脑分类页面'})
+		.when('/printers',{template:'这是打印机页面'})
+		.otherwise({redirectTo:'/'});
+	}]);
+
+
+3). tmpl 模板
+
+
+
+
