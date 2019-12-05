@@ -1,0 +1,33 @@
+
+//===============================实现响应方法 send 和 sendFile
+//===============================实现响应方法 send 和 sendFile
+
+	end 方法只能接收字符串和 Buffer 作为响应的值，
+	Express 中封装了一个 send 方法挂在 res 对象下
+	可以接收数组、对象、字符串、Buffer、数字处理后响应给浏览器
+
+
+
+// send 响应
+// 引入 Express
+const express = require("express");
+const path = require("path");
+
+// 创建服务
+const app = express();
+
+// 创建路由
+app.get("/", function (req, res) {
+    res.send({ name: "panda", age: 28 });
+});
+
+app.get("/test.txt", function (req, res) {
+    // 必须传入绝对路径
+    res.sendFile(path.join(__dirname, req.path));
+});
+
+// 监听服务
+app.listen(3000);
+
+
+

@@ -1,0 +1,30 @@
+
+//===============================扩展请求对象属性
+//===============================扩展请求对象属性
+// req 属性的使用
+// 引入 Express
+const express = require("express");
+
+// 创建服务
+const app = express();
+
+// 创建路由
+app.get("/", function (req, res) {
+    console.log(req.path);
+    console.log(req.query);
+    console.log(req.host);
+    res.end("home");
+});
+
+app.get("/about/:id/:name", function (req, res) {
+    console.log(req.params);
+    res.end("about");
+});
+
+// 监听服务
+app.listen(3000);
+
+
+
+
+
