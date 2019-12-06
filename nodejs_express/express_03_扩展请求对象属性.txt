@@ -1,30 +1,25 @@
-
-//===============================扩展请求对象属性
-//===============================扩展请求对象属性
-// req 属性的使用
+// send 响应
 // 引入 Express
 const express = require("express");
+const path = require("path");
 
 // 创建服务
 const app = express();
 
 // 创建路由
 app.get("/", function (req, res) {
-    console.log(req.path);
-    console.log(req.query);
-    console.log(req.host);
-    res.end("home");
+    res.send({ name: "panda", age: 28 });
 });
 
-app.get("/about/:id/:name", function (req, res) {
-    console.log(req.params);
-    res.end("about");
+app.get("/test.html", function (req, res) {
+    // 必须传入绝对路径
+	console.log(req.path);
+    res.sendFile(path.join(__dirname, req.path));
 });
 
 // 监听服务
 app.listen(3000);
 
-
-
-
+// http://localhost:3000/
+// http://localhost:3000/test.html	//直接返回 文件内容
 
