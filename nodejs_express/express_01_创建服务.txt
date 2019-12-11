@@ -1,32 +1,15 @@
-Express 是 NodeJS 的 Web 框架，与 Koa 的轻量相比，功能要更多一些
 
 
-//========================================================创建一个服务
 // 三行代码搭建的最基本服务
 // 引入 Express
 const express = require("express");
+
 // 创建服务
 const app = express();
+
 // 监听服务
 app.listen(3000);
 
-//======================================================== // 文件：express.js 源码分析
-//它基于http模块的
-const http = require("http");
-function createApplication() {
-    // 创建 app 函数，身份为总管家，用于将请求分派给别人处理
-    let app = function (req, res) {}
-    // 启动服务的 listen 方法
-    app.listen = function () {
-        // 创建服务器
-        const server = http.createServer(app);
+// http://localhost:3000/
 
-        // 监听服务，可能传入多个参数，如第一个参数为端口号，最后一个参数为服务启动后回调
-        server.listen(...arguments);
-    }
-    // 返回 app
-    return app;
-}
 
-module.exports = createApplication;
- 
