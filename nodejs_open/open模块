@@ -7,7 +7,7 @@
 
 2.调用open模块指定Chrome浏览器打开指定的url
 	let open = reuqire("open");
-	open("指定的url", "chrmoe");
+	open("指定的url", "chrome");
 	 
 3.使用setTimeout()函数还可以实现简单的定时提醒功能
 	let open = require("open");
