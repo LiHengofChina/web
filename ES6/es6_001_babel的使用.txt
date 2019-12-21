@@ -1,0 +1,38 @@
+现在的Chrome浏览器已经支持ES6了，但是有些低版本的浏览器还是不支持ES6的语法
+	//这就需要我们把ES6的语法自动的转变成ES5的语法。
+	//====================================
+	webpack是有自动编译转换能力的 或 Babel平台
+//==================================================================================
+//==================================================================================
+https://www.jianshu.com/p/b65176f3e935
+ 
+		
+1). 快速生成 package.json
+	npm init -y
+
+2). 安装 babel	//读：卑泊 bei bo
+		//注意，并不是使用wekpack  
+		npm install -g babel-cli
+		npm install --save-dev babel-preset-es2015 babel-cli
+
+3). 新建 .babelrc
+    {
+        "presets":[
+            "es2015"
+        ],
+        "plugins":[]
+    }
+
+4). 在src下的 index.js 中编辑 使用es6语法
+	let a=1;
+	console.log(a);
+
+5). 然后我们在终端输入
+	babel src/index.js -o dist/index.js
+	//这样es6的语法就自己转换成es5了
+	//注意：这仅仅是转成了es5，并不是之前写的最原始的JS
+
+
+
+
+ 

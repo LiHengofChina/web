@@ -1,0 +1,15 @@
+launch.json 是 VSCode 在当前开发目录自动生成的一个配置文件。
+
+	开发时，根据所在项目类型，进行程序启动的路径和运行环境配置。
+
+
+${workspaceFolder}/scripts/debug.js 	程序采用node进行调试。
+${workspaceRoot}     					VSCode中打开文件夹的路径 
+${workspaceRootFolderName}   			VSCode中打开文件夹的路径, 但不包含"/" 
+${file}    								当前打开的文件
+${relativeFile}    						当前打开的文件（相对于workspaceRoot）  
+${fileBasename}   						当前打开文件的文件名, 不含扩展名
+${fileDirname}   						当前打开文件的目录名
+${fileExtname}   						当前打开文件的扩展名  
+${cwd}   								当前运行任务的工作目录（启动目录）
+ 

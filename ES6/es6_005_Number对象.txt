@@ -1,0 +1,54 @@
+
+//============================================================== ES6的数字操作
+//============================================================== ES6的数字操作
+
+//========================示例1：定义二进制数
+let binary = 0B010101;
+console.log(binary);    
+
+
+//========================示例2：定义八进制数
+let b=0o666;
+console.log(b);
+//==============================================================数字验证 Number.isFinite( xx )
+//==============================================================数字验证 Number.isFinite( xx )
+
+Number.isFinite( ) 来进行数字验证，只要是数字，
+				不论是浮点型还是整形都会返回true
+
+示例：
+let a= 11/4;
+console.log(Number.isFinite(a));//true
+console.log(Number.isFinite('ES6'));//false
+console.log(Number.isFinite(NaN));//false
+console.log(Number.isFinite(undefined));//false
+
+//==============================================================判断是否为整数Number.isInteger(xx)
+//==============================================================判断是否为整数Number.isInteger(xx)
+let a=123.1;
+console.log(Number.isInteger(a)); //false
+
+
+//==============================================================整数转换
+//==============================================================整数转换
+
+
+let a='9.18';
+console.log(Number.parseInt(a)); 
+console.log(Number.parseFloat(a));
+
+
+//============================================================== 整数取值范围操作
+整数的操作是有一个取值范围的，它的取值范围就是2的53次方
+console.log(Math.pow(2,53)-1); 
+
+//==============示例1：最大安全数与最小安全数
+console.log(Number.MAX_SAFE_INTEGER);
+console.log(Number.MIN_SAFE_INTEGER);
+
+
+//==============示例1：判断是否为安全整数
+let a= Math.pow(2,53)-1;
+console.log(Number.isSafeInteger(a));
+console.log(Number.isSafeInteger(9007199254740991));
+

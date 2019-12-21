@@ -1,0 +1,74 @@
+//================================ JavaScript
+//================================ JavaScript
+//================================ JavaScript
+	JavaScript一种 动态类型、弱类型、基于原型的客户端脚本语言，用来给HTML网页增加动态功能。
+		//动态：
+			在运行时确定数据类型。变量使用之前不需要类型声明， 通常变量的类型是被赋值的那个值的类型。
+		//弱类：
+			计算时可以不同类型之间对使用者透明地隐式转换，即使类型不正确，也能通过隐式转换来得到正确的类型。
+		//原型：
+			新对象继承对象（作为模版），将自身的属性共享给新对象，模版对象称为原型。这样新对象实例化后不但可以享有自己创建时和运行时定义的属性，而且可以享有原型对象的属性。
+			PS：新对象指函数，模版对象是实例对象，实例对象是不能继承原型的，函数才可以的。//TODO
+//JavaScript由三部分组成：
+1. ECMAScript（核心）
+	作为核心，它规定了语言的组成部分：语法、类型、语句、关键字、保留字、操作符、对象
+2. DOM（文档对象模型）
+	DOM把整个页面映射为一个多层节点结构，开发人员可借助DOM提供的API，轻松地删除、添加、替换或修改任何节点。
+	//PS：DOM也有级别，分为DOM1、DOM2、DOM3，拓展不少规范和新接口。
+3. BOM （浏览器对象模型）
+	支持可以访问和操作浏览器窗口的浏览器对象模型，开发人员可以控制浏览器显示的页面以外的部分。
+	//PS：BOM未形成规范
+
+//================================ 什么是ES5
+//================================ 什么是ES5
+//================================ 什么是ES5
+	作为ECMAScript第五个版本（第四版因为过于复杂废弃了），浏览器支持情况可看第一副图，增加特性如下。
+它增加了部分特性，展示 一部分
+
+1. strict模式
+	严格模式，限制一些用法，'use strict';
+
+2. 增加方法
+	Array every、some 、forEach、filter 、indexOf、lastIndexOf、isArray、map、reduce、reduceRight方法
+	
+	Function.prototype.bind
+	
+	String.prototype.trim
+	
+	Date.now
+	
+	Object.getPrototypeOf
+	Object.create
+	Object.getOwnPropertyNames
+	Object.defineProperty
+	Object.getOwnPropertyDescriptor
+	Object.defineProperties
+	Object.keys
+	Object.preventExtensions / Object.isExtensible
+	Object.seal / Object.isSealed
+	Object.freeze / Object.isFrozen
+
+//================================ ES6
+//================================ ES6
+//================================ ES6
+	ECMAScript6在保证向下兼容的前提下，提供大量新特性，
+
+	ES6特性汇总：
+		1.块级作用域 关键字let, 常量const
+		2.对象字面量的属性赋值简写（property value shorthand）
+3. 赋值解构
+4. 函数参数 - 默认值、参数打包、 数组展开（Default 、Rest 、Spread）		
+5. 箭头函数 Arrow functions
+6. 字符串模板 Template strings
+7. Iterators（迭代器）+ for..of
+8. 生成器 （Generators）
+9. Class
+10. Modules
+11. Map + Set + WeakMap + WeakSet
+12. Math + Number + String + Array + Object APIs
+13. Proxies
+14. Symbols
+15. Promises
+
+
+  
