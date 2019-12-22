@@ -1,0 +1,84 @@
+Set数据结构，
+//=================================== Set
+//=================================== Set
+//=================================== Set
+示例1：Set 的声明
+
+let setArr = new Set(['js','css','html','js']); //重复的会被去掉
+console.log(setArr);//Set {"js", "css", "html"}
+
+	Set和Array 的区别是Set不允许内部有重复的值，
+	//如果有只显示一个，相当于去重
+	//虽然Set很像数组，但是他不是数组。
+
+//=================================== Set 添加值
+//=================================== Set 添加值
+//=================================== Set 添加值
+let setArr = new Set(['js','css','html','js']);
+console.log(setArr);//Set {"js", "css", "html"}
+
+setArr.add('vue');
+console.log(setArr); 	//在后面会增加vue
+
+//=================================== 删除 值
+//=================================== 删除 值
+//=================================== 删除 值
+
+setArr.delete('vue');
+console.log(setArr); //Set {"js", "css", "html"}
+
+
+//=================================== 清空
+//=================================== 清空
+//=================================== 清空
+
+let setArr = new Set(['js','css','html','js']);
+console.log(setArr);//Set {"js", "css", "html"}
+
+setArr.clear(); //清空
+console.log(setArr);
+
+
+//=================================== 查找has 
+//=================================== 查找has
+//=================================== 查找has
+用has进行值的查找，返回的是true或者false。
+
+let setArr = new Set(['js','css','html','js']);
+console.log(setArr);//Set {"js", "css", "html"}
+console.log(setArr.has("jss"));
+
+
+//=================================== for of循环
+//=================================== for of循环
+//=================================== for of循环
+
+let setArr = new Set(['js','css','html','js']);
+console.log(setArr);//Set {"js", "css", "html"}
+
+for (let item of setArr){
+    console.log(item);
+}
+//=================================== size 属性
+//=================================== size 属性
+//=================================== size 属性
+let setArr = new Set(['js','css','html','js']);
+console.log(setArr);//Set {"js", "css", "html"}
+ 
+console.log(setArr.size); //3
+
+
+
+//=================================== 怎么判断它不是数组
+//=================================== 怎么判断它不是数组
+//=================================== 怎么判断它不是数组
+
+let setArr = new Set(['js','css','html','js']);
+console.log(setArr);//Set {"js", "css", "html"}
+console.log(setArr.size); //3
+console.log(Array.isArray(setArr))		//false 
+console.log(setArr instanceof Array)	//false
+
+
+ 
+ 

@@ -25,6 +25,7 @@
 //====示例1：函数中的严谨模式
 
 function add(a,b=1){	//PS: 严谨模式下，这里不能使用默认值，是ES6的一个坑
+						//ps: 严谨模式下， ...c 扩展运算符，也是不能使用的
     'use strict'	    //函数中的严谨模式
     if(a == 0){
         throw new Error('This is error');
@@ -46,7 +47,7 @@ function add(a,b){
     }
     return a+b;
 }
-console.log(add.length);
+console.log(add.length);//注意：这个是获取方法的入参长度
 
 
 

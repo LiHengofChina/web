@@ -1,0 +1,64 @@
+我们在ES5中经常使用方法或者对象去模拟类的使用，
+虽然可以实现功能，
+但是代码并不优雅，
+//============================================= ES6为我们提供了类的使用
+//============================================= ES6为我们提供了类的使用
+//=====================
+//=====================
+示例1： 声明一个简单的类
+
+class Coder{
+    name(val){
+        console.log(val);
+    }
+}
+let js= new Coder;
+js.name('javascript');
+
+//=====================
+//=====================
+示例2： 类的多方法声明
+class Coder{
+    name(val){
+        console.log(val);
+        return val;
+    }
+    skill(val){
+        console.log(this.name('js')+':'+'Skill:'+val);
+    }
+}
+let js= new Coder;
+js.name('javascript');
+js.skill('web');
+//===================== 
+//===================== 
+示例3: 通过构建方法传递参数
+//constructor( )进行传参。传递参数后可以直接使用this.xxx进行调用。
+class Coder{
+    constructor(a,b){
+        this.a=a;
+        this.b=b;
+    }
+    add(){
+        return this.a+this.b;
+    }
+}
+let js=new Coder(1,2);
+console.log(js.add());
+
+//=====================
+//=====================
+示例4：class的继承
+示例4：class的继承
+class Coder{
+    name(val){
+        console.log(val);
+        return val;
+    }
+}
+class htmler extends Coder{
+}
+let js=new htmler;
+js.name('javascript');
+
+
