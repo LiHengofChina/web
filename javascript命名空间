@@ -1,0 +1,18 @@
+
+在多人合作写脚本的时候，会发生方法名冲突的情况
+用JS的命名空间能解决这个问题
+var MYNAMESPACE = MYNAMESPACE || {};
+若全局空间中已有同名对象，则不覆盖该对象；否则创建一个新的命名空间。
+//======================================= 示例1：
+//======================================= 示例1：
+
+var MYNAMESPACE = MYNAMESPACE || {};
+MYNAMESPACE.person = function(name) {//设置人名的方法
+    this.name = name;
+};
+MYNAMESPACE.person.prototype.getName = function() {
+    return this.name;
+};
+//使用方法
+var p = new MYNAMESPACE.person("doc");
+console.log(p.getName());        // doc
