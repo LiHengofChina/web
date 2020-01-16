@@ -1,0 +1,59 @@
+//================================================= 使用 require.js 自定义加载
+//================================================= 使用 require.js 自定义加载
+
+	  /**
+		示例：
+		　　require(['jquery', 'underscore', 'backbone'], function ($, _, Backbone){
+		　　　　// some code here
+		　　});
+
+	  */
+	  
+	默认情况下，require.js假定这三个模块与main.js在同一个目录，
+	文件名分别为jquery.js，underscore.js和backbone.js，然后自动加载。
+	//==========================================
+	//==========================================
+	使用require.config()方法，我们可以对模块的加载行为进行自定义。
+	require.config()就写在主模块（main.js）的头部。参数就是一个对象，
+	这个对象的paths属性指定各个模块的加载路径。	
+		
+	　　require.config({
+	　　　　paths: {
+	　　　　　　"jquery": "jquery.min",
+	　　　　　　"underscore": "underscore.min",
+	　　　　　　"backbone": "backbone.min"
+	　　　　}
+	　　});
+		//或
+	　　require.config({
+	　　　　paths: {
+	　　　　　　"jquery": "lib/jquery.min",
+	　　　　　　"underscore": "lib/underscore.min",
+	　　　　　　"backbone": "lib/backbone.min"
+	　　　　}
+	　　});
+		//或
+	　　require.config({
+	　　　　baseUrl: "js/lib",
+	　　　　paths: {
+	　　　　　　"jquery": "jquery.min",
+	　　　　　　"underscore": "underscore.min",
+	　　　　　　"backbone": "backbone.min"
+	　　　　}
+	　　});
+		//或
+	　　require.config({
+	　　　　paths: {
+	　　　　　　"jquery": "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min"
+	　　　　}
+	　　});
+		/**
+		后话，PS:
+			每个模块是一个单独的js文件。
+			这样的话，如果加载多个模块，就会发出多次HTTP请求，会影响网页的加载速度。
+			因此，require.js提供了一个优化工具，当模块部署完毕以后，
+			可以用这个工具将多个模块合并在一个文件中，减少HTTP请求数。
+		*/
+	
+	
+	
