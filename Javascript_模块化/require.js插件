@@ -1,0 +1,13 @@
+//=================================================	require.js插件
+//=================================================	require.js插件
+		domready插件，可以让回调函数在页面DOM结构加载完成后再运行。
+		require(['domready!'], function (doc){
+			// called once the DOM is ready
+		});
+
+
+		text和image插件，则是允许require.js加载文本和图片文件。
+		define([ 'text!review.txt', 'image!cat.jpg' ], function(review, cat) {
+			console.log(review);
+			document.body.appendChild(cat);
+		});
