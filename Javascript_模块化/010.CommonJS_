@@ -40,6 +40,8 @@ world.js
 				global
 		理论上浏览器只要能提供这四个变量
 		就能加载 CommonJS 模块
-		网上可以搜索到 "浏览器加载 CommonJS 模块的原理与实现"
+		网上可以搜索到 "浏览器加载 CommonJS 模块的原理与实现"//TODO，了解即可：Browserify
+		
+		
 	*/
 
