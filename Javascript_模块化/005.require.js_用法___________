@@ -15,7 +15,7 @@
 
 //=================================================使用 require.js 编写模块
 //=================================================使用 require.js 编写模块
-	//定义
+	//定义 math.js
 	define(function() {
 		var add = function(x, y) {
 			return x + y;
@@ -25,6 +25,7 @@
 			add : add
 		};
 	});
+
 	//加载
 	require([ 'math' ], function(math) {
 		console.log(math.add(1, 1));
