@@ -1,0 +1,86 @@
+//===================================包
+//===================================包
+
+	包是在模块基础上更深一步的抽象，Node.js 的包类似于 C/C++ 的函数库或者 Java/.Net的类库。
+	它将某个独立的功能封装起来，用于发布、更新、依赖管理和版本控制。
+		//相当于一个jar包
+		
+	Node.js 根据 CommonJS 规范实现了包机制，开发了 npm来解决包的发布和获取需求。
+	Node.js 的包是一个目录，其中包含一个 JSON 格式的包说明文件 package.json。
+
+	严格符合 CommonJS 规范的包应该具备以下特征：
+
+ package.json //顶层目录下
+ bin  		//二进制文件
+ lib  		//JavaScript 代码
+ doc  		//文档
+ test 		//单元测试
+
+	Node.js 对包的要求并没有这么严格，只要顶层目录下有 package.json，并符合一些规范即可。
+	//当然为了提高兼容性，我们还是建议你在制作包的时候，严格遵守 CommonJS 规范。
+	
+//===================================模块与包	
+//===================================模块与包	
+	模块与文件是一一对应的。
+	文件不仅可以是 JavaScript 代码或二进制代码，
+	还可以是一个文件夹。
+		
+		最简单的包，就是一个作为文件夹的模块。
+	//=======================示例1：把文件夹封装为一个模块，即所谓的包
+	//=======================示例1：把文件夹封装为一个模块，即所谓的包
+	//somepackage/index.js
+	exports.hello = function(){
+		console.log(" hello ! ");
+	}
+
+	//getpackage.js
+	var somePackage = require("./somepackage");
+	somePackage.hello();
+
+
+	包通常是一些模块的集合，
+	在"模块的基础上提供了更高层的抽象"，
+	相当于"提供了一些固定接口的函数库"。
+	
+	//=======================示例2：规范，改进
+	//=======================示例2：规范，改进
+
+	//interface.js
+	exports.hello = function(){
+		console.log(" hello ! ");
+	}	
+	//package.json
+	{
+		"main" : "./lib/interface.js"
+	}
+	//getpackage.js
+	var somePackage = require("./somepackage");
+	somePackage.hello();
+
+	
+	Node.js 在调用某个包时，会首先检查包中 package.json 文件的 main 字段，
+	将其作为"包的接口模块"，
+	//如果 package.json 或 main 字段不存在，
+	//会尝试寻找 index.js 或 index.node 作为包的接口。
+	
+	
+
+/**
+	package.json 详细 说明：
+		
+	   //
+	   //CommonJS 规定的用来描述包的文件，完全符合规范的 package.json 文件应该含有以下字段。
+	 name ：包的名称，必须是唯一的，由小写英文字母、数字和下划线组成，不能包含空格。
+	 description ：包的简要说明。
+	 version ：符合语义化版本识别规范的版本字符串。
+	 keywords ：关键字数组，通常用于搜索。
+	 maintainers ：维护者数组，每个元素要包含 name 、 email （可选）、 web （可选）字段。
+	 contributors ：贡献者数组，格式与 maintainers 相同。包的作者应该是贡献者数组的第一个元素。
+	 bugs ：提交bug的地址，可以是网址或者电子邮件地址。
+	 licenses ：许可证数组，每个元素要包含 type （许可证的名称）和 url （链接到许可证文本的地址）字段。
+	 repositories ：仓库托管地址数组，每个元素要包含 type （仓库的类型，如 git ）、url （仓库的地址）和 path （相对于仓库的路径，可选）字段。
+	 dependencies ：包的依赖，一个关联数组，由包名称和版本号组成。	
+*/
+	
+	
+ 
