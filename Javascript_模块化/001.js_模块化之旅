@@ -55,19 +55,19 @@ ES6将会支持模块化的语法
 //================================================= 三阶段：立即执行函数 写法 ：解决暴露私有成员的问题。
 	var module1 = (function(){
 		var _count = 0 ;
-		var m1 = function (){
-			console.log("__________m1");
+		var method1 = function (){
+			console.log("__________method1");
 		};
-		var m2 =function (){
-			console.log("__________m2");
+		var method2 =function (){
+			console.log("__________method2");
 		};
 		return {
-			m1: m1,
-			m2: m2
+			method1: method1,
+			method2: method2
 		}
 	})();
-	module1.m1();
-	module1.m2();
+	module1.method1();
+	module1.method2();
 
 	使用"立即执行函数"（Immediately-Invoked Function Expression，IIFE），
 	可以达到不暴露私有成员的目的。
@@ -83,17 +83,17 @@ ES6将会支持模块化的语法
 这时就有必要采用"放大模式"（augmentation）。
 
 var module1 = (function (mod){
-	mod.m3 = function(){
-		console.log("__________m3");
+	mod.method3 = function(){
+		console.log("__________method3");
 	}
 	return mod;	
 })(module1);
 
-module1.m1();
-module1.m2();
-module1.m3();
+module1.method1();
+module1.method2();
+module1.method3();
 
-为module1模块添加了一个新方法m3()，然后返回新的module1模块。
+为module1模块添加了一个新方法method3()，然后返回新的module1模块。
 
 
 //================================================= 五阶段：宽放大模式（Loose augmentation）
@@ -123,14 +123,3 @@ module1.m3();
  
     })(jQuery, YAHOO);
 
-
-
-
-
-
- 
-
- 
- 
- 
- 
