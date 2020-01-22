@@ -7,10 +7,8 @@ CommonJS团队定义了module格式来解决JavaScript作用域问题
 在一个文件里面定义的"变量、函数、类"
 都是私有的，对其他文件不可见。
 //===========
-CommonJS规范规定，每个模块内部，
-module 变量代表当前模块。
-这个变量是一个对象，
-它的exports属性（即module.exports）是对外的接口。
+CommonJS规范规定，每个模块内部，module 变量代表当前模块。
+这个变量是一个对象，它的exports属性（即module.exports）是对外的接口。
 
 加载某个模块，其实是加载该模块的module.exports属性。
 
