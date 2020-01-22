@@ -11,11 +11,18 @@ function Hello() {
 	};
 };
 exports.Hello = Hello; ///////////////////
+
 //==========//gethello.js
+
 var Hello = require('./singleobject').Hello ///////////////////
 hello = new Hello();
 hello.setName('BYVoid');
 hello.sayHello();
+
+hello2 = new Hello();
+hello2.setName('BYVoid2');
+hello2.sayHello();
+
 //============================示例2：module.exports
 //============================示例2：module.exports
 function Hello() {
