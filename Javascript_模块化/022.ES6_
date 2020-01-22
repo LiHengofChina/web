@@ -1,0 +1,160 @@
+
+一个模块只能有一个默认输出，
+因此 export default 命令只能使用一次。所以，import命令后面才不用加大括号
+
+//========================================================= 示例1: export default
+//========================================================= 示例1: export default
+
+//============ 导出
+//============ 导出
+var a={
+	fn:function(){
+		console.log(9)
+	},　
+	a:9, 
+	obj:{ a:1, b:2,  c:3 }
+}
+export default a  
+//============ 导入
+//============ 导入
+import a from './es6.js'
+
+
+
+//========================================================= 示例2: export default 
+//========================================================= 示例2: export default 
+//导出
+var a=1;var b=2;var c=3;
+export default a
+export {b,c}  
+
+//引入 
+import  a,{b,c} from './es6.js'	
+		//引入时，部分添加{}，部分不添加
+
+//========================================================= 示例3: export default 匿名函数
+//========================================================= 示例3: export default 匿名函数
+// export-default.js
+export default function() {
+  console.log('foo');
+}
+//其他模块加载该模块时，import命令可以为该匿名函数指定任意名字。
+
+// import-default.js
+import customName from './export-default';
+customName(); // 'foo
+//代码的import命令，可以用任意名称指向export-default.js输出的方法，
+
+//========================================================= 示例3: export default 非匿名
+//========================================================= 示例3: export default 非匿名
+function foo() {
+  console.log('foo');
+}
+export default foo;
+//foo函数的函数名 foo，在模块外部是无效的。加载的时候，视同匿名函数加载。
+
+
+//========================================================= 比较 正常输出 和 正常输出
+//========================================================= 比较 正常输出 和 正常输出
+//===============第一组: 默认输出
+//===============第一组: 默认输出
+export default function crc32() { // 输出
+  // ...
+}
+import crc32 from 'crc32'; // 输入
+
+//===============第二组: 正常输出
+//===============第二组: 正常输出
+export function crc32() { // 输出
+  // ...
+};
+import {crc32} from 'crc32'; // 输入
+
+ 第一组是使用export default时，对应的import语句不需要使用大括号；
+ 第二组是不使用export default时，对应的import语句需要使用大括号。
+ 
+ export default命令用于指定模块的默认输出。
+ 显然，一个模块只能有一个默认输出，因此export default命令只能使用一次。
+ 所以，import命令后面才不用加大括号，因为只可能唯一对应export default命令。
+ 
+//========================================================= 默认输出的本质
+//========================================================= 默认输出的本质
+
+	本质上，export default就是输出一个叫做default的变量或方法，
+	然后系统允许你为它取任意名字。所以，下面的写法是有效的。
+
+	// modules.js
+	function add(x, y) {
+	  return x * y;
+	}
+	export {add as default};
+		// 等同于
+		// export default add;
+
+	// app.js
+	import { default as foo } from 'modules';
+	// 等同于
+	// import foo from 'modules';
+	
+	/**
+	正是因为export default命令其实只是输出一个叫做default的变量，
+		所以它后面不能跟变量声明语句。
+
+		// 正确
+		export var a = 1;
+
+		// 正确
+		var a = 1;
+		export default a;
+
+		// 错误
+		export default var a = 1; //本质有一个变更，再命名一个，所以不正确
+		
+		//export default a的含义是将变量a的值赋给变量default。所以，最后一种写法会报错。
+
+	*/
+	/**
+		同样地，因为export default命令的本质是将后面的值，赋给default变量，所以可以直接将一个值写在export default之后。
+		// 正确
+		export default 42;
+
+		// 报错
+		export 42;
+	
+	*/
+
+ 
+ //=========================================================
+ 
+有了export default命令，输入模块时就非常直观了，以输入 lodash 模块为例。
+import _ from 'lodash';
+
+
+如果想在一条import语句中，同时输入默认方法和其他接口，可以写成下面这样。
+
+import _, { each, each as forEach } from 'lodash';
+对应上面代码的export语句如下。
+
+export default function (obj) {		}
+export function each(obj, iterator, context) {		}
+export { each as forEach }
+
+
+上面代码的最后一行的意思是，暴露出forEach接口，
+默认指向each接口，
+即forEach和each指向同一个方法。
+
+ 
+//========================================================= 输出类
+//========================================================= 输出类
+export default也可以用来输出类。
+
+// MyClass.js
+export default class { ... }
+
+// main.js
+import MyClass from 'MyClass';
+let o = new MyClass();
+ 
+ 
+ 
