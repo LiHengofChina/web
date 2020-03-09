@@ -39,6 +39,10 @@ new function(){console.log("我是立刻执行函数");}()
 		for(var i=0; i<6; i++){
 		  liList[i].onclick = function(){
 			alert(i) // 为什么 alert 出来的总是 6，而不是 0、1、2、3、4、5
+			/**
+				alert(i);
+				里面的i是在运行的时候才去取i的值。而i已经变成了最终的值。
+			*/
 		  }
 		}	
 	 //================为了解决这个问题
