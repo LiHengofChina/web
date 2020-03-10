@@ -1,18 +1,277 @@
 
-在多人合作写脚本的时候，会发生方法名冲突的情况
-用JS的命名空间能解决这个问题
-var MYNAMESPACE = MYNAMESPACE || {};
-若全局空间中已有同名对象，则不覆盖该对象；否则创建一个新的命名空间。
-//======================================= 示例1：
-//======================================= 示例1：
+//============================================== JS命名空间（namespace）
+//============================================== JS命名空间（namespace）
+	命名空间namespace（某些语言中叫package），
+	是一个在静态语言中常见的概念。
+	它可以帮助我们更好地整理代码，
+	并可避免命名冲突。
+	//==================================================================================
+	举一个简单的例子，如果有两个人都叫小明，我们很难区分和引用这两个人。
+	但如果我们在他们前面加上命名空间，
+	比如：北京的小明和上海的小明，那么区分起来就容易的多了，也不会因为重名而找错人了。
 
-var MYNAMESPACE = MYNAMESPACE || {};
-MYNAMESPACE.person = function(name) {//设置人名的方法
-    this.name = name;
+//============================================== JS中没有原生的命名空间支持
+//============================================== JS中没有原生的命名空间支持
+	遗憾的是，JS中并不提供原生的命名空间支持。
+		在JS中创建的任何对象都默认是全局对象。
+		在现代的大规模JS开发中，
+		不采用命名空间会造成非常糟糕的命名方式，
+		比如用前缀命名函数和变量，导致代码丑陋不可读。
+	当引入第三方库后，更可能会发生命名覆盖的情况。
+//============================================== 如何解决这个问题
+//============================================== 如何解决这个问题
+	那么JS中该如何解决这个问题呢？
+	你可以等ES6的到来，
+	到那时我们就有native命名空间可用了。
+//============================================== 当下我们还需要一些特殊手段来模拟命名空间的概念。
+//============================================== 当下我们还需要一些特殊手段来模拟命名空间的概念。
+	简单地说，我们可以创建一个简单"对象字面量"来打包所有的"相关函数和变量"。
+	这个简单对象字面量模拟了命名空间的作用。
+	
+		
+
+//============================================== 第一阶段：嵌套命名空间，多层的对象字面量
+//============================================== 第一阶段：嵌套命名空间，多层的对象字面量
+
+	
+我们也可以用是嵌套命名空间，更详细的归类对象：
+
+var MYNAMESPACE = { //外层"对象字面量"
+    PEOPLE: { //内层"对象字面量"
+        person: function(name) {
+            this.name = name;
+            this.getName = function() {
+                return this.name;
+            }
+        }
+    },
+    PET: { //内层"对象字面量"
+        dog: function(petName) {
+            this.petName = petName;
+            this.getPetName = function() {
+                return this.petName;
+            }
+        }
+    }
 };
-MYNAMESPACE.person.prototype.getName = function() {
-    return this.name;
+	
+//============================================== 第二阶段：
+//============================================== 第二阶段：
+	//========================== 定义"子命名空间"
+	//========================== 定义"子命名空间"
+	var jsnamespace = window.jsnamespace || {};
+	jsnamespace.sub = window.jsnamespace.sub || {};
+
+	//其实就是给 jsnamespace 对象变量加了一个 sub 字段，
+	//可以采用此办法，嵌套定义任意层次深的命名空间。
+			
+
+ 
+
+	//==========================
+	这里使用的是一个全局对象，
+	在添加这个"命名空间"的时候，
+	我们有可能覆盖全局空间中的同名对象。
+	因此我们需要在声明命名空间前进行检查，保证全局空间的安全
+	var MYNAMESPACE = MYNAMESPACE || {};	
+	若全局空间中已有同名对象，则不覆盖该对象；否则创建一个新的命名空间。
+	
+	//==========================
+	采用了这个安全的命名空间后，声明的方法也需要略作改动：
+	var MYNAMESPACE = MYNAMESPACE || {};
+	
+	//相当于定义类
+	MYNAMESPACE.person = function(name) { //设置名称的方法，相当于构建，此时不需要加 prototype ， //使用"构造函数法"定义的类
+		this.name = name; 
+	};
+	
+	//相当于定函数
+	MYNAMESPACE.person.prototype.getName = function() { //获取名称的方法，此时面要加上  prototype 
+		return this.name;
+	};
+
+	// 使用方法
+	var p = new MYNAMESPACE.person("ifcode"); //使用时加上命名空间。
+	p.getName();        // ifcode	
+
+	//==========================
+	注意在定义命名空间构造函数时
+	需要将其定义在 prototype 上
+	否则新建的实例无法访问对象的方法。
+	
+
+//============================================== 第三阶段：进一步写法
+//============================================== 第三阶段：进一步写法
+	
+ 	var MYNAMESPACE = window.MYNAMESPACE || {};
+
+	//====================定义类
+	MYNAMESPACE.PersonInfo = function(cfg){
+		
+		cfg = cfg || {};
+		this.name =cfg["name"] || "无名者";
+		this.gender = cfg["gender"] || "未知性别";
+		
+	}
+	//====================定义函数
+	MYNAMESPACE.PersonInfo.prototype.getInfo = function(){
+		return this.name + "_____" + this.gender;
+	}
+	//====================使用
+	//用法1
+	var p1 = new MYNAMESPACE.PersonInfo({});
+	alert(p1.getInfo());
+	
+	//用法2
+	var p2 = new MYNAMESPACE.PersonInfo({name:"王者荣耀",gender:"无"});
+	alert(p2.getInfo());
+	
+	//用法3
+	var p3 = new MYNAMESPACE.PersonInfo();
+	p3.name = "张三";
+	p3.gender = "男";
+	alert(p3.getInfo());
+ 
+
+
+	对于JavaScript解析机制来说，
+	它是从 MYNAMESPACE 这个Object 的 PersonInfo 字段获取到Function，
+	然后再对该 Function 进行new操作创建对象。
+		
+//============================================== 第四阶段：闭包、极简主义的类
+//============================================== 第四阶段：闭包、极简主义的类
+
+
+		jsnamespace.PersonInfo = function(cfg) { //定义一个类, 使用"构造函数法"定义的类
+			cfg = cfg || {};
+			this.name = cfg["name"] || "";
+			this.gender = cfg["gender"] || "?";
+		};
+		
+		jsnamespace.PersonInfoUtil = function(){//再定义一个类, 使用"闭包法"定义的类
+			return { 	//返回一个对象
+				show:function(p){ //对象具有一个方法
+					var r = "姓名：" + p.name;
+					alert(r);
+				}
+			};
+		}();//立即执行函数的写法
+
+		
+
+		var p3 = new jsnamespace.PersonInfo();
+		p3.name = "张三";
+		p3.gender = "男";
+		jsnamespace.PersonInfoUtil.show(p3);
+		
+
+
+//============================================== 第五阶段：完整的示例 JSDuck 文档注释
+//============================================== 第五阶段：完整的示例 JSDuck 文档注释
+	
+/** @class
+* JavaScript的命名空间.
+* @abstract
+*/
+var jsnamespace = window.jsnamespace || {};
+
+// == enum ==
+
+/** @enum
+* 性别代码. 枚举类.
+*/
+jsnamespace.GenderCode = {
+    /** 未知 */
+    "UNKNOWN": 0,
+    /** 男 */
+    "MALE": 1,
+    /** 女 */
+    "FEMALE": 2
 };
-//使用方法
-var p = new MYNAMESPACE.person("doc");
-console.log(p.getName());        // doc
+
+
+// == PersonInfo class ==
+
+/** @class
+* 个人信息. 构造函数法的类.
+*/
+jsnamespace.PersonInfo = function(cfg) {
+    cfg = cfg || {};
+    /** @cfg {String} [name=""] 姓名. */
+    /** @property {String} 姓名. */
+    this.name = cfg["name"] || "";
+    /** @cfg {jsnamespace.GenderCode} [gender=jsnamespace.GenderCode.UNKNOWN] 性别. */
+    /** @property {jsnamespace.GenderCode} 性别. */
+    this.gender = cfg["gender"] || jsnamespace.GenderCode.UNKNOWN;
+};
+
+
+/**
+* 取得称谓.
+*
+* @return  {String}    返回称谓字符串.
+*/
+jsnamespace.PersonInfo.prototype.getAppellation = function() {
+    var rt = "";
+    if (jsnamespace.GenderCode.MALE == this.gender) {
+        rt = "Mr.";
+    } else if (jsnamespace.GenderCode.FEMALE == this.gender) {
+        rt = "Ms.";
+    }
+    return rt;
+};
+
+
+/**
+* 取得欢迎字符串.
+*
+* @return  {String}    返回欢迎字符串.
+*/
+jsnamespace.PersonInfo.prototype.getHello = function() {
+    var rt = "Hello, " + this.getAppellation() + " " + (this.name);
+    return rt;
+};
+
+
+// == PersonInfoUtil class ==
+
+/** @class
+* 个人信息工具. 闭包法的类.
+*/
+jsnamespace.PersonInfoUtil = function () {
+    /**
+    * 前缀.
+    *
+    * @static @private
+    */
+    var _prefix = "[show] ";
+    
+    return {
+        /** 显示信息.
+        *
+        * @param {jsnamespace.PersonInfo}    p    个人信息.
+        * @static
+        */
+        show: function(p) {
+            var s = _prefix;
+            if (!!p) {
+                s += p.getHello();
+            }
+            alert(s);
+        },
+        
+        /** 版本号. @readonly */
+        version: 0x100
+    };
+}();
+
+
+		
+var p3 = new jsnamespace.PersonInfo();
+p3.name = "张三";
+p3.gender = jsnamespace.GenderCode.MALE;
+
+
+jsnamespace.PersonInfoUtil.show(p3);
+ 
+	
