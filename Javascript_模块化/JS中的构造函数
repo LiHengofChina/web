@@ -1,0 +1,120 @@
+
+//================================= JS中的 构造函数
+//================================= JS中的 构造函数
+通过"new 函数名"来"实例化对象"的函数叫构造函数。
+	
+	任何的函数都可以作为构造函数存在。
+		//之所以有构造函数与普通函数之分，主要从功能上进行区别的。
+		
+	构造函数的主要 功能为 初始化对象，
+	特点是和new 一起使用。 
+		//就是说：只上前面 有 new 关键字，
+		//后面的"函数名+括号"就是构造函数 
+		//如 ：   var arr = new Array();  
+		// Array() 就是构建函数
+		
+	//=====================================
+	new就是在创建对象，从无到有，
+	构造函数就是在为初始化的对象添加属性和方法。
+	构造函数定义时首字母大写（规范）。
+	
+	//=======================对 new 理解： 
+	new  申请内存, 创建对象
+	当调用 new 时，后台会隐式执行 new Object() 创建对象
+	所以，通过 new创建的 "字符串"、"数字"是  引用类型，而是非值类型。
+			//因为它们隐匿的执行了 new Object() 嘛
+
+
+
+	
+//================================= 常见的构建函数
+//================================= 常见的构建函数
+1). var arr = new Array();
+		
+		//语法糖  var arr = [];
+		
+2). var obj = new Object();
+		//语法糖  var obs = {};
+
+3). var date = new Date();
+
+		//以上写种写法，
+		//包括语法糖写法都是在  执行构建函数
+
+
+
+//================================= 执行构造函数时发生的事
+//================================= 执行构造函数时发生的事
+	function Foo(name,age,sex){
+		this.name = name;
+		this.age = age;
+		this.sex = sex;
+	}
+	Foo.prototype.belief = function(){
+		console.log("量变是质变的必要准备，质变是量变积累到一定程序的必然结果！");
+	}
+	var f = new Foo("zh","18","男");
+	
+	//==============================;步骤
+	1). var f = {}
+		//一个继续自 Foo.prototype 的新对象被创建
+	
+	    f.__proto__ = Foo.Prototype;
+		// f 继承 Foo的原型。   
+    2). 
+　　　　b   Foo.call(f,'zh',18,'男');
+	
+		//执行Foo函数，将name,age,sex 参数传入Foo中执行，
+		此时函数内部this 为 new 创建的 f 对象，
+		所以  f.name = 'zh';f.age = 18; f.sex = '男'；
+		
+		//this
+	
+	3). 实例化对象完成
+	    此时  f = {
+				name:'zh',
+				age:18,
+				sex:'男'
+			  }
+		
+//================================= ES6 中 class 与 构造函数 的关系
+//================================= ES6 中 class 与 构造函数 的关系
+	class 为  构造函数 的语法糖，
+	即 class 的本质是 构造函数。
+	class的继承 extends  本质 为 "构造函数的原型链的继承"。
+	
+	//构造函数 的 原型链 的 继承
+
+
+	//=================== ES6 定义类 的写法
+	class Person{
+		constructor(name,age){// constructor 是一个构建方法，用来接收参数。
+			this.name = name; //this代表实例对象 
+			this.age = age;
+		}
+		say(){//这个方法千万不要加上 function
+			return this.name + this.age;
+		}
+	}
+	var obj = new Person("老铁","18");
+	console.log(obj.say());
+
+	//=================== 构造函数的写法
+
+	function Person(name,age){
+		this.name = name;
+		this.age = age;
+	}
+	Person.prototype.say = function(){
+		return this.name + this.age;
+	}
+	
+	var obs = new Person("老铁","18");
+	console.log(obj.say());
+
+	//====================================
+	通过class定义的类 和通过 构造函数定义的类 二者本质相同。
+	并且在js执行时，会将第一种转会为第二种执行。
+	所以 ES6 class的写法实质就是 构造函数。
+
+ 
