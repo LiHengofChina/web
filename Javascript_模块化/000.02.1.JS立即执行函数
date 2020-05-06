@@ -35,16 +35,38 @@ new function(){console.log("我是立刻执行函数");}()
 	只有一个作用：创建一个独立的作用域。
 	这个作用域里面的变量，外面访问不到（即避免「变量污染」）。
 	//================示例：
-		var liList = ul.getElementsByTagName('li')
+<html>
+	<head>
+		<title> test </title> </head>
+	<body>
+			  <li>Coffee</li>
+			  <li>Coffee</li>
+			  <li>Coffee</li>
+			  <li>Coffee</li>
+			  <li>Coffee</li>
+			  <li>Coffee</li>
+	</body>
+	<script>
+		//js必须放在li下面
+		var liList = document.getElementsByTagName('li');
 		for(var i=0; i<6; i++){
 		  liList[i].onclick = function(){
-			alert(i) // 为什么 alert 出来的总是 6，而不是 0、1、2、3、4、5
-			/**
-				alert(i);
-				里面的i是在运行的时候才去取i的值。而i已经变成了最终的值。
-			*/
+				alert(i) // 为什么 alert 出来的总是 6，而不是 0、1、2、3、4、5
+
+				//浏览器加载完代码就开始事件绑定
+				
+				//i = 0 , 绑定liList[0],即第一个 <li>,绑定函数的效果是 alert(i),随后 i++,i变成了1
+				//i = 1 , 绑定liList[1],即第二个 <li>,绑定函数的效果是 alert(i),随后 i++,i变成了2
+				//i = 2 , 绑定liList[2],即第三个 <li>,绑定函数的效果是 alert(i),随后 i++,i变成了3
+				//i = 3 , 绑定liList[3],即第四个 <li>,绑定函数的效果是 alert(i),随后 i++,i变成了4
+				//i = 4 , 绑定liList[4],即第五个 <li>,绑定函数的效果是 alert(i),随后 i++,i变成了5
+				//i = 5 , 绑定liList[5],即第六个 <li>,绑定函数的效果是 alert(i),随后 i++,i变成了6				
+				
+				//当运行的时候，点击任意一个 <li/> ，其实都是 alert(i)，i会取最后的那一个值，也就是6
 		  }
-		}	
+		}
+	</script>
+</html>	
 	 //================为了解决这个问题
 		var liList = ul.getElementsByTagName('li')
 		for(var i=0; i<6; i++){
