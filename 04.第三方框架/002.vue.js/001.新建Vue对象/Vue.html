@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Vue Demo</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="firstVue">
+	
+		</div>
+	</body>
+	<script type="text/javascript">
+		var myVue = new Vue({
+			el: "#firstVue"
+		})
+	</script>
+</html>
+
+<!--
+
+js变量 myVue 就是Vue创建的一个对象，
+可以理解成把<div id="firstVue></div>和这个标签里面包含的所有DOM都实例化成了一个JS对象， 
+这个对象就是myVue
+
+el 是Vue的保留字，用来指定实例化的DOM的ID号, 
+
+#firstVue 这句话就是"标签选择器"，告诉Vue要实例化ID=“firstVue”的这个标签。
+ 
+ 
+
+
+-->
+
+ 

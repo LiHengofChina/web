@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Vue Demo</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="firstVue">
+				{{ my_data }}
+		</div>
+	</body>
+	<script type="text/javascript">
+		var myVue = new Vue({
+			el: "#firstVue",
+			data:{
+				my_data: "test"
+			}
+		})
+	</script>
+</html>
+
+<!--
+
+（1）. HTML标签内部的数据绑定
+
+{{ my_data }}	这个双大括号的语法叫做mustache 语法，大括号里面的是作为变量形式出现的。
+
+	
+data参数用来绑定VUE实例的数据变量，
+	每个不同变量之间用逗号分隔，
+	上面我们绑定了自定义变量my_data，并赋初值'test'
+
+完成数据绑定工作，<div>标签里的{{myData}}数据会随着myVue实例里的myData数据的变动而变动，
+
+
+ 
+ -->
