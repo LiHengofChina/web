@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Vue Demo</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="firstVue">
+				<button-counter></button-counter>
+		</div>
+	</body>
+	<script type="text/javascript">
+		Vue.component('button-counter',{
+			//定义数据
+			data:function(){
+				return {
+					count:0
+				}
+			},
+			//定义方法
+			methods:{
+				clickAdd: function(){
+					this.count++
+				}
+			},
+			template: '<button @click="clickAdd">You clicked me {{count}} times</button>'
+			
+		})
+
+		var myVue = new Vue({
+			el: "#firstVue"
+		})
+		
+		
+	</script>
+</html>
+
+<!--
+
+每一个VUE组件对相当于一个VUE实例，在组件内可以定义方法，数据，甚至可以引用其他组件
+
+这里需要注意的是data并不是像这样直接提供一个对象：
+data: {
+    count: 0
+}
+取而代之的是，一个组件的 data 选项必须是一个函数
+因此每个实例可以维护一份被返回对象的独立的拷贝
+data: function(){
+    return {
+        count: 0
+    }
+}
+
+ 
+ -->
+
+

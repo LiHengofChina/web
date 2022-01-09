@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Vue Demo</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="firstVue">
+				<component-a></component-a>
+		</div>
+	</body>
+	<script type="text/javascript">
+		//component-a是一个全局组件
+		Vue.component('component-a',{
+			template:'<div><p>这里是全局组件</p><component-b></component-b></div>',
+			
+			//使用components在父组件中注册局部组件
+			components:{
+				//局部组件
+				'component-b': {
+					template:'<button>这是一个局部组件</button>'
+				},
+			}
+		})
+
+		var myVue = new Vue({
+			el: "#firstVue"
+		})
+		
+		
+	</script>
+</html>
+
+<!--
+
+上面我们注册的是全局组件，也就是在整个VUE根实例中注册的，
+也可以理解为调用了VUE的静态方法注册的，
+这样注册的组件是可以在任何VUE实例中使用的。
+
+比如我分别注册了一个前端HOME组件和一个后端ADMIN组件，
+又想注册两个HEAD组件分别用在HOME和ADMIN组件里面，
+代表前台后台不同的页头，
+
+这时候如果是全局注册为了区分不同的HEAD组件，
+我可能就需要为他们起两个名字，分别叫HOME_HEAD和ADMIN_HEAD。
+
+在component-a组件里
+	使用了关键字components注册了一个局部组件component-b
+	
+	并且嵌入了component-a的模板语法中。
+	
+	
+-->
+
+
