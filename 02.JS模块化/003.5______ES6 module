@@ -1,0 +1,45 @@
+ 
+//===================================================================== ES6 module 
+//===================================================================== ES6 module
+	
+  1 、 按需加载（编译时加载）
+  2 、 import和export命令只能在模块的顶层，
+	   不能在代码块之中（如：if语句中）,
+	   import() 语句可以在代码块中实现异步动态按需动态加载。
+
+
+
+	/*正确的三种写法*/
+	// 写法一
+	export var m = 1;
+
+	// 写法二
+	var m = 1;
+	export {m};
+
+	// 写法三
+	var n = 1;
+	export {n as m};
+
+	// 写法四
+	var n = 1;
+	export default n;
+
+	// 写法五
+	if (true) {
+		import('./myModule.js')
+		.then(({export1, export2}) => {
+		  // ...·
+		});
+	}
+
+	// 写法六
+	Promise.all([
+	  import('./module1.js'),
+	  import('./module2.js'),
+	  import('./module3.js'),
+	])
+	.then(([module1, module2, module3]) => {
+	   ···
+	});
+
