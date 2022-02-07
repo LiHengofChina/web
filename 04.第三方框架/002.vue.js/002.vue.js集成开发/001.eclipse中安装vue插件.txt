@@ -1,0 +1,17 @@
+
+//================================ 方式一：
+//================================ 方式一：
+
+	需要安装 NodeJs ————> Npm ————> Vue.js
+
+//================================ 方式二：通过Eclipse插件来安装
+//================================ 方式二：通过Eclipse插件来安装
+
+	https://blog.csdn.net/qq_20387013/article/details/103398007
+	
+	（1）. Eclipse Marketplace  ————> node  ————> Nodeclipse.github.io 1.0.2
+	
+	（2）. Eclipse Marketplace  ————> vue  ————>  
+
+
+
