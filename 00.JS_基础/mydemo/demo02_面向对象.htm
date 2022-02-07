@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Array every() and some() Example</title>
+</head>
+<body>
+    <script>
+	
+	function Person(){
+	}
+	Person.prototype.name = "Nicholas";
+	Person.prototype.age = 29;
+	Person.prototype.job = "Software Engineer";
+	Person.prototype.sayName = function(){
+		alert(this.name);
+	}
+	var person1 = new Person();
+	person1.sayName();//""
+
+	var person2 = new Person();
+	person2.sayName();
+	alert(person1.sayName == person2.sayName);
+	
+	alert(Person.prototype.isPrototypeOf(person1));
+	alert(Person.prototype.isPrototypeOf(person2));
+	
+	/*
+		var book = {
+			_year :2004,
+			edition:1
+		};
+		Object.defineProperty(book,"year",{
+			get:function(){
+				return this._year;
+			},
+			set:function(newValue){
+				if(newValue > 2004){
+					this._year = newValue;
+					this.edition += newValue - 2004;
+				}
+			}
+		});
+		
+		book.year = 2005;
+		alert(book.edition);
+		alert(book._year);
+		alert(book.year);
+	*/
+	
+	/*
+		var person = {};
+		Object.defineProperty(person,"name",{
+			value:"Nicholas",
+			writable:false,
+		});
+		alert(person.name);
+		person.name = "Greg";
+		alert(person.name);
+	*/ 
+	
+	 
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
