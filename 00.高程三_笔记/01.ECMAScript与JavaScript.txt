@@ -1,3 +1,4 @@
+
 (1).ECMAScript是新的脚本语言标准
 	
 	TC39定制的
@@ -17,7 +18,8 @@
 		2).AdobleFalsh ==> Adobe ActionScript
 		3).Node
  
- //==========================JavaScript的版本
+//========================== JavaScript的版本
+
 	作为Netscape继承人的Mozilla公司，
 	是目前唯一沿用最初JavaScript版本编号序列的浏览器开发商
 	
