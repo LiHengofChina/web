@@ -1,9 +1,20 @@
-CommonJS  //同步 ，服务端
-AMD、CMD  //异步
-是目前最常用的三种模块化书写规范。
 
-//====================================== CommonJS
-//====================================== CommonJS
+//====================================== 总结
+//====================================== 总结
+
+
+	//同步 ，服务端
+		CommonJS   ————————>  Node.js
+
+
+	//异步 
+		AMD   	   ————————>   require.js 和 curl.js 
+		CMD    	   ————————>   seajs
+
+
+
+//===================================================================== CommonJS -服务器环境
+//===================================================================== CommonJS -服务器环境
 	CommonJS规范是诞生比较早的。NodeJS就采用了CommonJS。
 	是这样加载模块：
 
@@ -16,44 +27,117 @@ AMD、CMD  //异步
 	比如上面的例子中clock的调用必须等待clock.js请求成功，
 	加载完毕。那么，能不能异步加载模块呢？
 
-//====================================== AMD
-//====================================== AMD
+	//========= 示例：
 
-AMD，即 (Asynchronous Module Definition)，
-这种规范是异步的加载模块，
-requireJs应用了这一规范。
-先定义所有依赖，然后在加载完成后的回调函数中执行：
+	// a.js
+	// 相当于这里还有一行：var exports = module.exports;代码
+	exports.a = 'Hello world';  // 相当于：module.exports.a = 'Hello world';
 
-
-require([module], callback);
-用AMD写上一个模块：
-
-require(['clock'],function(clock){
-  clock.start();
-});
-AMD虽然实现了异步加载，
-但是开始就把所有依赖写出来是不符合书写的逻辑顺序的，
-能不能像commonJS那样用的时候再require，
-而且还支持异步加载后再执行呢？
-
-//====================================== CMD
-//====================================== CMD
-CMD (Common Module Definition), 是seajs推崇的规范，
-CMD则是依赖就近，用的时候再require。
-它写起来是这样的：
-
-define(function(require, exports, module) {
-   var clock = require('clock');
-   clock.start();
-});
-注意：
-	AMD和CMD最大的区别是"对依赖模块的'执行时机'处理不同"，
-	而"不是加载的时机或者方式不同"，
-	二者皆为异步加载模块。
+	// b.js
+	var moduleA = require('./a.js');
+	console.log(moduleA.a);     // 打印出hello world
 
 
-1). AMD依赖前置，js可以方便知道依赖模块是谁，立即加载；
-2). CMD就近依赖，需要使用把"模块变为字符串解析一遍"才知道依赖了那些模块，
-	这也是很多人诟病CMD的一点，牺牲性能来带来开发的便利性，
-	//实际上解析模块用的时间短到可以忽略。
+//===================================================================== AMD -浏览器环境
+//===================================================================== AMD -浏览器环境
 
+	AMD，即 (Asynchronous Module Definition)，
+	这种规范是异步的加载模块，
+	requireJs应用了这一规范。
+	先定义所有依赖，然后在加载完成后的回调函数中执行：
+
+
+	require([module], callback);
+	用AMD写上一个模块：
+
+	require(['clock'],function(clock){
+	  clock.start();
+	});
+	AMD虽然实现了异步加载，
+	但是开始就把所有依赖写出来是不符合书写的逻辑顺序的，
+	能不能像commonJS那样用的时候再require，
+	而且还支持异步加载后再执行呢？
+
+	//========= 示例：
+
+	// a.js
+	define(function (){
+	　　return {
+	　　　a:'hello world'
+	　　}
+	});
+	// b.js
+	require(['./a.js'], function (moduleA){
+		console.log(moduleA.a); // 打印出：hello world
+	});
+
+
+
+
+//===================================================================== CMD -浏览器环境
+//===================================================================== CMD -浏览器环境
+
+
+	CMD (Common Module Definition), 是 seajs 推崇的规范，
+							// SeaJS 是一个遵循CMD规范的JavaScript模块加载框架
+	CMD则是依赖就近，用的时候再require。
+	它写起来是这样的：
+
+	define(function(require, exports, module) {
+	   var clock = require('clock');
+	   clock.start();
+	});
+
+	注意：
+		AMD和CMD最大的区别是"对依赖模块的'执行时机'处理不同"，
+		而"不是加载的时机或者方式不同"，
+		二者皆为异步加载模块。
+
+
+	1). AMD依赖前置，js可以方便知道依赖模块是谁，立即加载；
+	2). CMD就近依赖，需要使用把"模块变为字符串解析一遍"才知道依赖了那些模块，
+		这也是很多人诟病CMD的一点，牺牲性能来带来开发的便利性，
+		//实际上解析模块用的时间短到可以忽略。
+
+	//========= 示例：
+
+	// a.js
+	define(function (require, exports, module){
+	　　exports.a = 'hello world';
+	});
+	// b.js
+	define(function (require, exports, module){
+		var moduleA = require('./a.js');
+		console.log(moduleA.a); // 打印出：hello world
+	});
+
+
+//===================================================================== UMD -浏览器或服务器环境
+//===================================================================== UMD -浏览器或服务器环境
+
+	兼容AMD和commonJS规范的同时，还兼容全局引用的方式
+
+	//========= 示例：
+	
+	(function (root, factory) {
+		if (typeof define === 'function' && define.amd) {
+			//AMD
+			define(['jquery'], factory);
+		} else if (typeof exports === 'object') {
+			//Node, CommonJS之类的
+			module.exports = factory(require('jquery'));
+		} else {
+			//浏览器全局变量(root 即 window)
+			root.returnExports = factory(root.jQuery);
+		}
+	}(this, function ($) {
+		//方法
+		function myFunc(){};
+		//暴露公共方法
+		return myFunc;
+	}));
+
+
+
+//===================================================================== ES6 module 
+//===================================================================== ES6 module
