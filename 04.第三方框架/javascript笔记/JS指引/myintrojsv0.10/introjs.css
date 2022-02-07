@@ -1,0 +1,114 @@
+
+ /** 遮罩的背景颜色 */
+.lhjs-overlay {
+  position: absolute;
+  box-sizing: content-box;
+  z-index: 999999;
+  background-color: #000;
+  opacity: 0;
+  background: -moz-radial-gradient(center,ellipse cover,rgba(0,0,0,0.6) 0,rgba(0,0,0,0.6) 100%);
+  background: -webkit-gradient(radial,center center,0px,center center,100%,color-stop(0%,rgba(0,0,0,0.6)),color-stop(100%,rgba(0,0,0,0.6)));
+  background: -webkit-radial-gradient(center,ellipse cover,rgba(0,0,0,0.6) 0,rgba(0,0,0,0.6) 100%);
+  background: -o-radial-gradient(center,ellipse cover,rgba(0,0,0,0.6) 0,rgba(0,0,0,0.6) 100%);
+  background: -ms-radial-gradient(center,ellipse cover,rgba(0,0,0,0.6) 0,rgba(0,0,0,0.6) 100%);
+  background: radial-gradient(center,ellipse cover,rgba(0,0,0,0.6) 0,rgba(0,0,0,0.6) 100%);
+  filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#66000000',endColorstr='#e6000000',GradientType=1)";
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-transition: all 0.3s ease-out;
+     -moz-transition: all 0.3s ease-out;
+      -ms-transition: all 0.3s ease-out;
+       -o-transition: all 0.3s ease-out;
+          transition: all 0.3s ease-out;
+}
+
+/**  框内透明控制 */
+.lhjs-showElement,
+tr.lhjs-showElement > td,
+tr.lhjs-showElement > th {
+  z-index: 9999999 !important;
+}
+.lhjs-relativePosition,
+tr.lhjs-showElement > td,
+tr.lhjs-showElement > th {
+  position: relative;
+}
+
+ /** 边框控制 */
+.lhjs-helperLayer {
+  border:2px dashed #2693FF !important;
+  box-sizing: content-box;
+  position: absolute;
+  z-index: 9999998;
+  background-color: #FFF;
+  background-color: rgba(255,255,255,.9);
+  border: 1px solid #777;
+  border: 1px solid rgba(0,0,0,.5);
+  border-radius: 4px;
+  box-shadow: 0 2px 15px rgba(0,0,0,.4);
+  -webkit-transition: all 0.3s ease-out;
+     -moz-transition: all 0.3s ease-out;
+      -ms-transition: all 0.3s ease-out;
+       -o-transition: all 0.3s ease-out;
+          transition: all 0.3s ease-out;
+}
+ /** 竖线控制 */
+.lhjs-tooltipReferenceLayer {
+  box-sizing: content-box;
+  position: absolute;
+  visibility: hidden;
+  z-index: 10000000;
+  background-color: transparent;
+  -webkit-transition: all 0.3s ease-out;
+     -moz-transition: all 0.3s ease-out;
+      -ms-transition: all 0.3s ease-out;
+       -o-transition: all 0.3s ease-out;
+          transition: all 0.3s ease-out;
+}
+.lhjs-arrow {
+    border: 1px solid #2693FF;
+    content: '';
+    position: absolute;
+    height: 40px !important;
+}
+.lhjs-arrow.top {
+  top: -41px;
+}
+ /** 圆点 */
+.lhjs-circular{
+	border-radius: 50%;
+	border: 4px solid #2693FF;
+    position: absolute;
+	top: -45px;
+    left: 7px;
+}
+ /** 文字面板 */
+.lhjs-tooltip {
+  top: 151px !important;
+  left: 50px !important;
+  background:#2693FF !important;
+  color:#FFFFFF !important;
+  box-sizing: content-box;
+  position: absolute;
+  visibility: visible;
+  padding: 10px;
+  background-color: white;
+  min-width: 200px;
+  max-width: 300px;
+  border-radius: 3px;
+  box-shadow: 0 1px 10px rgba(0,0,0,.4);
+  -webkit-transition: opacity 0.1s ease-out;
+     -moz-transition: opacity 0.1s ease-out;
+      -ms-transition: opacity 0.1s ease-out;
+       -o-transition: opacity 0.1s ease-out;
+          transition: opacity 0.1s ease-out;
+}
+.lhjs-tooltipbuttons {
+  text-align: right;
+  white-space: nowrap;
+}
+.lhjs-donebutton{
+	color:#ffffff;
+	cursor: pointer;
+}
+

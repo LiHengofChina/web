@@ -1,0 +1,4 @@
+$("#search_dept_account_").off("click").on("click",function(){
+					var _id = $('#on_right_click_dept_id').val();
+					alert(_id); 
+				})

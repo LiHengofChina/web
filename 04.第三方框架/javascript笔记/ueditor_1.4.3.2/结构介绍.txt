@@ -1,0 +1,53 @@
+http://blog.csdn.net/lishuai1028/article/details/51481161
+1.把下载后的文件引入到项目中
+	把文件引入到自己的项目中，
+	其中jsp文件夹下的lib中的jar包，
+	根据自己的项目，
+	选择适当的方式引入，
+	
+	//lib目录
+	说明
+	这个ueditor实际上也是通过java来上传的
+	
+ 
+	
+	
+2：到此整个UEditor实际上已经可以使用了，
+	但是我们的项目是web项目，路径会有问题，
+	需要对UEditor的配置文件进行修改，
+	其中修改的文件为ueditor.config.js
+
+
+
+3.ueditor上传文件,本身其它都已经完成了,不需要走servlet,
+	但是我们根据需要,
+	可以修改配置,
+	让它经过自己的servlet 
+	或者修改它的servlet
+	request.getParameter( "action" );
+	//--------
+	通过ueditor.config.js
+	找到 controller.jsp 这个
+	发现它引入了com.baidu.ueditor.ActionEnter
+	网上搜索 com.baidu.ueditor.ActionEnter源码
+	
+	//--------
+	对源码进行追踪,然后进行修改.
+	
+	
+ 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+

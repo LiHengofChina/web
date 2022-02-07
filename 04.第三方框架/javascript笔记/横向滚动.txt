@@ -1,0 +1,7 @@
+(1)	父DIV设置	
+.scrolling_custom_roll_x{
+					overflow-x: auto;
+}
+(2) 子DIV设置固定宽度
+
+style="width:2300px" 

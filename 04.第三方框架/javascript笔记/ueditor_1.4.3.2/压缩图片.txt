@@ -1,0 +1,53 @@
+UEditor功能很强大，
+	但是有个很不友好的功能：
+	会在使用UEditor上传图片时，
+	如果你的原始图片尺寸过大，
+	就会先自动对图片大小进行压缩，
+	然后将压缩的文件给servlet。
+	也就是说，使用UEditor 
+	上传图片后会导致图片大小发生改变并使图片变得模糊，
+	而这是在用户毫不知情的情况下进行的操作，非常讨厌。
+	如果不想让上传的精美照片被UEditor 压缩得面目全非，
+	可以通过以下方法禁止UEditor自动压缩图片：
+(1)//----------------------------------------------禁用方式
+	"imageCompressEnable" => true, 
+(2)//----------------------------------------------
+	"imageCompressBorder": 1600, //只有边长大于该值的照片才会被UEditor 压缩。
+(3)//----------------------------------------------图片质量
+	 “UEditor\dialogs\image\image.js”中 
+	 "quality" 值调整为100 （代码瑞安），
+(4)//----------------------------------------------换算
+	边长1600 单位(像素或者CM)
+	//---------------
+	Ueditor单图不支持压缩,多图才支持压缩.
+//----------------------------------------------单图上传
+
+ //---------------------------------------------- 
+ 
+Thumbnails.of("D:\\456.jpg").scale(1f).outputQuality(0.25f).toFile("D:\\789.jpg");
+	
+	
+//-
+import="com.baidu.ueditor.ActionEnter,java.io.File,java.io.IOException,net.coobird.thumbnailator.Thumbnails,org.json.JSONObject"	
+
+
+在controller.jsp中加入
+
+//----------图片压缩处理（利用Thumbnails这个包）
+在压缩的地方加入如下代码
+
+JSONObject jo = new JSONObject(state);
+if("SUCCESS".equals(jo.get("state"))){//如果上传成功
+	 String fullPath =rootPath.subSequence(0, rootPath.length()-1)+""+jo.get("url") ;
+	 try {
+			
+		 File oldF = 	 new File(fullPath);
+		 File newF = 	 new File( fullPath+".jpg");
+		 Thumbnails.of(oldF).scale(1f).outputQuality(0.25f).toFile(newF);
+		 oldF.delete();
+		 newF.renameTo(new File(fullPath));
+	
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+}

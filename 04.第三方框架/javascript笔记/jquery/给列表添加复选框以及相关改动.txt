@@ -1,0 +1,109 @@
+(1).
+	<th class="center">
+						<input type="checkbox"  id="checkAllPartymember">
+	</th>
+
+	<script type="text/javascript">
+			//全选或全不选
+			$("#checkAllPartymember").click(function(){
+					var isChk=$("#checkAllPartymember").prop('checked');
+					if(isChk){
+						//选中复选框
+						$("input[name='pm']:checkbox").prop("checked", true);
+						//全部变色
+						$("#userTab").find("tr").find("td").addClass("chosedColor");
+					}else{
+						//取消选中复选框
+						$("input[name='pm']:checkbox").prop("checked", false);
+						//取消变色
+						$("#userTab").find("tr").find("td").removeClass("chosedColor");
+					}
+			});
+		   
+	</script>
+(2).循环产生：
+<input type="checkbox"    name="pm" id="partymember_${partyMember.id}"  value="${partyMember.id}">
+<script type="text/javascript">
+		
+		
+		/**
+		 *每行的复选框点击事件
+		 */
+       	$("input[name='pm']:checkbox").click(function(event){
+			
+			//点击复选框的时候，也改变颜色。
+			if($(this).prop('checked')){
+				 $(this).parent("td").parent("tr").find("td").addClass("chosedColor");
+			}else{
+			    $(this).parent("td").parent("tr").find("td").removeClass("chosedColor");
+			}
+		
+       	 
+       		 //当子选框全部选中的时候，顶部也选中。
+       		 var boo = false;
+			 $("input[name='pm']:checkbox").each(function (index, domEle) {
+					 if($("#"+domEle.id).prop('checked')){
+			 		 	boo = true;
+			 		 }else{
+			 		 	boo = false;
+			 		 	return false;
+			 		 }
+			 });
+		 
+			 if(boo){
+				 $("#checkAllPartymember").prop("checked", true);
+			 }else{
+			 	 $("#checkAllPartymember").prop("checked", false);
+			 }
+			 
+		}); 
+		
+		/**
+		 *点击行事件
+		 */
+		$("#userTab").find("tr").bind("click",function(){
+		
+			//选中复选框
+			var tr_ =  $(this).find("td").eq(0).find("input[name='pm']:checkbox").click();
+			
+			//改变行或列颜色
+			if(tr_.prop('checked')){
+		 
+				//添加颜色
+				$(this).find("td").addClass("chosedColor");
+				
+			}else{
+			
+				//移除颜色
+				$(this).find("td").removeClass("chosedColor");
+			}
+			
+			
+		});
+		/**
+		 *防止给行添加监听之后，无法点击行之内的它控制的监听
+		 */
+		$(":checkbox").click(function(e){
+    		e.stopPropagation();
+		});
+		 
+		
+</script>
+(0).换页的时候：
+	
+	$("#checkAllPartymember").prop("checked", false);
+
+	.chosedColor{
+		background:#F4E3C2 !important;
+	}
+
+
+
+
+
+
+
+
+
+
+

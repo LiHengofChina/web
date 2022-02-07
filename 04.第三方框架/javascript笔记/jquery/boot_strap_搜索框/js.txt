@@ -1,0 +1,45 @@
+<script type="text/javascript">
+
+
+/**
+ * 条件搜索框
+ * @param el
+ * @returns {DropDown}
+ */
+function DropDown(el) {
+	this.dd = el;
+	this.placeholder = this.dd.children('span');
+	this.inputHidden = this.dd.children('input');
+	this.opts = this.dd.find('ul.dropdown > li');
+	this.val = '';
+	this.index = -1;
+	this.initEvents();
+}
+/**
+ * 条件搜索框
+ */
+DropDown.prototype = {
+	initEvents : function() {
+		var obj = this;
+		obj.dd.on('click', function(event){
+			$(this).toggleClass('active');
+			event.stopPropagation();
+		});
+		
+		
+		obj.opts.on('click',function(){
+			var opt = $(this);
+			obj.val = opt.text();
+			obj.valE = opt.children("a").attr("hideName");
+			obj.index = opt.index();
+			obj.placeholder.text(obj.val);
+			obj.inputHidden.val(obj.valE);
+
+		});
+	}
+}
+$(function() {
+	var dd = new DropDown( $('#searchType') );
+});
+
+</script>

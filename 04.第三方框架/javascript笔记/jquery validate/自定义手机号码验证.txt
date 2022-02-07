@@ -1,0 +1,25 @@
+
+第一步:
+	<input type="text" 
+		name="phone" 
+		value="${user.phone }"
+		placeholder="请填写11位的手机号码"  
+		val_phone="" 
+		maxlength="11" /> 
+	<span
+
+	加入一个自定义的属性
+	val_phone="/^[a-zA-Z0-9_\.]+$/" 
+第二步：
+	添加一个自定义的验证规则
+  $.validator.addMethod(
+				 "val_phone",
+				  function(value,element,regx){
+				if(/^1[3|4|5|7|8]\d{9}$/.test(value)){
+					return true;
+			  }
+		return false;
+		},
+		"手机格式不正确"
+	);
+	

@@ -1,0 +1,11 @@
+01.<script type="text/javascript">
+02.¡¡¡¡ function trim(str){ //É¾³ý×óÓÒÁ½¶ËµÄ¿Õ¸ñ
+03.¡¡¡¡     return str.replace(/(^\s*)|(\s*$)/g, "");
+04.¡¡¡¡ }
+05.¡¡¡¡ function ltrim(str){ //É¾³ý×ó±ßµÄ¿Õ¸ñ
+06.¡¡¡¡     return str.replace(/(^\s*)/g,"");
+07.¡¡¡¡ }
+08.¡¡¡¡ function rtrim(str){ //É¾³ýÓÒ±ßµÄ¿Õ¸ñ
+09.¡¡¡¡     return str.replace(/(\s*$)/g,"");
+10.¡¡¡¡ }
+11.¡¡¡¡</script>
