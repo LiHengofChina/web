@@ -1,0 +1,44 @@
+ 
+//=========================DOM
+	文档对象模型DOM
+			"针对XML"但经过扩展
+			用于"HTML的应用程序编程"接口
+		//=============
+		DOM把整个页面映射为一个多层节点结构
+			HTML或XML页面中每个组成部分都是某种类型的节点
+		//======注意DOM提供了API
+		借助DOM提供的API，
+		开发人员可以轻松自如地删除、添加、
+		替换或修改任何节点。
+		//=======
+		一句话，DOM提供了API
+//====================为什么要使用DOM
+	在IE4和NN4中的DHTML基础上，
+	开发人员首次无需重新加载网页，
+	就可以修改其外观了和内容了。
+	//===============
+	由于IE4和NN4(网景)在HTML上各持已见，
+	不加以控制会出现，浏览器互不兼容的局面。
+	所以W3C万维网联盟开始规化DOM
+	/**
+		DOM并不只是针对JavaScript的，
+		很多语言也都实现了DOM，
+		每种语言标准都添加了与特定语言相关的新方法和新接口
+		 
+		SVG(Scalable Vector Graphic，可伸缩矢量图):
+		MathML(Mathermatical Markup Language，数学标记语言)
+		SMIL(Synchronized Multimedia Integration Language,同步多媒体集成语言)
+		 
+	*/
+	//===============DOM的级别
+		DOM0	
+		DOM1	
+		DOM2	
+		DOM3	
+		
+	
+	
+	
+	
+		
+
