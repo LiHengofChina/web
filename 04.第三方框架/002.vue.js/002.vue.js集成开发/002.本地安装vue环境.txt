@@ -1,4 +1,7 @@
 
+
+https://www.cnblogs.com/liluxiang/p/9592003.html
+
 说明：
 npm: 	Nodejs下的包管理器。
 webpack: 它主要的用途是通过CommonJS的语法把所有浏览器端需要发布的静态资源做相应的准备，比如资源的合并和打包。
@@ -138,5 +141,32 @@ NodeJs自带Npm，但不是最新的
 		http://localhost:8080
 
 
+（7）.  npm run build
 
+		生成静态文件，打开dist文件夹下新生成的index.html文件
+
+//========================================== 目录结构说明
+//========================================== 目录结构说明
+	
+	vue01
+		build  		//构建脚本的目录
+		config		//构建配置目录
+			dev.env.js
+			index.js
+			prod.env.js
+		dist		//生成的结果文件
+		node_modules
+		src----------------------这下面是源码
+			assets		//资源目录
+			components	//组件目录
+			router		//路由
+			App.vue		//页面级组件
+			main.js		//入口js
+		static-------------------其它静态文件
+		index.html---------------页面入口
+		package.json-------------项目描述文件
+		package-lock.json
+		README.md
+	
+	
 
