@@ -1,0 +1,23 @@
+
+
+https://blog.csdn.net/zhang5476499/article/details/80189395
+
+//==================== Easyui datagrid 使用，
+//==================== Easyui datagrid 使用， 
+
+ 
+
+		$('#dg').datagrid({"onLoadSuccess":function(data){
+				var tr = $('#dg').datagrid('getPanel').find('div.datagrid-body tr');
+				//所有行
+			    tr.each(function () {
+			    	//某一行
+                    var div = $(this).children('td[field=oper]').children("div");
+                    div.css({
+	   					 "height":"auto",
+	   					 "white-space":"pre-wrap"
+   					});
+			    });
+		}});
+		
+ 
