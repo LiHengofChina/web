@@ -1,0 +1,83 @@
+
+
+<template  >
+	  <div class="hello">
+		    <hr/>
+				<p>原始字符串: {{ message }}</p>
+				<p>计算后反转字符串: {{ reversedMessage }}</p>
+
+
+		    <hr/>
+				<p>计算后反转字符串: {{ reversedMessage2 }}</p>
+		    <hr/>
+				<p>computed 提供set方法===> {{ site }}</p>
+		  	    <button v-on:click="test">手工调用set方法</button>
+			</div>
+</template>
+<script>
+	export default {
+		  name: 'HelloWorld',
+		  data(){
+		    return {
+		    	message: "abcdefghijklmn",
+			    
+			    name: 'Google',
+			    url: 'http://www.google.com'
+			    
+			    
+		    }
+		  },
+		  computed: {
+		  		 // 计算属性的 getter computed 属性默认只有 getter ，
+			    reversedMessage: function () {
+  						 // `this` 指向 vm 实例			    	
+			      		return this.message.split('').reverse().join('')
+			    }
+			    
+			    ,
+			    site: { //computed 属性默认只有 getter ，不过在需要时你也可以提供一个 setter ：
+			      // getter
+			      get: function () {
+			        return this.name + ' ' + this.url
+			      },
+			      // setter
+			      set: function (newValue) {
+			        var names = newValue.split(' ')
+			        this.name = names[0]
+			        this.url = names[names.length - 1]
+			      }
+			    }
+			    
+	  	  },
+	  	  methods: {
+	  	  			//可以说使用 computed 性能会更好，但是如果你不希望缓存，你可以使用 methods 属性。
+	  	  
+	  	  			//可以使用 methods 来替代 computed，效果上两个都是一样的，
+	  	  			//但是 computed 是基于它的依赖缓存，只有相关依赖发生改变时才会重新取值。
+	  	  			//而使用 methods ，在重新渲染的时候，函数总会重新调用执行。
+	  	  			
+				  reversedMessage2: function () {
+				    	return this.message.split('').reverse().join('')
+				  }
+				  ,
+				  test: function(){
+				  		// 调用 setter， vm.name 和 vm.url 也会被对应更新
+						this.site = '李恒 http://www.liheng.com';
+						document.write('name: ' + this.name);
+						document.write('<br>');
+						document.write('url: ' + this.url);
+				  }
+		  }
+	}
+
+	
+</script>
+<style scoped>
+	.class1{
+	  background: #444;
+	  color: #eee;
+	}
+ 
+
+	 
+</style>

@@ -1,0 +1,36 @@
+
+//========================================== 目录结构说明
+//========================================== 目录结构说明
+	
+	vue01
+		build  		//项目构建(webpack)相关代码
+		config		//构建配置目录------------这个是配置文件，配置一些属性，配置java中的properties 
+			dev.env.js
+			index.js  -----端口和IP就配置在这里面的
+			prod.env.js
+		dist		//生成的结果文件
+		node_modules 		//npm 加载的项目依赖模块
+		src				//这里是我们要开发的目录，基本上要做的事情都在这个目录里。里面包含了几个目录及文件：
+			assets		//资源目录	放置一些图片，如logo等。
+			components	//组件目录 : 目录里面放了一个组件文件，可以不用。
+			router		//路由
+			App.vue		//页面级组件 项目入口文件，我们也可以直接将组件写这里，而不使用 components 目录。
+			main.js		//入口js	项目的核心文件。
+		static			//静态资源目录，如图片、字体等。
+		test			//初始测试目录，可删除
+		index.html---------------页面入口
+		package.json-------------项目描述文件，这是一个标准的npm说明文件,项目配置文件。
+				- scripts ------------- 这里面配置的是可以使用的命令：
+						//npm run + 名字的形式
+				  --"dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+						------------------- 对应 npm run dev
+				  --"start": "npm run dev",
+						------------------- 对应 npm run start
+				  --"build": "node build/build.js"
+						------------------- 对应 npm run start
+
+				- dependencies---包的依赖这里面有定义依赖，其中就有 webpack 和 babel
+		package-lock.json
+		README.md
+
+

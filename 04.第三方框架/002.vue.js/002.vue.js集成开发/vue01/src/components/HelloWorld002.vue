@@ -6,7 +6,6 @@
     <h1>url : {{url}}</h1>
     <h1>Alexa : {{alexa}}</h1>
     <hr/>
-    <h1>{{ msg_liheng }}</h1>
     <h2>Essential Links</h2>
     <ul>
       <li>
@@ -94,8 +93,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg_liheng: '你好，李恒',
-	  site: "测试数据",
+	  site: "绑定data中的数据",
 	  url: "www.liheng.com",
 	  alexa: "10000"
       

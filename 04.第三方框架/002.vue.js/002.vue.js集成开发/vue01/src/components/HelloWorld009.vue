@@ -1,0 +1,129 @@
+
+
+<template  >
+	  <div class="hello">
+		
+		    <hr/>
+		    <!-- 绑定一个class  -->
+			<div v-bind:class="{'active':isActive}"></div>
+		    
+
+		    <hr/>
+		    <!-- 绑定一个多个class  -->
+			<div class="static" v-bind:class="{ 'active': isActive , 'text-danger': hasError }"> </div>
+
+		    <hr/>
+		    <!-- 绑定一个对象，由对象属性决定  -->
+			<div v-bind:class="classObject"></div>
+		   
+		   
+		    <hr/>
+		    <!-- 绑定一个对象，由对象属性决定，也可以在这里绑定返回对象的计算属性。这是一个常用且强大的模式：  -->
+			<div v-bind:class="classObjectxx"></div>
+
+
+		    <hr/>
+		    <!--  把一个数组传给 v-bind:class   -->
+			<div v-bind:class="[activeClass, errorClass]"></div>
+
+
+		    <hr/>
+		    <!--  errorClass 是始终存在的，isActive 为 true 时添加 activeClass 类  -->
+			<div v-bind:class="[errorClass ,isActive ? activeClass : '']"></div>
+		    
+		    <hr/>
+		    <!--   内联样式 v-bind:style 直接设置样式：  -->
+			<div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">李恒</div>
+
+
+		    <hr/>
+		    <!--   内联样式 v-bind:style 直接设置样式：  -->
+			<div v-bind:style="styleObject">李恒</div>
+
+		    <hr/>
+		    <!--   v-bind:style 可以使用数组将多个样式对象应用到一个元素上：  -->
+		    <div v-bind:style="[baseStyles, overridingStyles]">李恒</div>
+			
+			
+	  </div>
+	  
+</template>
+<script>
+	export default {
+		  name: 'HelloWorld',
+		  data(){
+			    return {
+					 isActive : true,
+					 hasError : true,
+					 
+				     classObject: {
+				   			active: true,
+				      		'text-danger': true
+				     },
+
+					 error: {
+					      value: false,
+					      type: 'fatal'
+					 }
+					 
+					 ,
+      			     activeColor: 'green',
+			     	 fontSize: 30,
+					 
+					 activeClass: 'active',
+				     errorClass: 'text-danger',
+					 
+					 
+					 styleObject: {
+					      color: 'green',
+					      fontSize: '30px'
+					 }	
+					 
+	
+	,baseStyles: {
+      color: 'green',
+      fontSize: '30px'
+    },
+	overridingStyles: {
+      'font-weight': 'bold'
+    }			     
+				     
+
+			    }
+		  },
+		  computed: {
+				    classObjectxx: function () {
+					      return {
+						  		base: true,
+						        active: this.isActive && !this.error.value,
+						        'text-danger': this.error.value && this.error.type === 'fatal',
+					      }
+				    }
+		  }  
+		  
+	}
+
+	
+</script>
+
+<style scoped>
+
+.base {
+  width: 100px;
+  height: 100px;
+}
+
+
+.active {
+	width: 100px;
+	height: 100px;
+	background: green;
+}
+
+.text-danger {
+	background: red;
+}
+
+</style>
+
+
