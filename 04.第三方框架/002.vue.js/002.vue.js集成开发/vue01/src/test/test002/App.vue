@@ -1,23 +1,23 @@
 <template>
-  <div class="app">
-    <img src="./assets/logo.png">
-    
-    <!-- 通过这个标签，把路由中的内容包含进来了
-    面在路由中再导入了最后的显示页面。
-     -->
-    <router-view/>
-    
+  <div >
+  	<img src="./assets/logo.png">
+    <h1>{{ msg }}</h1>
   </div>
 </template>
-
+ 
 <script>
 export default {
-  name: 'App'
+  name: 'hello',
+  data () {
+    return {
+      msg: '你好，李恒！'
+    }
+  }
 }
 </script>
 
 <style>
-.app {
+#app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

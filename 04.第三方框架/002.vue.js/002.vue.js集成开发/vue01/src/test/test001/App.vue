@@ -1,12 +1,7 @@
 <template>
-  <div class="app">
+  <div id="app">
     <img src="./assets/logo.png">
-    
-    <!-- 通过这个标签，把路由中的内容包含进来了
-    面在路由中再导入了最后的显示页面。
-     -->
     <router-view/>
-    
   </div>
 </template>
 
@@ -17,7 +12,7 @@ export default {
 </script>
 
 <style>
-.app {
+#app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
