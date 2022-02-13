@@ -21,7 +21,10 @@
 				<button v-on:click="reverseMessage">反转字符串</button>
 				<hr/>
 				
-				
+				<!-- （3）.直接计算-->
+			 	<p style = "font-size:25px;">计数器: {{ counter }}</p>
+   			 	<button @click="counter++" style = "font-size:25px;">点我</button>
+				<hr/>
 				
 		</div>
 	</body>
@@ -30,7 +33,8 @@
 			el: "#firstVue",
 			data:{
 				my_data: "test",
-				'message_liheng': 'abcdefghigklmn!'
+				'message_liheng': 'abcdefghigklmn!',
+				counter: 1
 			},
 			methods: {
 				clickButton:function(){
@@ -51,7 +55,7 @@
 </html>
  
  
-<!--
+<!-- v-on
 
 
 

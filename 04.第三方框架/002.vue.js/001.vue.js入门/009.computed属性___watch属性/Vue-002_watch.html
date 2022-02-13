@@ -7,11 +7,17 @@
 	<body>
 		<div id="firstVue">
 
-
+			
+			
+			<!--  （1）. 计数器 -->
 		    <hr/>
 			 	<p style = "font-size:25px;">计数器: {{ counter }}</p>
    			 	<button @click="counter++" style = "font-size:25px;">点我</button>
-		    
+			
+			<!--  （2）. 长度单位换算，
+				    注意：和双向绑定有点像， 双向绑定，绑定的是值，
+						   而这里是当一个值改变，去修改另一个值。
+			-->
 		    <hr/>
 				千米 : <input type = "text" v-model = "kilometers">
 				米 : <input type = "text" v-model = "meters">
