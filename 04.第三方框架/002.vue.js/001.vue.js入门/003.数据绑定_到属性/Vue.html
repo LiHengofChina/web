@@ -7,25 +7,31 @@
 	<body>
 		<div id="firstVue" >
 				 
-				 <div :hidden="my_hidden">
-					 你是看不到我的
-				 </div>
+				 <!-- （1）. hidden属性 -->
+				 <h1>
+					 <div :hidden="my_hidden">
+						 你是看不到我的
+					 </div>
+				 </h1>
 				 <hr/>
 				 
-				 <p>{{ message_liheng }}</p>
+				 
+				 <!-- （2）. 双向绑定 -->
+				 <h1><p>{{ message_liheng }}</p></h1>
 				 <input v-model="message_liheng">
 				 <hr/>
 				 <hr/>
 				 
+				 <!-- （3）. html绑定 -->
 				 <div v-html="message"></div>
 				 <hr/>
 				 
-				 <!-- 属性中拼接数据-->
+				 <!-- （4）.属性中拼接数据-->
 				 <div v-bind:id="'list-' + id">李恒在学习</div>
 				 <hr/>
 				 
 				
-				<!-- 样式属性绑定 -->
+				<!--  （5）.样式属性绑定 -->
 				<label for="r1">修改颜色</label>
 					<input type="checkbox" v-model="use" id="r1">
 				<br><br>
@@ -34,7 +40,7 @@
 			  	</div>
 				<hr/>
 				 
-				<!-- 超连接绑定 -->
+				<!--  （6）.超连接绑定 -->
 				<pre><a v-bind:href="url">李恒的网站</a></pre>
 				<hr/>
 				
@@ -95,4 +101,40 @@ v-bind 由于经常会用到，所以也可以缩写成冒号:，
 比如上面的<div>标签就完全可以这样写
 <div id="firstVue" :hidden="my_hidden">{{my_data}}</div>
 
+ -->
+ 
+<!-- 双向绑定说明
+
+	Vue  是单向数据传输的，就是从vue实例传送数据到DOM
+	 
+	那么 我们如何从DOM中实时 获取用户输入的数据赋值给vue实例呢
+	 
+	这用到了Vue.js提供给用户的一个语法糖 v-model ,
+	这个语法糖通过两步实现了数据的反向传递，
+	也就是从DOM传送给vue实例数据。
+	
+	//=============================================
+
+	v-model 通过两步实现了数据反向传递
+		
+	第一步，绑定了DOM标签的input事件(比如叫tapInput())
+
+	第二步，当用户进行输入时候，触发tapInput()函数，
+			tapInput()函数内部读取此DOM标签的Value值，
+			赋值给vue实例
+
+	通过以上两步，v-model语法糖实现了vue数据的反向传输
+	//=============================================
+
+	这个时候，当我们在<input>输入框输入值的时候，
+	v-model会实时将最新值(value)赋值给vue实例的my_data变量，
+	而my_data变量又将实时展现在<p>标签中
+	
+	//=============================================
+	这样我们看起来实现了这么一个数据流:
+	DOM1(input标签)——>VUE——>DOM2(p标签)
+
+	我们利用v-model语法变相实现了数据的双向传递
+	
+	
  -->

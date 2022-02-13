@@ -7,10 +7,14 @@
 	<body>
 		<div id="firstVue" >
 				 
-				<!-- 点击事件绑定-->
+				<!-- （1）.点击事件绑定-->
 				<div  v-on:click="doSomething">点我试下</div>
 				<hr/>
 				
+				<!-- （1）.点击事件绑定-->
+				<button v-on:click="clickButton">Click Me</button>
+				<p>{{ my_data }}</p>				
+				<hr/>
 				 
 		</div>
 	</body>
@@ -18,9 +22,12 @@
 		var myVue = new Vue({
 			el: "#firstVue",
 			data:{
-			    
+				my_data: "test"
 			},
 			methods: {
+				clickButton:function(){
+					this.my_data = "Wow! I'm changed!, Hello Liheng!"
+				},
 				doSomething: function(){
 						alert("点击事件绑定");
 				}
