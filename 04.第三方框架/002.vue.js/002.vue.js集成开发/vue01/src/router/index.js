@@ -9,6 +9,8 @@ import HelloWorld006 from '@/components/HelloWorld006'
 import HelloWorld007 from '@/components/HelloWorld007'
 import HelloWorld008 from '@/components/HelloWorld008'
 import HelloWorld009 from '@/components/HelloWorld009'
+import HelloWorld010 from '@/components/HelloWorld010'
+import HelloWorld011 from '@/components/HelloWorld011'
 
 Vue.use(Router)
 
@@ -58,6 +60,16 @@ export default new Router({
       path: '/helloWorld009',
       name: 'HelloWorld009',
       component: HelloWorld009
+    },
+    {
+      path: '/helloWorld010',
+      name: 'HelloWorld010',
+      component: HelloWorld010
+    },
+    {
+      path: '/helloWorld011',
+      name: 'HelloWorld011',
+      component: HelloWorld011
     }
   ]
 })
