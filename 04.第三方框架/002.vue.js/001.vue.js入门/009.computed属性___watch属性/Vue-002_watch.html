@@ -19,8 +19,8 @@
 						   而这里是当一个值改变，去修改另一个值。
 			-->
 		    <hr/>
-				千米 : <input type = "text" v-model = "kilometers">
-				米 : <input type = "text" v-model = "meters">
+				千米 : <input type = "text" v-model="kilometers">
+				米 : <input type = "text" v-model="meters">
 
 
 
@@ -37,7 +37,7 @@
 					 meters:0				
 			},
 
-			watch : {
+			watch : {  //=================== 像属性（数据data）一样用，而不是方法
 				  /**
 				  另一种写法：
 					var vm = new Vue({....
