@@ -12,10 +12,27 @@ import HelloWorld009 from '@/components/HelloWorld009'
 import HelloWorld010 from '@/components/HelloWorld010'
 import HelloWorld011 from '@/components/HelloWorld011'
 
+
+
+import Test001 from '@/components/demo001/Test001'
+
 Vue.use(Router)
 
 export default new Router({
   routes: [
+	
+	
+	
+    {
+      path: '/test001',
+      name: 'Test001',
+      component: Test001
+    },
+    
+    
+    
+    
+    
     {
       path: '/helloWorld001',
       name: 'HelloWorld001',
