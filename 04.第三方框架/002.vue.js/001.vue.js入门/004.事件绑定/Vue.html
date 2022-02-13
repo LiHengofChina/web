@@ -26,13 +26,27 @@
 			 	<p style = "font-size:25px;">计数器: {{ counter }}</p>
    			 	<button @click="counter++" style = "font-size:25px;">点我</button>
 				<hr/>
-
-
+				
 				<!-- （5）.   -->
+				<button v-on:click="counter2 += 1">增加 1</button>
+				<p>这个按钮被点击了 {{ counter2 }} 次。</p>
+				<hr/>
+
+				<!-- （6）.   -->
 				<button v-on:click="say('hi')">Say hi</button>
-				<button v-on:click="say('what')">Say what</button>
-
-
+				<hr/>
+	
+	
+	
+				<!--（7）. 键盘监听： Alt + C -->
+				<input @keyup.alt.67="clear">
+				
+				<!--（8）. 键盘监听：Ctrl + Click  -->
+				<div @click.ctrl="doSomething">Do something</div>
+					
+	
+	
+ 
 		</div>
 	</body>
 	<script type="text/javascript">
@@ -42,6 +56,7 @@
 				my_data: "test",
 				'message_liheng': 'abcdefghigklmn!',
 				counter: 1,
+				counter2: 1,
 				name:"xxxxx"
 			},
 			methods: {
@@ -63,12 +78,15 @@
 					  if (event) {
 						  alert(event.target.tagName);
 					  }
+				},
+				clear: function(){
+					alert(" Alt + C");
 				}
 
 			}
 		});
 		
-		<!-- （6）.直接调用 -->
+		<!-- （7）.直接调用 -->
 		myVue.greet();
 	</script>
 	
@@ -104,7 +122,7 @@ mousedown这些，
 
 	（1）. 如果不加this，系统会默认你想引用的是一个全局变量
 	（2）. 可是这里我们需要引用的是 这个vue实例里的局部变量
-	
+
 
 
 v-on:语法同样有一个缩写@，
@@ -112,3 +130,83 @@ v-on:语法同样有一个缩写@，
 
 
 -->
+
+<!--  事件   修饰符  
+
+修饰符
+		以半角句号 . 指明的特殊后缀，
+		用于指出一个指令应该以特殊方式绑定。
+		//例如，.prevent 修饰符告诉 v-on 指令对于触发的事件调用 event.preventDefault()：
+
+//========================
+Vue.js 为 v-on 提供了事件修饰符来处理 DOM 事件细节，
+		如：event.preventDefault() 或 event.stopPropagation()。
+
+Vue.js 通过由点 . 表示的指令后缀来调用修饰符。
+
+
+
+
+		.stop - 阻止冒泡
+		.prevent - 阻止默认事件
+		.capture - 阻止捕获
+		.self - 只监听触发该元素的事件
+		.once - 只触发一次
+		.left - 左键事件
+		.right - 右键事件
+		.middle - 中间滚轮事件
+
+
+		//阻止单击事件冒泡 
+		<a v-on:click.stop="doThis"></a>
+
+		//提交事件不再重载页面 
+		<form v-on:submit.prevent="onSubmit"></form>
+
+		//修饰符可以串联 
+		<a v-on:click.stop.prevent="doThat"></a>
+
+		//只有修饰符 
+		<form v-on:submit.prevent></form>
+
+		//添加事件侦听器时使用事件捕获模式 
+		<div v-on:click.capture="doThis">...</div>
+
+		//只当事件在该元素本身（而不是子元素）触发时触发回调 
+		<div v-on:click.self="doThat">...</div>
+
+		//click 事件只能点击一次，2.1.4版本新增 
+		<a v-on:click.once="doThis"></a>
+
+
+-->
+<!--  
+	按键   修饰符  
+
+	只有在 keyCode 是 13 时调用 vm.submit() 
+	<input v-on:keyup.13="submit">
+
+	同上  
+	<input v-on:keyup.enter="submit">
+
+	//================ 另外：常用的按键提供了别名：
+
+	全部的按键别名：
+
+	.enter
+	.tab
+	.delete (捕获 "删除" 和 "退格" 键)
+	.esc
+	.space
+	.up
+	.down
+	.left
+	.right
+	.ctrl
+	.alt
+	.shift
+	.meta
+ 
+
+-->
+
