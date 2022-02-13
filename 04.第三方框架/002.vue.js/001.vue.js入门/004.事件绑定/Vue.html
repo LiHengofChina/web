@@ -11,18 +11,24 @@
 				<div  v-on:click="doSomething">点我试下</div>
 				<hr/>
 				
-				<!-- （1）.点击事件绑定-->
+				<!-- （2）.点击事件绑定-->
 				<button v-on:click="clickButton">Click Me</button>
 				<p>{{ my_data }}</p>				
 				<hr/>
 				 
+				<!-- （3）.点击事件绑定-->
+				<p>{{ message_liheng }}</p>
+				<button v-on:click="reverseMessage">反转字符串</button>
+				<hr/>
+				
 		</div>
 	</body>
 	<script type="text/javascript">
 		var myVue = new Vue({
 			el: "#firstVue",
 			data:{
-				my_data: "test"
+				my_data: "test",
+				'message_liheng': 'abcdefghigklmn!'
 			},
 			methods: {
 				clickButton:function(){
@@ -30,7 +36,11 @@
 				},
 				doSomething: function(){
 						alert("点击事件绑定");
+				},
+				reverseMessage: function () {
+					this.message_liheng = this.message_liheng.split('').reverse().join('')
 				}
+
 			}
 		})
 	</script>
@@ -38,3 +48,38 @@
  	
 </html>
  
+ 
+<!--
+
+
+
+v-bind:是用来绑定数据的，
+v-on:则是用来绑定事件的，
+比如我要绑定一个<button>的 click事件就这么写
+<button v-on:click="clickButton()">Click Me</button>
+
+这里的click可以换成任意一个html事件，
+比如load , doubleclick , mouseon , 
+mousedown这些，
+不过click肯定是我们最常用的
+
+
+将click动作绑定到clickButton()函数之后就需要实现这个函数了,
+我们要在之前的vue实例中加入新字段 methods
+在methods关键字里面定义了clickButton方法
+并在方法内改变了之前定义的my_data变量的值。
+
+
+这里涉及到如何在vue实例中引用data字段的变量，如上所示，
+需要加this后面直接写要引用的变量就可以了
+
+	（1）. 如果不加this，系统会默认你想引用的是一个全局变量
+	（2）. 可是这里我们需要引用的是 这个vue实例里的局部变量
+	
+
+
+v-on:语法同样有一个缩写@，
+比如v-on:click="clickButton"就等价于@click="clickButton"
+
+
+-->
