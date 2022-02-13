@@ -7,10 +7,48 @@
 	<body>
 		<div id="firstVue" >
 				 
-	    	 <!--  v-if 指令将根据表达式 seen 的值(true 或 false )来决定是否插入 p 元素。 -->
-	    	 <p v-if="seen">现在你看到我了 v-if  </p>
-		     <hr/>
+	    	<!--  （1）.v-if 指令将根据表达式 seen 的值(true 或 false )来决定是否插入 p 元素。 -->
+	    	<p v-if="seen">现在你看到我了 v-if  </p>
+		    <hr/>
 				
+				
+			<!--  （2）.  -->	
+			<template v-if="liheng" >
+				  <h1>李恒教程</h1>
+			      <p>学的不仅是技术，更是梦想！</p>
+			      <p>哈哈哈，打字辛苦啊！！！</p>
+			</template>	
+		    <hr/>
+			
+			
+			<!--  （3）.条件 -->
+			<div v-if="Math.random() > 0.5">
+			  Sorry
+			</div>
+			<div v-else>
+			  Not sorry
+			</div>		
+		    <hr/>		
+				 
+				 
+			<!--  （4）.条件 -->
+		 	<div v-if="type === 'A'">
+		      A
+		    </div>
+		    <div v-else-if="type === 'B'">
+		      B
+		    </div>
+		    <div v-else-if="type === 'C'">
+		      C
+		    </div>
+		    <div v-else>
+		      Not A/B/C
+		    </div>
+	 		<hr/>	 
+				 
+			<!--  （5）.条件 -->	 
+	 		<h1 v-show="ok">Hello!</h1>
+			<hr/>	 
 				 
 		</div>
 	</body>
@@ -18,13 +56,13 @@
 		var myVue = new Vue({
 			el: "#firstVue",
 			data:{
-			    		  seen: true
-						  
+			    		  seen: true,
+						  liheng: true,
+						  type: 'C',
+						  ok: true
 			},
 			methods: {
-				doSomething: function(){
-						alert("点击事件绑定");
-				}
+ 
 			}
 		})
 	</script>
