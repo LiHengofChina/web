@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Vue Demo</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="firstVue">
+		 
+ 
+				<h1>{{5+5}}</h1>
+				<h1>{{ ok ? 'YES' : 'NO' }}</h1>
+				<h1>{{ liheng.split('').reverse().join('') }}</h1>
+ 
+				<hr/>
+	 
+				
+		</div>
+	</body>
+	<script type="text/javascript">
+		var myVue = new Vue({
+			el: "#firstVue",
+			data:{
+					ok: true, 
+					liheng: 'LIHENG'
+			}
+		})
+	</script>
+</html>
+
+<!--
+ 
+ -->
