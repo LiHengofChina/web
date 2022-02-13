@@ -5,19 +5,64 @@
 		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 	</head>
 	<body>
-		<div id="firstVue" :hidden="my_hidden">
-				{{my_data}}
+		<div id="firstVue" >
+				 
+				 <div :hidden="my_hidden">
+					 你是看不到我的
+				 </div>
+				 <hr/>
+				 
+				 <div v-html="message"></div>
+				 <hr/>
+				 
+				 <!-- 属性中拼接数据-->
+				 <div v-bind:id="'list-' + id">李恒在学习</div>
+				 <hr/>
+				 
+				
+				<!-- 样式属性绑定 -->
+				<label for="r1">修改颜色</label>
+					<input type="checkbox" v-model="use" id="r1">
+				<br><br>
+				<div v-bind:class="{'class1': use}">
+				    v-bind:class 指令
+			  	</div>
+				<hr/>
+				 
+				<!-- 超连接绑定 -->
+				<pre><a v-bind:href="url">李恒的网站</a></pre>
+				<hr/>
+				
+				
+
+
+
 		</div>
 	</body>
 	<script type="text/javascript">
 		var myVue = new Vue({
 			el: "#firstVue",
 			data:{
-				my_data: "test",
-			    my_hidden: "hidden"
+			    my_hidden: "hidden",
+				
+				message: '<h1>v-html（这是一片html）</h1>',
+				
+				id : 1,
+				
+				use: false,
+				
+				url: 'http://www.baidu.com'
 			}
 		})
 	</script>
+	
+	<style scoped>
+		.class1{
+		  background: #444;
+		  color: #eee;
+		}
+
+	</style>	
 </html>
 
 <!--

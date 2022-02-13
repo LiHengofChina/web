@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Vue Demo</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="firstVue" >
+				 
+	    	 <!--  v-if 指令将根据表达式 seen 的值(true 或 false )来决定是否插入 p 元素。 -->
+	    	 <p v-if="seen">现在你看到我了 v-if  </p>
+		     <hr/>
+				
+				 
+		</div>
+	</body>
+	<script type="text/javascript">
+		var myVue = new Vue({
+			el: "#firstVue",
+			data:{
+			    		  seen: true
+						  
+			},
+			methods: {
+				doSomething: function(){
+						alert("点击事件绑定");
+				}
+			}
+		})
+	</script>
+	
+ 	
+</html>
+ 
