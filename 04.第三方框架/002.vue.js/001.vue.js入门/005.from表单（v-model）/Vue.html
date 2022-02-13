@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Vue Demo</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="firstVue">
+				
+				<!--  （1） -->
+				<form v-on:submit.prevent="onSubmit">
+					 <table>
+						11111111
+					 </table>
+					 
+					 <input type="submit" value="submit2222">
+				</form>
+				<hr/>
+
+				<!--  （2） -->
+				<p>input 元素：</p>
+				<input v-model="message" placeholder="编辑我……">
+				<p>消息是: {{ message }}</p>
+				
+				
+				<!--  （3） -->
+				<hr/>
+				<p>textarea 元素：</p>
+				<p style="white-space: pre">{{ message2 }}</p>
+				<textarea v-model="message2" placeholder="多行文本输入……"></textarea>
+
+				<!--  （4） -->
+				<hr/>
+				<p>单个复选框：</p>
+				<input type="checkbox" id="checkbox" v-model="checked">
+				<label for="checkbox">{{ checked }}</label>
+				
+				<!--  （5） -->
+				<hr/>
+				<p>多个复选框：</p>
+				<input type="checkbox" id="runoob" value="Runoob" v-model="checkedNames">
+				<label for="runoob">Runoob</label>
+				<input type="checkbox" id="google" value="Google" v-model="checkedNames">
+				<label for="google">Google</label>
+				<input type="checkbox" id="taobao" value="Taobao" v-model="checkedNames">
+				<label for="taobao">taobao</label>
+				<br/>
+				<span>选择的值为: {{ checkedNames }}</span>
+				
+				
+				<!--  （6） -->
+				<hr/>
+				<input type="radio" id="runoob" value="Runoob" v-model="picked">
+				<label for="runoob">Runoob</label>
+				<br>
+				<input type="radio" id="google" value="Google" v-model="picked">
+				<label for="google">Google</label>
+				<br>
+				<span>选中值为: {{ picked }}</span>
+				
+				<!--  （7） -->
+				<hr/>		
+				<select v-model="selected" name="fruit">
+					<option value="">选择一个网站</option>
+					<option value="www.runoob.com">Runoob</option>
+					<option value="www.google.com">Google</option>
+				</select>
+				<div id="output">
+					选择的网站是: {{selected}}
+				</div>
+				<hr/>	
+				
+				
+		 
+				<!-- （8） 在 "change" 而不是 "input" 事件中更新 -->
+				<input v-model.lazy="msg_xxx" >	
+				<input v-model="msg_xxx">
+				<hr/>
+				
+				
+				<!--  （9） -->
+				<input v-model.number="age" type="number">
+				<hr/>
+				
+				
+				
+				
+				
+		</div>
+	</body>
+	<script type="text/javascript">
+		var myVue = new Vue({
+			el: "#firstVue",
+			data:{
+				my_data: "test",
+				
+				'message_liheng': 'abcdefghigklmn!'
+				
+				,message: 'Liheng'
+				,message2: 'liheng_test'
+
+
+				,checked : false
+				,checkedNames: ['Google']
+
+
+				,picked:'Google'
+
+				,selected:[]
+
+				,msg:  ''
+				,age: 10
+				
+				,msg_xxx:"sss"
+			},
+			methods:{
+	            onSubmit: function(){
+	            	alert("提交之前调用！");
+	            }
+			}
+		})
+	</script>
+</html>
+
+<!-- 
+
+
+可以用 v-model 指令在表单控件元素上创建双向数据绑定。
+
+修饰符
+
+.lazy
+	在默认情况下， v-model 在 input 事件中同步输入框的值与数据，
+	但你可以添加一个修饰符 lazy ，从而转变为在 change 事件中同步：
+	在 "change" 而不是 "input" 事件中更新
+	<input v-model.lazy="msg" >
+
+
+.number
+如果想自动将用户的输入值转为 Number 类型（如果原值的转换结果为 NaN 则返回原值），
+可以添加一个修饰符 number 给 v-model 来处理输入值：
+
+<input v-model.number="age" type="number">
+这通常很有用，因为在 type="number" 时 HTML 中输入的值也总是会返回字符串类型。
+
+.trim
+如果要自动过滤用户输入的首尾空格，可以添加 trim 修饰符到 v-model 上过滤输入：
+<input v-model.trim="msg">
+
+
+-->
+

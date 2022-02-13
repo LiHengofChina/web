@@ -42,7 +42,7 @@
 				<input @keyup.alt.67="clear">
 				
 				<!--（8）. 键盘监听：Ctrl + Click  -->
-				<div @click.ctrl="doSomething">Do something</div>
+				<div v-on:click.ctrl="doSomething">Do something</div>
 					
 	
 	
@@ -132,12 +132,6 @@ v-on:语法同样有一个缩写@，
 -->
 
 <!--  事件   修饰符  
-
-修饰符
-		以半角句号 . 指明的特殊后缀，
-		用于指出一个指令应该以特殊方式绑定。
-		//例如，.prevent 修饰符告诉 v-on 指令对于触发的事件调用 event.preventDefault()：
-
 //========================
 Vue.js 为 v-on 提供了事件修饰符来处理 DOM 事件细节，
 		如：event.preventDefault() 或 event.stopPropagation()。
