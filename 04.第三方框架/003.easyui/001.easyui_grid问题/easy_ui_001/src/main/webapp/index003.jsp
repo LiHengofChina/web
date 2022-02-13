@@ -74,6 +74,7 @@
 		    
 		});
 		
+		//这几行代码至少花了我10个小时，最终还是解决了。
 		$('#dg').datagrid({"onLoadSuccess":function(data){
 				var tr = $('#dg').datagrid('getPanel').find('div.datagrid-body tr');
 				//所有行
@@ -85,6 +86,7 @@
 	   					 "white-space":"pre-wrap"
    					});
 			    });
+				console.log("________");
 		}});
   
 		

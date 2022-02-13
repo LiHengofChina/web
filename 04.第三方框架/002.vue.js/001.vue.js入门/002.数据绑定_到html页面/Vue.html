@@ -12,23 +12,30 @@
 				<h1>site : {{site}}</h1>
 				<h1>url : {{url}}</h1>
 				<h1>Alexa : {{alexa}}</h1>		
-				
 				<hr/>
 				
 				<!-- （2）. 方法中的数据 -->
 				<h1>{{details()}}</h1>
+				<hr/>
+				
+		 
+				
 				
 		</div>
 	</body>
 	<script type="text/javascript">
-		var myVue = new Vue({
-			el: "#firstVue",
-			data:{
+	
+		var data_out = {
 				my_data: "李恒init（来自data）",
 				site: "绑定data中的数据",
 				url: "www.liheng.com",
 				alexa: "10000"
-			},
+			};
+	
+		var myVue = new Vue({
+			el: "#firstVue",
+			data: data_out,
+			
 			methods: {
 						details: function() {
 							return  this.site + " - 学的不仅是技术，更是梦想！（来自方法methods）";
@@ -36,23 +43,53 @@
 			}
 			
 		})
+		
+		
+		/**（3）. 从Vue 外取数据，
+					Vue 实例还提供了一些有用的实例属性与方法。
+					它们都有前缀 $，以便与用户定义的属性区分开来。
+					意思是说：取Vue对象中，非自定义的节点，需要加上$符号
+		*/
+		alert(myVue.$data);
+		alert(myVue.$data === data_out);
+		
+		alert(myVue.$el);
+		alert(myVue.$el === document.getElementById('firstVue'));
+
+
+
 	</script>
 </html>
 
+
 <!--
 
-HTML标签内部的数据绑定
+	data 用于定义属性， 
+	methods 用于定义的函数，可以通过 return 来返回函数值。
+	{{ }} 用于输出 "对象属性" 和 "函数返回值" 。
 
-{{ my_data }}	这个双大括号的语法叫做mustache 语法，大括号里面的是作为变量形式出现的。
+-->
 
-	
-data参数用来绑定VUE实例的数据变量，
-	每个不同变量之间用逗号分隔，
-	上面我们绑定了自定义变量my_data，
-		--------- 并赋初值'test'
-
-完成数据绑定工作，<div>标签里的{{myData}}数据会随着myVue实例里的myData数据的变动而变动，
-
-
+<!--
+	当一个 Vue 实例被创建时，它向 Vue 的响应式系统中加入了其 data 对象中能找到的所有的属性。
+	当这些属性的值发生改变时，html 视图将也会产生相应的变化。
+-->
  
- -->
+
+<!--
+
+
+	HTML标签内部的数据绑定
+
+	{{ my_data }}	这个双大括号的语法叫做mustache 语法，大括号里面的是作为变量形式出现的。
+		
+	data参数用来绑定VUE实例的数据变量，
+		每个不同变量之间用逗号分隔，
+		上面我们绑定了自定义变量my_data，
+			--------- 并赋初值'test'
+
+	完成数据绑定工作，<div>标签里的{{myData}}数据会随着myVue实例里的myData数据的变动而变动，
+
+
+
+-->
