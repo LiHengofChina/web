@@ -6,8 +6,15 @@
 	</head>
 	<body>
 		<div id="firstVue">
+				
 				<button v-on:click="clickButton">Click Me</button>
 				<p>{{ my_data }}</p>
+				
+				<hr/>
+				
+				<p>{{ message_liheng }}</p>
+				<button v-on:click="reverseMessage">反转字符串</button>
+				
 		</div>
 	</body>
 	<script type="text/javascript">
@@ -15,11 +22,16 @@
 			el: "#firstVue",
 			data:{
 				my_data: "test",
-				my_hidden: "hidden"
+				
+				'message_liheng': 'abcdefghigklmn!'
+				
 			},
 			methods:{
 					clickButton:function(){
 						this.my_data = "Wow! I'm changed!, Hello Liheng!"
+					},
+					reverseMessage: function () {
+						this.message_liheng = this.message_liheng.split('').reverse().join('')
 					}
 			}
 		})

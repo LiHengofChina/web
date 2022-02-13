@@ -12,6 +12,11 @@
 				 </div>
 				 <hr/>
 				 
+				 <p>{{ message_liheng }}</p>
+				 <input v-model="message_liheng">
+				 <hr/>
+				 <hr/>
+				 
 				 <div v-html="message"></div>
 				 <hr/>
 				 
@@ -44,6 +49,8 @@
 			el: "#firstVue",
 			data:{
 			    my_hidden: "hidden",
+				
+				message_liheng: "双向数据绑定",
 				
 				message: '<h1>v-html（这是一片html）</h1>',
 				

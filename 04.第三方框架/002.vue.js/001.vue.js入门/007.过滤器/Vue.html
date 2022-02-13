@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Vue Demo</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="firstVue">
+				
+				<!-- 在两个大括号中 -->
+				<h1>{{ message_liheng | capitalize }}</h1>
+				<hr/>
+				<!-- 
+			
+			（1）.在 v-bind 指令中 
+			<div v-bind:id="rawId | formatId"></div>
+			
+			（2）. 过滤器可以串联：
+				 {{ message | filterA | filterB }}
+				 
+			
+			
+			（3）. 过滤器是 JavaScript 函数，因此可以接受参数：
+			
+				{{ message | filterA('arg1', arg2) }}
+			
+				-->     
+				
+
+				
+		</div>
+	</body>
+	<script type="text/javascript">
+		var myVue = new Vue({
+			el: "#firstVue",
+			data:{
+				'message_liheng': 'abcdefghigklmn!'
+				
+			},
+		    filters: {
+					//首字母变成大写
+					capitalize: function (value) {
+					  if (!value) return ''
+					  value = value.toString()
+					  return value.charAt(0).toUpperCase() + value.slice(1)
+					}
+		    }
+		})
+	</script>
+</html>
+
+ 
