@@ -6,15 +6,35 @@
 	</head>
 	<body>
 		<div id="firstVue">
-				{{ my_data }}
+		 
+				<!-- data中的数据 -->
+				<h1>my_data : {{my_data}}</h1>
+				<h1>site : {{site}}</h1>
+				<h1>url : {{url}}</h1>
+				<h1>Alexa : {{alexa}}</h1>		
+				
+				<hr/>
+				
+				<!-- 方法中的数据 -->
+				<h1>{{details()}}</h1>
+				
 		</div>
 	</body>
 	<script type="text/javascript">
 		var myVue = new Vue({
 			el: "#firstVue",
 			data:{
-				my_data: "test"
+				my_data: "李恒init（来自data）",
+				site: "绑定data中的数据",
+				url: "www.liheng.com",
+				alexa: "10000"
+			},
+			methods: {
+						details: function() {
+							return  this.site + " - 学的不仅是技术，更是梦想！（来自方法methods）";
+						}
 			}
+			
 		})
 	</script>
 </html>
@@ -28,7 +48,8 @@
 	
 data参数用来绑定VUE实例的数据变量，
 	每个不同变量之间用逗号分隔，
-	上面我们绑定了自定义变量my_data，并赋初值'test'
+	上面我们绑定了自定义变量my_data，
+		--------- 并赋初值'test'
 
 完成数据绑定工作，<div>标签里的{{myData}}数据会随着myVue实例里的myData数据的变动而变动，
 
