@@ -3,83 +3,20 @@
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
       <br>
       <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
+			<div class="addFile">
+				 <!-- 上传文件的容器，通过css让它不显示出来 -->
+				 <input type="file" 
+				 	 ref="fileBtn"  id="uploadFile"
+				 	 :hidden="my_hidden"
+				      @change="getFile($event)"       
+				      multiple="multiple"      />
+				 <button @click="trigger">Upload</button>
+			 </div>
       </li>
     </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
+ 
   </div>
 </template>
 
@@ -87,27 +24,40 @@
 export default {
   name: 'HelloWorld',
   data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+	    return {
+	      msg: 'Upload File!',
+	      my_hidden: 'hidden'
+	    }
+  },
+  methods:{
+	  	trigger() {
+	  			//通过这个方法选择文件
+	      		this.$refs.fileBtn.dispatchEvent(new MouseEvent("click"));
+	    },
+	    
+	    //当选择了文件之后，会自动调用这个方法，开始上传文件。
+		getFile(event) {
+		   let file = event.target.files[0];
+		   
+		   console.log("______________uploading__________");
+		   /**
+		   uploadImg(file).then(res => {
+		      
+		          //   ...
+		          document.getElementById("uploadFile").value = null;
+		             
+		      }).catch(error => {
+		      
+		      //     ...
+		      
+		   });
+		   */
+		   
+		   
+		}	    
+	    
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 </style>
