@@ -1,22 +1,26 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
     <ul>
       <br>
       <li>
 			 <div class="addFile">
-				 <!-- ÉÏ´«ÎÄ¼þµÄÈÝÆ÷£¬Í¨¹ýcssÈÃËü²»ÏÔÊ¾³öÀ´ 
-				  accept="image/*"    			ÏÞÖÆÉÏ´«ÎÄ¼þµÄÀàÐÍ£¬²»Ð´¾Í±íÊ¾ËùÓÐÎÄ¼þ¶¼Ö§³Ö
-				  @change="getFile($event)"		ÉÏ´«ÎÄ¼þÊ±´¥·¢ÊÂ¼þ
-				  multiple="multiple" 			ÊÇ·ñÖ§³Ö¶à¸öÎÄ¼þÉÏ´«
+				 <!-- ä¸Šä¼ æ–‡ä»¶çš„å®¹å™¨ï¼Œé€šè¿‡cssè®©å®ƒä¸æ˜¾ç¤ºå‡ºæ¥ 
+				 è¯´æ˜Žï¼š
+				  accept="image/*"    			é™åˆ¶ä¸Šä¼ æ–‡ä»¶çš„ç±»åž‹ï¼Œä¸å†™å°±è¡¨ç¤ºæ‰€æœ‰æ–‡ä»¶éƒ½æ”¯æŒ
+				  @change="getFile($event)"		ä¸Šä¼ æ–‡ä»¶æ—¶è§¦å‘äº‹ä»¶
+				  multiple="multiple" 			æ˜¯å¦æ”¯æŒå¤šä¸ªæ–‡ä»¶ä¸Šä¼ 
+				  ref="fileBtn_liheng"     è¡¨ç¤ºå¦‚æžœè¦å¼•ç”¨è¿™ä¸ªinpuï¼Œå°±è¦ä½¿ç”¨è¿™ä¸ªåå­— $refs.fileBtn_liheng
+				  						  //dispatchEvent å‡½æ•°å°±æ˜¯ç”¨æ¥è§¦å‘æŸä¸ªäº‹ä»¶
+				  						  // new MouseEvent("click")  äº§ç”Ÿä¸€ä¸ªç‚¹å‡»äº‹ä»¶
+				  				
 				 -->
 				 <input type="file" 
-				 	 ref="fileBtn"  id="uploadFile"
+				 	 ref="fileBtn_liheng"  
+				 	 id="uploadFile"
 				 	 :hidden="my_hidden"
 				      @change="getFile($event)"       
 				      multiple="multiple"      />
-				  <!-- ÉÏ´«°´Å¥ -->
+				  <!-- ï¼ˆ1ï¼‰.  ç‚¹å‡»"ä¸Šä¼ æŒ‰é’®"æ—¶è°ƒç”¨ trigger æ–¹æ³•ï¼Œ ä¸ª -->
 				 <button @click="trigger">Upload</button>
 			 </div>
       </li>
@@ -26,34 +30,40 @@
 </template>
 
 <script>
+
+
+//import { fileImport } from "@/utils/fileImport";
+
 export default {
   name: 'HelloWorld',
   data () {
 	    return {
-	      msg: 'Upload File!',
-	      my_hidden: 'hidden'
+	      my_hidden: 'hidden' //éšè—æ–‡æœ¬æ¡†
 	    }
   },
   methods:{
 	  	trigger() {
-	  			//Í¨¹ýÕâ¸ö·½·¨Ñ¡ÔñÎÄ¼þ
-	      		this.$refs.fileBtn.dispatchEvent(new MouseEvent("click"));
+	  			//ï¼ˆ2ï¼‰.é€šè¿‡è¿™ä¸ªæ–¹æ³•ï¼Œè§¦å‘çœŸæ­£çš„â€œç‚¹å‡»ä¸Šä¼ æ¡†å­â€ã€‚
+	      		this.$refs.fileBtn_liheng.dispatchEvent(new MouseEvent("click"));
 	    },
 	    
-	    //µ±Ñ¡ÔñÁËÎÄ¼þÖ®ºó£¬»á×Ô¶¯µ÷ÓÃÕâ¸ö·½·¨£¬¿ªÊ¼ÉÏ´«ÎÄ¼þ¡£
+	    //ï¼ˆ3ï¼‰. å½“inputæ¡†å‘ç”Ÿæ”¹å˜æ—¶ï¼ˆé€‰æ‹©äº†æ–‡ä»¶ä¹‹åŽï¼‰ï¼Œè‡ªåŠ¨è°ƒç”¨è¿™ä¸ªæ–¹æ³•ã€‚
 		getFile(event) {
+		
 		   let file = event.target.files[0];
 		   
 		   console.log("______________uploading__________"+event.target.files[0]);
 		   console.log("______________uploading__________"+event.target.files[1]);
 		   console.log("______________uploading__________"+event.target.files[2]);
 		   console.log("______________uploading__________"+event.target.files[3]);
+		
+			
 		   /**
-		   uploadImg(file).then(res => {
+		   fileImport(file).then(res => {
 		      
 		          //   ...
 		          document.getElementById("uploadFile").value = null;
-		          //ÔÚÉÏ´«ÎÄ¼þ³É¹¦ºó£¬½«Õâ¸öÎÄ¼þµÄvalueÖÃÎªnull£¬ÒòÎª²»Çå¿ÕÕâ¸öinputµÄvalue£¬ÊÇ²»ÄÜÖØ¸´ÉÏ´«ÏàÍ¬µÄÎÄ¼þ£¬Ô­ÒòÊÇinputµÄvalueÖµ²»±ä£¬changeÊÂ¼þ²»Ê¶±ðÎÄ¼þÓÐ±ä»¯¡£
+		          //åœ¨ä¸Šä¼ æ–‡ä»¶æˆåŠŸåŽï¼Œå°†è¿™ä¸ªæ–‡ä»¶çš„valueç½®ä¸ºnullï¼Œå› ä¸ºä¸æ¸…ç©ºè¿™ä¸ªinputçš„valueï¼Œæ˜¯ä¸èƒ½é‡å¤ä¸Šä¼ ç›¸åŒçš„æ–‡ä»¶ï¼ŒåŽŸå› æ˜¯inputçš„valueå€¼ä¸å˜ï¼Œchangeäº‹ä»¶ä¸è¯†åˆ«æ–‡ä»¶æœ‰å˜åŒ–ã€‚
 
 		      }).catch(error => {
 		      
