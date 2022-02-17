@@ -69,8 +69,8 @@ action： 原上传文件的路径，由于使用了自定义上传文件请求�
 
 <script>
 
-import { strRebuildBySplit, lastSubstring } from '@/utils/strUtil'
-import { message } from '@/utils/message'
+import { strRebuildBySplit, lastSubstring } from '@/utils/test002/strUtil'
+import { message } from '@/utils/test002/message'
  
 export default {
 	 data() {
@@ -147,13 +147,15 @@ export default {
 		  * （3）. 真实开始上传。
 		  */
 		 uploadFileLiHeng(file) {
-		 
-		 	 alert();
+		  
 			 // 把文件放入 FormData 进行提交
 			 const param = new FormData()
+			 
 			 param.append('files', file.file)
+			 alert();
 			 uploadFile(param).then(response => {
-			 // TODO 一些关闭弹框，上传成功提示等
+				 // TODO 一些关闭弹框，上传成功提示等
+				 
 			 })
 		 }
 

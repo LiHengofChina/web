@@ -6,7 +6,9 @@
       
 				 <!-- 示例一：
 				 自己写的input上传框子
-				 选择文件就开始上传 -->
+				 选择文件就开始上传 
+				 -->
+				 
 			 <div class="addFile">
 				 <!-- 上传文件的容器，通过css让它不显示出来 
 				 说明：
@@ -36,7 +38,7 @@
 <script>
 
 
-//import { fileImport } from "@/utils/fileImport";
+//import { fileImport } from "@/utils/test001/fileImport";
 
 export default {
   name: 'HelloWorld',
@@ -63,6 +65,8 @@ export default {
 		
 			
 		   /**
+		    * （4）. 真实开始上传。
+		    *
 		   fileImport(file).then(res => {
 		      
 		          //   ...
