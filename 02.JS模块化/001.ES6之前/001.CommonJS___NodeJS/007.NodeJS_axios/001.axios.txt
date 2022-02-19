@@ -43,18 +43,18 @@ axios：
 //================================================= axios 代码示例
 
 axios({
-	url: '/getUsers',
-	method: 'get',
-	responseType: 'json', // 默认的
-	data: {
-		//'a': 1,
-		//'b': 2,
-	}
+		url: '/getUsers',
+		method: 'get',
+		responseType: 'json', // 默认的
+		data: {
+			//'a': 1,
+			//'b': 2,
+		}
 }).then(function (response) {
-	console.log(response);
-	console.log(response.data);
+		console.log(response);
+		console.log(response.data);
 }).catch(function (error) {
-	console.log(error);
+		console.log(error);
 });
 
 
