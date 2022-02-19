@@ -38,8 +38,7 @@
 <script>
 
 
-import { fileImport } from "@/utils/test001/fileImport001";
-
+ 
 export default {
   name: 'HelloWorld',
   data () {
@@ -58,11 +57,7 @@ export default {
 		
 		   let file = event.target.files[0];
 		   
-		   console.log("______________uploading__________"+event.target.files[0]);
-		   console.log("______________uploading__________"+event.target.files[1]);
-		   console.log("______________uploading__________"+event.target.files[2]);
-		   console.log("______________uploading__________"+event.target.files[3]);
-		
+ 
 			
 		   /**
 		    * （4）. 真实开始上传。

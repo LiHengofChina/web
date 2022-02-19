@@ -41,7 +41,9 @@ action： 原上传文件的路径，由于使用了自定义上传文件请求�
 		 class="upload-demo">
 		 
 		 
-		 <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+		 <el-button slot="trigger" size="small" type="primary">
+		 选取文件
+		 </el-button>
 		 
 		 
 		 <!-- 一个普通的Button，点击时触发它的事件，在事件中引用上面的资源，进行上传操作。-->
@@ -155,6 +157,8 @@ export default {
 		  	 
 			 // 把文件放入 FormData 进行提交
 			 const param = new FormData()
+			 
+			 //注意：后台接受的时候，参数名字也必须加  'files' 不能是 'file' 或其它
 			 param.append('files', file.file)
 
 

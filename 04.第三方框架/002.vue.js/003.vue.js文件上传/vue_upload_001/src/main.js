@@ -14,6 +14,11 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(Element);
 
 
+// http服务资源
+import VueResource from 'vue-resource';
+Vue.use(VueResource);
+
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

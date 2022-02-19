@@ -1,6 +1,7 @@
 package com.liheng.demo.ctrl;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -60,12 +61,8 @@ public class FileController {
 			System.out.println(path);
 			System.out.println(fileName);
 			 
-			FileOutputStream fos = new FileOutputStream(path+"\\" +fileName); 
-			IOUtils.copy(multipartFile.getInputStream(),new BufferedOutputStream(fos));
+			multipartFile.transferTo(new File(path + File.separator + fileName) );
 			
-			fos.flush();
-			fos.close();
-			 
 		}
 		System.out.println("_________" + files);
 		return "22222222222";
