@@ -56,7 +56,6 @@ public class FileController {
  
 		for (MultipartFile multipartFile : files) {
 			String fileName = multipartFile.getOriginalFilename();
-//			String path = request.getServletContext().getRealPath("/upload/excel");
 			String path = "F:\\web\\04.第三方框架\\002.vue.js\\003.vue.js文件上传\\spring-boot-fileupload-001\\upload";
 			System.out.println(path);
 			System.out.println(fileName);

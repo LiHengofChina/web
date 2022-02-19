@@ -73,7 +73,7 @@ import { strRebuildBySplit, lastSubstring } from '@/utils/test002/strUtil'
 import { message } from '@/utils/test002/message'
 
 
-import { uploadFile_ , uploadFile_x } from "@/utils/test002/uploadFile";
+import { uploadFile_x } from "@/utils/test002/uploadFile002";
  
 export default {
 	 data() {
@@ -150,7 +150,9 @@ export default {
 		  * （3）. 真实开始上传。
 		  */
 		 uploadFileLiHeng(file) {
-		  
+		  	 
+		  	 //alert(uploadFile_);
+		  	 
 			 // 把文件放入 FormData 进行提交
 			 const param = new FormData()
 			 param.append('files', file.file)

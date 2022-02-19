@@ -8,7 +8,7 @@ const request = axios.create();
  */
 export const uploadFile_x = (file) => {
 
-		 console.log("xxx");
+		 console.log("start....");
 		 return request({
 //			 url: '/uploadFile',
 			 url: 'http://localhost:8081/uploadFile',

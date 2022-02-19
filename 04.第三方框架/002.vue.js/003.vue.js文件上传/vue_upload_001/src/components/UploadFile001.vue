@@ -38,7 +38,7 @@
 <script>
 
 
-//import { fileImport } from "@/utils/test001/fileImport";
+import { fileImport } from "@/utils/test001/fileImport001";
 
 export default {
   name: 'HelloWorld',
