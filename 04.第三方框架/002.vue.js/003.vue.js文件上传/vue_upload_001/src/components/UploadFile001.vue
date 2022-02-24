@@ -35,7 +35,7 @@
 
 <script>
 
-
+import { uploadFile_x } from "@/utils/test002/uploadFile002";
  
 export default {
   name: 'HelloWorld',
@@ -52,26 +52,29 @@ export default {
 	    
 	    //（3）. 当input框发生改变时（选择了文件之后），自动调用这个方法。
 		getFile(event) {
-		
+			console.log("_____111______");
 		   let file = event.target.files[0];
 		   
- 
+       	   const param = new FormData()
+		   param.append('files', file)
 			
 		   /**
 		    * （4）. 真实开始上传。
 		    *
-		   fileImport(file).then(res => {
-		      
+		    */
+		   uploadFile_x(param).then(response => {
+				 // TODO 一些关闭弹框，上传成功提示等
 		          //   ...
 		          document.getElementById("uploadFile").value = null;
 		          //在上传文件成功后，将这个文件的value置为null，因为不清空这个input的value，是不能重复上传相同的文件，原因是input的value值不变，change事件不识别文件有变化。
 
-		      }).catch(error => {
+		   }).catch(error => {
 		      
 		      //     ...
 		      
 		   });
-		   */
+		    
+		  
 		   
 		   
 		}	    
