@@ -11,7 +11,7 @@ export const uploadFile_x = (file) => {
 		 console.log("start....");
 		 return request({
 //			 url: '/uploadFile',
-			 url: 'http://localhost:8081/uploadFile',
+			 url: 'http://localhost:8079/uploadFile',
 			 method: 'post',
 			 headers: {
 				 'Content-Type': 'multipart/form-data; charset=utf-8'

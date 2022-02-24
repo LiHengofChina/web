@@ -153,7 +153,7 @@ export default {
 			 *	 （3）. Vue.use(VueResource) 方法启用插件
 			 *    不过，现在VUE官方推荐使用axios。
 			 */
-			this.$http.post( 'http://localhost:8081/uploadFile', 
+			this.$http.post( 'http://localhost:8079/uploadFile', 
 							fileFormData,requestConfig
 			).then((res) => {
 					
