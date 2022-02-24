@@ -13,6 +13,13 @@ module.exports = {
     
     
     proxyTable: {
+        '/to_spring': {
+            target:'http://localhost:8079/',
+            changeOrigin:true,  
+            pathRewrite:{
+              '^/to_spring': ''
+            }
+        },
         '/to_struts2': {
             target:'http://localhost:8080/struts2-upload-001/',
             	
@@ -21,14 +28,7 @@ module.exports = {
             pathRewrite:{
               '^/to_struts2': ''
             }
-          },
-        '/to_spring': {
-              target:'http://localhost:8079/',
-              changeOrigin:true,  
-              pathRewrite:{
-                '^/to_spring': ''
-              }
-         }
+        }
     },
 
     // Various Dev Server settings
