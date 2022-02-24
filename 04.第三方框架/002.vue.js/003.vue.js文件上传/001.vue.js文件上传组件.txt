@@ -6,17 +6,25 @@
 在vue中，可以使用现有的框架。
 
 
-（1）. element-ui
-			// 一个nodejs模块
-			
-（2）. ant-design
-		等来直接实现上传文件和下载文件。
+（1）. 直接用js来实现。
 
-（3）. 或者直接用js来实现。
+
+（2）. element-ui   //el-upload	// 一个nodejs模块
+		
+			
+（3）. v-file-upload //vue.js 专用上传组件
+		https://blog.csdn.net/cuk5340/article/details/107697837
+		 
+
+（3）.  vant 组件用到再查。//TODDO
+		https://www.cnblogs.com/yunzhongmeng/p/14486578.html
+		<van-uploader v-model="fileList" :after-read="afterRead" :max-count="3" multiple></van-uploader>
+
 
 
 //==========================================
 //==========================================
 （1）.使用 "vue.js的web" 向 "spring_boot" 的系统上传文件，涉及跨域问题。
+
 
  

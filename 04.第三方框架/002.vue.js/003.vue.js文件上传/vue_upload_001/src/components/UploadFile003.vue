@@ -4,8 +4,8 @@
       <br>
       <li>
       
-      <!-- 示例三
-      选择文件，点击上传，才开始。
+      <!-- 示例三：  选择文件，点击上传，才开始。
+      使用 element-ui 控件 +  vue-resource($http.post) 上传
       -->
       		<!--
 
@@ -14,7 +14,6 @@
 			 <el-upload
 			    :limit="1"
 			    ref="upload"
-			    
 			    :file-list="fileList"
 			    :before-upload="beforeUpload"
 			    action="doUpload"
@@ -82,8 +81,7 @@ export default {
 	 data() {
 		 return {
  			fileName: "",
- 			fileList: [],
- 			http: require('http')
+ 			fileList: [] 
 		 }
 	 },
 	 methods: {
@@ -158,7 +156,9 @@ export default {
 			this.$http.post( 'http://localhost:8081/uploadFile', 
 							fileFormData,requestConfig
 			).then((res) => {
+					
 					//debugger
+					/**
 					if (data && data.code === 0) {
 							 this.$message({
 								 message: '操作成功',
@@ -172,6 +172,7 @@ export default {
 					 } else {
 					 		this.$message.error(data.msg)
 					 }
+					 */
 			},function(res){
                             console.log('失败')
             })

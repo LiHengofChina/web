@@ -19,6 +19,19 @@ import VueResource from 'vue-resource';
 Vue.use(VueResource);
 
 
+
+/**
+ * 	（1.1）.安装
+			npm i --save v-file-upload
+	（1.2）.安装
+			npm install -g yarn
+			yarn add v-file-upload
+ * */
+import FileUpload from 'v-file-upload';
+Vue.use(FileUpload);
+
+
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
