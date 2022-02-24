@@ -10,8 +10,8 @@ export const uploadFile_x = (file) => {
 
 		 console.log("start....");
 		 return request({
-//			 url: '/uploadFile',
-			 url: 'http://localhost:8079/uploadFile',
+			 url: '/to_spring/uploadFile', 		
+//			 url: '/to_struts2/liheng_uploads3.action',
 			 method: 'post',
 			 headers: {
 				 'Content-Type': 'multipart/form-data; charset=utf-8'

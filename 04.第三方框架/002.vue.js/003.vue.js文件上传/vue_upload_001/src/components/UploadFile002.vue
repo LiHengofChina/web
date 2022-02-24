@@ -164,6 +164,7 @@ export default {
 
 
 			 uploadFile_x(param).then(response => {
+				 alert("xx");
 				 // TODO 一些关闭弹框，上传成功提示等
 				 
 			 })
