@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: 86136
+Build-Jdk: 17.0.1
+Implementation-Title: zuul-child-server-demo-001
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com.liheng.demo
+Implementation-URL: https://spring.io/projects/spring-boot/zuul-parent-s
+ tudy-001/zuul-child-server-demo-001
+Created-By: Maven Integration for Eclipse
+

@@ -1,0 +1,59 @@
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+						http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.liheng.demo</groupId>
+	<artifactId>zuul-parent-study-001</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<!-- 标志这是一个父项目 -->
+	<packaging>pom</packaging>
+
+	<!-- 一段描述 -->
+	<name>eureka-study</name>
+	<description>Demo project for Spring Cloud</description>
+
+	<!-- 父项目本身再去继续 spring-boot -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.4.3</version>
+		<relativePath/>
+	</parent>
+
+	<!-- 定义通用的属性 -->
+	<properties>
+		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+
+
+	  <!-- 申明依赖，但并不真正引入 -->
+	  <dependencyManagement>
+	  	<dependencies>
+	  		<!-- 申明 spring-cloud -->
+	  		<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>2020.0.1</version>
+				<type>pom</type>
+				<scope>import</scope>
+	  		</dependency>
+	  	</dependencies>
+	  </dependencyManagement>
+
+
+	  <modules>
+	  	<module>zuul-child-registry-001</module>
+	  	
+	  	<module>zuul-child-server-node-002</module>
+	  	<module>zuul-child-server-node-001</module>
+	  	
+	  	
+	  	<module>zuul-child-server-demo-001</module>
+	  </modules>
+</project>
+

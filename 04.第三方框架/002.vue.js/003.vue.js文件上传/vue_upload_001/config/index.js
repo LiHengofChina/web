@@ -28,7 +28,14 @@ module.exports = {
             pathRewrite:{
               '^/to_struts2': ''
             }
-        }
+        },
+        '/to_zuul_struts': {
+            target:'http://localhost:8079/',
+            changeOrigin:true,  
+            pathRewrite:{
+              '^/to_zuul_struts': ''
+            }
+        },
     },
 
     // Various Dev Server settings

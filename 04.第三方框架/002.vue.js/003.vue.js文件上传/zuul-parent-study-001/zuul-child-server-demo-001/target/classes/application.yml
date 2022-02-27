@@ -1,0 +1,36 @@
+
+debug: true
+
+
+server:
+   port: 8079 # 指定该Eureka实例的端口
+
+
+spring:
+   application:
+      name: microservice-liheng-zuul-server # 项目名称尽量用小写
+
+eureka:
+   instance:
+      preferIpAddress: true								# IP地址优先
+      lease-expiration-duration-in-seconds: 30			# 按需配置续约更新时间和到期时间
+      lease-renewal-interval-in-seconds: 10				# 
+   client:
+      healthcheck:
+         enabled: true									#开启健康检查
+      serviceUrl:
+         defaultZone: http://localhost:8761/eureka/ 	#指定注册中心的地址
+
+ribbon:
+  NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
+
+
+ 
+
+zuul:
+  routes:
+    demo:
+      path: /*   #这里要配置*
+      url:   #这里必须有这个属性，但是不用配置值。
+      
+
