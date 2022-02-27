@@ -43,7 +43,7 @@ public class MyZuulFilter extends ZuulFilter {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-//		requestContext.put("RequestURI", url);
+		requestContext.put("requestURI", url);
 		
 		return null;
 	}
