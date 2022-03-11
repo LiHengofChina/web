@@ -1,0 +1,12 @@
+
+npm install webpackbar
+
+const WebpackBar = require("webpackbar");
+
+
+plugins:[
+		 //让打包时出现进度条
+		 new WebpackBar()
+]
+
+ 

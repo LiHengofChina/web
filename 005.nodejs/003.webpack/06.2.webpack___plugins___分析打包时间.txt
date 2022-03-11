@@ -1,0 +1,48 @@
+ 
+//================================================（1）. 分析打包速度
+//================================================（1）. 分析打包速度
+
+https://zhuanlan.zhihu.com/p/145012279
+
+
+
+进行优化的第一步需要知道我们的构建到底慢在那里。
+
+通过 speed-measure-webpack-plugin 测量你的 webpack 构建期间各个阶段花费的时间：
+
+
+（1）.安装包
+	npm install  speed-measure-webpack-plugin
+
+（2）. 引入包
+
+	const SpeedMeasurePlugin = require("speed-measure-webpack-plugin")
+	const smp = new SpeedMeasurePlugin()
+	
+	const prodWebpackConfig = { // 之前的 module.exports = {} 改写为。
+
+	}
+
+	module.exports = smp.wrap(prodWebpackConfig)
+
+（3）. 打包控制台输出时间，示例：
+
+			√ Webpack
+			  Compiled successfully in 349.20ms
+
+
+
+			 SMP  ⏱
+			General output time took 0.351 secs
+
+			 SMP  ⏱  Plugins  //插件时间
+			WebpackBarPlugin took 0.009 secs
+
+			 SMP  ⏱  Loaders  //加载器时间
+			babel-loader took 0.281 secs
+			  module count = 2
+			modules with no loaders took 0 secs
+			  module count = 1
+
+
+ 

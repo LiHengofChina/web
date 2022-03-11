@@ -8,9 +8,9 @@ https://segmentfault.com/a/1190000006178770
 	
 	1). ES6,ES7,JSX语法
 		/**
-		npm install --save-dev babel-loader
-		npm install --save-dev babel-preset-env
-		npm install --save-dev babel-preset-react
+npm install --save-dev babel-loader
+npm install --save-dev babel-preset-env
+npm install --save-dev babel-preset-react
 		{
 			test: /(\.jsx|\.js)$/,
 			use: {

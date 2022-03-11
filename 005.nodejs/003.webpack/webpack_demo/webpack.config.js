@@ -1,4 +1,10 @@
-module.exports = {
+
+
+const WebpackBar = require("webpackbar");
+
+const webpackConfig = {
+
+//module.exports = {
 
   devtool: 'source-map',  
   devtool: 'eval',  
@@ -19,20 +25,33 @@ module.exports = {
 	}
   	,
   	module:{
-  		rules: [{
-  		        	test: /\.js$/,
-  		        	exclude: /node_modules/,
-  		        	use:[{
-  		        			loader: 'babel-loader'
-  		        	}]
-  		        }]
-  	}
+  		rules: [
+  		        //排除 node_modules 目录
+				{
+					test: /(\.jsx|\.js)$/,
+					use: {
+						loader: "babel-loader"
+					},
+					exclude: /node_modules/
+				}
+  		
+  		
+  		]
+  	},
+  	
+  	plugins:[
+  	         //让打包时出现进度条
+  	         new WebpackBar()
+	]
+  	
+  
   	  
 }
 
 
-//const SpeedMeasurePlugin = require("speed-measure-webpack-plugin")
-//const smp = new SpeedMeasurePlugin()
-//
-//
-//module.exports = smp.wrap(prodWebpackConfig)
+// 分析打包速度 使用
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const smp = new SpeedMeasurePlugin()
+
+module.exports = smp.wrap(webpackConfig)
+

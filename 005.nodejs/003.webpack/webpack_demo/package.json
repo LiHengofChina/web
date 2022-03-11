@@ -12,11 +12,15 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-loader": "^8.2.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
-    "speed-measure-webpack-plugin": "^1.5.0"
+    "speed-measure-webpack-plugin": "^1.5.0",
+    "webpackbar": "^5.0.2"
   }
 }
