@@ -1,0 +1,37 @@
+(9) 使用webpack构建本地服务器
+
+	Webpack提供一个可选的本地开发服务器
+	这个本地服务器基于node.js构建
+	它是一个单独的组件
+
+	//局部安装
+	npm install --save-dev webpack
+	npm install --save-dev webpack-cli			
+	npm install --save-dev webpack-dev-server
+	
+    devServer: {
+		contentBase: "./public",//本地服务器所加载的页面所在的目录
+		historyApiFallback: true,//不跳转
+		inline: true//实时刷新
+    }
+
+//=============== 通过命令启动这个本地服务
+
+webpack-dev-server --open chrome
+
+//=============== npm引导启动
+//=============== npm引导启动
+package.json
+{
+...... 
+  "scripts": {
+ 
+    "server": "webpack-dev-server --open chrome"
+  } 
+}
+
+
+npm run server  //启动服务器
+
+
+ 
