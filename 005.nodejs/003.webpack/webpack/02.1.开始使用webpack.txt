@@ -1,0 +1,75 @@
+https://segmentfault.com/a/1190000006178770
+
+
+1). 创建一个package.json文件
+	//这是一个标准的npm说明文件
+	//当前项目的依赖模块，自定义的脚本任务等等
+	//使用npm init命令可以自动创建这个package.json文件
+	npm init
+	//直接回车即可
+
+2). 安装webpack
+	//全局安装
+	npm install -g webpack
+	
+			//安装到你的项目目录
+			//npm install --save-dev webpack
+
+	//安装cli
+	npm install webpack-cli -g
+	
+	
+3). 创建两个文件夹,
+	app	   //存放原始数据和我们将写的JavaScript模块
+	public //用来存放之后供浏览器读取的文件
+		   //（包括使用webpack打包生成的js文件
+		   //以及一个index.html文件） 
+
+4). 新建三个文件
+	index.html 	-- 放在public文件夹中
+			//在index.html文件中写入最基础的html代码
+			//它在这里目的在于引入打包后的js文件(名为：bundle.js)
+	Greeter.js	-- 放在app文件夹中
+	main.js		-- 放在app文件夹中
+
+
+4). 填写文件信息：
+	.....
+
+
+
+
+
+(9) 使用webpack构建本地服务器
+
+	Webpack提供一个可选的本地开发服务器
+	这个本地服务器基于node.js构建
+	它是一个单独的组件
+
+	//局部安装
+	npm install --save-dev webpack
+	npm install --save-dev webpack-cli			
+	npm install --save-dev webpack-dev-server
+	
+    devServer: {
+		contentBase: "./public",//本地服务器所加载的页面所在的目录
+		historyApiFallback: true,//不跳转
+		inline: true//实时刷新
+    }
+	 
+	"server": "webpack-dev-server --open chrome"
+	
+	npm start  		//打包
+	npm run build 	//打包
+	npm run server  //启动服务器
+
+
+
+(11).  让文件名和文件内容是匹配的，方便浏览器准确的缓存
+	webpack可以把一个哈希值添加到打包的文件名中，（内容改变，名称相应改变）
+	使用方法如下,添加特殊的字符串混合体（[name], [id] and [hash]）到输出文件名前
+	output: {
+		path: __dirname + "/build",
+		filename: "bundle-[hash].js"
+	}
+

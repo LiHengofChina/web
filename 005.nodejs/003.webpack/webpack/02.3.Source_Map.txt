@@ -1,0 +1,29 @@
+//============================================================	 
+//============================================================	 
+
+8). Source Maps	//方便调试用的
+					//仅开发阶段使用它//会生成 .map文件
+
+	配置生成 Source Maps
+		//提供了一种对应编译文件和源文件的方法，
+		//使得编译后的代码可读性更高，也更容易调试。
+
+		//意思是：给打包后的文件生成原文件嘛，因为打包在一起不方便查看
+		
+  devtool: 'source-map',
+
+module.exports = {
+		devtool: 'source-map',
+		//devtool: 'cheap-source-map',
+}
+	//============ 值说明
+	 
+eval					//每个module会封装到 eval 里包裹起来执行，并且会在末尾追加注释 //@ sourceURL.  --最快的编译办法
+source-map				//生成一个SourceMap文件.  --显示源码  
+hidden-source-map		//和 source-map 一样，但不会在 bundle 末尾追加注释.
+inline-source-map		//生成一个 DataUrl 形式的 SourceMap 文件.
+eval-source-map			//每个module会通过eval()来执行，并且生成一个DataUrl形式的SourceMap.
+cheap-source-map		//生成一个没有列信息（column-mappings）的SourceMaps文件，不包含loader的 sourcemap（譬如 babel 的 sourcemap） --不显示源码
+cheap-module-source-map	//生成一个没有列信息（column-mappings）的SourceMaps文件，同时 loader 的 sourcemap 也被简化为只包含对应行的。
+
+

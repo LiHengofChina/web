@@ -1,0 +1,33 @@
+//============================================================	 
+//============================================================	 
+
+
+(8.1).  配置文件分离// TODO
+
+	但是在产品阶段，可能还需要对打包的文件进行额外的处理，
+	比如说优化，压缩，缓存以及分离CSS和JS。
+	对于复杂的项目来说，需要复杂的配置，
+	这时候分解配置文件为多个小的文件可以使得事情井井有条
+	
+	1).
+		//webpack.config.js
+		webpack.production.config.js	//但是这里面去掉开发过程的参数 
+		devtool: ''
+	2).	 
+		"build": "NODE_ENV=production webpack --config ./webpack.production.config.js --progress"
+		//这个 NODE_ENV 实际上设置的是: process.env.NODE_ENV 的值
+		//console.log(process.env.NODE_ENV)
+		
+	/**	production 和 development 的区别 ：
+			 生产模式，代码更加简洁在，且进行压缩，开发模式与之相反。
+		devtool 和 mode 一般配合使用：
+		开发环境：
+			mode: 'development',
+			devtool: 'cheap-module-eval-source-map',
+		生产环境
+			mode: 'production',
+			devtool: 'cheap-module-source-map',
+	*/
+
+
+
