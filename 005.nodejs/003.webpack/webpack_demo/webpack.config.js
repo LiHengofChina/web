@@ -17,6 +17,8 @@ module.exports = {
 		historyApiFallback: true,//不跳转
 		inline: true//实时刷新
 	}
+
+ 
 }
 
 
