@@ -14,7 +14,7 @@ CommonJS团队定义了module格式来解决JavaScript作用域问题
 CommonJS规范规定，每个模块内部，module 变量代表当前模块。
 这个变量是一个对象，它的exports属性（即module.exports）是对外的接口。
 
-加载某个模块，其实是加载该模块的module.exports属性。
+加载某个模块，其实是加载该模块的 module.exports 属性。
 
 //============
 CommonJS 给出 2个工具来实现模块之间的依赖
@@ -28,7 +28,7 @@ salute.js
 	module.exports = MySalute; //导出
 
 world.js
-	var MySalute = require("./salute"); //导出
+	var MySalute = require("./salute"); //引入
 	var Result = MySalute + " world!";
 	console.log(Result);
 	
