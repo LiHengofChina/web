@@ -17,8 +17,22 @@ module.exports = {
 		historyApiFallback: true,//不跳转
 		inline: true//实时刷新
 	}
-
- 
+  	,
+  	module:{
+  		rules: [{
+  		        	test: /\.js$/,
+  		        	exclude: /node_modules/,
+  		        	use:[{
+  		        			loader: 'babel-loader'
+  		        	}]
+  		        }]
+  	}
+  	  
 }
 
 
+//const SpeedMeasurePlugin = require("speed-measure-webpack-plugin")
+//const smp = new SpeedMeasurePlugin()
+//
+//
+//module.exports = smp.wrap(prodWebpackConfig)
