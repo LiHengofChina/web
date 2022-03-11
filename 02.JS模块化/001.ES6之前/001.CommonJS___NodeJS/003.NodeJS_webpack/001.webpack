@@ -1,4 +1,0 @@
-npm install -g webpack
-它依赖于npm，也需要再NodeJS环境下运行，
-它也是一个nodeJS的模块，因此，它也是CommonJS 规范的模块
-它是一个"模块打包机"
