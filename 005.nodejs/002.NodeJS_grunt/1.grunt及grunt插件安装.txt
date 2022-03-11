@@ -1,0 +1,138 @@
+官网：http://www.gruntjs.net/
+GRUNT 是 JavaScript 世界的构建工具
+//===========================安装
+//===========================安装
+//===========================安装
+(1).Grunt和 Grunt 插件是通过 npm 安装并管理的，
+		npm是 Node.js 的包管理器。
+		//换句话说，它依赖于NodeJS环境
+		//先安装NodeJS，安装包：node-v8.9.4-x64.msi
+		//安装完NodeJS之后，就可以使用npm命令了
+		//因为　npm是NodeJS的包管理器(是它的一部分)
+(2).如果是在局域网访问，不能连接外网，
+		只能在内网的镜像站下载：
+		用命令来设置镜像站
+		npm config set registry http://rnd-mirrors.huawei.com/npm-registry/
+		
+(3).升级"NPM"
+		//保当前环境中所安装的 npm 已经是最新版本，
+		 npm update -g npm  
+(4).安装CLI
+		//（CLI）是Grunt的命令行工具
+		// 通过 npm 来安装 grunt-cli 
+		npm install -g grunt-cli
+		//当安装 CLI 之后，
+		//grunt 命令就被加入到你的系统路径中了，
+		//注意：此时，还没有安装grunt
+		/**
+			注意：安装 grunt-cli 不等于安装 Grunt
+			
+			每次运行 grunt 时，
+			他就利用node提供的require()
+			系统查找本地安装的 Grunt。
+					正是由于这一机制，
+					你可以在项目的任意子目录中运行grunt 。
+			如果找到一份本地安装的 Grunt，
+			CLI就将其加载，
+			并传递Gruntfile中的配置信息，
+		*/
+ (4).文件准备
+ 
+	第一步：准备
+ 		 一般需要在你的项目中添加两份文件：
+		//===============
+		package.json
+			//npm用来存储项目的元数据，将项目打包成npm模块必须的，
+			/*
+					你可以在此文件中列出项目依赖的grunt和Grunt插件
+					放置于devDependencies配置段内,
+					如：
+					"devDependencies": {
+						"grunt": "^1.0.1",
+						"grunt-contrib-jshint": "^1.1.0"
+					}
+					
+					//创建 package.json 文件的办法
+					1).	grunt-init
+					3). npm init
+					4). 拷贝一个旧的或手动创建	
+
+			*/
+			
+		//===============
+		Gruntfile.js
+			//名为 Gruntfile.js 或 Gruntfile.coffee，
+			//是有效的 JavaScript 或 CoffeeScript 文件，
+			//用来配置或定义任务（task）并加载Grunt插件的。 
+						/** 发布时间：2010 年 12 月 24 日
+							CoffeeScript是一套JavaScript的转译语言，
+							创建者 Jeremy Ashkenas 戏称它是- JavaScript 的不那么铺张的小兄弟。
+							因为 CoffeeScript 会将类似 Ruby 
+							语法的代码编译成 JavaScript，
+							而且大部分结构都相似，
+							但不同的是 CoffeeScript 拥有更严格的语法。						
+						
+							CoffeeScript 是一门编译到 
+							JavaScript 的小巧语言. 
+							在 Java 般笨拙的外表下, 
+							JavaScript 其实有着一颗华丽的心脏. 
+							CoffeeScript 尝试用简洁的方式展示
+							JavaScript 优秀的部分.
+						*/
+
+		/***
+			package.json 和 Gruntfile.js
+			同时放置于项目根目录中
+						//后话：并且应该与项目的源代码一起被提交。
+		*/
+		在项目目录运行: npm install
+		将依据 package.json 文件中所列出的
+		每个依赖来自动安装适当版本的依赖。
+
+	
+(4).装 Grunt 和 grunt 插件
+	安
+	格式:npm install <module> --save-dev 
+	
+	npm install grunt --save-dev				//安装grunt
+	npm install grunt-contrib-jshint --save-dev //安装插件JSHint
+	npm install grunt-contrib-qunit --save-dev  //安装qunit
+	npm install grunt-contrib-watch --save-dev  //安装qunit
+
+ 
+(5).UI项目中使用到的插件
+//==========UI项目中使用的使用的作用
+GRUNT插件官网地址：
+	http://www.gruntjs.net/plugins
+	
+
+	"grunt":  
+	"grunt-angular-templates": 
+					合并自己缓存HTML模版，加载AngularJS应用程序
+					grunt.loadNpmTasks('grunt-angular-templates');
+	"grunt-contrib-clean":  grunt clean  
+					grunt.loadNpmTasks('grunt-contrib-clean');
+	"grunt-contrib-concat": grunt concat
+					grunt.loadNpmTasks('grunt-inline-concat');
+	"grunt-contrib-copy":  				 复制任务
+					grunt.loadNpmTasks('grunt-mcopy');
+	"grunt-contrib-cssmin":  			 压缩CSS
+					grunt.loadNpmTasks('grunt-contrib-cssmin');
+	"grunt-contrib-htmlmin": grunt htmlmin
+					grunt.loadNpmTasks('grunt-contrib-htmlmin');
+	"grunt-contrib-jshint":	grunt jshint 
+					grunt.loadNpmTasks('grunt-contrib-jshint');
+	"grunt-contrib-less":
+	"grunt-contrib-requirejs":
+	"grunt-contrib-uglify":
+					//压缩合并
+	"grunt-marsrev":
+	"grunt-replace":
+	"grunt-replace-url":
+	"grunt-safety":
+
+
+
+
+	
+	

@@ -1,0 +1,283 @@
+如何使用 Gruntfile 来为你的项目配置task，也就是打包任务的？
+//=========================Grunt配置
+//=========================Grunt配置
+//=========================Grunt配置
+	1).Grunt的task配置都是在 Gruntfile 
+	  中的grunt.initConfig方法中指定的。
+	  
+	2).此配置主要是以任务名称命名的属性，
+		也可以包含其他任意数据。
+		//一旦这些代表任意数据的属性
+		//与任务所需要的属性相冲突，
+		//就将被忽略。
+		通过示例来说明以上两点：
+			grunt.initConfig({
+				  concat: {
+						// 这里是concat任务的配置信息。
+				  },
+				  uglify: {
+						// 这里是uglify任务的配置信息
+				  },
+				  // 任意数据。
+				  my_property: 'whatever',
+				  my_src_files: ['foo/*.js', 'bar/*.js'],
+			});
+//=========================任务配置和目标
+//=========================任务配置和目标
+//=========================任务配置和目标
+	1).当运行一个任务时，
+		Grunt会自动查找配置对象中的同名属性。
+	
+	2).多任务（multi-task）可以通过
+		任意命名的"目标（target）"
+		来定义多个配置
+	示例：
+			grunt.initConfig({
+				  concat: {			//任务名
+						foo: { },	//目标
+						bar: { }	//目标	
+				  },
+				  uglify: {			//任务名
+						bar: { }	//目标
+				  }					//目标
+			});
+			/*
+			 说明:concat任务有名为foo和bar两个目标，
+			 而uglify任务仅仅只有一个名为bar目标。
+			*/
+	3).多任务的执行：
+		1).
+			grunt concat:foo
+			或
+			grunt concat:bar
+				//将只会处理指定目标（target）的配置
+		2).
+			而运行grunt concat将遍历所有目标
+			（target）并依次处理
+	4).其它注意事项
+			使用grunt.task.renameTask重命名过，
+			Grunt将在配置对象中查找以新的任务名命名的属性。
+		
+	
+//=========================options属性
+//=========================options属性
+//=========================options属性
+		
+		1).在一个任务配置中，
+			options属性可以用来指定覆盖内置属性的默认值。
+			options对象是可选的，如果不需要，可以忽略。
+		2).
+			每一个目标（target）
+			中还可以拥有一个
+			专门针对此目标（target）的options属性
+			目标（target）级的平options
+			将会覆盖任务级的options。
+	
+		示例：
+	
+		grunt.initConfig({
+			  concat: {
+				options: { },
+				foo: {
+					options: { }
+				},
+				bar: { }
+			  },
+		});	
+//=========================文件		
+//=========================文件		
+//=========================文件		
+		由于大多的任务都是执行文件操作，
+		Grunt有一个强大的抽象层
+		用于声明任务应该操作哪些文件。
+		//=========================
+		//===========
+		简洁格式	//通常情况下它用于只读任务
+		foo: {
+			 src: ['src/aa.js', 'src/aaa.js']
+		}	
+		//===========		
+		文件对象格式//支持每个目标对应多个src-dest形式的文件映射
+					//属性名就是目标文件,源文件(数据)就是它的值
+		foo: {
+			  files: {
+				'dest/a.js': ['src/aa.js', 'src/aaa.js'],
+				'dest/a1.js': ['src/aa1.js', 'src/aaa1.js']
+			  }
+		}
+		//===========
+		文件数组格式//每个目标对应多个src-dest文件映射
+					//同时也允许每个映射拥有额外属性：
+		foo: {
+			  files: [
+					{
+							src: ['src/bb.js', 'src/bbb.js'], 
+							dest: 'dest/b/', 
+							nonull: true
+					},
+					{
+							src: ['src/bb1.js', 'src/bbb1.js'], 
+							dest: 'dest/b1/', 
+							filter: 'isFile'
+					}
+			  ]
+		}
+ 
+//=========================自定义过滤函数	
+//=========================自定义过滤函数	
+//=========================自定义过滤函数	
+	
+	(1).第一步：
+		foo: {
+				  src: ['tmp/**/*'],
+				  filter:'isFile'	//匹配指定目录的文件
+		}
+		或
+		foo: {
+			  src: ['tmp/**/*'],
+			  filter: function(filepath) {//自定义这个函数
+							//返回空目录
+						return (
+							grunt.file.isDir(filepath)
+							&& 
+							require('fs').readdirSync(filepath).length === 0
+						);
+					  }
+			}
+	(2).第二步：
+		加载插件：
+		  grunt.loadNpmTasks('grunt-contrib-clean');
+		  
+		  
+		  
+		
+//=========================	通配符模式 globbing
+//=========================	通配符模式 globbing
+//=========================	通配符模式 globbing
+		通常分别指定所有源文件路径是不切实际的，
+		因此Grunt通过内置支持node-glob 和 minimatch 
+		库来匹配文件名(又叫作 globbing )。	
+		//=========通配符列表
+		//=========通配符列表
+		* 		//匹配任意数量的字符，但不匹配 /
+		?   	//匹配单个字符，但不匹配 /
+		** 		//匹配任意数量的字符，包括 /，只要它是路径中唯一的一部分
+		{} 		//允许使用一个逗号分割的“或”表达式列表
+		!  		//在模式的开头用于排除一个匹配模式所匹配的任何文件
+
+		//=========示例说明：
+		1). foo/*.js  	     将匹配位于foo/目录下的所有的.js结尾的文件；
+		2). foo/**/*js 		将匹配foo/目录以及其子目录
+							中所有以.js结尾的文件
+		
+	//============注意：
+	在数组形式的文件路径或者一个通配符模式中，
+	所有模式"按顺序处理"
+	
+//=========================	模版
+//=========================	模版
+//=========================	模版
+
+	//================上下文定义
+	(1). 整个配置对象决定了属性上下文(模板中的属性)
+		//主要指自定义的属性
+	(2). 
+		在模板中使用grunt以及它的方法都是有效的，
+		例如： <%= grunt.template.today('yyyy-mm-dd') %>。
+			
+	//================使用模版
+	(3).使用 <% %>	会"在任务"从"它们的配置中"
+				读取"相应的数据"时，自动扩展扫描，
+				模板会被递归的展开，
+				直到配置中不再存在遗留的
+				模板相关的信息(与模板匹配的)。
+	
+	(3).示例：
+		<%= prop.subprop %> 
+		将会自动展开配置信息中的prop.subprop的值，
+		//值可以是：字符串、数组、对象
+	(4).
+		<% %> 执行任意内联的JavaScript代码。
+		对于控制流或者循环来说是非常有用的。
+	
+	示例：
+	grunt.initConfig({
+		  concat: {
+			sample: {
+			  options: {
+				banner: '/* <%= baz %> */\n'   // '/* abcde */\n'
+			  },
+			  src: ['<%= qux %>', 'baz/*.js'],  // [['foo/*.js', 'bar/*.js'], 'baz/*.js']
+			  dest: 'build/<%= baz %>.js'      // 'build/abcde.js'
+			},
+		  },
+		  //用于任务配置模板的任意属性
+		  foo: 'c',
+		  bar: 'b<%= foo %>d', // 'bcd'
+		  baz: 'a<%= bar %>e', // 'abcde'
+		  qux: ['foo/*.js', 'bar/*.js']
+	});
+		
+	runt.loadNpmTasks('grunt-inline-concat');
+	
+
+//=========================	导入外部数据
+//=========================	导入外部数据
+//=========================	导入外部数据
+			/**
+			grunt.file.readJSON
+			和
+			grunt.file.readYAML
+			两个方法分别用于引入JSON和YAML数据。
+			*/
+grunt.initConfig({
+  pkg: grunt.file.readJSON('package.json')
+});	
+//=========================动态构建文件对象	 
+//=========================动态构建文件对象	  
+//=========================动态构建文件对象	 
+//仅举例说明：
+	grunt.initConfig({
+	  uglify: {
+		static_mappings: {
+		  // Because these src-dest file mappings are manually specified, every
+		  // time a new file is added or removed, the Gruntfile has to be updated.
+		  files: [
+			{src: 'lib/a.js', dest: 'build/a.min.js'},
+			{src: 'lib/b.js', dest: 'build/b.min.js'},
+			{src: 'lib/subdir/c.js', dest: 'build/subdir/c.min.js'},
+			{src: 'lib/subdir/d.js', dest: 'build/subdir/d.min.js'},
+		  ],
+		},
+		dynamic_mappings: {
+		  // Grunt will search for "**/*.js" under "lib/" when the "uglify" task
+		  // runs and build the appropriate src-dest file mappings then, so you
+		  // don't need to update the Gruntfile when files are added or removed.
+		  files: [
+			{
+			  expand: true,     // Enable dynamic expansion.
+			  cwd: 'lib/',      // Src matches are relative to this path.
+			  src: ['**/*.js'], // Actual pattern(s) to match.
+			  dest: 'build/',   // Destination path prefix.
+			  ext: '.min.js',   // Dest filepaths will have this extension.
+			  extDot: 'first'   // Extensions in filenames begin after the first dot
+			},
+		  ],
+		},
+	  },
+	});
+	//==============================
+	uglify 任务中的static_mappings和dynamic_mappings两个目标
+	具有相同的src-dest文件映射列表, 
+	这是因为任务运行时Grunt会自动展开dynamic_mappings文件对象
+	为4个单独的静态src-dest文件映射--假设这4个文件能够找到。	
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	

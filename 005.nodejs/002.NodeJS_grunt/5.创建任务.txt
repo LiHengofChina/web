@@ -1,0 +1,174 @@
+//===================
+	每当运行Grunt时, 
+	你可以为其指定一个或多个任务, 
+	这些任务用于告诉Grunt你想要它做什么事情。
+//=======================任务别名
+//=======================任务别名
+//=======================任务别名
+	当运行此 "任务别名" 时，
+	在 taskList 中指定的每个任务都会按照其出现的顺序依次执行
+	
+	//格式
+	grunt.registerTask(taskName, [description, ] taskList)
+	//默认任务
+	grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
+	//参数
+	grunt.registerTask('dist', ['concat:dist', 'uglify:dist']);
+//=======================多任务
+//=======================多任务
+//=======================多任务
+		当运行一个多任务时，
+		Grunt会自动从项目的配置对象中查找同名属性。
+		多任务可以有多个配置，
+		并且可以使用任意命名的'targets'。
+	
+		大部分的contrib任务(主要是指官方提供的任务)
+		都是多任务形式的。
+				//jshint任务 concat任务等等
+	//格式：
+	grunt.registerMultiTask(taskName, [description, ] taskFunction)
+	//=========从任务示例
+	grunt.initConfig({
+	  log: {
+		foo: [1, 2, 3],
+		bar: 'hello world',
+		baz: false
+	  }
+	});
+
+	grunt.registerMultiTask('log', 'Log stuff.', function() {
+	  grunt.log.writeln(this.target + ': ' + this.data);
+	});
+	
+	grunt log:foo
+	grunt log:bar
+	grunt log
+//======================="基本" 任务
+//======================="基本" 任务
+//======================="基本" 任务
+	当一个基本任务执行时，
+	Grunt并不会检查配置和环境 -- 
+	//它仅仅执行指定的任务函数，
+	//并传递任何使用冒号分割的参数作为函数的参数。
+	
+	格式：grunt.registerTask(taskName, [description, ] taskFunction)
+	
+	//====示例：
+	grunt.registerTask('foo', 'A sample task that logs stuff.', function(arg1, arg2) {
+	  if (arguments.length === 0) {
+		grunt.log.writeln(this.name + ", no args");
+	  } else {
+		grunt.log.writeln(this.name + ", " + arg1 + " " + arg2);
+	  }
+	});	
+
+		grunt foo:testing:123
+		grunt foo
+//=======================自定义任务
+//=======================自定义任务
+//=======================自定义任务
+	如果你的任务并没有遵循 "多任务" 结构，那就使用自定义任务。
+	grunt.registerTask('default', 'My "default" task description.', function() {
+	  grunt.log.writeln('Currently running the "default" task.');
+	});
+//=======================任务中调用其它任务
+//=======================任务中调用其它任务
+//=======================任务中调用其它任务
+ grunt.registerTask('foo', 'My "foo" task.', function() {
+	  // Enqueue "bar" and "baz" tasks, to run after "foo" finishes, in-order.
+	  grunt.task.run('bar', 'baz');
+	  // Or:
+	  grunt.task.run(['bar', 'baz']);
+});
+//=======================异步任务
+//=======================异步任务
+//=======================异步任务
+
+
+可以在task体中通过调用 this.async() 将其转换为异步的。
+
+	grunt.registerTask('asyncfoo', 'My "asyncfoo" task.', function() {
+		  // Force task into async mode and grab a handle to the "done" function.
+		  var done = this.async();
+		  // Run some sync stuff.
+		  grunt.log.writeln('Processing task...');
+		  // And some async stuff.
+		  setTimeout(function() {
+			grunt.log.writeln('All done!');
+			done();
+		  }, 1000);
+	});
+	为了简单起见，Grunt使用同步的编码风格，
+	
+	注意，传递 false 给 done() 函数就会告诉Grunt你的任务已经失败。
+	grunt.registerTask('asyncme', 'My asynchronous task.', function() {
+		var done = this.async();
+		doSomethingAsync(done);
+	});
+	
+//=======================任务也可以访问它们自身名称和参数。
+//=======================任务也可以访问它们自身名称和参数。
+//=======================任务也可以访问它们自身名称和参数。
+	grunt.registerTask('foo', 'My "foo" task.', function(a, b) {
+		grunt.log.writeln(this.name, a, b);
+	});
+//=======================如果记录到任何错误，那么任务就会失败。
+//=======================如果记录到任何错误，那么任务就会失败。
+//=======================如果记录到任何错误，那么任务就会失败。
+grunt.registerTask('foo', 'My "foo" task.', function() {
+	  if (failureOfSomeKind) {
+		grunt.log.error('This is an error message.');
+	  }
+
+	  // 如果这个任务出现错误则返回false
+	  if (ifErrors) { return false; }
+
+	  grunt.log.writeln('This is the success message');
+});	
+//=======================当任务失败时，所有后续任务都将终止，除非指定 --force 。	
+//=======================当任务失败时，所有后续任务都将终止，除非指定 --force 。	
+//=======================当任务失败时，所有后续任务都将终止，除非指定 --force 。	
+grunt.registerTask('foo', 'My "foo" task.', function() {
+  // Fail synchronously.
+  return false;
+});
+
+grunt.registerTask('bar', 'My "bar" task.', function() {
+  var done = this.async();
+  setTimeout(function() {
+    // Fail asynchronously.
+    done(false);
+  }, 1000);
+});
+//========================依赖于其他任务的成功执行
+//========================依赖于其他任务的成功执行
+//========================依赖于其他任务的成功执行
+
+ 任务还可以依赖于其他任务的成功执行。
+ 注意 grunt.task.requires 并不会真正的运行其他任务，
+ 它仅仅检查其它任务是否已经执行，并且没有失败。
+ 
+grunt.registerTask('foo', 'My "foo" task.', function() {
+  return false;
+});
+
+grunt.registerTask('bar', 'My "bar" task.', function() {
+  // 如果"foo"任务运行失败或者没有运行则任务失败。
+  grunt.task.requires('foo');
+  // 如果"foo"任务运行成功则执行这里的代码。
+  grunt.log.writeln('Hello, world.');
+});
+//========================任务还可以访问配置属性。
+//========================任务还可以访问配置属性。
+//========================任务还可以访问配置属性。
+grunt.registerTask('foo', 'My "foo" task.', function() {
+  // 记录属性值，如果属性未定义（undefined）则返回null。
+  grunt.log.writeln('The meta.name property is: ' + grunt.config('meta.name'));
+  // 同样的记录属性值，如果属性未定义（undefined）则返回null。
+  grunt.log.writeln('The meta.name property is: ' + grunt.config(['meta', 'name']));
+});
+ 
+ 
+ 
+ 
+ 
