@@ -1,0 +1,298 @@
+
+//================================================ 插件
+//================================================ 插件
+
+	插件（Plugins）是用来拓展 Webpack 功能的，
+	它们会在整个构建过程中生效，执行相关的任务。
+		
+		//Webpack有很多内置插件，同时也有很多第三方插件
+
+//================================================ Loaders 和 Plugins 的区别	
+//================================================ Loaders 和 Plugins 的区别	
+	不要混淆 插件 和 Loaders
+
+	1). Loaders是在打包构建过程中用来处理源文件的（JSX，Scss，Less..），一次处理一个。
+		
+	2).	插件并不直接操作单个文件，它直接对整个构建过程起作用。
+	
+		
+ 
+//================================================ 常见插件（一）
+//================================================ 常见插件（一）
+
+1). HtmlWebpackPlugin
+	//依据一个简单的index.html模板
+	//生成一个"自动引用你打包后JS文件"的新index.html
+	//这在每次生成的js文件名称不同时非常有用（比如添加了hash值）。
+2). 插件安装
+	npm install --save-dev html-webpack-plugin
+
+3). 产生插件实例
+	const HtmlWebpackPlugin = require('html-webpack-plugin');
+	
+	plugins: [
+            new HtmlWebpackPlugin({
+                template: __dirname + "/app/index.tmpl.html"//new 一个这个插件的实例，并传入相关的参数
+            })
+	]							
+ 
+ 	/**
+		htmlWebpackPlugin
+			是html-webpack-plugin插件在生成html文件过程中产生的数据，
+			这些数据对html模板文件是可用的
+
+
+		htmlWebpackPlugin.files		
+				//此次html-webpack-plugin插件配置的chunk和抽取的css样式。
+		htmlWebpackPlugin.options
+				//传递给插件的配置项，
+				//具体的配置项如上面插件配置项小节所描述的。
+ 	*/
+//================================================ 常见插件（二）热部署
+//================================================ 常见插件（二）热部署
+
+Hot Module Replacement
+	它允许你在修改组件代码后，自动刷新实时预览修改后的效果。
+	//一句话，时时部署,看到最新修改
+	1).
+		devServer: {
+			......
+			hot: true 
+			......
+		},
+	2).
+		const webpack = require('webpack');
+		plugins: [
+			new webpack.HotModuleReplacementPlugin()//热加载插件
+		]
+
+//================================================ 常见插件（二）热部署2
+//================================================ 常见插件（二）热部署2
+
+这两个插件一般配置使用，
+npm install --save-dev webpack-dev-middleware
+npm install --save-dev webpack-hot-middleware
+
+
+const webpackDevMiddleware = require("webpack-dev-middleware");
+const webpackHotMiddleware = require('webpack-hot-middleware');
+
+
+
+
+
+
+//================================================ 常见插件（三） OccurenceOrder 和 UglifyJS plugins
+//================================================ 常见插件（三） OccurenceOrder 和 UglifyJS plugins
+	
+	//调整模块的打包顺序，用到次数更多的会出现在文件的前面
+	OccurenceOrderPlugin : (内置)//为组件分配ID，
+						   //通过这个插件webpack可以分析和优先考虑使用最多的模块，
+						   //并为它们分配最小的ID
+	UglifyJsPlugin：   	   //压缩JS代码；
+	1).
+		npm install --save-dev uglifyjs-webpack-plugin
+	2).	
+		const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
+	3).	
+		new webpack.optimize.OccurrenceOrderPlugin(),
+		new UglifyJsPlugin({
+			uglifyOptions: {
+				compress: false
+			}
+		})
+
+//================================================ 常见插件（四）清理插件
+//================================================ 常见插件（四）清理插件
+
+1). 安装 
+     cnpm install clean-webpack-plugin --save-dev
+ 
+ 
+2). 产生对象
+
+	const {CleanWebpackPlugin} = require('clean-webpack-plugin');	//解构的方式
+	new CleanWebpackPlugin()
+
+
+				
+
+//================================================ 常见插件（五）css提取插件
+//================================================ 常见插件（五）css提取插件
+
+	将CSS提取为独立的文件的插件，
+		//对每个包含css的js文件都会创建一个CSS文件，
+		//支持按需加载css和sourceMap
+		//支持按需加载css和sourceMap
+
+1).   npm install --save-dev mini-css-extract-plugin
+
+2). 
+	  const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+3).
+	 {
+		  test: /\.css$/,
+		  use: [
+				MiniCssExtractPlugin.loader,
+				"css-loader"
+			]
+	 }
+4).
+
+	new MiniCssExtractPlugin({
+		filename: "[name].css",
+		chunkFilename: "[id].css"
+	}),  
+
+//===================================================== 常见插件（六）合并插件  webpack-merge 
+//===================================================== 常见插件（六）合并插件  webpack-merge 
+
+const webpackMerge = require('webpack-merge');
+const commonConfig = require('./webpack.common.js'); 
+
+// 把两部分配置合到一起
+module.exports = function (options) {
+    return webpackMerge(
+		commonConfig({ env: ENV }), //第一部分
+		{//第二部分
+			entry: {
+				businessAll: ***.js,
+				business_themes: [***.js]
+			},
+			mode: 'development',
+			devtool: 'inline-source-map',
+			output: {},
+			plugins: []
+		}
+	);
+}
+
+//===================================================== 常见插件（七）复制 插件   //TODO 未测试
+//===================================================== 常见插件（七）复制 插件   //TODO 未测试
+npm install --save-dev copy-webpack-plugin
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+new CopyWebpackPlugin([
+  {
+    from: path.resolve(__dirname, 'static'),
+    to: path.resolve(__dirname, 'pages/static'),
+    ignore: ['.*']
+  }
+])
+
+
+//===================================================== 常见插件（八）JS压缩
+//===================================================== 常见插件（八）JS压缩
+npm install terser-webpack-plugin --save-dev
+
+const TerserPlugin = require('terser-webpack-plugin');
+
+module.exports = {
+  optimization: {
+    minimizer: [new TerserPlugin()],
+  },
+};
+
+//===================================================== 常见插件（九）优化css插件
+//===================================================== 常见插件（九）优化css插件
+
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
+plugins: [
+      new OptimizeCssAssetsPlugin()//优化CSS文件
+]
+ 
+//===================================================== 常见插件（十） chunk ID 修改
+//===================================================== 常见插件（十） chunk ID 修改
+
+NamedChunksPlugin：把chunk id变为一个字符串标识符
+	//(固化 runtime 内以及在使用动态加载时分离出的 chunk 的 chunk id)
+
+//===================================================== 常见插件（十一）生成文件名(模块)，文件命名
+//===================================================== 常见插件（十一）生成文件名(模块)，文件命名
+
+NamedModulesPlugin  	//基于文件名的哈希值命名
+HashedModuleIdsPlugin 	//基于文件内容的哈希值命名
+
+//===================================================== 常见插件（十二）公共JS打包方法
+//===================================================== 常见插件（十二）公共JS打包方法
+CommonsChunkPlugin
+ 主要是用来提取第三方库和公共模块，
+	//避免加载的bundle文件或者按需加载的bundle文件体积过大，
+	//从而导致加载时间过长
+	//JS CSS等等	
+	
+webpack 4 移除 CommonsChunkPlugin，取而代之的是两个新的配置项（optimization.splitChunks 和 optimization.runtimeChunk）	
+
+	module.exports = {
+	  entry: {
+		'app': './index.js',			//入口一
+		'vender': ['left-pad', 'jsonp'] //入口二，命名为vender，它里面包涵
+										//'left-pad'和'jsonp'两部分
+	  },
+	  output: {
+		filename: '[name].[chunkHash].js',
+		path: path.resolve(__dirname, 'build')
+	  },
+	  plugins:[
+			 new webpack.optimize.CommonsChunkPlugin({
+				name: ['vender', 'manifest'], //指定vender下的内容打包为第三方的JS
+				minChunks: Infinity,
+			})
+	  ]
+	};
+
+//===================================================== 常见插件（十三）LoaderOptionsPlugin
+//===================================================== 常见插件（十三）LoaderOptionsPlugin
+  new webpack.LoaderOptionsPlugin({
+    options: {
+      postcss: function () {	//针对  postcss 平台 
+        return [precss, autoprefixer];//autoprefixer 为CSS代码自动添加适应不同浏览器的CSS前缀。
+      }
+    }
+
+
+
+//oader-options-plugin 和其他插件不同，它用于将 webpack 1 迁移至 webpack 2
+//就是说 webpack 2 后，所有的loader 的 options(配置项)不全局共享，
+//如果想全局共享 ，就可以使用这个插件。
+通过这个插件配置全局/共享的 loader 配置,使所有的 loader 都能收到这些配置。
+
+
+此插件支持以下选项：
+
+options.debug (boolean)：loader 是否为 debug 模式。debug 在 webpack 3 中将被移除。
+options.minimize (boolean)：loader 是否要切换到优化模式。
+options.options (object)：一个配置对象，用来配置旧的 loader - 将使用和 webpack.config.js 相同的结构。
+options.options.context (string)：配置 loader 时使用的上下文。
+任何其他选项和在 webpack.config.js 中一样……
+
+
+//===================================================== 常见插件（十四）ProvidePlugin  插件
+//===================================================== 常见插件（十四）ProvidePlugin  插件
+自动加载模块，而不必到处 import 或 require 。
+
+示例：
+1). 要自动加载 jquery，我们可以将两个变量都指向对应的 node 模块：
+	 new webpack.ProvidePlugin({
+		  $: 'jquery',
+		  jQuery: 'jquery'
+	 })
+2). 然后在我们任意源码中：
+	 // in a module
+	 $('#item'); // <= 起作用
+	 jQuery('#item'); // <= 起作用
+	 // $ 自动被设置为 "jquery" 输出的内容
+//===================================================== 常见插件（十五）DefinePlugin  插件
+//===================================================== 常见插件（十五）DefinePlugin  插件
+使用DefinePlugin可以更安全的定义环境变量
+new webpack.DefinePlugin({
+  'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH)
+})
+	
+
+
+
+
+

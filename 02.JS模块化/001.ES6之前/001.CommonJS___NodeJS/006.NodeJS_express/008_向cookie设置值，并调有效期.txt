@@ -1,0 +1,14 @@
+const express=require('express')
+var server=express()
+//const cookieParser=require('cookie-parser')
+
+//加了path之后，cookie只能在/lin路径下才能访问,
+//maxAge是cookie的存活时间，单位是毫秒
+server.get('/lin',function(req,res){
+  res.cookie('age',16,{path:'/lin',maxAge:15*1000})
+  res.send('welcome lin')
+})
+
+server.listen(8080)
+//http://localhost:8080/lin 
+ 

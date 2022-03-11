@@ -1,0 +1,25 @@
+// 使用重定向
+// 引入 Express
+const express = require("express");
+const path = require("path");
+
+// 创建服务
+const app = express();
+
+// 创建路由
+app.get("/user", function (req, res, next) {
+    res.end("user");
+});
+
+app.get("/detail", function (req, res, next) {
+    // 访问 /detail 重定向到 /user
+    res.redirect("/user");
+});
+
+// 监听服务
+app.listen(3000);
+
+
+// http://localhost:3000/user
+// http://localhost:3000/detail
+	

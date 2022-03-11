@@ -1,0 +1,61 @@
+externals
+	如果想引用一个库，但是又不想让webpack打包，
+	并且又不影响我们在程序中以CMD、AMD或者window/global全局等方式进行使用，
+	那就可以通过配置externals
+
+externals配置选项，将指定的内容排除在构建的vendor中，
+但是，指定的内容需要出现在用户环境中。	//就是开发环境可以使用
+
+//====================================externals支持模块上下文的方式
+//externals配置选项，将指定的内容排除在构建的vendor中
+//但是，指定的内容需要出现在用户环境中。	//就是开发环境可以使用
+
+
+//==================================== externals 配置数据类型(用法)
+
+string, array, object, function, regex
+string, array, object, function, regex
+
+//==================================== externals 配置数据类型(用法)
+
+externals支持模块上下文的方式
+global - 
+			//外部 library 能够作为全局变量使用。
+			//用户可以通过在 script 标签中引入来实现。
+			//这是 externals 的默认设置。
+commonjs - 
+			//用户(consumer)应用程序可能使用 CommonJS 模块系统，
+			//因此外部 library 应该使用 CommonJS 模块系统，
+			//并且应该是一个 CommonJS 模块。
+commonjs2 - 
+			//类似上面几行，但导出的是 module.exports.default。
+amd - 
+			//类似上面几行，但使用 AMD 模块系统。
+
+//==================================== 
+
+
+示例：
+	1). 在index.html中引入CDN的资源react全家桶之类的资源
+		//
+		  <script src="https://lib.baomitu.com/react/16.4.0-alpha.7926752/cjs/react.development.js"></script>
+		  <script src="https://cdnjs.cloudflare.com/cjs/react-dom-server.browser.development.js"></script>
+
+	2). webpack.config.js配置如下：
+	  module.exports = {
+		 ...
+		 externals : {
+		   react: 'react',
+		   redux: 'redux'
+		 }
+		 ...
+	   }
+
+	3). 这样的话在应用程序中依旧可以以import的方式（还支持其他方式）引用：
+		import React from 'react';
+		import { createStore, combineReducers, applyMiddleware } from 'redux';
+
+	4).这样不仅之前对第三方库的用法方式不变，
+		还把第三方库剥离出webpack的打包中，
+		从而加速webpack的打包速度。
+

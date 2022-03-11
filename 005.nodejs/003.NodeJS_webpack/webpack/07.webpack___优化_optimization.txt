@@ -1,0 +1,78 @@
+
+https://blog.csdn.net/weixin_43678786/article/details/85788759
+
+//webpack4 出现的优化：
+//从webpack4开始官方移除了commonchunk插件，
+//改用了 optimization 属性进行更加灵活的配置
+//================================
+可以理解为它是用来优化webpack的
+	//==================示例：
+	optimization: {
+		minimizer: [//
+			new TerserPlugin({....
+		]
+	}
+
+//================================配置项目: minimizer //默认为true
+//================================配置项目: minimizer //默认为true
+		//效果就是压缩js或css代码。它可以配置多个压缩插件
+  minimizer: [ // 自定义js优化配置，将会覆盖默认配置
+      new UglifyJsPlugin({
+			// 过滤掉以".min.js"结尾的文件，
+			// 我们认为这个后缀本身就是已经压缩好的代码，
+			// 没必要进行二次压缩
+        exclude: /\.min\.js$/, 
+				..........
+      }),
+      // 用于优化css文件
+      new OptimizeCssAssetsPlugin({
+        assetNameRegExp: /\.css$/g,
+				..........
+      })
+  ]
+//================================配置项目: runtimeChunk//默认为false
+//================================配置项目: runtimeChunk//默认为false
+	runtimeChunk： {
+		name: () =>  "manifest"
+	}
+	或
+	runtimeChunk: 'single'
+		
+//================================配置项目: noEmitOnErrors//默认为true
+//================================配置项目: noEmitOnErrors//默认为true
+	编译错误的时候是否不生成资源。
+		
+		
+//================================配置项目: splitChunks//默认为true	
+//================================配置项目: splitChunks//默认为true	
+	根据不同的策略来分割打包出来的bundle。
+ 
+	 splitChunks: {
+	  chunks: "async",	//默认‘async’
+	  minSize: 30000,	//minSize,maxSize,maxAsyncRequests
+					    //（按需加载时候最大的并行请求数）,maxInitialRequests（一个入口最大的并行请求数）
+						//至少要30KB之后才能分享
+	  minChunks: 1,		//最小公用模块次数，默认为1
+	  maxAsyncRequests: 5,
+	  maxInitialRequests: 3,
+	  automaticNameDelimiter: '~',
+	  name: true,    //分割的js名称，默认为true，
+					 //返回${cacheGroup的key} ${automaticNameDelimiter} ${moduleName},
+					 //可以自定义。
+	  cacheGroups: {
+		vendors: {
+		  test: /[\\/]node_modules[\\/]/,
+		  priority: -10
+		},
+		default: {
+		  minChunks: 2,
+		  priority: -20,
+		  reuseExistingChunk: true
+		}
+	  }
+	}
+ 
+ 
+ 
+
+		

@@ -1,0 +1,15 @@
+
+
+// 三行代码搭建的最基本服务
+// 引入 Express
+const express = require("express");
+
+// 创建服务
+const app = express();
+
+// 监听服务
+app.listen(3000);
+
+// http://localhost:3000/
+
+

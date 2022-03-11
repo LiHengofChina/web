@@ -1,0 +1,7 @@
+GRUNT 是 JavaScript 世界的构建工具
+	//  grunt 通过 npm 安装并管理的，
+	//  npm是 Node.js 的包管理器。
+	//  换句话说，它依赖于NodeJS环境
+	//  grunt 其实就是一个nodeJS插件。因此它也是一个满足 CommonJS 规范的东东
+	//  Grunt采用同步模式的编码风格
+	// 你可以通过在任务中调用 this.async() 切换到异步

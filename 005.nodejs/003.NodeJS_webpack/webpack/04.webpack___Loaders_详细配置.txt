@@ -1,0 +1,114 @@
+ 
+Loaders 示例
+//========================================（一） 样式表 处理
+//========================================（一） 样式表 处理 
+ 
+ 		/**
+		webpack提供两个工具处理样式表,二者处理的任务不同
+			1). css-loader
+					css-loader使你能够使用类似 @import 和 url(...)的方法
+					实现 require()的功能
+			2). style-loader
+					将所有的计算后的样式加入页面中
+		二者组合在一起使你能够把"样式表"嵌入webpack打包后的JS文件中。
+		
+		
+		依赖安装：
+				npm install --save-dev style-loader
+				npm install --save-dev css-loader
+				
+		*/
+		
+示例代码：	
+	module.exports = {
+......
+		module: {		//模块配置
+			loaders: [
+				{
+					test:/\.css$/,		//
+					loader: 'style!css'	//就是上面所说的 tyle-loader 与 css-loader
+				}
+			]
+		}
+	}		
+//========================================（二）CSS modules 技术
+//========================================（二）CSS modules 技术
+缘起：
+	过去的一些年里，
+	JavaScript发展得非常迅速(模块化、干净、依赖加载管理等)
+	
+	但是CSS发展就相对慢一些
+	"样式表依旧巨大、且充满了全局类名"
+	使得"维护和修改"都"非常困难和复杂"
+
+	/**
+		"CSS modules"的技术就意在把JS的模块化思想带入CSS中来
+		通过CSS模块，所有的类名，动画名默认都只作用于当前模块。
+	*/
+//============= Webpack 中的 "CSS模块化"
+//============= Webpack 中的 "CSS模块化"
+	/**
+	Webpack从一开始就对CSS模块化提供了支持
+	在CSS loader中进行配置后，
+	你所需要做的一切就是把"modules"传递到所需要的地方，
+	然后就可以直接把CSS的类名传递到组件的代码中，
+	且这样做只对当前组件有效，
+	不必担心在不同的模块中具有相同的类名可能会造成的问题。
+	*/
+ 			loaders: [
+				{
+					test:/\.css$/,
+					loader: 'style!css?modules' 
+							// ?modules 只是配置上多加一个这个，
+							// 就表示，所有CSS不会相互污染了
+				}
+			]
+			
+这样相同的类名也不会互相污染
+
+//======================================== （三）CSS预编译
+//======================================== （三）CSS预编译
+ 预处理的作用
+		Sass 和 Less 之类的 预处理器 是 对 "原生CSS的拓展"，
+		它们允许你使用类似于variables, nesting, mixins, inheritance等不存在于CSS中的特性来写CSS，
+		CSS预处理器可以这些特殊类型的语句转化为浏览器可识别的CSS语句
+		几个常用的处理的
+	
+		//less-loader 、 sass-loader 、 stylus-loader
+		
+ 			loaders: [
+				{
+					test:/\.css$/,
+					loader: 'style!css?modules!less!sass!stylus' //加入那些处理程序
+				}
+			]		
+		
+//======================================== （四）CSS 处理平台
+//======================================== （四）CSS 处理平台
+CSS处理平台-PostCSS，它可以让CSS实现更多的功能 
+	如：为CSS代码自动添加适应不同浏览器的CSS前缀。
+
+//依赖安装：npm install --save-dev postcss-loader autoprefixer
+
+ 			loaders: [
+				{
+					test:/\.css$/,
+					loader: 'style!css?modules!less!sass!stylus!postcss' //3.加入处理列表
+				}
+			], 
+			postcss: [ //1.先创建一个postcss关键字
+				require('autoprefixer')//2.申明依赖的 autoprefixer 插件
+			]
+现在你写的css会自动根据Can i use里的数据添加不同前缀了。
+//======================================== Babel 平台	
+//======================================== Babel 平台	
+	Babel其实是一个编译JavaScript的平台，
+	它可以编译代码帮你达到以下目的：
+
+	让你能使用最新的JavaScript代码（ES6，ES7...），
+	而不用管新标准是否被当前使用的浏览器完全支持；
+	让你能使用基于JavaScript进行了拓展的语言，
+	比如React的JSX；
+
+
+ 

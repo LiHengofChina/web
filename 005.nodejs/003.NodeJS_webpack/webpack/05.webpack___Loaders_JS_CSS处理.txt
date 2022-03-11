@@ -1,0 +1,107 @@
+https://segmentfault.com/a/1190000006178770
+//PostCSS 与 BaBel 本来是独立的两个平台，不过，它们可以和webpack配合起来发挥更大的作用
+
+
+1). BaBel 平台 (编译JS)
+	babel-core //核心模块
+	npm install --save-dev babel-core
+	
+	1). ES6,ES7,JSX语法
+		/**
+		npm install --save-dev babel-loader
+		npm install --save-dev babel-preset-env
+		npm install --save-dev babel-preset-react
+		{
+			test: /(\.jsx|\.js)$/,
+			use: {
+				loader: "babel-loader",
+				options: {
+					presets: [
+						"env", "react"
+					]
+					//['env', 'stage-0', 'react'] // env转换es6 stage-0转es7 react转react
+				}
+			},
+			exclude: /node_modules/
+		}
+		*/
+	2). react 语法
+		/**
+		npm install --save react
+		npm install --save react-dom
+		
+		import React, {Component} from 'react'
+		import React from 'react';
+		import {render} from 'react-dom';
+
+		*/	
+2). CSS处理
+	1).  样式表处理
+		 css-loader
+			//使你能够使用类似 @import 和 url(...)的方法
+		 style-loader
+			//将所有的计算后的样式加入页面中
+			/**
+				npm install --save-dev style-loader
+				npm install --save-dev css-loader
+					{
+						test:/\.css$/,
+						loader: 'style!css'
+					}
+			*/ 
+	2). CSS模块化
+			/**	//使用cssModule添加类名的方法
+				<div className={styles.root}> 
+				</div>
+
+				{
+					test:/\.css$/,
+					loader: 'style!css?modules' 
+						//?modules 只是配置上多加一个这个，就表示，所有CSS不会相互污染了
+				}
+				 {
+					loader: "css-loader",
+					options: {
+						modules: true
+					}
+				  }
+				
+			*/
+
+	3).  CSS预处理器
+			/**
+					Less Loader
+					Sass Loader
+					Stylus Loader
+			*/
+			//允许你使用类似于variables, nesting, mixins, inheritance等不存在于CSS中的特性来写CSS
+			//CSS预处理器可以这些特殊类型的语句转化为浏览器可识别的CSS语句，
+
+	4). PostCSS 平台
+			npm install --save-dev postcss-loader
+			npm install --save-dev autoprefixer
+			//为CSS代码自动添加适应不同浏览器的CSS前缀等等功能。
+3). 文件和URL路径，图片处理 //TODO 未测试
+	npm install --save-dev file-loader url-loader 
+
+	file-loader 解决css等文件中引入图片路径的问题
+	url-loader 当图片较小的时候会把图片BASE64编码
+
+	大于limit参数的时候还是使用file-loader 进行拷贝
+	{
+		test: /\.(png|jpg|jpeg|gif|svg)/,
+		use: {
+		  loader: 'url-loader',
+		  options: {
+			outputPath: 'images/', // 图片输出的路径
+			limit: 5 * 1024
+		  }
+		}
+	},
+	// 同时要处理打包图片路径问题，
+	output: {
+		publicPath: '/'
+	}
+
+
+

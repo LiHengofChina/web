@@ -1,0 +1,38 @@
+//================================================示例1：exports
+//================================================示例1：exports
+
+//module.js
+var name;
+exports.setName = function(thyName){
+	name = thyName;
+}
+exports.sayHello = function(){
+	console.log( " Hello " + name);
+}
+//getmodule.js
+var myModule = require("./module");
+myModule.setName("liheng");
+myModule.sayHello();
+
+	//上面这个代码有点类似于创建一个对象，
+	//但实际上和对象又有本质的区别，
+	//因为require 不会重复加载模块，
+	也就是说无论调用多少次 require， 
+	获得的模块都是同一个。
+
+//================================================示例2：说明 require 是单次加载
+//================================================示例2：说明 require 是单次加载
+var hello1 = require('./module');
+hello1.setName('BYVoid');
+var hello2 = require('./module');
+hello2.setName('BYVoid 2');
+hello1.sayHello();	
+
+	//运行后发现输出结果是 Hello BYVoid 2 ，
+	//这是因为变量 hello1 和 hello2 指向的是同一个实例，
+	//因此 hello1.setName 的结果被 hello2.setName 覆盖，
+	//最终输出结果是由后者决定的。
+
+
+
+ 

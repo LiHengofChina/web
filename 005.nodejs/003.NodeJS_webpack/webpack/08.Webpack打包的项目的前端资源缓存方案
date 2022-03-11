@@ -1,0 +1,88 @@
+用Webpack打包的项目的前端资源缓存方案说起
+//==========================做法(方案)：
+//==========================做法(方案)：
+1). 使用 CommonsChunkPlugin 来将所有依赖的第三方包打包到
+	一个名为vender的chunk中
+2). 为了避免每次更改项目代码时导致 vender chunk 的 chunkHash改变，
+	我们还会单独生成一个 manifest chunk。
+
+//==========================示例：
+//==========================示例：
+
+1).文件 /index.js
+
+	import add from './src/add';
+	import leftPad from 'left-pad';
+	import jsonp from 'jsonp';
+
+	add(1, 2);
+2). 配置文件 ：webpack.config.js
+
+	const path = require('path');
+	const webpack = require('webpack');
+	//==================
+	module.exports = {
+	  entry: {
+		'app': './index.js',			//入口一
+		'vender': ['left-pad', 'jsonp'] 	//入口二，命名为vender，它里面包涵//'left-pad'和'jsonp'两部分
+	  },
+	  output: {
+		filename: '[name].[chunkHash].js',
+		path: path.resolve(__dirname, 'build')
+	  },
+	  plugins:[
+			 new webpack.optimize.CommonsChunkPlugin({
+				name: ['vender', 'manifest'],
+				minChunks: Infinity,
+			})
+	  ]
+	};
+	//==================现象：
+	//==================现象：
+	"app和manifest"这两个chunk的chunkHash改变了
+	而vender的chunkHash和之前保持了一致。	
+	//结果
+	这就使得 vender可以被缓存在客户端 //因为浏览器发现它引用的东西，
+									  //路径和名字等信息没变在。
+
+	从而减少客户端的下载量。
+	
+3). 如果index.js新引入一个文件
+	import add from './src/add';
+	import add2 from './src/add2';
+	import leftPad from 'left-pad';
+	import jsonp from 'jsonp';
+
+	add(1, 2);
+	add2(1);	
+	//此时结果
+	此时再次构建，我们并没有修改依赖的第三方包，
+	但是vender chunk的chunkHash也发生了更改。
+	//===============原因：
+	导致这个结果的原因在于，
+	由于引入了一个新模块，
+	使得打包过程中部分模块的模块ID发生了改变。
+			//模块按顺序分配一个ID，新加东西导致顺序变化 ？？TODO
+	而模块ID的改变，
+	直接导致了包含这些模块的chunk内容改变，
+	进而导致 chunkHash 的改变。
+	/** 图略
+		蓝色框中的模块ID为3的模块就是我们新加的模块。
+		由于它被插在了ID为3的位置，
+		导致后续所有模块的ID都发生了更改。
+	*/
+	//===============解决思路：
+	找到一种和 顺序无关的模块ID命名方式
+		"基于文件名或者文件内容的哈希值"
+		//相关插件：
+		NamedModulesPlugin HashedModuleIdsPlugin 
+		//配置
+		 plugins:[
+			new webpack.HashedModuleIdsPlugin()
+		 ]
+	//结果：
+	这新就算新增加文件，构建生成的也是HASH文件了。
+	
+	
+	
+	
