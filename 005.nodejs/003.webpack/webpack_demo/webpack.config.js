@@ -10,6 +10,8 @@ const webpackConfig = {
   devtool: 'eval',  
 
 
+
+  
   
   entry:  __dirname + "/app/main.js",//已多次提及的唯一入口文件
   
@@ -18,10 +20,20 @@ const webpackConfig = {
     filename: "bundle-[hash].js"//打包后输出文件的文件名
   },
 
+  
+  
+  
+  
+  
 	devServer: {
 		contentBase: "./public",//本地服务器所加载的页面所在的目录
 		historyApiFallback: true,//不跳转
 		inline: true//实时刷新
+		
+		
+		//配置代理
+		,proxy: require("./proxy.js")
+		
 	}
   	,
   	module:{
@@ -43,8 +55,9 @@ const webpackConfig = {
   	         //让打包时出现进度条
   	         new WebpackBar()
 	]
-  	
-  
+
+			
+	
   	  
 }
 
