@@ -1,0 +1,180 @@
+
+//============================================================ （1）vue-cli-service 原理研究，以及其与webpack-dev-service的区别
+//============================================================ （1）vue-cli-service 原理研究，以及其与webpack-dev-service的区别
+
+（1）. 从package.json里面可以看到npm run dev其实就是 vue-cli-service serve。
+
+（2）. vue-cli3.0 安装的时候把 vue-cli-service 一并安装了，
+	   即执行了npm install vue-cli-service --save-dev。
+
+（3）. 安装后，可以在./node_modules/.bin目录下查看到vue-cli-service。
+
+（3）. vue-cli-service.js的核心代码
+	   /**
+			onst Service = require('../lib/Service')
+			// 实例化Service
+			// VUE_CLI_CONTEXT为undefined，所以传入的值为process.cwd()及项目所在目录
+			const service = new Service(process.env.VUE_CLI_CONTEXT || process.cwd())
+	   */
+
+.....
+
+最终执行的serve.js 内注册serve时传递的方法。webpack获取到配置之后，
+实例化Compiler 传递给webpackDevServer，通过webpackDevServer实现自动编译和热更新。
+
+（4）. 经过一系统的操作到了 webpack-dev-service
+
+
+//============================================================ （2）
+//============================================================ （2）
+
+所以说到底，
+
+vue-cli-sevice 还是基 于webpack-dev-server 的
+而webpack-dev-server又是基于nodejs的express框架开的服务器 
+//=================================================================================================== 安装包
+//=================================================================================================== 安装包
+
+
+npm install @vue/cli
+npm install @vue/cli-service
+
+//=================================================================================================== npm引导启动
+//=================================================================================================== npm引导启动
+
+
+"scripts": {
+	"server": "vue-cli-service serve --open chrome",
+}
+
+
+
+
+//=================================================================================================== vue-cli-service 命令 及参数
+//=================================================================================================== vue-cli-service 命令 及参数
+
+
+（1）. vue-cli-service serve	
+		--open    服务器启动时打开浏览器
+		--copy    将URL复制到服务器启动时的剪贴板 (直接到浏览器去粘贴就OK了 http://localhost:8080/)
+		--mode    指定环境模式 (默认: development)
+		--host    host 地址 (default: 0.0.0.0)
+		--port    端口号 (default: 8080)
+		--https   使用https (default: false)
+
+
+（2）. vue-cli-service build
+		--mode        指定环境模式 (default: production)
+		--dest        指定输出目录 (default: dist)
+		--modern      构建两个版本的 js 包：一个面向支持现代浏览器的原生 ES2015+ 包，以及一个针对其他旧浏览器的包。
+		--target      允许您以项目库或Web组件的形式在项目内部构建任何组件 app | lib | wc | wc-async (default: app) ???
+		--name        lib或者web组件库的名称 (default: "name" in package.json or entry filename)
+		--no-clean    在构建项目之前不要删除输出目录(dist)
+		--report      生成report.html以帮助分析包内容
+		--report-json 生成report.json来帮助分析包内容
+		--watch       监听 - 当有改变时 自动重新打包~
+
+
+（3）. vue-cli-service inspect
+
+	   使用它vue-cli-service inspect来检查Vue CLI项目中的webpack配置。有关更多详细信息，请参阅检查Webpack配置
+	   
+//=================================================================================================== 配置文件
+//=================================================================================================== 配置文件
+
+项目目录中没有 vue.config.js 文件，需要手动创建
+
+vue.config.js 是一个可选的配置文件
+	// 如果项目的 (和 package.json 同级的) 根目录中存在这个文件，那么它会被 @vue/cli-service 自动加载
+	//你也可以使用 package.json 中的 vue 字段，但是注意这种写法需要你严格遵照 JSON 的格式来写。
+	
+
+
+这个文件应该导出一个包含了选项的对象：
+
+//=================================================================================================== vue.config.js配置
+//=================================================================================================== vue.config.js配置
+https://www.jianshu.com/p/b358a91bdf2d
+
+
+
+（1）. publicPath 
+
+			Type: string
+			Default: '/'
+
+			//部署应用包时的基本 URL， 用法和 webpack 本身的 output.publicPath 一致。
+			这个值也可以被设置为空字符串 ('') 或是相对路径 ('./')，
+			这样所有的资源都会被链接为相对路径，
+			这样打出来的包可以被部署在任意路径。
+			//把开发服务器架设在根路径，可以使用一个条件式的值：
+
+
+（2）. outputDir 
+
+			Type: string
+			Default: 'dist'
+
+			输出文件目录，
+				当运行 vue-cli-service build 时生成的生产环境构建文件的目录。
+				注意目标目录在构建之前会被清除 (构建时传入 --no-clean 可关闭该行为)。
+
+
+（3）. assetsDir 
+
+			Type: string
+			Default: ''
+
+			放置生成的静态资源 (js、css、img、fonts) 的目录。
+
+
+（4）. indexPath
+
+			Type: string
+			Default: 'index.html'
+
+			指定生成的 index.html 的输出路径 (相对于 outputDir)。也可以是一个绝对路径。
+
+
+（5）. filenameHashing
+
+			Type: boolean
+			Default: true
+
+			默认情况下，生成的静态资源在它们的文件名中包含了 hash 以便更好的控制缓存。
+			然而，这也要求 index 的 HTML 是被 Vue CLI 自动生成的。
+			如果你无法使用 Vue CLI 生成的 index HTML，
+			你可以通过将这个选项设为 false 来关闭文件名哈希。
+
+
+（6）. pages
+
+			Type: Object
+			Default: undefined
+
+			在 multi-page（多页）模式下构建应用。
+			每个“page”应该有一个对应的 JavaScript 入口文件。
+
+			其值应该是一个对象，对象的 key 是入口的名字，value 是：
+
+			一个指定了 entry, template, filename, title 和 chunks 的对象 (除了 entry 之外都是可选的)；
+
+			或一个指定其 entry 的字符串。
+
+（7）. pages
+
+
+	//用到的时候查
+
+ 
+//===================================================================================================
+//===================================================================================================
+
+
+
+
+
+
+
+
+
