@@ -5,12 +5,19 @@
   "author": "liheng <13688007165@139.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "li": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress  --open chrome  --config build/webpack.dev.conf.js",
+  
+  
+  
+    "server": "vue-cli-service serve --open",
+    
+    
     "start": "npm run dev",
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@vue/cli": "^5.0.1",
+    "@vue/cli-service": "^5.0.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
@@ -48,7 +55,7 @@
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
-    "webpack-dev-server": "^2.9.1",
+    "webpack-dev-server": "^3.0.0",
     "webpack-merge": "^4.1.0"
   },
   "engines": {
