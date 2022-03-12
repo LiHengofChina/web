@@ -34,6 +34,9 @@ devServer: {
 		port:3000,						//指定本地服务器端口
 		contentBase :'./src', 			// 指定打包的基础路径，src为根路径打包，也就是只打包src里面的文件
 		compress:true 					//智能压缩
+
+		
+
 }
 
 
