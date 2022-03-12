@@ -46,13 +46,37 @@
 	npm install @vue/cli --save-dev
 	npm install @vue/cli-service  --save-dev
 	npm install vue-template-compiler --save-dev
+ 
 	
 	
-	npm install webpack@latest
-	npm install webpack@latest  //注意：这里需要升级 webpack
-
+	npm install webpack@latest   --save-dev   //注意：这里需要升级 webpack
+	
+	npm install webpack-merge@latest --save-dev  
+	
+	
+	npm install babel@latest --save-dev
+	npm install webpackbar --save-dev
+	
+	npm install path-browserify --save-dev
+	
 //==========================================================================
 //==========================================================================
 
 此时，启动找的是 vue.config.js 文件，而不是 webpack.prod.conf.js
+
+//==========================================================================
+//==========================================================================
+
+npm install webpack-merge --save-dev
+剩下 就是开始编写配置文件 
+
+//==========================================================================  先打包
+//==========================================================================  先打包
+
+ 
+"dev": "vue-cli-service serve",
+"build": "vue-cli-service build",
+
+npm run build
+npm run dev
 
