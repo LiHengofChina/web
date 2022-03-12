@@ -1,0 +1,56 @@
+
+//================================================ 
+//================================================ 
+
+     主要使用 process.env.NODE_ENV === ‘production’判断当前环境，
+	 再使用 config.entry(‘app’).clear().add(’…’) 指定入口文件
+
+
+
+
+
+		module.exports = {
+
+		  chainWebpack: (config) => {
+			config.resolve.alias
+			  //set第一个参数：设置的别名，第二个参数：设置的路径
+			  .set('@', resolve('./src'))
+			config.when(process.env.NODE_ENV === 'production', config => {
+			  // 使用process.env.NODE_ENV判断当前环境，再使用config.entry('app')指定入口文件
+			  config.entry('app').clear().add('./src/main-prod.js')  
+			})
+			config.when(process.env.NODE_ENV === 'development', config => {
+			  config.entry('app').clear().add('./src/main-dev.js')
+			})
+		  }
+		};
+	
+	    //=========================================== src 
+	    //=========================================== src
+		
+		如果不指定默认找的是 src 下的main.js
+	
+
+//================================================ webpack的方式
+//================================================ webpack的方式
+
+const webpackConfig = {
+
+  devtool: 'source-map',  
+  devtool: 'eval',  
+
+  entry:  __dirname + "/app/main.js",//已多次提及的唯一入口文件
+  
+
+}
+
+//================================================ webpack的方式
+//================================================ webpack的方式
+
+module.exports = {
+  context: path.resolve(__dirname, '../'),
+  entry: {
+    app: './src/main.js'
+  }
+}
+ 

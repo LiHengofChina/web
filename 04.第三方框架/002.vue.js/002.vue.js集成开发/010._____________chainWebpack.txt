@@ -1,0 +1,68 @@
+
+https://segmentfault.com/a/1190000019920162
+
+在项目开发中我们难免碰到需要对webpack配置更改的情况，
+
+
+用chainWebpack做高级配置；包括
+
+//================================================ 
+//================================================ 
+
+Vue CLI 内部的 webpack 配置是通过 webpack-chain 维护的。
+
+这个库提供了一个 webpack 原始配置的上层抽象，
+
+使其可以定义具名的 loader 规则和具名插件，
+并有机会在后期进入这些规则并对它们的选项进行修改。
+
+它允许我们更细粒度的控制其内部配置。
+接下来有一些常见的在 vue.config.js 中的 chainWebpack 修改的例子。
+
+// vue.config.js
+module.exports = {
+  chainWebpack: config => {
+    config.module
+      .rule('vue')
+      .use('vue-loader')
+        .loader('vue-loader')
+        .tap(options => {
+          // 修改它的选项...
+          return options
+        })
+  }
+}
+
+//==============  添加一个新的 Loader
+//==============  添加一个新的 Loader
+
+// vue.config.js
+module.exports = {
+  chainWebpack: config => {
+    // GraphQL Loader
+    config.module
+      .rule('graphql')
+      .test(/\.graphql$/)
+      .use('graphql-tag/loader')
+        .loader('graphql-tag/loader')
+        .end()
+  }
+}
+
+//==============  替换一个规则里的 Loader，
+//==============  替换一个规则里的 Loader，
+
+// 添加svg-sprite-loader
+    const svgRule = config.module.rule('svg')
+    svgRule.uses.clear()
+    svgRule
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .tap(options => {
+        options = {
+          symbolId: 'icon-[name]'
+        }
+        return options
+      })
+
+
