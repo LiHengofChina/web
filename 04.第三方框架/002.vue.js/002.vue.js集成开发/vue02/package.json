@@ -5,8 +5,9 @@
   "author": "liheng",
   "private": true,
   "scripts": {
-    "dev": "vue-cli-service serve",
+    "dev": "vue-cli-service serve --mode=production",
     "build": "vue-cli-service build",
+    "test": "vue-cli-service serve  --mode=test",
     "start": "npm run dev"
   },
   "dependencies": {
