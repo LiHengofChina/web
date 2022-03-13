@@ -18,8 +18,10 @@ console.log(  process.env.NODE_ENV === "development");
 console.log( name); //名字
 
 console.log( process.env.VUE_APP_USE_TYPE !== "MicroApp" );
+console.log("_____________3_________" );
+console.log(externals.target === "externals");
 
-console.log("_____________2_________" );
+console.log("_____________4_________" );
 
 const webpackConfig = {
 		
@@ -63,10 +65,11 @@ const webpackConfig = {
 			
 			
 			
-			
+			//外部扩展
 			externals: externals.target === "externals" ? externals.externals : {},
 					
 			
+			//模块
 			module:{
 				rules:[
 				       {
@@ -82,7 +85,7 @@ const webpackConfig = {
 				       ]
 			},		
 					
-			plugins: [
+			plugins: [//插件
 			          
 			          
 			          
