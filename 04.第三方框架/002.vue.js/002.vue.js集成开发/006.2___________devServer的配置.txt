@@ -1,8 +1,34 @@
 
+https://webpack.docschina.org/configuration/dev-server/
+
 	
-devServer: {
-	 
-},
+	devServer:{
+		host: "localhost",				//指定要使用的 host。
+		port: port, 					//指定监听请求的端口号：
+		//open: true,					//告诉 dev-server 在服务器已经启动后打开浏览器。设置其为 true 以打开你的默认浏览器。
+		open: {
+		       app: {
+		           name: 'google-chrome',
+		         }
+			  },
+		
+		client:{
+			overlay:{ 					//当出现编译错误或警告时，在浏览器中显示全屏覆盖。
+				warnings: false,
+				errors: true
+			}
+		},
+		
+		
+		
+		
+		
+		
+		hot: true,  					//启用 webpack 的 热模块替换 特性：
+		compress: true,					//启用 gzip compression：
+		
+		proxy: require("./proxy.js")	//代理配置
+	},
 
 
 //=================================================================================================== 说明
@@ -42,4 +68,6 @@ devServer
 		X-foo:112233
 */
 
+//=========================================
+ 
  
