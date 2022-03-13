@@ -15,6 +15,10 @@ const name = defaultSettings.title || "vue Element Admin";
 
 console.log("_____________2_________" );
 console.log(  process.env.NODE_ENV === "development");
+console.log( name); //名字
+
+console.log( process.env.VUE_APP_USE_TYPE !== "MicroApp" );
+
 console.log("_____________2_________" );
 
 const webpackConfig = {
@@ -45,10 +49,14 @@ const webpackConfig = {
 			
 			name: name,
 			
-			resolve: {
+			resolve: { //Resolve 配置 Webpack 如何寻找模块所对应的文件。
 				alias: {
 					"@": resolve("../src")
-				}
+				},
+				
+				modules:[
+				    
+				]
 			},
 			
 			
@@ -84,30 +92,31 @@ const webpackConfig = {
 			
 			
 			
-			resolve:{
-				fallback:{
+			resolve:{ // 配置 Webpack 如何寻找模块所对应的文件。
+				
+				
+				fallback:{//退路
 					path: require.resolve("path-browserify")
 				}
+				
+				
 			},
 					
 					
 					
 					
 					
-					
+			//配置 output 选项可以控制 webpack 如何向硬盘写入编译文件		
 			output:
 				process.env.VUE_APP_USE_TYPE !== "MicroApp" 
-				?
+						?
 						{} :
 						{
-							library: `${name}-[name]`,
-							libraryTarget: "umd",
-							chunkLoadingGlobal: `webpackJsonp_${name}`
+							library: `${name}-[name]`,					// 输出一个库，为你的入口做导出。
+							libraryTarget: "umd",						// 配置如何暴露 library。
+							chunkLoadingGlobal: `webpackJsonp_${name}`	// webpack 用于加载 chunk 的全局变量。
 						}
 					
-		
-		
-		
 		
 		
 		},

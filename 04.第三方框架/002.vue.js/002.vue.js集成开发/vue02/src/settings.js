@@ -15,7 +15,7 @@ module.exports = {
 		
 		homePath: '/dashboard',
 		
-		title: 'PICC',
+		title: 'LIHENG_STUDY',
 		
 		
 		
