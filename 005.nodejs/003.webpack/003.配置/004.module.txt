@@ -1,0 +1,24 @@
+https://webpack.docschina.org/configuration/module/
+
+module.exports = {
+  module: {
+    parser: {
+      javascript: {
+        // ...
+        commonjsMagicComments: true,
+      },
+    },
+	rules: {
+		
+		
+	}
+	
+  },
+};
+
+
+
+ 
+
+
+

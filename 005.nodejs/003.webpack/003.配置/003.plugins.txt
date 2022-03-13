@@ -1,0 +1,40 @@
+https://webpack.docschina.org/configuration/output/#outputchunkloadingglobal
+
+
+
+
+
+//==================================================================================== 一组 webpack 插件。
+//==================================================================================== 一组 webpack 插件。
+
+module.exports = {
+  //...
+  plugins: [
+    new webpack.DefinePlugin({
+      // Definitions...
+    }),
+  ],
+};
+//==================================================================================== 一个复杂示例，使用多个插件，可能看起来就像这样：
+//==================================================================================== 一个复杂示例，使用多个插件，可能看起来就像这样：
+ 
+
+var webpack = require('webpack');
+// 导入非 webpack 自带默认插件
+var DashboardPlugin = require('webpack-dashboard/plugin');
+
+// 在配置中添加插件
+module.exports = {
+  //...
+  plugins: [
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+   // 编译时(compile time)插件
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"production"',
+    }),
+   // webpack-dev-server 强化插件
+    new DashboardPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+  ],
+};
+
