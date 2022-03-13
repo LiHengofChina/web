@@ -47,12 +47,19 @@ module.exports = merge(webpackBaseConfig,{
 	chainWebpack(config){
  
 		
+		//
 		config.devtool("eval") //配置 source-map
 		
+		
+		//优化：
+		//
 		config.optimization.splitChunks({
-			chunks: "all",
 			
-			cacheGroups:{
+			chunks: "all", //置为 all，因为这意味着 chunk 可以在异步和非异步 chunk 之间共享。
+			
+			cacheGroups:{ //继承和/或覆盖来自 splitChunks.* 的任何选项
+				
+				
 				libs: {
 					name: "chunk-libs",
 					test: /[\\/]node_modules[\\/]/,
