@@ -26,10 +26,10 @@ const webpackConfig = {
 		
 		
 		
-		outputDir: outputDir,
-		assetsDir: "static",
-		lintOnSave: process.env.NODE_ENV === "development",
-		transpileDependencies:false,
+		outputDir: outputDir,   	 //输出文件目录， 当运行 vue-cli-service build 时生成的生产环境构建文件的目录。
+		assetsDir: "static", 		 //放置生成的静态资源,
+		lintOnSave: false,			 //是否在保存的时候使用 `eslint-loader` 进行检查
+		transpileDependencies:false, //默认情况下 babel-loader 会忽略所有 node_modules 中的文件。如果你想要通过 Babel 显式转译一个依赖，可以在这个选项中列出来。
 		
 		
 		

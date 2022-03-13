@@ -25,8 +25,7 @@ https://www.jianshu.com/p/b358a91bdf2d
 			Type: string
 			Default: 'dist'
 
-			输出文件目录，
-				当运行 vue-cli-service build 时生成的生产环境构建文件的目录。
+			输出文件目录， 当运行 vue-cli-service build 时生成的生产环境构建文件的目录。
 				注意目标目录在构建之前会被清除 (构建时传入 --no-clean 可关闭该行为)。
 
 
@@ -73,8 +72,12 @@ https://www.jianshu.com/p/b358a91bdf2d
 
 （7）. pages
  
+//============================
+（8）. lintOnSave
+	是否在保存的时候使用 `eslint-loader` 进行检查。 有效的值：`ture` | `false` | `"error"`  当设置为 `"error"` 时，检查出的错误会触发编译失败。
 
- 
+
+
 
 //============================其它配置
 //============================其它配置
