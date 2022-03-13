@@ -80,8 +80,18 @@ resolve:{
 				*/	
 				
 				
-	descriptionFiles: ['package.json']
+	descriptionFiles: ['package.json'],
+	
+	
+	
+	
+	fallback:{//退路 TODO
+		path: require.resolve("path-browserify")
+	}
 			 
+	
+	
+	
 	
 }
  
