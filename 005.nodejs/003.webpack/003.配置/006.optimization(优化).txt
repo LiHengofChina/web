@@ -1,0 +1,80 @@
+
+https://webpack.docschina.org/configuration/optimization/
+
+//======================================================================
+//======================================================================
+
+
+
+//============================
+//============================
+
+https://webpack.docschina.org/plugins/split-chunks-plugin/
+
+optimization.splitChunks
+
+
+
+
+//============================optimization.splitChunks.chunks
+//============================optimization.splitChunks.chunks
+ 
+/**
+		string = 'async' function (chunk)
+
+		这表明将选择哪些 chunk 进行优化。
+		
+		
+		当提供一个字符串，有效值为
+				all，async 和 initial。
+		
+		设置为 all 可能特别强大，
+		因为这意味着 chunk 可以在异步和非异步 chunk 之间共享。
+
+		Note that it is applied to the fallback cache group as well (splitChunks.fallbackCacheGroup.chunks).
+
+*/
+
+optimization: {
+    splitChunks: {
+      // include all types of chunks
+      chunks: 'all',
+    },
+
+//============================optimization.splitChunks.cacheGroups
+//============================optimization.splitChunks.cacheGroups
+
+
+	cacheGroups: {
+		defaultVendors: {
+			  test: /[\\/]node_modules[\\/]/,
+			  priority: -10,
+			  reuseExistingChunk: true,
+		},
+		default: {
+			  minChunks: 2,
+			  priority: -20,
+			  reuseExistingChunk: true,
+		},
+	},
+
+	缓存组可以继承 和/或覆盖来自 splitChunks.* 的任何选项。
+	但是 test、priority 和 reuseExistingChunk 只能在缓存组级别上进行配置。
+	将它们设置为 false以禁用任何默认缓存组。
+	
+	/**
+		个人理解：注意是用来继承 和 覆盖的。
+				  但是  
+					  test、
+					  priority、
+					  reuseExistingChunk 
+				  这三个值，
+				  只能在这里配置。
+		
+	*/
+
+	
+
+	
+
+
