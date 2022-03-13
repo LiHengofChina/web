@@ -3,6 +3,10 @@ externals
 	并且又不影响我们在程序中以CMD、AMD或者window/global全局等方式进行使用，
 	那就可以通过配置externals
 
+
+注意：区别extensions
+
+
 externals配置选项，将指定的内容排除在构建的vendor中，
 但是，指定的内容需要出现在用户环境中。	//就是开发环境可以使用
 

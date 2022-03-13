@@ -1,0 +1,17 @@
+
+https://www.npmjs.com/package/path-browserify
+
+路径 浏览器模块
+
+path-browserify当前与Node.js 10.3 API 匹配。
+
+//=========================
+不需要自己安装
+使用path模块时，它是内置 的
+
+//=================
+browserify 或 webpack 等捆绑程序默认包含该path-browserify模块。
+
+//================= 手动安装
+npm install path-browserify
+
