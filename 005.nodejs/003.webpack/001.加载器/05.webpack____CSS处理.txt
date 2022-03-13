@@ -1,40 +1,4 @@
-https://segmentfault.com/a/1190000006178770
-//PostCSS 与 BaBel 本来是独立的两个平台，不过，它们可以和webpack配合起来发挥更大的作用
 
-
-1). BaBel 平台 (编译JS)
-	babel-core //核心模块
-	npm install --save-dev babel-core
-	
-	1). ES6,ES7,JSX语法
-		/**
-npm install --save-dev babel-loader
-npm install --save-dev babel-preset-env
-npm install --save-dev babel-preset-react
-		{
-			test: /(\.jsx|\.js)$/,
-			use: {
-				loader: "babel-loader",
-				options: {
-					presets: [
-						"env", "react"
-					]
-					//['env', 'stage-0', 'react'] // env转换es6 stage-0转es7 react转react
-				}
-			},
-			exclude: /node_modules/
-		}
-		*/
-	2). react 语法
-		/**
-		npm install --save react
-		npm install --save react-dom
-		
-		import React, {Component} from 'react'
-		import React from 'react';
-		import {render} from 'react-dom';
-
-		*/	
 2). CSS处理
 	1).  样式表处理
 		 css-loader
@@ -81,6 +45,7 @@ npm install --save-dev babel-preset-react
 			npm install --save-dev postcss-loader
 			npm install --save-dev autoprefixer
 			//为CSS代码自动添加适应不同浏览器的CSS前缀等等功能。
+
 3). 文件和URL路径，图片处理 //TODO 未测试
 	npm install --save-dev file-loader url-loader 
 
