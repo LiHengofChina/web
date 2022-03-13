@@ -14,11 +14,7 @@ module.exports = {
 		cdn: {
 			css: [],
 			js: [
-			     
-			     
-			     
-			     
-			     
+
 			     ]
 		},
 		

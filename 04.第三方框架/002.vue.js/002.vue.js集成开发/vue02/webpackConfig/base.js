@@ -20,8 +20,9 @@ console.log( name); //名字
 console.log( process.env.VUE_APP_USE_TYPE !== "MicroApp" );
 console.log("_____________3_________" );
 console.log(externals.target === "externals");
-
 console.log("_____________4_________" );
+console.log(externals.target === "externals");
+console.log("_____________5_________" );
 
 const webpackConfig = {
 		
@@ -89,7 +90,7 @@ const webpackConfig = {
 			          
 			          
 			          
-			          
+			          //进度条插件
 			          new WebpackBar()
 			],
 			
@@ -123,6 +124,10 @@ const webpackConfig = {
 		
 		
 		},
+		
+		
+		
+		//更细粒度的控制其内部配置
 		chainWebpack(config){
 			
 			
@@ -131,8 +136,9 @@ const webpackConfig = {
 			
 			
 			
-						
-			config.plugin("html").tap((args) => {
+			// 添加html插件，替换其中的如果是生产环境 替换其中的 cdn 地址。
+			config.plugin("html")
+				   .tap((args) => {
 					args[0].cdn = externals.target === "externals"
 							?
 					externals.cdn
@@ -141,19 +147,30 @@ const webpackConfig = {
 				return args;
 			});
 			
-			config.plugins.delete("preload");
-
-			config.plugins.delete("prefetch");
+			
+			// 移除 preload 
+			config.plugins.delete("preload");  //预先加载
+			// 移除 prefetch
+			config.plugins.delete("prefetch"); //预先拉取
 			
 			
 			
+			// 添加 svg 加载器
+			config.module
+				.rule("svg")
+				.exclude.add(
+						resolve("../src/icons")
+						)
+				.end();
 			
-			config.module.rule("svg").exclude.add(resolve("../src/icons")).end();
 			
+			// 添加 icons 加载器
 			config.module
 				.rule("icons")
 				.test(/\.svg$/)
-				.include.add(resolve("../src/icons"))
+				.include.add(
+						resolve("../src/icons")
+						)
 				.end()
 				.use("svg-sprite-loader")
 				.loader("svg-sprite-loader")
@@ -161,6 +178,7 @@ const webpackConfig = {
 					symbolId: "icon-[name]"
 				})
 				.end();
+
 		}
 };
 module.exports = webpackConfig;
