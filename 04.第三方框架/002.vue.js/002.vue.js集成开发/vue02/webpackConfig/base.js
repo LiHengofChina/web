@@ -12,10 +12,15 @@ const outputDir = "dist";
 
 const name = defaultSettings.title || "vue Element Admin";
 
+
+console.log("_____________2_________" );
+console.log(  process.env.NODE_ENV === "development");
+console.log("_____________2_________" );
+
 const webpackConfig = {
 		
 		
-		
+		 		
 		
 		
 		

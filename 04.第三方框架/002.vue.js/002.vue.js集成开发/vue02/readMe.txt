@@ -79,4 +79,19 @@ npm install webpack-merge --save-dev
 
 npm run build
 npm run dev
+//==========================================================================  配置文件加载顺序
+//==========================================================================  配置文件加载顺序
+
+（1）. npm run test
+（2）. package.json
+（3）. .env.test
+（4）. vue.config.js
+（5）. developments.
+（6）. externals.js
+（7）. proxy.js
+（8）. base.js
+（9）. settings.js
+
+
+
 

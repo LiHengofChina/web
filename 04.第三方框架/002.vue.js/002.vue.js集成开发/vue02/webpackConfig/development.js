@@ -9,13 +9,13 @@ function resolve(dir) {
 
 
 
-const prot = 9528;
+const port = 9528;
 
 module.exports = merge(webpackBaseConfig,{
 	productionSourceMap: false , // 生产环境是否生成 sourceMap 文件
 	devServer:{
 		host: "localhost",
-		prot: prot,
+		port: port,
 		open: true,
 		client:{
 			overlay:{
@@ -30,8 +30,8 @@ module.exports = merge(webpackBaseConfig,{
 		
 		
 		hot: true,
-		compress: true,
-		
+		compress: true
+		,
 		proxy: require("./proxy.js")
 	},
 	configureWebpack: {
