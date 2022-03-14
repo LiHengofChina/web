@@ -9,7 +9,6 @@
   
   
   
-    "server": "vue-cli-service serve --open",
     
     
     "start": "npm run dev",

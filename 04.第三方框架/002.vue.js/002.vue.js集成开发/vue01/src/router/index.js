@@ -11,10 +11,10 @@ export default new Router({
   routes: [
 	
 	
-    
-    
+
+ 
     {
-      path: '/helloWorld001',
+      path: '/liheng_test',
       name: 'HelloWorld001',
       component: HelloWorld001
     } 
