@@ -1,0 +1,46 @@
+
+//================================================== webpack  默认入口文件问题 和 html 的问题 //webpack
+//================================================== webpack  默认入口文件问题 和 html 的问题 //webpack
+
+（1）. 默认入口是 main.js 文件 
+		webpack4 是以默认的入口为src中的 index.js 文件为入口，
+		
+		输出到 dist 文件中的 main.js 。
+
+（2）. 输出路径也是有默认的
+
+//==================================================
+//==================================================
+
+
+//==============（1）
+//==============（1）
+
+
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+
+//==============（2）
+//==============（2）
+
+
+new HtmlWebpackPlugin({
+	filename: 'index.html',		     // filename 生成的主文件
+	template: 'index_template.html', //指html模板文件
+	inject: true
+}),
+
+//=================== index_template.html 模版中  id="app_index_"
+  <body>
+    <div id="app_index_"></div>
+    <!-- built files will be auto injected -->
+  </body>
+
+
+//=================== main.js 中 初始化指向  app_index_
+   el: '#app_index_',    
+   
+
+这样 npm run build 之后就生成了一个 index.html 文件
+
+
