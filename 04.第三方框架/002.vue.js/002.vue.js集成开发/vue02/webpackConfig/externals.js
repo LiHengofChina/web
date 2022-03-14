@@ -1,14 +1,6 @@
 module.exports = {
 		
-		
-		
-		
-		
 		target: "externals",
-		
-		
-		
-		
 		
 		
 		cdn: {
@@ -18,15 +10,7 @@ module.exports = {
 			     ]
 		},
 		
-		
-		
-		
-		
 		externals:{
-			
-		
-		
-		
 		
 		},
 

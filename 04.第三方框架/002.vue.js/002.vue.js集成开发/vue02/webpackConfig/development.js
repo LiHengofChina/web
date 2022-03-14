@@ -1,12 +1,13 @@
 const {merge} = require("webpack-merge");
 const webpackBaseConfig = require("./base.js");
 
+
+//const HtmlWebpackPlugin = require('html-webpack-plugin')
+
 const path = require("path");
 function resolve(dir) {
 	return path.join(__dirname,dir);
 }
-
-
 
 
 const port = 9528;
@@ -31,58 +32,61 @@ module.exports = merge(webpackBaseConfig,{
 		},
 		
 		
-		
-		
-		
-		
 		hot: true,  					//启用 webpack 的 热模块替换 特性：
 		compress: true,					//启用 gzip compression：
 		
 		proxy: require("./proxy.js")	//代理配置
 	},
 	configureWebpack: {
-		plugins: []
+		plugins: [
+		          		
+		          	//	new HtmlWebpackPlugin()
+					    new HtmlWebpackPlugin({
+					      filename: 'index.html',
+					      template: 'index.html',
+					      inject: true
+					    })		          		
+		          ]
 	},
 	
 	chainWebpack(config){
- 
 		
-		//
-		config.devtool("eval") //配置 source-map
+//		//
+//		config.devtool("eval") //配置 source-map
+//		
+//		//优化：
+//		config.optimization.splitChunks({
+//			
+//			chunks: "all", //置为 all，因为这意味着 chunk 可以在异步和非异步 chunk 之间共享。
+//			
+//			cacheGroups:{ //继承和/或覆盖来自 splitChunks.* 的任何选项
+//				
+//				
+//				libs: {
+//					name: "chunk-libs",
+//					test: /[\\/]node_modules[\\/]/,
+//					priority:10,
+//					chunks: "initial"
+//				},
+//				
+//				elementUI:{
+//					name: "chunk-elementUI",
+//					priority: 20,
+//					test: /[\\/]node_modules[\\/]_?element-ui(.*)/
+//				},
+//				
+//				commons: {
+//					name: "chunk-commons",
+//					test: resolve("src/components"),
+//					minChunks: 3,
+//					priority: 5,
+//					reuseExistingChunk: true
+//				}
+//			}
+//			
+//		});
+
 		
-		
-		//优化：
-		//
-		config.optimization.splitChunks({
-			
-			chunks: "all", //置为 all，因为这意味着 chunk 可以在异步和非异步 chunk 之间共享。
-			
-			cacheGroups:{ //继承和/或覆盖来自 splitChunks.* 的任何选项
-				
-				
-				libs: {
-					name: "chunk-libs",
-					test: /[\\/]node_modules[\\/]/,
-					priority:10,
-					chunks: "initial"
-				},
-				
-				elementUI:{
-					name: "chunk-elementUI",
-					priority: 20,
-					test: /[\\/]node_modules[\\/]_?element-ui(.*)/
-				},
-				
-				commons: {
-					name: "chunk-commons",
-					test: resolve("src/components"),
-					minChunks: 3,
-					priority: 5,
-					reuseExistingChunk: true
-				}
-			}
-			
-		});
 	} 
 	
 });

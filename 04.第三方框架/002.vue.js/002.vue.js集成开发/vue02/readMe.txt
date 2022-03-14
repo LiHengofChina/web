@@ -58,6 +58,8 @@
 	npm install webpackbar --save-dev
 	
 	npm install path-browserify --save-dev
+
+	npm install html-webpack-plugin --save-dev
 	
 //==========================================================================
 //==========================================================================
