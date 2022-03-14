@@ -2,7 +2,7 @@ const {merge} = require("webpack-merge");
 const webpackBaseConfig = require("./base.js");
 
 
-//const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const path = require("path");
 function resolve(dir) {
@@ -40,12 +40,17 @@ module.exports = merge(webpackBaseConfig,{
 	configureWebpack: {
 		plugins: [
 		          		
-		          	//	new HtmlWebpackPlugin()
+		          		
+		          
+
+		          		//VUE.本向有一个，这里再自定义一个，所以名字不能相同，会冲突。
 					    new HtmlWebpackPlugin({
-					      filename: 'index.html',
-					      template: 'index.html',
-					      inject: true
-					    })		          		
+					    	filename: 'index_liheng.html',		     // filename 生成的主文件
+					    	template: 'index_template.html', //指html模板文件
+					    	inject: true
+					    }),					    
+					    
+					    
 		          ]
 	},
 	
