@@ -1,0 +1,46 @@
+
+
+
+
+https://www.cnblogs.com/wonyun/p/6030090.html
+
+//==================================================
+//==================================================
+
+html-webpack-plugin 插件的基本作用就是生成html文件，
+将 webpack中`entry`配置的相关入口chunk  和
+`extract-text-webpack-plugin`抽取的css样式   
+插入到该插件提供的`template`或者`templateContent`配置项指定的内容基础上生成一个html文件，
+具体插入方式是将样式`link`插入到`head`元素中，
+`script`插入到`head`或者`body`中。
+
+
+
+//====================================
+//====================================
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+webpackconfig = {
+	...
+	plugins: [
+		new HtmlWebpackPlugin()
+	]
+}
+
+不配置任何选项的html-webpack-plugin插件，
+他会默认将webpack中的entry
+配置所有入口thunk和extract-text-webpack-plugin抽取的css样式都插入到文件指定的位置。
+例如上面生成的html文件内容如下：
+
+<!DOCTYPE html>
+<html>
+	  <head>
+			<meta charset="UTF-8">
+			<title>Webpack App</title>
+	  <link href="index-af150e90583a89775c77.css" rel="stylesheet"></head>
+	  <body>
+		  <script type="text/javascript" src="common-26a14e7d42a7c7bbc4c2.js"></script>
+		  <script type="text/javascript" src="index-af150e90583a89775c77.js"></script>
+	  </body>
+</html>
+//====================================
+//====================================
