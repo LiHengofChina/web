@@ -22,7 +22,14 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 webpackconfig = {
 	...
 	plugins: [
-		new HtmlWebpackPlugin()
+		new HtmlWebpackPlugin(),
+		
+		new HtmlWebpackPlugin({
+			filename: 'index.html',		     // filename 生成的主文件
+			template: 'index_template.html', //指html模板文件
+			inject: true
+		}),
+		
 	]
 }
 
@@ -42,5 +49,26 @@ webpackconfig = {
 		  <script type="text/javascript" src="index-af150e90583a89775c77.js"></script>
 	  </body>
 </html>
-//====================================
-//====================================
+//==================================== 注意自定义的 index.html 名字要避免和 vue.js 默认名字冲突
+//==================================== 注意自定义的 index.html 名字要避免和 vue.js 默认名字冲突
+
+		new HtmlWebpackPlugin({
+			filename: 'index.html',		     // filename 生成的主文件
+			template: 'index_template.html', //指html模板文件
+			inject: true
+		}),
+
+
+//================================================== VUE中默认的 index.html 文件
+//================================================== VUE中默认的 index.html 文件
+
+
+main.js是我们的入口文件，主要作用是初始化vue实例并使用需要的插件，
+这里new Vue代表新建vue对象。App.vue是我们的主组件，
+所有页面都是在App.vue下进行切换的。vue中的页面都是单页面，但是都是index.html上承载的，
+这就是为什么你能在index.html中看到id为app的div，
+其实就是和App.vue对应，App.vue里面的标签将会把路由相关内容（index.js）渲染在这个地方，
+总之 index.html 是项目运行的入口。
+
+如果什么都不配置，vue.js会默认生成一个 index.html 这样的文件 。
+ 
