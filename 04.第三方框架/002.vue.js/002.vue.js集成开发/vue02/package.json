@@ -5,25 +5,16 @@
   "author": "liheng",
   "private": true,
   "scripts": {
-    
-    
-    
     "liheng": "vue-cli-service serve --mode=test",
-    
-
-    
-     "build": "vue-cli-service build --mode=test",
-   
-   
-   
+    "build": "vue-cli-service build --mode=test",
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs"
-   
   },
   "dependencies": {
+    "element-ui": "^2.15.6",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
