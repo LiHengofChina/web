@@ -5,18 +5,23 @@
   "author": "liheng",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    
+    
     
     "liheng": "vue-cli-service serve --mode=test",
     
+
+    
+     "build": "vue-cli-service build --mode=test",
+   
+   
+   
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
-    "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
+    "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs"
    
-    "build": "vue-cli-service build --mode=test"
-    
   },
   "dependencies": {
     "vue": "^2.5.2",

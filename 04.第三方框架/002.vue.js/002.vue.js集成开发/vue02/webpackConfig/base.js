@@ -2,7 +2,9 @@ const path = require("path");
 const defaultSettings = require("../src/settings.js");
 
 const externals = require("./externals.js");
-const WebpackBar = require("webpackbar");
+
+
+//const WebpackBar = require("webpackbar");
 
 function resolve(dir) {
 	return path.join(__dirname,dir);
@@ -34,112 +36,112 @@ const webpackConfig = {
 			headers: process.env.VUE_APP_USE_TYPE !== "MicroApp" ? {} : { "Access-Control-Allow-Origin": "*" }
 		},
 		
-//		configureWebpack: {
-//			
-//			name: name,
-//			
-//			resolve: { //Resolve 配置 Webpack 如何寻找模块所对应的文件。
-//				alias: {
-//					"@": resolve("../src")
-//				},
-//				
-//				modules:[
-//				    
-//				]
-//			},
-//			
-//			//外部扩展
-//			externals: externals.target === "externals" ? externals.externals : {},
-//			
-//			//模块
-//			module:{
-//				rules:[
-//				       {
-//				    	   test: /(\.jsx|\.js)$/,
-//				    	   use: {
-//				    		   loader: "babel-loader"
-//				    	   },
-//				    	   exclude: /node_modules/
-//				       }
-//
-//				       ]
-//			},		
-//					
-//			plugins: [//插件
-//			          
-//			          //进度条插件
+		configureWebpack: {
+			
+			name: name,
+			
+			resolve: { //Resolve 配置 Webpack 如何寻找模块所对应的文件。
+				alias: {
+					"@": resolve("../src")
+				},
+				
+				modules:[
+				    
+				]
+			},
+			
+			//外部扩展
+			externals: externals.target === "externals" ? externals.externals : {},
+			
+			//模块
+			module:{
+				rules:[
+				       {
+				    	   test: /(\.jsx|\.js)$/,
+				    	   use: {
+				    		   loader: "babel-loader"
+				    	   },
+				    	   exclude: /node_modules/
+				       }
+
+				       ]
+			},		
+					
+			plugins: [//插件
+			          
+			          //进度条插件
 //			          new WebpackBar()
-//			],
-//			resolve:{ // 配置 Webpack 如何寻找模块所对应的文件。
-//				
-//				
-//				fallback:{//退路
-//					path: require.resolve("path-browserify")
-//				}
-//				
-//				
-//			},
-//					
-//			//配置 output 选项可以控制 webpack 如何向硬盘写入编译文件		
-//			output:
-//				process.env.VUE_APP_USE_TYPE !== "MicroApp" 
-//						?
-//						{} :
-//						{
-//							library: `${name}-[name]`,					// 输出一个库，为你的入口做导出。
-//							libraryTarget: "umd",						// 配置如何暴露 library。
-//							chunkLoadingGlobal: `webpackJsonp_${name}`	// webpack 用于加载 chunk 的全局变量。
-//						}
-//					
-//		
-//		
-//		},
+			],
+			resolve:{ // 配置 Webpack 如何寻找模块所对应的文件。
+				
+				
+				fallback:{//退路
+					path: require.resolve("path-browserify")
+				}
+				
+				
+			},
+					
+			//配置 output 选项可以控制 webpack 如何向硬盘写入编译文件		
+			output:
+				process.env.VUE_APP_USE_TYPE !== "MicroApp" 
+						?
+						{} :
+						{
+							library: `${name}-[name]`,					// 输出一个库，为你的入口做导出。
+							libraryTarget: "umd",						// 配置如何暴露 library。
+							chunkLoadingGlobal: `webpackJsonp_${name}`	// webpack 用于加载 chunk 的全局变量。
+						}
+					
+		
+		
+		},
 		
 		
 		
-//		//更细粒度的控制其内部配置
-//		chainWebpack(config){
-//			
-//			
-//			
-//			// 添加html插件，替换其中的如果是生产环境 替换其中的 cdn 地址。
-//			config.plugin("html")
-//				   .tap((args) => {
-//					args[0].cdn = externals.target === "externals"
-//							?
-//					externals.cdn
-//							:
-//					"";
-//				return args;
-//			});
+		//更细粒度的控制其内部配置
+		chainWebpack(config){
+			
+			
+			
+			// 添加html插件，替换其中的如果是生产环境 替换其中的 cdn 地址。
+			config.plugin("html")
+				   .tap((args) => {
+					args[0].cdn = externals.target === "externals"
+							?
+					externals.cdn
+							:
+					"";
+				return args;
+			});
 //			// 移除 preload 
 //			config.plugins.delete("preload");  //预先加载
 //			// 移除 prefetch
 //			config.plugins.delete("prefetch"); //预先拉取
-//			
-//			// 添加 svg 加载器
-//			config.module
-//				.rule("svg")
-//				.exclude.add(
-//						resolve("../src/icons")
-//						)
-//				.end();
-//			
-//			// 添加 icons 加载器
-//			config.module
-//				.rule("icons")
-//				.test(/\.svg$/)
-//				.include.add(
-//						resolve("../src/icons")
-//						)
-//				.end()
-//				.use("svg-sprite-loader")
-//				.loader("svg-sprite-loader")
-//				.options({
-//					symbolId: "icon-[name]"
-//				})
-//				.end();
-//		}
+			
+			// 添加 svg 加载器
+			config.module
+				.rule("svg")
+				.exclude.add(
+						resolve("../src/icons")
+						)
+				.end();
+			
+			// 添加 icons 加载器
+			config.module
+				.rule("icons")
+				.test(/\.svg$/)
+				.include.add(
+						resolve("../src/icons")
+						)
+				.end()
+				.use("svg-sprite-loader")
+				.loader("svg-sprite-loader")
+				.options({
+					symbolId: "icon-[name]"
+				})
+				.end();
+		}
 };
 module.exports = webpackConfig;
 

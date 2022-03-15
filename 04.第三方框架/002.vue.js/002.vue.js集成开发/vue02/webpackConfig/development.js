@@ -31,6 +31,8 @@ module.exports = merge(webpackBaseConfig,{
 			}
 		},
 		
+		//assetsPublicPath: '/',
+		//assetsSubDirectory: 'static',
 		
 		hot: true,  					//启用 webpack 的 热模块替换 特性：
 		compress: true,					//启用 gzip compression：
@@ -38,18 +40,20 @@ module.exports = merge(webpackBaseConfig,{
 		proxy: require("./proxy.js")	//代理配置
 	},
 	configureWebpack: {
+		
+		
+		
+		
 		plugins: [
 		          		
 		          		
-		          
 
-		          		//VUE.本向有一个，这里再自定义一个，所以名字不能相同，会冲突。
-					    new HtmlWebpackPlugin({
-					    	filename: 'index_liheng.html',		     // filename 生成的主文件
-					    	template: 'index_template.html', //指html模板文件
-					    	inject: true
-					    }),					    
-					    
+//		          		//VUE.本向有一个，这里再自定义一个，所以名字不能相同，会冲突。
+//					    new HtmlWebpackPlugin({
+//					    	filename: 'indexxx.html',		     // filename 生成的主文件
+//					    	template: 'index_template.html', //指html模板文件
+//					    	inject: true
+//					    }),					    
 					    
 		          ]
 	},
@@ -57,7 +61,7 @@ module.exports = merge(webpackBaseConfig,{
 	chainWebpack(config){
 		
 //		//
-//		config.devtool("eval") //配置 source-map
+		config.devtool("eval") //配置 source-map
 //		
 //		//优化：
 //		config.optimization.splitChunks({
