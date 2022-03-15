@@ -1,0 +1,25 @@
+
+让日志显示的得更清楚。
+ 
+ 
+ https://blog.csdn.net/kaimo313/article/details/107964540
+		webpack之优化构建时命令行的显示日志
+	
+	
+	（1）. npm install friendly-errors-webpack-plugin --save-dev
+	 
+	
+	
+	（2）. const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+	
+	（3）.  plugins: [
+			  new FriendlyErrorsWebpackPlugin()
+			],
+			stats: 'normal'
+			//============================
+			Preset			Alternative		Description
+			“errors-only”	none			只在发生错误时输出
+			“minimal”		none			只在发生错误或有新的编译时输出
+			“none”			false			没有输出
+			“normal”		true			标准输出
+			“verbose”		none			全部输出
