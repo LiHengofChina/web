@@ -3,10 +3,11 @@ import Router from 'vue-router'
 import HelloWorld001 from '@/components/HelloWorld001'
 
 
+console.log("_________________1________________");
 
 
 Vue.use(Router)
-
+console.log("_________________2________________");
 export default new Router({
   routes: [
 	
@@ -14,7 +15,7 @@ export default new Router({
 
  
     {
-      path: '/liheng_test',
+      path: '/liheng_test', //http://localhost:8080/#/liheng_test
       name: 'HelloWorld001',
       component: HelloWorld001
     } 
@@ -22,4 +23,6 @@ export default new Router({
  
  
   ]
-})
+});
+
+console.log("_________________3________________");

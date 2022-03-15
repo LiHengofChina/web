@@ -12,7 +12,9 @@
     
     
     "start": "npm run dev",
-    "build": "node build/build.js"
+    
+    "build": "node build/build.js --config build/webpack.dev.conf.js"
+    
   },
   "dependencies": {
     "@vue/cli": "^5.0.1",

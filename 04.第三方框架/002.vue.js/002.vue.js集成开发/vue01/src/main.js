@@ -9,7 +9,7 @@ Vue.config.productionTip = false
 
 new Vue({
 	
-  el: '#app_index_',      /*  将这个VUE对象绑定到 某个 标签 位于 index.html中 */
+  el: '#app_index_liheng',      /*  将这个VUE对象绑定到 某个 标签 位于 index.html中 */
   
   
   router, 				 //路由决定访问地址 和 去哪个   
