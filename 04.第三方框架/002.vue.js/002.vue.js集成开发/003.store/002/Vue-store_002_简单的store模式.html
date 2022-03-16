@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Vue Demo</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	</head>
+	<body>
+ 
+  
+ 
+	</body>
+	<script type="text/javascript">
+	
+		/**
+			为了解决这个问题，我们采用一个简单的 store 模式：	
+		*/
+		var  store = {
+			  debug: true,
+			  state: {
+				message: 0
+			  },
+			  setMessageAction (newValue) {
+				if (this.debug) console.log('setMessageAction triggered with', newValue)
+				this.state.message = newValue
+			  },
+			  clearMessageAction () {
+				if (this.debug) console.log('clearMessageAction triggered')
+				this.state.message = ''
+			  }
+		}
+		/**
+			说明：
+			 需要注意，所有 store 中 state 的变更，
+			 都放置在 store 自身的 action 中去管理。
+			 
+			 这种集中式状态管理 能够 被 "更容易地理解" 哪种类型的 "变更将会发生"，
+			 以及它们是如何被触发。
+			 当错误出现时，我们现在也会有一个 log 记录 bug 之前发生了什么。
+
+		*/
+		var vmA = new Vue({
+		  data: {
+			el: "#firstVueA",
+			privateState: {}, //此外，每个实例/组件仍然可以拥有和管理自己的私有状态：
+			
+			sharedState: store.state
+			
+		  } 
+		});
+
+		var vmB = new Vue({
+		  data: {
+			el: "#firstVueB",
+			privateState: {},  //此外，每个实例/组件仍然可以拥有和管理自己的私有状态：
+			
+			sharedState: store.state
+			
+		  } 
+		});
+				
+ 
+
+
+
+	</script>
+</html>
+ 
+

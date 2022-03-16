@@ -1,0 +1,99 @@
+
+//=============================================================== 在项目中使用
+//=============================================================== 在项目中使用
+
+  store文件夹一般有以下6个文件
+
+
+（1）. state.js
+		//相当于数据库，定义了数据的结构和初始值
+		
+（2）. actions.js
+		//提交状态，调用mutations方法对数据进行操作
+
+（3）. mutations.js
+		//定义state数据的修改操作
+
+（4）. getters.js
+		//是store的计算属性，即获取state中的状态，但是不做悠
+
+（5）. mutation-type.js
+		//存入vuex中要用到的常量
+		
+（6）. index.js
+		//定义 Vuex.Store
+
+//=============================================================== 步骤
+//=============================================================== 步骤
+
+//store/index.js
+
+	import Vue from 'vue'
+	import Vuex from 'vuex'
+	import createPersistedState from 'vuex-persistedstate'
+	Vue.use(Vuex)
+
+	const module = {
+		
+		//组件的共享状态state
+		state: {
+			user: {
+				name: 'rookie'
+			}
+		},
+		
+		getters: {},
+		
+		// 改变状态的方法
+		mutations: {
+			setUser(state, payload){
+				if(payload.hasOwnProperty('name')){
+					state.user.name = payload.name
+				}
+			}
+		},
+		
+		plugins: [createPersistedState()]
+		
+	}
+	/**
+		说明 ：
+			上面是一个简单的vuex，在vuex中对store应用，
+			
+			在store中包含 组件的共享状态state 和 改变状态的方法（暂且称作方法）mutations。
+			
+			注意state相当于对外的只读状态，不能通过store.state.user.name来更改，
+			
+			
+			使用 store.commit 方法 通过触发 mutations 改变s tate。
+
+
+	*/
+//==========
+//==========
+在页面中获取记录的值name为rookie：
+mounted(){
+    console.log(this.$store.state.user.name);
+}
+store.state为获取store中的值，
+此时在my页面中打印出来的值为rookie，
+
+//========== 修改状态
+//========== 修改状态
+
+而我们想要修改name的值，
+则需要借助 store.commit 方法来触发 mutations:
+
+this.$store.commit('setUser',{name: 'kuke_kuke'});
+
+在mutations中找到setUser，第二个参数payload为传入的对象{name: ‘kuke_kuke’}，
+调用方法hadOwnProperty来判断传入的对象是否有name属性，从而修改state中的值，
+此时在页面中再次打印user.name的值为’kuke _ kuke’。
+
+//==========
+//==========
+在main.js中获取模块并使用：
+import store from './store'
+new Vue({
+    store
+})

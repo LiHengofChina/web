@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Vue Demo</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	</head>
+	<body>
+ 
+		<div id="firstVueA">
+		
+			<button @click="message++" style = "font-size:25px;">点我A</button>
+			firstVueA<input type = "text" v-model="message">
+			
+		</div>
+		
+		<div id="firstVueB">
+			<button @click="message++" style = "font-size:25px;">点我B</button>
+			firstVueB<input type = "text" v-model="message">
+		</div>
+		
+		
+	</body>
+	<script type="text/javascript">
+	
+		/**
+			https://cn.vuejs.org/v2/guide/state-management.html
+			Vue 应用中原始 data 对象的 实际来源——————
+			当访问数据对象时一个 Vue 实例只是简单的代理访问。
+
+		
+			如果你有一处需要被多个实例间共享的状态，
+			可以简单地通过维护"一份数据来实现共享"：	
+		*/
+		var sourceOfTruth = {
+				message: 0
+		};
+		var vmA = new Vue({
+		  el: "#firstVueA",
+		  data: sourceOfTruth
+		});
+
+		var vmB = new Vue({
+		  el: "#firstVueB",
+		  data: sourceOfTruth
+		});
+		/**
+			说明：
+				现在当 sourceOfTruth 发生变更，
+				vmA 和 vmB 都将自动地更新它们的视图。
+				
+			子组件们的每个实例也会通过 this.$root.$data 去访问。
+			现在我们有了唯一的数据来源。
+			
+			但是，调试将会变为噩梦。
+			任何时间，我们应用中的任何部分，
+			在任何数据改变后，都不会留下变更过的记录。
+
+		*/
+
+
+	</script>
+</html>
+ 
+
