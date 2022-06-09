@@ -1,0 +1,44 @@
+<!Doctype html>
+<html>
+		<head>
+		</head>
+		<body>
+				<div id="demo" ></div>
+		</body>
+</html>	
+<script type="text/javascript">
+ 
+
+
+/** 写法一：
+	function print() {
+		document.getElementById("demo").innerHTML="RUNOOB!";
+	}
+	setTimeout(print, 3000);
+*/
+
+/**
+
+这段程序中的 setTimeout 就是一个消耗时间较长（3 秒）的过程，
+
+它的第一个参数是个回调函数，
+第二个参数是毫秒数，
+
+这个函数执行之后会：
+		产生一个子线程，子线程会等待 3 秒，
+		然后执行回调函数 "print"，在命令行输出 "RUNOOB!"。
+ 
+*/
+
+
+
+
+/** 写法二：*/
+
+setTimeout(function () {
+    document.getElementById("demo").innerHTML="RUNOOB!";
+}, 3000);
+
+
+
+</script>

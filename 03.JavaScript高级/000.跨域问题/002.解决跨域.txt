@@ -1,0 +1,53 @@
+
+//================================================= 方法一  设置返回的Response跨域，适合所有服务端
+//================================================= 方法一  设置返回的Response跨域，适合所有服务端
+	
+			//因为是 "服务器的返回" 被 "浏览器拦截"
+
+	（1）.普通参数跨域设置
+		httpServletResponse.setHeader("Access-Control-Allow-Origin","*");
+		httpServletResponse.setHeader("Access-Control-Allow-Methods","POST");
+		httpServletResponse.setHeader("Access-Control-Allow-Headers","Access-Control");
+		httpServletResponse.setHeader("Allow","POST");	
+		/**
+			Access-Control-Allow-Origin:| * 				// 授权的源控制
+			Access-Control-Max-Age:							// 授权的时间
+			Access-Control-Allow-Credentials: true | false  // 控制是否开启与Ajax的Cookie提交方式
+			Access-Control-Allow-Methods:[,]* 				// 允许请求的HTTP Method
+			Access-Control-Allow-Headers:[,]* 				// 控制哪些header能发送真正的请求
+
+		*/
+		//观察响应头
+		Response Headers 
+			Access-Control-Allow-Credentials: true
+			Access-Control-Allow-Headers: abc,accpet,content-ype,devicecode
+			Access-Control-Allow-Methods: GET,HEAD,POST
+			Access-Control-Allow-Origin: http://localhost:8080/
+			Access-Control-Max-Age: 1800
+			
+			Connection: keep-alive
+			Content-Length: 11
+			Content-Type: application/json
+			Date: Thu, 17 Feb 2022 14:54:43 GMT
+			Keep-Alive: timeout=60
+			Vary: Origin
+			Vary: Access-Control-Request-Method
+			Vary: Access-Control-Request-Headers
+				
+	（2）.带headr请求跨域设置
+	
+			这样客户端需要发起 OPTIONS请求， 可以说是一个"预请求"，
+			用于探测后续真正需要发起的跨域 POST 请求对于服务器来说是否是安全可接受的，
+			****************************************
+			因为跨域提交数据对于服务器来说可能存在很大的安全问题。
+			****************************************
+			因为Springmvc模式是挂壁OPTIONS请求的，所以需要开启
+			<servlet>    
+			   <servlet-name>application</servlet-name>    
+			   <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>  
+			   <init-param>  
+					<param-name>dispatchOptionsRequest</param-name>  
+					<param-value>true</param-value>  
+			   </init-param>    
+			   <load-on-startup>1</load-on-startup>    
+			</servlet>    

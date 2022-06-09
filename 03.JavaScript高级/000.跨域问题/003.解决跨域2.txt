@@ -1,0 +1,108 @@
+
+//================================================= 方法二：使用Spring MVC（4.2以上） 跨域
+//================================================= 方法二：使用Spring MVC（4.2以上） 跨域
+Spring MVC 从 4.2 版本开始增加了对CORS的支持，
+在spring MVC 中增加CORS支持非常简单，
+
+（1）可以配置全局的规则，
+（2）也可以使用@CrossOrigin注解进行细粒度的配置。
+
+//================================================================================================= （1）. 局部配置
+//================================================================================================= （1）. 局部配置
+
+//================== 在类上使用 使用 @CrossOrigin 注解
+//================== 在类上使用 使用 @CrossOrigin 注解
+
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RestController
+@RequestMapping("/controller")
+public class Controlle{
+	//origins="*"      授权的源控制
+	//maxAge=3600  	   授权的时间
+}
+
+//================== 在方法上使用 @CrossOrigin 注解
+//================== 在方法上使用 @CrossOrigin 注解
+
+public class Controller {
+
+    @CrossOrigin("http://www.baidu.com")
+    @RequestMapping("/a")
+    public void a() {
+        // ...
+    }
+  
+}
+
+
+这里控制器和方法同时有,Spring会合并两个注解的属性一起应用到a方法上，可以单独管理
+
+
+//================================================================================================= （1）. 全局配置
+//================================================================================================= （1）. 全局配置
+
+//=============基于java代码配置
+//=============基于java代码配置
+
+
+//默认情况下所有的域名和GET、HEAD和POST方法都是允许的。
+@Configuration
+public class WebConfig extends WebMvcConfigurerAdapter {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+    }
+}
+
+
+//你也可以单独更改任何属性，以及配置适用于特定的路径模式的CORS：
+@Configuration
+public class WebConfig extends WebMvcConfigurerAdapter {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+            .allowedOrigins("http://domain2.com")
+            .allowedMethods("PUT", "DELETE")
+            .allowedHeaders("header1", "header2", "header3")
+            .exposedHeaders("header1", "header2")
+            .allowCredentials(false).maxAge(3600);
+    }
+}
+
+//不限制任何请求（方便复制粘贴）
+@Configuration
+public class CorsConfig extends WebMvcConfigurerAdapter {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "TRACE");
+    }
+}
+//=============基于XML的配置
+//=============基于XML的配置
+
+//不限制任何请求
+<mvc:cors>
+    <mvc:mapping path="/**" />
+</mvc:cors>
+
+
+
+//针对某些地址作限制
+
+<mvc:cors>
+
+    <mvc:mapping path="/api/**"
+        allowed-origins="http://domain1.com, http://domain2.com"
+        allowed-methods="GET, PUT"
+        allowed-headers="header1, header2, header3"
+        exposed-headers="header1, header2" allow-credentials="false"
+        max-age="123" />
+
+    <mvc:mapping path="/resources/**"
+        allowed-origins="http://domain1.com" />
+
+</mvc:cors>

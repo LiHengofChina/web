@@ -1,0 +1,52 @@
+<!Doctype html>
+
+<script type="text/javascript">
+
+function loadXMLDoc(){
+
+	var xmlhttp;
+	if(window.XMLHttpRequest){
+		
+		//IE7 + , Firefox, Chrome,Opera,Safari浏览器执行代码
+		xmlhttp=new XMLHttpRequest();
+		
+	}else{
+	
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		
+	}
+	
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+		}
+	}
+
+	//xmlhttp.open("GET","/web/03.JavaScript高级/002.AJAX/ajax_info.txt",true);
+	xmlhttp.open("GET","/05.Theory/ajax_info.txt",true);
+	/**
+		这里会碰到一个跨域的问题，先不关注
+		Request URL: file:///F:/05.Theory/ajax_info.txt
+		Referrer Policy: strict-origin-when-cross-origin	
+	
+	*/
+ 
+
+	xmlhttp.send();
+	
+	
+}
+
+
+</script>
+
+<html>
+		<head>
+		</head>
+		<body>
+				<button type="button" onclick="loadXMLDoc()" >修改内容</button>
+		</body>
+</html>	
+
