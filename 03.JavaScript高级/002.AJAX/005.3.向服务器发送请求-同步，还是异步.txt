@@ -1,0 +1,54 @@
+ 
+//===========================================================================================================  异步 - True 或 False？
+//===========================================================================================================  异步 - True 或 False？
+
+AJAX 指的是异步 JavaScript 和 XML（Asynchronous JavaScript and XML）。
+XMLHttpRequest 对象如果要用于 AJAX 的话，其 open() 方法的 async 参数必须设置为 true：
+
+
+xmlhttp.open("GET","ajax_test.html",true);
+
+/**
+
+	对于 web 开发人员来说，发送异步请求是一个巨大的进步。
+	很多在服务器执行的任务都相当费时。
+	AJAX 出现之前，这可能会引起应用程序挂起或停止。
+
+	通过 AJAX，JavaScript 无需等待服务器的响应，而是：
+
+	在等待服务器响应时执行其他脚本
+	当响应就绪后对响应进行处理
+
+*/
+//=========================================================================================================== Async=true
+//=========================================================================================================== Async=true
+当使用 async=true 时，请规定在响应处于 onreadystatechange 事件中的就绪状态时执行的函数：
+
+xmlhttp.onreadystatechange=function()
+{
+    if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+        document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+    }
+}
+xmlhttp.open("GET","/try/ajax/ajax_info.txt",true);
+xmlhttp.send();
+
+//=========================================================================================================== Async=true
+//=========================================================================================================== Async=true
+
+如需使用 async=false，请将 open() 方法中的第三个参数改为 false：
+
+xmlhttp.open("GET","test1.txt",false);
+
+
+我们不推荐使用 async=false，但是对于一些小型的请求，也是可以的。
+请记住，JavaScript 会等到服务器响应就绪才继续执行。如果服务器繁忙或缓慢，应用程序会挂起或停止。
+注意：当您使用 async=false 时，请不要编写 onreadystatechange 函数 - 把代码放到 send() 语句后面即可：
+
+
+xmlhttp.open("GET","/try/ajax/ajax_info.txt",false);
+xmlhttp.send();
+document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+
+
