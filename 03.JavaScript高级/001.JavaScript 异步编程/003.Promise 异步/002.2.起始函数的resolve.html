@@ -1,0 +1,46 @@
+<!Doctype html>
+
+<script type="text/javascript">
+
+
+
+/**
+
+			resolve
+
+*/
+
+ 
+		new Promise(function (resolve, reject) {//异步执行
+				console.log("_________________________1");
+				var a = 3;
+				var b = 1;
+				
+				if( b == 0){
+					console.log("_________________________2");
+					reject("Divide zero"); 
+				}else{
+					console.log("_________________________3");
+					resolve( a / b ); //  往下调用
+									  //  a / b 的值，传给了下面的 value_liheng
+				}
+
+		}).then(function (value_liheng) {//这里是同步执行（是上面异步执行后连接的同步）
+				console.log("_________________________4");
+				console.log("a / b = " + value_liheng);
+		}).finally(function () {
+			console.log("_________________________xxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+			console.log("End");
+		});
+	
+	
+ 
+
+
+
+</script>
+
+<html>
+
+</html>
+

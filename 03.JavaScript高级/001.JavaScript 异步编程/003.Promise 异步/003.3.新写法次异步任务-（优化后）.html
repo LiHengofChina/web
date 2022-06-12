@@ -1,0 +1,44 @@
+<!Doctype html>
+
+<script type="text/javascript">
+		
+		 /**
+		 
+		 上述的 "计时器" 程序看上去比函数瀑布还要长，
+		 所以我们可以将它的核心部分写成一个 Promise 函数：
+		 */
+		function print(delay, message) {
+			return new Promise(function (resolve, reject) {
+				setTimeout(function () {
+					console.log(message);
+					resolve();
+				}, delay);
+			});
+		}
+		
+		
+		print(1000, "First")
+		.then(function () {
+			return print(4000, "Second");
+				/**
+				 
+				 这里不用return 相当于 后面两个会并行
+				 
+				 这里用return 相当于 后面两个串行
+				 
+				*/
+				
+		}).then(function () {
+			print(3000, "Third");
+		});
+		
+		
+		
+		
+		
+</script>
+
+<html>
+		 
+</html>	
+
