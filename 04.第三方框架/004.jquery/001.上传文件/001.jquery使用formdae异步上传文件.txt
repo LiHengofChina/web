@@ -1,0 +1,7 @@
+
+
+使用 FormData
+
+参考：
+F:\Java\java_框架\010.struts2\001.upload\004.通过ajax向struts2上传文件.txt
+
