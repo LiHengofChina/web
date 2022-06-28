@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>李恒测试)</title> 
+</head>
+<body>
+
+	<p><strong>以下内容是通过异步请求获取的：</strong></p>
+
+
+	<p id="demo"></p>
+
+<script>
+			var xhr = new XMLHttpRequest();
+
+			// 成功时加载的内容
+			xhr.onload = function () {
+				// 输出接收到的文字数据
+				document.getElementById("demo").innerHTML=xhr.responseText;
+			}
+			
+			// 失败时加载的内容
+			xhr.onerror = function () {
+				document.getElementById("demo").innerHTML="请求出错";
+			}
+			 
+			// 设置地址
+			xhr.open("GET", "http://www.runoob.com/try/ajax/ajax_info.txt", true);
+			// 开始请求
+			xhr.send();
+
+</script>
+
+</body>
+</html>
