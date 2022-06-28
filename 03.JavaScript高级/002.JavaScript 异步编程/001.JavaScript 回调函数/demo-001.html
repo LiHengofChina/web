@@ -3,7 +3,8 @@
 		<head>
 		</head>
 		<body>
-				<div id="demo" ></div>
+				<div id="demo1" ></div>
+				<div id="demo2" ></div>
 		</body>
 </html>	
 <script type="text/javascript">
@@ -12,7 +13,7 @@
 
 /** 写法一：
 	function print() {
-		document.getElementById("demo").innerHTML="LIHENG!";
+		document.getElementById("demo1").innerHTML="LIHENG!";
 	}
 	setTimeout(print, 3000);
 */
@@ -35,10 +36,15 @@
 
 /** 写法二：*/
 
+
 setTimeout(function () {
-    document.getElementById("demo").innerHTML="LIHENG!";
+    document.getElementById("demo1").innerHTML="LIHENG!";
 }, 3000);
 
 
+
+alert("liheng");
+document.getElementById("demo2").innerHTML="RUNOOB-2!";
+console.log("2");
 
 </script>
