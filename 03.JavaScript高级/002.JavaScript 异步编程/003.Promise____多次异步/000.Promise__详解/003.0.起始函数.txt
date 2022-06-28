@@ -6,9 +6,9 @@
 
 resolve 和 reject 都是函数，
 
-其中调用 resolve 代表一切正常，
+其中调用
+resolve 代表一切正常，
 reject 是出现异常时所调用的：
-
 
 
 （1）  	resolve() 
