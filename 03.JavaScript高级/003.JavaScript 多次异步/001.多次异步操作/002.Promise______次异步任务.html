@@ -1,0 +1,95 @@
+<!Doctype html>
+
+<script type="text/javascript">
+/***
+
+	说明：
+		Promise 将嵌套格式的代码变成了顺序格式的代码。
+ 
+*/
+
+  
+		new Promise(function(resolve,reject){
+
+			//（0）Promise里面的代码会异步执行， setTimeout 时间到达后执行， 两者同步使用，相当于是 两次异步哦
+			//这里 setTimeout 是为了模拟调用后台接口而消费的时间，指的是后台调用结束后
+			setTimeout(function(){
+				
+				console.log("first");
+				
+				//Promise 的构建方法内的业务逻辑执行完之后， 必须调用resolve,才会继续执行。
+				resolve("resolve 向下传递一个值：liheng1111"); //（1）类似 "责任链模式" 的走向下一步，并传递值
+				
+				
+				
+			},1000);
+
+
+		})
+		
+		.then( function(aa){ //（2）then 方法的参数是一个函数，它可以接受上一个 resolve 传的参数 
+				
+				console.log(aa); 
+				
+				return "then 向下传递一个值：liheng2222"; //（3） then 也可以返回一个值，返回 一个普通值的时候，就相当于 resolve 传参数一样，是向下个then
+
+		})
+		
+		.then(function(bb){  
+				
+				console.log(bb);
+				
+				
+				//（4） then也可以返回 一个 Promise 对象
+				//但是，如果 then 返回一个 Promise 对象， //那么下一个 then 将相当于对这个返回的 Promise 进行操作
+				return new Promise(function(resolve,reject){
+				
+				
+					setTimeout(function(){
+						console.log("second");
+						resolve("_______我来插队，插队就变成了串行_______");//这里就通过 resolve 来向下传递值了。
+					},4000);
+					
+				});
+			
+				
+		})
+			
+		.then( function(cc){ 
+				//（5）由于上一个then返回的是 Promise，所以这次then里面会先执行上一次 Promise的内容，
+				
+				/** 
+					上一个 then 返回的是Promise，而它里面就有使用 setTimeout 异步，让它插队，相当于把异步的内容归并到一条线上
+					这里 setTimeout 是为了模拟调用后台接口而消费的时间，指的是后台调用结束后，才开始执行
+					再来执行下一个 then的内容，相当于回调函数，
+					不同在于，这里可以多次异步，多次回调，都保证顺序，
+				*/
+				
+				// 再执行这一次的then的内容，//同样的上次的 Promise 对象中的 resolve 可以向下传递参数。
+
+				console.log(cc);
+				
+				return new Promise(function(resolve,reject){
+					setTimeout(function(){
+						console.log("thrid");
+						resolve();
+					},1000);
+				});
+				
+		})
+		
+ 
+		.then(function(){ //同步
+		
+				console.log("fourth");
+				
+		}) 
+		;
+
+ 
+</script>
+
+<html>
+		 
+</html>	
+
