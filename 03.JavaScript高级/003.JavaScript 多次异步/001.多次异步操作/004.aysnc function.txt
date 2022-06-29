@@ -1,0 +1,38 @@
+
+异步函数（async function）是 ECMAScript 2017 (ECMA-262) 标准的规范，
+
+几乎被所有浏览器所支持，
+
+除了 Internet Explorer。
+
+//==============================================================
+//==============================================================
+
+在 Promise 中我们编写过一个 Promise 函数：
+
+function print(delay, message) {
+    return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            console.log(message);
+            resolve();
+        }, delay);
+    });
+}
+print(1000, "First").then(function () {
+    return print(4000, "Second");
+}).then(function () {
+    print(3000, "Third");
+});
+
+//============================================================== 我们可以将这段代码变得更好看：相当于再进一步优化
+//============================================================== 我们可以将这段代码变得更好看：相当于再进一步优化
+
+async function asyncFunc() {
+    await print(1000, "First");
+    await print(4000, "Second");
+    await print(3000, "Third");
+}
+asyncFunc();
+
+//TODO
+https://www.runoob.com/js/js-promise.html
