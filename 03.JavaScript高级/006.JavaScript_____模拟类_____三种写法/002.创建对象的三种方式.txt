@@ -1,0 +1,18 @@
+
+https://blog.csdn.net/m0_37585915/article/details/80843945
+
+那么创建对象的方式主要有以下几种：
+第一种： 字面量
+var Obj1 = {name:”o1”};
+var Obj2 = new Object({name:”o2”});
+
+第二种：构造函数
+var M = function (name) { this.name = name };
+var Obj3 = new M(“o3”) ;
+
+第三种：Object.create
+var p = {name:”o4”}
+var Obj4 = Object.create(p);
+
+不同的方式创建的对象略微不同。
+
