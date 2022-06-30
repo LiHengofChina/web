@@ -1,0 +1,98 @@
+"普通函数"和"构建函数"对比
+
+//================ 相同点
+ 
+1). 构造函数也是一个普通函数
+		无论是构造函数还是非构造函数，
+		两者并没有实质性的区别；
+		
+		构造函数可以作为普通函数使用，
+		普通函数也可以作为构造函数来用
+		
+2). "构造函数"的 创建方式 和普通函数一样
+		1). 声明式
+		2). 表达式
+		3). new Function("n1","n2"," return n1+n2");
+
+ 
+		
+//==========================不同点
+1). 命名含义不同
+	普通函数：动词，say、run
+	构造函数：名词，Person、Car
+
+2). 构造函数习惯上"首字母大写"
+
+3). 调用方式不一样
+		普通函数：直接调用 person();
+		构造函数：需要使用new关键字来调用 new Person();
+
+4). 作用不一样
+		普通函数：完成处理逻辑
+		构造函数：用来新建实例对象
+
+5). 构造函数的"函数名"与"类名"相同
+		示例：
+			Person() 这个构造函数
+			Person 既是函数名，也是这个对象的类名
+
+6). 构建函数内部用 this 来构造属性和方法 		
+		function Person(){
+			this.name=name;
+			this.sayHi=function(){
+				alert("Hi");
+			}
+		}		
+
+7). 构造函数的执行流程
+      1).立刻在堆内存中创建一个新的对象
+      2).将新建的对象设置为函数中的this
+      3).逐个执行函数中的代码
+      4).将新建的对象作为返回值
+
+8). 未加 return 情况下返回内容 
+	普通函数
+		function person(){ }
+		var per =person();
+		console.log(per); //返回 undefined
+	构造函数
+		function Person(){}
+		var per2 = new Person();
+		console.log(per2); //返回 Person {}对象 
+
+9). 用instanceof 可以检查"某个对象"是否是"某个类"的实例，是则返回true；
+	function Person(name){
+		this.name = name;
+	}
+	var p = new Person("li");
+	console.log(p instanceof Person );
+
+10). 所有对象都是Object对象的后代，
+	 所以任何对象和Object做instanceof都会返回true
+
+11). 无论什么函数：
+	1). 只要通过 new 操作符来调用
+			那就是作为构造函数使用，此时this指向new出的实例
+	2). 如果不通过 new 操作符来调用
+			那就是作为普通函数使用；此时，在非严格模式下this都指向window
+	//==============================
+	function foo(name){
+		this.name = name;
+	}
+	function Foo(name){
+		this.name = name;
+	}
+
+	//当构造函数用：this都指向实例
+	console.log(new Foo('bty1'));   //Foo {name: "bty1"}
+	console.log(new foo('bty2'));   //foo {name: "bty2"}
+
+	//当普通函数用：this都指向window
+	Foo('bty1');
+	console.log(window.name);  //'bty1'
+	foo('bty2')
+	console.log(window.name);  //'bty2'
+	//===============
+	从原型链角度看，它们还是没啥区别：
+	console.log(foo.__proto__ === Function.prototype); //true
+	console.log(Foo.__proto__ === Function.prototype); //true
