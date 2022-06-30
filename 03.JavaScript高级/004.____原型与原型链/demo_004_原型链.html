@@ -1,0 +1,67 @@
+<!Doctype html>
+
+
+<script type="text/javascript">
+
+/**
+
+	//============ 总结就是：
+	//============ 总结就是：
+	 "构造函数" 有个 prototype 属性，是一个指针，指向原型对象。
+	 "每个实例" 内部也有一个指针 __proto__ ，指向原型对象。
+
+	//============= 反之
+	//============= 反之
+	 "原型对象"都有 constructor 属性，指向它的构建函数
+
+	//========================================================================== 原型链
+	//========================================================================== 原型链
+
+	"每个构造函数" 都有 "原型对象"
+	"每个构造函数实例" 都包含一个指向原型对象的内部指针（__proto__）
+
+	如果我们让 "第二个构造函数的原型对象" 等于 "第一个构造函数的实例" ，
+	结果 "第二个构造函数的原型对象" 将包含一个指向 "第一个原型对象的指针" ，
+
+	再然后 "第三个构造函数的原型对象" 等于 "第二个构造函数的实例"，
+	这样 "第三个构造函数的原型对象" 也将包含指向 "第一个原型对象" 的指针，
+	
+	以此类推，就够成了 "实例与原型的链条" ，这就是原型链的基本概念
+
+
+*/
+
+function One(){
+
+}
+function Two(){
+
+}
+function Three(){
+
+}
+
+Two.prototype=new One();
+Three.prototype=new Two();
+var three=new Three();
+console.log(three);
+console.log(three.__proto__===Three.prototype) //true
+console.log(three.__proto__.__proto__===Two.prototype) //true
+console.log(three.__proto__.__proto__.__proto__===One.prototype)  //true
+console.log(three.__proto__.__proto__.__proto__.__proto__===Object.prototype)  //true
+
+
+
+
+
+
+</script>
+
+
+
+<html>
+
+</html>
+
+
+
