@@ -1,0 +1,35 @@
+
+
+https://blog.csdn.net/weixin_39308542/article/details/109313214
+
+
+想在 在Promise中 Return 
+
+简单说：
+	就是在 Promise 中 Return，
+	简单说：就是在  Promise 中，
+	
+	把异步的值使用 resolve('值')传递给下一个then，
+	然后在then中进行判断。
+	
+	
+function fun() {
+    return new Promise((resolve, reject) => {
+    	resolve('模拟axios') //传值
+    })
+}
+function test() {
+  	return fun().then(res => {
+       console.log('1,',res) //拿到值。
+       return 1
+     }).then(res => {
+        console.log('2,',res)
+        return 2
+     }).then(res => {        
+     	console.log('3,',res)
+     	return 3
+     }).catch(err=>{
+        console.log('#err',err)
+	})
+}
+ 
