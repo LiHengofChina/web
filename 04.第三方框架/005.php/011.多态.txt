@@ -1,0 +1,77 @@
+
+作为面向对象编程的3大思想之一，多态也是一种高级技能
+
+多态一般都是通过接口来实现的
+
+就是调用同一个方法，执行得到的结果却不同！！！
+
+通过输入参数的不同，执行结果不同，这就是多态
+
+polymorphism.php
+
+//=======================================================================================
+//=======================================================================================
+
+
+<?php
+	//申明接口
+	interface tool{
+		function on();
+		function run();
+		function off();		
+	}
+	
+	//实现接口
+	class fan implements tool{
+		public $name;
+		
+		function on(){
+			echo '<br/>'.$this->name.'风扇启动<br/>';
+		}
+		function run(){
+			echo '<br/>'.$this->name.'风扇运行<br/>';
+		}
+		function off(){
+			echo '<br/>'.$this->name.'风扇关闭<br/>';
+		}
+		function __construct($name){
+			$this->name=$name;
+		}
+	}
+	//实现接口
+	class engine implements tool{
+		public $name;
+		
+		function on(){
+			echo '<br/>'.$this->name.'发动机启动<br/>';
+		}
+		function run(){
+			echo '<br/>'.$this->name.'发动机运行<br/>';
+		}
+		function off(){
+			echo '<br/>'.$this->name.'发动机关闭<br/>';
+		}
+		function __construct($name){
+			$this->name=$name;
+		}
+	}
+	
+	
+	//状态类
+	class toolStatus{
+		function ts($tool){
+			$tool->on();
+			$tool->run();
+			$tool->off();
+		}
+	}
+	
+	//应用多态polymorphism
+	$fan=new fan('海尔 ');
+	$engine=new engine('奥迪 ');
+	$toolStatus=new toolStatus();
+	
+	$toolStatus->ts($fan);
+	$toolStatus->ts($engine);
+?>
+

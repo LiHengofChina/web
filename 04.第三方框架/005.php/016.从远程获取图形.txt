@@ -1,0 +1,18 @@
+
+
+imageUrl.php
+
+
+
+
+<?php
+	$img=imagecreatefromjpeg('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw%2F95cd5724-1718-4582-80ec-f08ed4a81744%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1687146597&t=aa00455456b2acd3ca08ba0e159fc618');
+
+	ob_clean(); //用于清空输出缓冲区的函数。
+				//它的作用是清除当前输出缓冲区中的内容，使缓冲区变为空。
+	header('Content-type:image/jpeg');
+	imagejpeg($img) or die('创建图形失败');
+	imagedestroy($img);
+
+?>
+

@@ -1,0 +1,35 @@
+
+
+（1）
+	PHP开发环境主要3部分：
+		（1）服务器Apache，编程语言PHP，数据库MySQL。
+		（2）搭建开发环境，直接使用XAMPP集成安装就可以。
+		（3）直接使用XAMPP集成安装就可以。
+
+
+	XAMPP=Apache+MySQL+PHP+Perl，X表示的是跨平台。
+
+（2）
+
+官网下载安装即可：
+https://www.apachefriends.org/zh_cn/index.html
+
+
+
+	/** TODO
+		"搭建PHP开发环境" 下载里面是 Apache + MariaDB + PHP + Perl，
+		不是MySql啊，是MariaDB
+	*/
+
+
+
+（3）下载后，直接安装。
+
+
+（4）然后运行XAMPP的控制面板，
+	 点击Apache的start，
+	 绿色就是 "正常运行" 了。
+
+
+
+

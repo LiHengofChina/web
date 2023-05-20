@@ -1,0 +1,19 @@
+
+
+（1）使用note++进行编写文件 helloworld.php
+	<?php
+		echo "hello world!";
+	?>
+
+
+（2）然后将 helloworld.php文件放在路径：d:\xampp\htdocs
+			//以后我们将php文件放在一个单独的文件夹basic中，便于管理
+
+
+（3）访问：
+	 http://localhost/helloworld.php
+			// http://localhost/dashboard/index.php 可以访问XAMPP的主页
+
+
+（4）ok，第一个PHP程序就完成了。
+
