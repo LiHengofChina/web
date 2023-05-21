@@ -1,104 +1,117 @@
+
+
 <!DOCTYPE html>
 <html>
+
+
 	<head>
 		<title>Vue Demo</title>
 		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 	</head>
+
+
+
+
+<!--
+
+指令：
+	（1）.  指令是带有 v- 前缀的特殊属性。
+				如： v-html=
+
+	（2）.  参数在指令后以冒号指明
+				如：v-bind:id=
+
+	（3）.  修饰符
+				以半角句号 . 指明的 "特殊后缀"，
+				用于指出一个指令应该以特殊方式绑定。
+
+				//例如，.prevent 修饰符告诉 v-on 指令对于触发的事件调用 event.preventDefault()：
+				//注意：不同的指定 它有不同的修饰符号 
+				比如：总之，“.”号后面者是修饰符
+					v-on:click.ctrl
+					v-model.lazy
+ 
+	（4）.  v-bind  的缩写是		 	 	:
+		    v-on   语法同样有一个缩写		@
+
+-->
+
+
+
 	<body>
 		<div id="firstVue" >
-				 
-				 <!-- （1）. hidden属性 -->
+
+
+				 <!-- （1）. hidden属性  ，这是使用了缩写：v-bind -->
 				 <h1>
-					 <div :hidden="my_hidden">
+					 <div v-bind:hidden="my_hidden">
 						 你是看不到我的
 					 </div>
 				 </h1>
 				 <hr/>
-				 
-				 
+
 				 <!-- （2）. 双向绑定 -->
 				 <h1><p>{{ message_liheng }}</p></h1>
 				 <input v-model="message_liheng">
 				 <hr/>
 				 <hr/>
-				 
+
 				 <!-- （3）. html绑定 -->
 				 <div v-html="message"></div>
 				 <hr/>
-				 
+
 				 <!-- （4）.属性中拼接数据-->
 				 <div v-bind:id="'list-' + id">李恒在学习</div>
+				 <hr/><br>
+
+
+				 <!--  （5）.样式属性绑定 -->
+				 <label for="r1">修改颜色</label>
+				 	<input type="checkbox" v-model="use" id="r1">
+				 <br>
+				 <div v-bind:class="{'class1': use}">
+				     v-bind:class 指令，当选中上面的checkbox时，这行字的底色，就会发生改变
+			  	 </div>
+
 				 <hr/>
-				 
-				
-				<!--  （5）.样式属性绑定 -->
-				<label for="r1">修改颜色</label>
-					<input type="checkbox" v-model="use" id="r1">
-				<br><br>
-				<div v-bind:class="{'class1': use}">
-				    v-bind:class 指令
-			  	</div>
-				<hr/>
-				 
-				<!--  （6）.超连接绑定 -->
-				<pre><a v-bind:href="url">李恒的网站</a></pre>
-				<hr/>
-				
-				
+
+				 <!--  （6）.超连接绑定 -->
+				 <pre><a v-bind:href="url">李恒的网站GitHub地址</a></pre>
+				 <hr/>
 
 
 
 		</div>
 	</body>
+
 	<script type="text/javascript">
 		var myVue = new Vue({
 			el: "#firstVue",
 			data:{
 			    my_hidden: "hidden",
-				
+
 				message_liheng: "双向数据绑定",
-				
+
 				message: '<h1>v-html（这是一片html）</h1>',
-				
+
 				id : 1,
-				
+
 				use: false,
-				
-				url: 'http://www.baidu.com'
+
+				url: 'https://github.com/LiHengofChina'
 			}
 		})
 	</script>
-	
+
 	<style scoped>
 		.class1{
 		  background: #444;
 		  color: #eee;
 		}
 
-	</style>	
+	</style>
 </html>
-<!-- 
-	
-	指令：
-	
-	（1）.  指令是带有 v- 前缀的特殊属性。
-	（2）.  参数在指令后以冒号指明
-	
-	
-	（3）.  修饰符
-				以半角句号 . 指明的特殊后缀，
-				用于指出一个指令应该以特殊方式绑定。
-				//例如，.prevent 修饰符告诉 v-on 指令对于触发的事件调用 event.preventDefault()：
-			//注意：不同的指定 它有不同的修饰符号 
-			比如：总之，.后面者是修饰符
-				v-on:click.ctrl
-				v-model.lazy
-	
-	
-	（4）.  v-bind  的缩写是		 	 	: 
-		    v-on   语法同样有一个缩写		@ 
 
--->
 <!-- ------------------------ v- bind 指令
 
 绑定某个HTML标签的属性值

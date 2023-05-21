@@ -1,13 +1,14 @@
 
-
 https://www.cnblogs.com/liluxiang/p/9592003.html
 
 说明：
-npm: 	Nodejs下的包管理器。
-webpack: 它主要的用途是通过CommonJS的语法把所有浏览器端需要发布的静态资源做相应的准备，比如资源的合并和打包。
-vue-cli: 	用户生成Vue工程模板。（帮你快速开始一个vue的项目，也就是给你一套vue的结构，
-		包含基础的依赖库，只需要 npm install就可以安装）
- 
+npm: 		Nodejs下的包管理器。
+webpack: 	它主要的用途是通过CommonJS的语法把所有浏览器端需要发布的静态资源做相应的准备，比如资源的合并和打包。
+vue-cli: 	用户生成Vue工程模板。
+			（帮你快速开始一个vue的项目，
+			  也就是给你一套vue的结构，
+			  包含基础的依赖库，
+			  只需要 npm install就可以安装）
 
 //========================================== （1）.下载 NodeJS 地址：
 //========================================== （1）.下载 NodeJS 地址：
@@ -23,17 +24,16 @@ d:\Program Files\nodejs\
 //========================================== （3）.查看 NodeJS 的版本
 
 C:\Users\86136>node -v
-v16.13.2
+v18.16.0
 
 //========================================== （4）.查看 npm 的版本
 //========================================== （4）.查看 npm 的版本
-		
+
 C:\Users\86136>npm -v
-8.1.2
+9.5.1
 
 //========================================== （5）. 修改 npm 默认目录
 //========================================== （5）. 修改 npm 默认目录
-
 
 （1）.  建立两个目录
 		D:\nodejs\node_global
@@ -43,10 +43,10 @@ C:\Users\86136>npm -v
 		npm config set prefix "D:\nodejs\node_global"
 		npm config set cache "D:\nodejs\node_cache"
 
- 
+
 //========================================== （6）.  npm 升级
 //========================================== （6）.  npm 升级
- 
+
 
 NodeJs自带Npm，但不是最新的
 
@@ -61,15 +61,15 @@ NodeJs自带Npm，但不是最新的
 			C:\Users\86136\.npmrc
 			C:\Users\Administrator\.npmrc
 		*/
-		
+
 （3）. 从配置中获取镜像站地址
-	   
+
 	   npm config get registry
-	   
-	   
-	   
+
+
+
 （4）. 获得vue的信息	   
-	
+
 		npm info vue
 
 （5）. 升级 npm 	
@@ -84,10 +84,10 @@ NodeJs自带Npm，但不是最新的
 		（3）.npm -v
 		（4）. 查看本地仓库有哪些安装
 			   npm list -global
-			
+
 			// 此时仓库目录将会变成：
 			// D:\nodejs\node_global\node_modules
-		
+
 			/**
 				（5）. 增加环境变量，根据实际需要增加。
 				NODE_PATH =  D:\nodejs\node_global\node_modules
@@ -102,16 +102,16 @@ NodeJs自带Npm，但不是最新的
 （2）. npm install vue-router -g
 
 （3）. vue 脚手架
-
 	（1）. npm install vue-cli -g
 	（2）. 配置 "vue 脚手架" 的 环境变量。
 		   值为： D:\nodejs\node_global\
-		   
+
 	（3）. 输入命令 vue -V， 
 		   查看 "vue 脚手架" 是否安装成功
- 
-	//vue-cli 工具是内置了模板包括 webpack 和 webpack-simple,前者是比较复杂专业的项目
+
+	//vue-cli 工具是内置了模板包括 webpack 和 webpack-simple,前
+	//者是比较复杂专业的项目
 	//他的配置并不全放在根目录下的 webpack.config.js 中
-	   
+
 
 
