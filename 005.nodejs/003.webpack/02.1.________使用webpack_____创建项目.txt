@@ -1,18 +1,21 @@
 https://segmentfault.com/a/1190000006178770
 
+
 npm install -g webpack
+
 它依赖于npm，也需要再NodeJS环境下运行，
 它也是一个nodeJS的模块，因此，它也是CommonJS 规范的模块
 它是一个"模块打包机"
 
 
 
-1). 创建一个package.json文件
-	//这是一个标准的npm说明文件
+1). 创建一个package.json文件 //这个是nodejs的包所需要的
+	//这是一个 "标准的npm说明文件"
 	//当前项目的依赖模块，自定义的脚本任务等等
-	//使用npm init命令可以自动创建这个package.json文件
+	//使用 npm init 命令可以自动创建这个package.json文件
 	npm init
 	//直接回车即可
+
 
 2). 安装webpack
 	//全局安装
@@ -24,7 +27,11 @@ npm install -g webpack
 	//安装cli
 	npm install webpack-cli -g
 	
-	
+	//================== 验证安装是否成功
+	webpack --version
+	webpack-cli --version
+
+
 3). 创建两个文件夹,
 	app	   //存放原始数据和我们将写的JavaScript模块
 	public //用来存放之后供浏览器读取的文件

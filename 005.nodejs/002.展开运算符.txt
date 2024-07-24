@@ -1,0 +1,29 @@
+展开运算符 ... 是 JavaScript 的语法，可以用于对象和数组的扩展与合并。
+这个语法可以在 Node.js 和前端的 JavaScript 代码中使用。
+
+在您的 webpack 配置中，使用展开运算符是为了将多个规则组合成一个数组。
+例如：
+module.exports = {
+  module: {
+    rules: [
+      ...utils.styleLoaders({
+        sourceMap: config.dev.cssSourceMap,
+        usePostCSS: true
+      }),
+      {
+        test: /\.js$/,
+        include: path.resolve(__dirname, 'src'),
+        use: [
+          {
+            loader: 'thread-loader',
+            options: {
+              workers: 10, // 根据您的 CPU 核心数量调整
+            },
+          },
+          'babel-loader',
+        ],
+      },
+    ]
+  },
+  // 其他配置
+};

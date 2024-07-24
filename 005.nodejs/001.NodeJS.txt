@@ -8,7 +8,7 @@ https://www.runoob.com/nodejs/nodejs-http-server.html
 		并配上 mod_php5 模块和 php-cgi。
 		从这个角度看，
 		整个"接收 HTTP 请求并提供 Web 页面"的需求就不需要 PHP 来处理。
-	
+
 		//=================
 		//=================
 		不过对 Node.js 来说，概念完全不一样了。使用 Node.js 时，我们不仅仅 在实现一个应用，

@@ -1,0 +1,9 @@
+
+
+对于 Webpack 5 和 Webpack CLI 5.1.4，高版本的 Webpack 已经弃用了 extract-text-webpack-plugin。
+
+
+推荐使用 mini-css-extract-plugin
+mini-css-extract-plugin
+
+

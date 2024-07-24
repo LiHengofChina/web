@@ -1,0 +1,30 @@
+
+NodeRedis 是一个 Redis 客户端库，
+用于在 Node.js 应用程序中与 Redis 数据库进行交互。
+NodeRedis 提供了一组简单的 API，
+允许开发人员在 Node.js 环境中连接、查询和操作 Redis 数据库。
+
+//=========================================================================
+//=========================================================================
+
+这个脚本的主要功能是将指定目录下的 JSON 文件数据保存到 Redis 数据库中。
+
+
+var NodeRedis = require("./main");
+
+let redisConfig = {
+  host: '127.0.0.1',
+  port: 6379,
+  db: 4
+  // password: ''
+};
+
+let filePaths = ["static/data"];
+
+let nodeRedis = new NodeRedis(redisConfig);
+nodeRedis.saveJsonFileDataToRedis(filePaths);
+
+
+//=========================================================================
+//=========================================================================
+

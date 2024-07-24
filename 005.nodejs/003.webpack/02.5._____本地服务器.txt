@@ -43,8 +43,6 @@ devServer: {
 		contentBase :'./src', 			// 指定打包的基础路径，src为根路径打包，也就是只打包src里面的文件
 		compress:true 					//智能压缩
 
-		
-
 }
 
 
@@ -54,6 +52,22 @@ devServer: {
 webpack-dev-server 
 
 --inline   		 //刷新模式 
+			/**
+				解释：--inline 参数用于启用内联模式。在内联模式下，Webpack Dev Server 会注入一段脚本到你的包中，用于处理热更新（Hot Module Replacement）。
+				作用：当代码发生变化时，页面会自动刷新，显示最新的更改，而不需要手动刷新浏览器。
+			*/
+			
+			/**
+				--inline
+				错误信息 [webpack-cli] Error: Unknown option '--inline'  
+				
+				新版本的 Webpack Dev Server 不再需要 --inline 选项，因为它默认是启用的。
+				
+				
+			*/
+			
+			
+			
 --progress       //显示进度条
 --open chrome    //打开谷歌浏览器
 			//========================================================================= 刷新模式 
@@ -63,8 +77,7 @@ webpack-dev-server
 			通过设置devServer.inline切换两种模式，默认为inline模式。
 			当使用HMR功能时，推荐使用inline mode。
 
-
-
+--config build/webpack.dev.conf.js	//用于指定配置文件路径
 
 
 //========================================================================= 命令启动

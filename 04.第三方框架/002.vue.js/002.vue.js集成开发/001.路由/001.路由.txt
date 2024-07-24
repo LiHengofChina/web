@@ -3,7 +3,7 @@
 （3）vue.js 路由  
 	 https://blog.csdn.net/weixin_42282999/article/details/104458374
 	 
-	 vue-router 是 Vue.js的路由插件。
+	 vue-router 是 Vue.js的 "路由" 插件。
 	 使用场景（优劣）原理
 	 //适合用于构建单页面应用，基于路由和组件；
 	 路由用于设定访问路径，将路径和组件映射起来。
@@ -11,8 +11,7 @@
 	 
 	 路径之间的切换实际上就是组件的切换。
 	  （1）.安装
-	  npm install vue-router -
-
+	  npm install vue-router
 
 
 
