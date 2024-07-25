@@ -1,16 +1,16 @@
 package com.liheng.demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+//import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.ribbon.RibbonClients;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
  
-import com.liheng.demo.filter.MyZuulFilter;
+//import com.liheng.demo.filter.MyZuulFilter;
 import com.liheng.demo.ribbon.RibbonEurekaClientConfig;
 
 
 @SpringBootApplication
-@EnableEurekaClient
+//@EnableEurekaClient
 //@EnableDiscoveryClient
 
 /**
@@ -29,7 +29,7 @@ public class ServiceZuulApplication {
         System.out.println("_________________________");
     }
 	
-	
+	 
 //	@Bean
 //	public MyZuulFilter myZuulFilter() {
 //		return new MyZuulFilter();

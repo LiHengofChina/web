@@ -1,0 +1,59 @@
+
+//===================================================================================== 后端 微服务
+//===================================================================================== 后端 微服务
+
+
+
+//=========================================================== 以通过后面的微服务 
+（1）注册中心： zuul-parent-study-001：	  端口：8761  http://localhost:8761/eureka/
+
+（2）网关：zuul-child-server-demo-001     端口：8079
+
+
+
+
+ //===========================================================上传接口一：  Spring MVC 的接口
+ 上传接口： spring-boot-fileupload-001  端口：8080
+
+	//接口地址：http://localhost:8080/
+	//上传目录：E:\web\04.第三方框架\002.vue.js\003.vue.js文件上传\spring-boot-fileupload-001\upload
+
+
+//===========================================================上传接口二：  Struts2的接口
+ 上传接口：
+	struts2-upload-001
+	//应该是放在tocmat运行的
+
+
+//===================================================================================== 前端
+//===================================================================================== 前端
+
+（1）vue_upload_001  	端口：8078
+
+		（1）编译：npm run build
+
+		（2）启动：npm run start
+
+		（3）访问：http://localhost:8078
+
+		（4）上传：
+				（1）http://localhost:8078/vue_upload_001/uploadFile001
+						//（1）. 直接用js来实现。
+						
+				（2）http://localhost:8078/vue_upload_001/uploadFile002
+					    //（2）. element-ui   //el-upload	// 一个nodejs模块
+								
+				（3）http://localhost:8078/vue_upload_001/uploadFile003
+						//
+						//（3）. v-file-upload //vue.js 专用上传组件
+						//		https://blog.csdn.net/cuk5340/article/details/107697837
+						//		 
+				（4）http://localhost:8078/vue_upload_001/uploadFile004
+
+						vant 组件用到再查。//TODDO
+								https://www.cnblogs.com/yunzhongmeng/p/14486578.html
+								<van-uploader v-model="fileList" :after-read="afterRead" :max-count="3" multiple></van-uploader>
+
+
+
+
