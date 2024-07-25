@@ -27,18 +27,56 @@
 （1） 启用代码分割和 懒加载：
 	  //TODO，这里只是分割了代码， 懒加载 要在代码中使用才行
 	  通过代码分割将代码拆分成更小的块，只在需要时加载相应的代码模块。
-
+	  
+		//================================修改1
+		/**
+			  output: {
+				filename: '[name].js',
+				chunkFilename: '[name]~[contenthash].js',
+			  }
+		*/
+		//================================修改2
 		module.exports = {
 			  // 其他配置
 			  optimization: {
 					splitChunks: {
 					  chunks: 'all', // 处理同步和异步块
+									 //chunks: 'all' 表示将所有类型的代码（无论是异步加载的代码还是初始加载的代码）都进行代码分割。
+									 //initial：只对入口文件进行代码分割。
+									 //async：只对异步加载的代码进行代码分割。
+									 //all：对所有类型的代码都进行代码分割。
+									 /**
+										（1）拆分后文件说明：
+											 .LICENSE.txt  //包含了你使用的某些库或模块的许可证信息。这些文件通常是由 TerserPlugin 或其他压缩插件在混淆代码时生成的，用于遵循开源许可证的要求。
+											 			  //文件名称：每个 .LICENSE.txt 文件的名称中都包含一个哈希值，这个哈希值对应于具体的 JavaScript 文件。这是为了确保不同文件的许可证信息不会冲突。
+											 			  //内容：这些 .LICENSE.txt 文件的内容通常包括版权声明和许可证信息，详细说明了你项目中使用的各个第三方库的法律许可情况。
+											 //生成这些文件是为了确保在发布时符合开源软件的法律要求，保持对使用的开源软件的正确引用。
+									 */
+
 					  minSize: 20000, // 拆分前的最小模块大小（20 KB）
+									  //只有在拆分前模块的大小超过 20 KB 时才会进行代码拆分
+
 					  maxSize: 200000, // 拆分后的最大模块大小（200 KB）
+
+
 					  minChunks: 1, // 模块最少被引用的次数
 					  maxAsyncRequests: 30, // 最大异步请求数
 					  maxInitialRequests: 30, // 最大初始请求数
+
 					  automaticNameDelimiter: '~', // 名称分隔符
+					  /**
+						automaticNameDelimiter: '~' 是指在 Webpack 中自动生成的代码块（chunk）名称的分隔符。
+						它会影响由 Webpack 自动生成的代码块名称的格式。
+						例如，当 Webpack 拆分代码时，它会为每个代码块生成一个名称，使用 ~ 作为分隔符。
+
+						例如，如果你有一个模块 main.js，并且它依赖于 vendor.js，
+							  Webpack 在进行代码拆分时，可能会生成一个名为 main~vendor.js 的代码块，
+							  表示这是一个由 main 和 vendor 模块组合而成的代码块。
+							  
+						在上述配置中，automaticNameDelimiter: '~' 指定了 Webpack 在生成自动代码块名称时使用 ~ 作为分隔符。
+						这种命名方式有助于清晰地标识代码块的来源和组合关系，便于调试和分析。
+					  */
+
 					  cacheGroups: {
 						defaultVendors: {
 						  test: /[\\/]node_modules[\\/]/, // 匹配node_modules目录下的模块
