@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../components/HelloWorld.vue';
-import ApprovalForm from '../components/ApprovalForm.vue';
+import Home from '@/components/HelloWorld.vue';
+import ApprovalForm from '@/components/ApprovalForm.vue';
+import LoginPage from '@/components/LoginPage.vue';
+
 
 const routes = [
 {
@@ -12,7 +14,12 @@ const routes = [
     path: '/approval',
     name: 'Approval',
     component: ApprovalForm
+}, {
+    path: '/log',
+    name: 'LoginPage',
+    component: LoginPage,
 }
+
 ];
 
 const router = createRouter({

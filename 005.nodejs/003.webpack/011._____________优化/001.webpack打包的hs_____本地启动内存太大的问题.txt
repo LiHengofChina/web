@@ -28,14 +28,14 @@
 	  //TODO，这里只是分割了代码， 懒加载 要在代码中使用才行
 	  通过代码分割将代码拆分成更小的块，只在需要时加载相应的代码模块。
 	  
-		//================================修改1
+		//================================ 修改1
 		/**
 			  output: {
 				filename: '[name].js',
 				chunkFilename: '[name]~[contenthash].js',
 			  }
 		*/
-		//================================修改2
+		//================================ 修改2
 		module.exports = {
 			  // 其他配置
 			  optimization: {
@@ -103,7 +103,7 @@
 			  },
 		};
 
-（2） 压缩和混淆代码：
+（2） 压缩和混淆代码，优化和最小化 JavaScript 代码
 	  在生产环境中，确保使用压缩和混淆工具来减少代码大小。
 
 		// npm install --save-dev terser-webpack-plugin
@@ -135,28 +135,39 @@
 		  ],
 		};
 
-（4） 优化静态资源：
-	  使用压缩工具优化图片和其他静态资源。
+（4.1） 图片压缩方式一：老项目
+		优化静态资源：
+		使用压缩工具优化图片和其他静态资源。
 
-	//npm install imagemin --save-dev
-	//npm install imagemin-mozjpeg --save-dev
-	//npm install imagemin-pngquant --save-dev
-	//npm install --save-dev imagemin@8.0.0            我使用的是这个版本
-	//npm install --save-dev imagemin-mozjpeg@8.0.0    我使用的是这个版本
-	//npm install --save-dev imagemin-pngquant@8.0.0   我使用的是这个版本
+		//npm install imagemin --save-dev
+		//npm install imagemin-mozjpeg --save-dev
+		//npm install imagemin-pngquant --save-dev
+		//npm install --save-dev imagemin@8.0.0            我使用的是这个版本
+		//npm install --save-dev imagemin-mozjpeg@8.0.0    我使用的是这个版本
+		//npm install --save-dev imagemin-pngquant@8.0.0   我使用的是这个版本
 
 
-	//npm install --save-dev imagemin-webpack-plugin
-	//npm install --save-dev imagemin-webpack-plugin@2.4.0
+		//npm install --save-dev imagemin-webpack-plugin
+		//npm install --save-dev imagemin-webpack-plugin@2.4.0
 
-	const ImageminPlugin = require('imagemin-webpack-plugin').default;
+		const ImageminPlugin = require('imagemin-webpack-plugin').default;
 
-	module.exports = {
-	  // 其他配置
-	  plugins: [
-		new ImageminPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }),
-	  ],
-	};
+		module.exports = {
+		  // 其他配置
+		  plugins: [
+			new ImageminPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }),
+		  ],
+		};
+
+（4.2）图片压缩方式二：新项目
+
+		const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
+		ImageMinimizerPlugin 是一个 Webpack 插件，用于优化和压缩图像资源。
+		它利用不同的图像压缩工具对各种类型的图像进行优化，从而减小图像文件的大小，提高网站加载速度。
+
+		npm install --save-dev image-minimizer-webpack-plugin
+
+
 
 （5）并行构建: 使用 thread-loader 或 parallel-webpack 来并行处理模块。
      npm install --save-dev thread-loader@2.1.3
@@ -179,3 +190,9 @@
 			  },
 		]
 	 },
+
+
+（6）安装 npm install image-webpack-loader --save-dev
+
+
+
