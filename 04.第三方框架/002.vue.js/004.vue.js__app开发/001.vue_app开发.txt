@@ -1,0 +1,37 @@
+
+
+//============================================================ 环境
+//============================================================ 环境
+
+
+
+（1）全局安装
+		npm install -g @vue/cli --force
+
+		vue --version
+		//@vue/cli 5.0.8
+
+（2）创建vue项目
+
+		cd E:\web\04.第三方框架\002.vue.js\004.vue.js__app开发\worspace_vue
+		vue create vue_app_001
+
+
+（3）安装依赖
+		cd vue_app_001
+		npm install
+
+
+
+（4）. 编译
+		npm run build
+		执行完成后，会在 Vue 项目下生成一个 dist 目录， 一般包含 index.html 文件
+
+（5）. 运行开发服务器：
+		cd vue_app_001
+		npm run serve
+
+
+（6）. 访问
+		http://localhost:8080
+

@@ -1,0 +1,137 @@
+
+//============================================================ 添加一个 app审核页面
+//============================================================ 添加一个 app审核页面
+
+
+（1）安装路由
+	npm install vue-router
+
+（2）配置 Vue Router
+	在 src 目录下创建一个新的 router 文件夹，并在其中创建一个 index.js 文件来配置路由。
+	import { createRouter, createWebHistory } from 'vue-router';
+	import Home from '../components/HelloWorld.vue';
+	import ApprovalForm from '../components/ApprovalForm.vue';
+
+	const routes = [
+	{
+		path: '/',
+		name: 'Home',
+		component: Home
+	},
+	{
+		path: '/approval',
+		name: 'Approval',
+		component: ApprovalForm
+	}
+	];
+
+	const router = createRouter({
+		history: createWebHistory(process.env.BASE_URL),
+		routes
+	});
+
+	export default router;
+
+
+
+（3）
+	在项目的入口文件中使用这个路由。
+	打开 main.js 文件，并按照以下示例进行修改：
+
+	//======= 修改前
+	//======= 修改前
+	import { createApp } from 'vue'
+	import App from './App.vue'
+
+	createApp(App).mount('#app')
+
+	//======= 修改后
+	//======= 修改后
+	import { createApp } from 'vue';
+	import App from './App.vue';
+	import router from './router';
+
+	createApp(App).use(router).mount('#app');
+
+
+（4）
+	使用 <router-view> 组件
+
+
+
+
+
+
+	在 App.vue 中使用 <router-view> 组件，它会根据 "当前路由" 渲染 "相应的组件"。
+	你可以不修改 "现有的代码结构"，只需要在 "合适的位置添加 <router-view>" 即可。
+
+	//======= 修改前
+	//======= 修改前
+	<template>
+	  <img alt="Vue logo" src="./assets/logo.png">
+	  <HelloWorld msg="Welcome to Your Vue.js App"/>
+	</template>
+
+
+	<script>
+	import HelloWorld from './components/HelloWorld.vue'
+
+	export default {
+	  name: 'App',
+	  components: {
+		HelloWorld
+	  }
+	}
+	</script>
+
+	<style>
+	#app {
+	  font-family: Avenir, Helvetica, Arial, sans-serif;
+	  -webkit-font-smoothing: antialiased;
+	  -moz-osx-font-smoothing: grayscale;
+	  text-align: center;
+	  color: #2c3e50;
+	  margin-top: 60px;
+	}
+	</style>
+	
+	//======= 修改后
+	//======= 修改后
+	<template>
+	  <div id="app">
+		<img alt="Vue logo" src="./assets/logo.png">
+		<router-view />
+	  </div>
+	</template>
+
+	<script>
+	export default {
+	  name: 'App'
+	}
+	</script>
+
+	<style>
+	#app {
+	  font-family: Avenir, Helvetica, Arial, sans-serif;
+	  -webkit-font-smoothing: antialiased;
+	  -moz-osx-font-smoothing: grayscale;
+	  text-align: center;
+	  color: #2c3e50;
+	  margin-top: 60px;
+	}
+	</style>
+
+
+
+
+//============================================================
+//============================================================
+
+ 
+ （5）. 运行开发服务器：
+		cd vue_app_001
+		npm run serve
+
+
+（6）. 访问
+		 http://localhost:8080/approval
