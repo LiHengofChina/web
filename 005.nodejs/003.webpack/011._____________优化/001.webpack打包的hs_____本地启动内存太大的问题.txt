@@ -138,8 +138,9 @@
 （4） 优化静态资源：
 	  使用压缩工具优化图片和其他静态资源。
 
-	//npm install imagemin imagemin-mozjpeg imagemin-pngquant --save-dev
-
+	//npm install imagemin --save-dev
+	//npm install imagemin-mozjpeg --save-dev
+	//npm install imagemin-pngquant --save-dev
 	//npm install --save-dev imagemin@8.0.0            我使用的是这个版本
 	//npm install --save-dev imagemin-mozjpeg@8.0.0    我使用的是这个版本
 	//npm install --save-dev imagemin-pngquant@8.0.0   我使用的是这个版本

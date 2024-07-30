@@ -1,23 +1,23 @@
 <template>
     <div class="approval">
         <h1>请假申请</h1>
-        <p>Please review the request and select an option below:</p>
+        <p>请审核申请并选择以下选项：</p>
         <form @submit.prevent="submitApproval">
         <div class="option">
             <label>
             <input type="radio" v-model="decision" value="approve" />
-            <i class="fas fa-check-circle"></i> Approve
+            <i class="fas fa-check-circle"></i> 同意
             </label>
         </div>
         <div class="option">
             <label>
             <input type="radio" v-model="decision" value="reject" />
-            <i class="fas fa-times-circle"></i> Reject
+            <i class="fas fa-times-circle"></i> 拒绝
             </label>
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit">提交</button>
         </form>
-        <p v-if="submitted">Your decision: {{ decision }}</p>
+        <p v-if="submitted">您的决定：{{ decision }}</p>
     </div>
 </template>
 
