@@ -113,12 +113,12 @@ module.exports = defineConfig({
               },
             ],
         }),
-        new FontminPlugin({
-          autodetect: true, // 自动检测使用的字体字符
-            // glyphs: ['\u0000-\u00FF'], // 你也可以手动指定需要保留的字符
-            // glyphs: ['\uf0c8'], // 指定需要的字符集
-            //  text: 'Hello World!', // 指定需要的文本内容
-        }),
+        // new FontminPlugin({
+        //   autodetect: true, // 自动检测使用的字体字符
+        //     // glyphs: ['\u0000-\u00FF'], // 你也可以手动指定需要保留的字符
+        //     // glyphs: ['\uf0c8'], // 指定需要的字符集
+        //     //  text: 'Hello World!', // 指定需要的文本内容
+        // }),
     ],
 
   },
@@ -126,7 +126,7 @@ module.exports = defineConfig({
 
   // 开发服务器配置
   devServer: {
-    proxy: 'http://localhost:8080'
+    // proxy: 'http://localhost:8080'
   }
 });
 
