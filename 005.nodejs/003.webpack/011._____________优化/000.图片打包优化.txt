@@ -1,0 +1,152 @@
+（4.1） 图片压缩方式一：老项目
+		优化静态资源：
+		使用压缩工具优化图片和其他静态资源。
+
+		//npm install imagemin --save-dev
+		//npm install imagemin-mozjpeg --save-dev
+		//npm install imagemin-pngquant --save-dev
+		
+		//npm install --save-dev imagemin@8.0.0            我使用的是这个版本
+		//npm install --save-dev imagemin-mozjpeg@8.0.0    我使用的是这个版本
+		//npm install --save-dev imagemin-pngquant@8.0.0   我使用的是这个版本
+
+
+		//npm install --save-dev imagemin-webpack-plugin
+		//npm install --save-dev imagemin-webpack-plugin@2.4.0
+
+		const ImageminPlugin = require('imagemin-webpack-plugin').default;
+
+		module.exports = {
+		  // 其他配置
+		  plugins: [
+			new ImageminPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }),
+		  ],
+		};
+
+（4.2）图片压缩方式二：新项目
+		https://webpack.js.org/plugins/image-minimizer-webpack-plugin/#optimize-with-imagemin
+		//=========================================== image-minimizer-webpack-plugin 插件 ， Webpack 的插件，用于在构建过程中压缩优化图像文件。
+		//=========================================== image-minimizer-webpack-plugin 插件 ， Webpack 的插件，用于在构建过程中压缩优化图像文件。
+		//提供了一个通用的接口和机制，可以集成各种图像压缩器插件。
+		const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
+		ImageMinimizerPlugin 是一个 Webpack 插件，用于优化和压缩图像资源。
+		它利用不同的图像压缩工具对各种类型的图像进行优化，从而减小图像文件的大小，提高网站加载速度。
+		
+		npm install --save-dev image-minimizer-webpack-plugin
+
+		plugins: [
+			new ImageMinimizerPlugin({
+				minimizer: {
+					implementation: ImageMinimizerPlugin.imageminMinify,
+					options: {
+						plugins: [
+							['mozjpeg', { quality: 70 }],	//压缩图片的质量参数
+							['pngquant', { quality: [0.65, 0.90] }] //使用 0 到 1 的范围来表示压缩质量
+																	//设置为 [0.65, 0.90]，表示压缩后的图片质量在 65% 到 90% 之间波动。
+						],
+					},
+				},
+			}),
+		],
+		//===========================================  依赖的插件
+		//===========================================  依赖的插件
+		//具体的图像压缩器插件，分别用于压缩 JPEG 和 PNG 图像。这些插件实现了实际的压缩算法和逻辑。
+
+		而 imagemin-mozjpeg 和 imagemin-pngquant 是它的依赖插件，或者更确切地说，是它使用的压缩器插件。
+		//npm install imagemin-mozjpeg --save-dev
+		//npm install imagemin-pngquant --save-dev
+		//npm install imagemin --save-dev
+
+
+		//============================================================================================================ 官方教程
+		//============================================================================================================ 官方教程
+ 
+		（1）第一步安装：
+		npm install image-minimizer-webpack-plugin  --save-dev
+		npm install imagemin --save-dev
+
+
+		（2） 
+			//你可以使用 sharp 作为图像压缩插件
+			npm install image-minimizer-webpack-plugin sharp --save-dev
+			//这是一个优化 SVG 文件的工具，
+			npm install image-minimizer-webpack-plugin svgo --save-dev
+			 
+
+		（3）
+			图像可以在两种模式下进行优化：
+			无损（没有质量损失）。
+			有损（质量下降）。
+		（4）
+			Optimize with imagemin:
+				imagemin mozjpeg 可以配置为无损和有损模式。
+				imagemin svgo 可以配置为无损和有损模式。
+
+		（5）
+			Explore the options to get the best result for you.
+			//探索各种选项，为您获得最佳结果。
+
+			（1）
+			Recommended imagemin plugins for lossless optimization
+			//推荐用于无损优化的 imagemin 插件
+
+			npm install imagemin-gifsicle --save-dev
+			npm install imagemin-jpegtran --save-dev
+			npm install imagemin-optipng --save-dev
+			npm install imagemin-svgo --save-dev
+
+			（2）
+			Recommended imagemin plugins for lossy optimization
+			//推荐用于有损优化的imagemin插件
+
+			npm install imagemin-gifsicle --save-dev
+			npm install imagemin-mozjpeg --save-dev
+			npm install imagemin-pngquant --save-dev
+			npm install imagemin-svgo --save-dev
+		//============================================================================================================
+		//============================================================================================================
+		plugins: [
+			new ImageMinimizerPlugin({
+
+				minimizer: {
+					implementation: ImageMinimizerPlugin.imageminMinify,
+					options: {
+						plugins: [
+							["imagemin-gifsicle", { interlaced: true }],
+							["imagemin-mozjpeg", { quality: 70 }],
+							["imagemin-pngquant", { quality: [0.35, 0.70] }],
+							[
+							  "imagemin-svgo",
+							  {
+								plugins: [
+								  {
+									name: "preset-default",
+									params: {
+									  overrides: {
+										removeViewBox: false,
+										addAttributesToSVGElement: {
+										  params: {
+											attributes: [{ xmlns: "http://www.w3.org/2000/svg" }],
+										  },
+										},
+									  },
+									},
+								  },
+								],
+							  },
+							],
+						],
+					},
+				},
+				generator: [
+				  {
+					// 为 WebP 格式生成
+					preset: "webp",
+					implementation: ImageMinimizerPlugin.imageminGenerate,
+					options: {
+					  plugins: ["imagemin-webp"],
+					},
+				  },
+				],
+			}),
+		],

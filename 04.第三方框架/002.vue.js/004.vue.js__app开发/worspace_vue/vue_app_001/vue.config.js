@@ -2,7 +2,7 @@
 const { defineConfig } = require('@vue/cli-service');
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
-
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 
 module.exports = defineConfig({
   transpileDependencies: true,
@@ -59,10 +59,60 @@ module.exports = defineConfig({
           }
         }
     },
-    
+    module: {
+      rules: [
+        // 处理图片文件
+        {
+          test: /\.(jpe?g|png|gif|svg)$/i,
+          type: "asset",
+        },
+      ],
+    },
     plugins: [
+        new ImageMinimizerPlugin({
 
-    ]
+            minimizer: {
+                implementation: ImageMinimizerPlugin.imageminMinify,
+                options: {
+                    plugins: [
+                        ["imagemin-gifsicle", { interlaced: true }],
+                        ["imagemin-mozjpeg", { quality: 70 }],
+                        ["imagemin-pngquant", { quality: [0.35, 0.70] }],
+                        [
+                          "imagemin-svgo",
+                          {
+                            plugins: [
+                              {
+                                name: "preset-default",
+                                params: {
+                                  overrides: {
+                                    removeViewBox: false,
+                                    addAttributesToSVGElement: {
+                                      params: {
+                                        attributes: [{ xmlns: "http://www.w3.org/2000/svg" }],
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            ],
+                          },
+                        ],
+                    ],
+                },
+            },
+            generator: [
+              {
+                // 为 WebP 格式生成
+                preset: "webp",
+                implementation: ImageMinimizerPlugin.imageminGenerate,
+                options: {
+                  plugins: ["imagemin-webp"],
+                },
+              },
+            ],
+        }),
+    ],
 
   },
 

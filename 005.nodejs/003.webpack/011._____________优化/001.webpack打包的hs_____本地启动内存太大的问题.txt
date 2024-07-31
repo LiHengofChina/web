@@ -135,38 +135,6 @@
 		  ],
 		};
 
-（4.1） 图片压缩方式一：老项目
-		优化静态资源：
-		使用压缩工具优化图片和其他静态资源。
-
-		//npm install imagemin --save-dev
-		//npm install imagemin-mozjpeg --save-dev
-		//npm install imagemin-pngquant --save-dev
-		//npm install --save-dev imagemin@8.0.0            我使用的是这个版本
-		//npm install --save-dev imagemin-mozjpeg@8.0.0    我使用的是这个版本
-		//npm install --save-dev imagemin-pngquant@8.0.0   我使用的是这个版本
-
-
-		//npm install --save-dev imagemin-webpack-plugin
-		//npm install --save-dev imagemin-webpack-plugin@2.4.0
-
-		const ImageminPlugin = require('imagemin-webpack-plugin').default;
-
-		module.exports = {
-		  // 其他配置
-		  plugins: [
-			new ImageminPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }),
-		  ],
-		};
-
-（4.2）图片压缩方式二：新项目
-
-		const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
-		ImageMinimizerPlugin 是一个 Webpack 插件，用于优化和压缩图像资源。
-		它利用不同的图像压缩工具对各种类型的图像进行优化，从而减小图像文件的大小，提高网站加载速度。
-
-		npm install --save-dev image-minimizer-webpack-plugin
-
 
 
 （5）并行构建: 使用 thread-loader 或 parallel-webpack 来并行处理模块。
