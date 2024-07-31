@@ -17,6 +17,13 @@
 
             <div class="separator"></div>
 
+            <div class="nav-item" @click="navigate('workstation')">
+                <i class="fas fa-desktop nav-icon"></i>
+                <span>工作站</span>
+            </div>
+
+            <div class="separator"></div>
+
             <div class="nav-item" @click="navigate('tasks')">
                 <i class="fas fa-tasks nav-icon"></i>
                 <span>待办</span>

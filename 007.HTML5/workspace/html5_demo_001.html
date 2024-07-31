@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基本HTML5页面示例</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header, nav, section, article, footer {
+            padding: 20px;
+            margin: 10px;
+        }
+        header {
+            background-color: #f4f4f4;
+            border-bottom: 1px solid #ddd;
+        }
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #333;
+        }
+        .content {
+            display: flex;
+        }
+        .main-content {
+            flex: 3;
+        }
+        .sidebar {
+            flex: 1;
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin-left: 10px;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>欢迎来到我的网站</h1>
+    <p>这是一个基本的 HTML5 页面示例。</p>
+</header>
+
+<nav>
+    <a href="#">首页</a>
+    <a href="#">关于我们</a>
+    <a href="#">服务</a>
+    <a href="#">联系</a>
+</nav>
+
+<section class="content">
+    <article class="main-content">
+        <h2>文章标题</h2>
+        
+		
+		<p>这是一篇示例文章。你可以在这里写一些介绍或内容。这段文字仅用于展示如何使用 HTML5 的语义标签。</p>
+
+		 <!--
+		 
+
+			<!DOCTYPE html>：声明文档类型，告诉浏览器这是一个 HTML5 文档。
+			<html lang="zh-CN">：lang 属性定义文档的语言，这里设为中文。
+			<meta charset="UTF-8">：定义文档的字符编码为 UTF-8。
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">：设置视口的宽度及缩放比例，确保页面在移动设备上显示良好。
+			<title>：定义文档的标题，显示在浏览器标签页上。
+			<style>：内联样式，用于简单的样式定义。你也可以使用外部样式表。
+			<header>：头部区域，通常包含网站标题和介绍。
+			<nav>：导航栏，包含网站的主要链接。
+			<section>：内容区块，可以包含多个内容部分。
+			<article>：独立的内容部分，适合展示文章、博客等内容。
+			<aside>：侧边栏，用于显示附加信息。
+			<footer>：页脚，通常包含版权信息等。
+			<video>：嵌入视频元素。
+			<form>：表单元素，用于用户输入和提交数据。
+			<input> 和 <textarea>：用户输入控件，如文本框和多行文本域。
+			这个简单的 HTML5 页面示例展示了基本的网页结构和布局方法，适合用作学习和开发的起点。你
+		-->
+
+
+		
+		<h3>嵌入视频</h3>
+        <video width="320" height="240" controls>
+            <source src="movie.mp4" type="video/mp4">
+            您的浏览器不支持HTML5视频。
+        </video>
+        <h3>简单的表单</h3>
+        <form action="/submit" method="post">
+            <label for="name">姓名:</label><br>
+            <input type="text" id="name" name="name" required><br><br>
+            <label for="email">电子邮箱:</label><br>
+            <input type="email" id="email" name="email" required><br><br>
+            <label for="message">留言:</label><br>
+            <textarea id="message" name="message" rows="4" cols="50"></textarea><br><br>
+            <input type="submit" value="提交">
+        </form>
+    </article>
+    <aside class="sidebar">
+        <h2>侧边栏</h2>
+        <p>这里是侧边栏的内容，可以放一些额外的信息，如新闻、广告或链接。</p>
+    </aside>
+</section>
+
+<footer>
+    <p>版权所有 &copy; 2024 - 我的公司</p>
+</footer>
+
+</body>
+</html>

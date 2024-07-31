@@ -1,0 +1,30 @@
+
+
+//============================================== 怎么判断一个html是h5呢
+//============================================== 怎么判断一个html是h5呢
+
+（1） <!doctype html>：这个文档类型声明表示这是一个 HTML5 文档。
+			 // HTML5 的 <!doctype html> 非常简洁，
+			 // 不需要指定 DTD（文档类型定义），这是 HTML5 的特性之一。
+
+（2）<meta charset="utf-8">：这个标签定义了文档的字符编码为 UTF-8 ，UTF-8 是 HTML5 的推荐字符集。
+
+（3）<meta name="viewport" content="width=device-width,initial-scale=1">：
+	 这个标签设置了视口属性，以确保在移动设备上正确显示内容，
+	 这是 HTML5 的一个常见用法，特别是用于响应式设计。
+
+
+（4）<noscript>：这个标签在用户禁用 JavaScript 时显示的内容。
+	虽然 <noscript> 在 HTML4 中就存在，但它在 HTML5 中仍然是有效的。
+
+（5）其他特征：
+	（1）<meta http-equiv="X-UA-Compatible" content="IE=edge">：
+		    这个标签通常用于指示 Internet Explorer 以最新的渲染模式显示页面，确保良好的兼容性。
+	（2）<link rel="icon" href="/favicon.ico">：设置页面的 favicon。
+	（3）各种 <script defer> 和 <link> 标签用于引入 JavaScript 和 CSS 文件，
+			这也是现代 Web 开发的常见实践。
+			从这些元素和用法可以明确这是一个 HTML5 页面。
+			Vue.js 应用最终生成的 HTML 文件通常都是 HTML5 格式的，
+			因为它们遵循现代 Web 开发标准和最佳实践。
+
+
