@@ -1,6 +1,6 @@
 <template>
-  <div class="full-page">
-    <div class="login-page">
+  <div class="full-page" :style="{ backgroundImage: fullPageBackground }">
+    <div class="login-page" :style="{ backgroundImage: loginPageBackground }">
       <h2>欢迎登录</h2>
       <form @submit.prevent="submitLogin">
         <div>
@@ -31,8 +31,13 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      fullPageBackground: '', // 用于存储懒加载的全页背景图片
+      loginPageBackground: '' // 用于存储懒加载的登录区域背景图片
     };
+  },
+  mounted() {
+    this.lazyLoadBackgrounds();
   },
   methods: {
     submitLogin() {
@@ -40,6 +45,22 @@ export default {
       console.log('Login attempt:', this.username, this.password);
       // 假设登录成功，跳转到其他页面
       this.$router.push('/'); // 登录后重定向到首页或其他页面
+    },
+    lazyLoadBackgrounds() {
+  
+      // 懒加载全页背景图片
+      const fullPageImage = new Image();
+      fullPageImage.src = require('@/assets/login_bg_jr.png');
+      fullPageImage.onload = () => {
+        this.fullPageBackground = `url(${fullPageImage.src})`;
+      };
+
+      // 懒加载登录页面背景图片
+      const loginPageImage = new Image();
+      loginPageImage.src = require('@/assets/login_jr.png');
+      loginPageImage.onload = () => {
+        this.loginPageBackground = `url(${loginPageImage.src})`;
+      };
     }
   }
 };
@@ -59,7 +80,7 @@ html, body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url('@/assets/login_bg_jr.png') no-repeat;
+  
   background-size: auto; /* 保持图片的原始大小 */
   background-position: auto; /* 可以根据需要调整显示位置 */
 }
@@ -70,7 +91,6 @@ html, body {
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-image: url('@/assets/login_jr.png');
   background-size: cover;
   background-position: center;
   color: #fff;

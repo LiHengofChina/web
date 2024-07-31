@@ -1,0 +1,76 @@
+
+
+//============================================ 对图片懒加载
+//============================================ 对图片懒加载
+
+
+（1）安装插件
+npm install vue-lazyload
+
+（2）在 Vue 项目的入口文件（如 main.js）中引入并配置 vue-lazyload：
+import Vue from 'vue';
+import VueLazyload from 'vue-lazyload';
+
+Vue.use(VueLazyload, {
+  preLoad: 1.3, 			  // 下方 1.3 倍的高度内的图片也会被提前加载
+  error: 'path/to/error.png', // 图片加载失败时显示的图片
+  loading: 'path/to/loading.gif', // 图片加载过程中显示的图片
+  attempt: 1	//指定了图片加载失败时的重试次数。
+});
+
+
+（3）在组件中使用 v-lazy 指令：
+
+<img v-lazy="'path/to/your/image.jpg'" alt="description">
+
+
+//============================================  "懒加载背景图片" 与 "懒加载普通图片" 不同
+//============================================  "懒加载背景图片" 与 "懒加载普通图片" 不同
+
+因为 CSS 不支持直接的懒加载机制。
+不过，你可以使用 JavaScript 和 Vue 的一些特性来实现懒加载背景图片的效果。
+
+
+以下是一个基本思路：
+	（1）创建一个数据属性来控制背景图的加载状态。
+	（2）在组件的生命周期钩子中动态设置背景图片。
+	（3）使用 IntersectionObserver 或者 Vue 的生命周期钩子来检测元素是否在视口中。
+
+
+//============================================
+//============================================
+
+  <div class="full-page" :style="{ backgroundImage: fullPageBackground }">
+    <div class="login-page" :style="{ backgroundImage: loginPageBackground }">
+
+
+	data() {
+		return {
+		  username: '',
+		  password: '',
+		  fullPageBackground: '', // 用于存储懒加载的全页背景图片
+		  loginPageBackground: '' // 用于存储懒加载的登录区域背景图片
+		};
+	},
+ 
+ 
+mounted() {
+	this.lazyLoadBackgrounds();
+},
+
+lazyLoadBackgrounds() {
+
+  // 懒加载全页背景图片
+  const fullPageImage = new Image();
+  fullPageImage.src = require('@/assets/login_bg_jr.png');
+  fullPageImage.onload = () => {
+	this.fullPageBackground = `url(${fullPageImage.src})`;
+  };
+
+  // 懒加载登录页面背景图片
+  const loginPageImage = new Image();
+  loginPageImage.src = require('@/assets/login_jr.png');
+  loginPageImage.onload = () => {
+	this.loginPageBackground = `url(${loginPageImage.src})`;
+  };
+}
