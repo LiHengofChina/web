@@ -70,7 +70,7 @@ html, body {
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-image: url('../assets/login_jr.png');
+  background-image: url('@/assets/login_jr.png');
   background-size: cover;
   background-position: center;
   color: #fff;
