@@ -1,0 +1,10 @@
+
+使用 Vuex 进行状态管理
+
+vue add vuex
+
+
+
+
+
+

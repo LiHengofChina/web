@@ -1,0 +1,59 @@
+
+
+在 Vue 应用中，通过 Vue Router 配合 Webpack 的  "动态导入功能" ，
+可以实现 "懒加载组件"。
+
+//============================================ 例如：
+//============================================ 例如：
+
+import { createRouter, createWebHistory } from 'vue-router';
+
+const Home = () => import(/* webpackChunkName: "home" */ '../components/HelloWorld.vue');
+const ApprovalForm = () => import(/* webpackChunkName: "approval" */ '../components/ApprovalForm.vue');
+
+const routes = [
+  { path: '/', name: 'Home', component: Home },
+  { path: '/approval', name: 'Approval', component: ApprovalForm }
+];
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
+});
+
+export default router;
+
+//============================================
+//============================================
+
+/* webpackChunkName: "home" */ 注释是可选的，但它确实在某些情况下非常有用。
+							   它指定了一个名为 "home" 的代码块，
+
+//============================================
+//============================================
+这个例子中，Home 和 ApprovalForm 组件都是 "通过动态导入的方式实现" 的 "懒加载"。
+这意味着，这些组件的代码只会在 "用户访问相应的路由" 时才会被加载。
+
+
+//============================================ 另外：核心组件不要使用懒加载
+//============================================ 另外：核心组件不要使用懒加载
+
+import { createRouter, createWebHistory } from 'vue-router';
+
+
+这行代码不适合用 "懒加载" 的方式来写。
+"懒加载" 通常用于 "加载组件或模块" 的代码，
+而 vue-router 是一个 "核心依赖"，通常在 "应用启动时" 就需要加载。
+
+
+import store from './store' 
+	//import store from './store' 也是一个核心依赖。它通常用于导入 Vuex 的 store 实例，管理应用的全局状态。
+
+import '@fortawesome/fontawesome-free/css/all.css';
+	//这不是核心依赖，但它通常在应用启动时就需要加载，以确保在应用的所有部分都能正常显示图标。
+	//因为 CSS 样式表的加载通常不会对性能产生显著影响（尤其是这种广泛使用的全局样式表），因此通常不会对它进行懒加载。
+
+
+
+
+

@@ -2,20 +2,21 @@
 
 （1）
 	添加样式，引入 FontAwesome 图标，
-	
+
 	方式一： 在 public/index.html 添加
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 
 
-
 	方式二：npm install @fortawesome/fontawesome-free
-
 	import '@fortawesome/fontawesome-free/css/all.css'; // 引入 FontAwesome
+	//这种方式将 FontAwesome 的样式文件下载到本地项目中，通过 node_modules 引入。
+
 
 （2）
 
 	FontAwesome图标是通过 <i> 标签与对应的类名来使用的。这些类名是由 FontAwesome 提供的，用于表示不同的图标。
-
 	以下是你在 src/components/ApprovalForm.vue 中使用 FontAwesome 图标的部分：
+
+
 
