@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 
 
-const Home = () => import(/* webpackChunkName: "home" */ '@/components/HelloWorld.vue');
+const Home = () => import(/* webpackChunkName: "home" */ '@/components/HomePage.vue');
 const ApprovalForm = () => import(/* webpackChunkName: "approval" */ '@/components/ApprovalForm.vue');
 const LoginPage = () => import(/* webpackChunkName: "log" */ '@/components/LoginPage.vue');
 

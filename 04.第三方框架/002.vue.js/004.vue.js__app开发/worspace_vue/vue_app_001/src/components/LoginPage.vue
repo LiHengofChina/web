@@ -2,15 +2,15 @@
     <div class="login-page">
         <h2>Login</h2>
         <form @submit.prevent="submitLogin">
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" v-model="username" />
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" v-model="password" />
-        </div>
-        <button type="submit">Login</button>
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" v-model="username" />
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" v-model="password" />
+            </div>
+            <button type="submit">Login</button>
         </form>
     </div>
 </template>
@@ -42,5 +42,9 @@ export default {
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    background-image: url('../assets/login_jr.png');
+    background-size: cover;
+    background-position: center;
+    color: #fff; /* 设置文本颜色为白色以在深色背景上更清晰 */
 }
 </style>
