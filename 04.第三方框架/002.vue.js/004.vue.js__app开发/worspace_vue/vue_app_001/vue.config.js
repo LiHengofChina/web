@@ -3,6 +3,7 @@ const { defineConfig } = require('@vue/cli-service');
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
+const FontminPlugin = require('fontmin-webpack');
 
 module.exports = defineConfig({
   transpileDependencies: true,
@@ -77,7 +78,7 @@ module.exports = defineConfig({
                     plugins: [
                         ["imagemin-gifsicle", { interlaced: true }],
                         ["imagemin-mozjpeg", { quality: 70 }],
-                        ["imagemin-pngquant", { quality: [0.35, 0.70] }],
+                        ["imagemin-pngquant", { quality: [0.35, 0.50] }],
                         [
                           "imagemin-svgo",
                           {
@@ -111,6 +112,12 @@ module.exports = defineConfig({
                 },
               },
             ],
+        }),
+        new FontminPlugin({
+          autodetect: true, // 自动检测使用的字体字符
+            // glyphs: ['\u0000-\u00FF'], // 你也可以手动指定需要保留的字符
+            // glyphs: ['\uf0c8'], // 指定需要的字符集
+            //  text: 'Hello World!', // 指定需要的文本内容
         }),
     ],
 
