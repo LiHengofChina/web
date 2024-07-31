@@ -1,58 +1,96 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+    <div class="homepage">
+        <div class="content">
+            <!-- 主内容区域，可以根据需要自定义 -->
+            <h1>{{ msg }}</h1>
+            <p>
+                欢迎使用本应用！这里是主页内容。
+            </p>
+        </div>
+
+        <div class="navbar">
+
+            <div class="nav-item" @click="navigate('home')">
+                <i class="fas fa-home nav-icon"></i>
+                <span>首页</span>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="nav-item" @click="navigate('tasks')">
+                <i class="fas fa-tasks nav-icon"></i>
+                <span>待办</span>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="nav-item" @click="navigate('profile')">
+                <i class="fas fa-user nav-icon"></i>
+                <span>我的</span>
+            </div>
+
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'HomePage',
-  props: {
-    msg: String
-  }
+name: 'HomePage',
+    props: {
+        msg: String
+    },
+    methods: {
+        navigate(page) {
+            // 这里可以添加导航逻辑，例如使用 vue-router 切换页面
+            console.log(`Navigate to ${page}`);
+        }
+    }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+    .homepage {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden; /* 避免滚动条影响布局 */
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+.content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto; /* 允许内容区域滚动 */
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+    padding: 10px 0;
+    position: fixed; /* 固定位置 */
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
-a {
-  color: #42b983;
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+}
+
+.nav-icon {
+    font-size: 24px;
+}
+
+.separator {
+    width: 1px;
+    height: 24px;
+    background-color: #ccc;
 }
 </style>
