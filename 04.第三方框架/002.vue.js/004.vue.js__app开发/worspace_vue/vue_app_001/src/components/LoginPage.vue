@@ -11,7 +11,7 @@
           <label for="password">Password:</label>
           <input type="password" id="password" v-model="password" />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">登陆</button>
       </form>
     </div>
   </div>
@@ -67,6 +67,7 @@ export default {
     background-size: cover;
     background-position: center;
     color: #fff;
+    margin-top: 300px; /* 距离顶部 300px */
   }
 
 </style>
