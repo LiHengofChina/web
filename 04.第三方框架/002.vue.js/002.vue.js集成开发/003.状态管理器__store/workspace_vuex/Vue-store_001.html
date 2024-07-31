@@ -21,16 +21,15 @@
 		
 	</body>
 	<script type="text/javascript">
-	
-		/**
-			https://cn.vuejs.org/v2/guide/state-management.html
-			Vue 应用中原始 data 对象的 实际来源——————
-			当访问数据对象时一个 Vue 实例只是简单的代理访问。
 
-		
-			如果你有一处需要被多个实例间共享的状态，
-			可以简单地通过维护"一份数据来实现共享"：	
+		/**
+			这个示例主要展示了 Vue.js 的 "双向数据绑定（Two-Way Data Binding）特性" 和 "共享数据" 的使用
+			
+			两个 Vue 实例 vmA 和 vmB，它们共享同一个数据源。
+			
+			通过共享的 data 对象来管理多个 Vue 实例的状态。
 		*/
+
 		var sourceOfTruth = {
 				message: 0
 		};
@@ -43,17 +42,11 @@
 		  el: "#firstVueB",
 		  data: sourceOfTruth
 		});
+
 		/**
 			说明：
 				现在当 sourceOfTruth 发生变更，
 				vmA 和 vmB 都将自动地更新它们的视图。
-				
-			子组件们的每个实例也会通过 this.$root.$data 去访问。
-			现在我们有了唯一的数据来源。
-			
-			但是，调试将会变为噩梦。
-			任何时间，我们应用中的任何部分，
-			在任何数据改变后，都不会留下变更过的记录。
 
 		*/
 

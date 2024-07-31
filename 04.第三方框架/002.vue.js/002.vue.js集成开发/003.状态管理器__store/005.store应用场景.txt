@@ -1,0 +1,39 @@
+
+在前后端分离的项目中，Vuex store 通常被用来管理和共享全局状态，
+例如用户的认证信息（如 token）、用户信息、应用的全局配置等。
+这些信息在用户登录后通常会存储在 Vuex store 中，
+以便在整个应用中共享和访问。
+
+
+// store.js
+import { createStore } from 'vuex';
+
+const store = createStore({
+  state: {
+    token: null,
+    user: null
+  },
+  mutations: {
+    setToken(state, token) {
+      state.token = token;
+    },
+    setUser(state, user) {
+      state.user = user;
+    },
+    logout(state) {
+      state.token = null;
+      state.user = null;
+    }
+  },
+  actions: {
+    login({ commit }, { token, user }) {
+      commit('setToken', token);
+      commit('setUser', user);
+    },
+    logout({ commit }) {
+      commit('logout');
+    }
+  }
+});
+
+export default store;

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vue 3.2.13 Vuex 4.0.0 Demo</title>
+    <!-- 引入指定版本的 Vue 3.2.13 -->
+    <script src="https://unpkg.com/vue@3.2.13/dist/vue.global.js"></script>
+    <!-- 引入指定版本的 Vuex 4.0.0 -->
+    <script src="https://unpkg.com/vuex@4.0.0/dist/vuex.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <counter-component></counter-component>
+        <double-counter-component></double-counter-component>
+    </div>
+
+    <script>
+        // 定义 Vuex store
+        const store = Vuex.createStore({
+            state() {
+                return {
+                    count: 0
+                };
+            },
+            mutations: {
+				//第（5）步
+                increment_m(state) { //定义一个函数，第一个参数也是固定的，同步修改
+                    state.count++;
+                }
+            },
+            actions: {//用于处理异步操作，比如 API 请求或其他异步任务
+				//第（3）步
+                increment_action({ commit }) {
+
+					// TODO... ajax请求
+
+					//第（4）步				
+                    commit('increment_m');
+                }
+            },
+            getters: {    //getters 是类似于 Vue 组件中的计算属性。它们会根据 Vuex store 的状态派生出新的数据。           
+				double_liheng: state => state.count * 2 //直接引用 Vuex store 中的状态对象
+            }
+        });
+
+        // 定义第一个组件 CounterComponent
+        const CounterComponent = {
+            template: `
+                <div>
+					<!-- 第（7）步 -->
+                    <p>Count: {{ count_1 }}</p>
+
+					<!-- 第（1）步 -->
+                    <button @click="increment_method">Increment</button>
+                </div>
+            `,
+            computed: {// computed 计算属性会在 state.count 发生变化后自动触发更新
+				//第（6）步
+                count_1() {
+				
+                    return this.$store.state.count;
+                }
+            },
+            methods: {
+				//第（2）步
+                increment_method() {
+                    this.$store.dispatch('increment_action'); //dispatch 方法用于触发一个 action
+                }
+            }
+        };
+
+        // 定义第二个组件 DoubleCounterComponent
+        const DoubleCounterComponent = {
+            template: `
+                <div>
+                    <p>Double Count: {{ count_2 }}</p>
+                </div>
+            `,
+            computed: {// computed 计算属性会在 state.count 发生变化后自动触发更新
+                count_2() {
+                    return this.$store.getters.double_liheng;//调用上面的函数 ，
+							//这里调用 double_liheng
+							//因为 double_liheng 可以在多个地方使用，逻辑复用：
+                }
+            }
+        };
+
+        // 创建 Vue 应用实例
+        const app = Vue.createApp({});
+
+        // 注册组件
+        app.component('counter-component', CounterComponent);
+        app.component('double-counter-component', DoubleCounterComponent);
+
+        // 使用 Vuex store
+        app.use(store);
+
+        // 挂载应用
+        app.mount('#app');
+    </script>
+</body>
+</html>

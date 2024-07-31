@@ -1,0 +1,49 @@
+// store.js
+import Vue from 'vue';
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment(state) {
+      state.count++;
+    }
+  },
+  actions: {
+    increment(context) {
+      context.commit('increment');
+    }
+  },
+  getters: {
+    doubleCount: state => state.count * 2
+  }
+});
+
+export default store;
+
+
+在组件中使用：
+// SomeComponent.vue
+<template>
+  <div>
+    <p>{{ count }}</p>
+    <button @click="increment">Increment</button>
+  </div>
+</template>
+
+<script>
+import { mapState, mapActions } from 'vuex';
+
+export default {
+  computed: {
+    ...mapState(['count'])
+  },
+  methods: {
+    ...mapActions(['increment'])
+  }
+};
+</script>
