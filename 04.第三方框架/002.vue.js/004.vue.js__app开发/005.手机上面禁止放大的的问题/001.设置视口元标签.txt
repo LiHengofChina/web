@@ -1,0 +1,19 @@
+
+//================（1）设置视口元标签
+//================（1）设置视口元标签
+	确保在 HTML 的 <head> 部分中设置了视口元标签，
+	以正确适配移动设备的屏幕尺寸。
+	这是移动端开发的常见做法。
+
+	<meta name="viewport" 
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	>
+
+	width=device-width：将视口宽度设置为设备的宽度。
+	initial-scale=1：初始缩放比例为 1。
+	maximum-scale=1：最大缩放比例为 1，禁止用户放大页面。
+	user-scalable=no：禁止用户手动缩放页面。
+
+	//=======================
+	//=======================
+	

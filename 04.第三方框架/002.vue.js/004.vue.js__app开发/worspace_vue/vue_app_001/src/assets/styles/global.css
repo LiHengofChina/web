@@ -6,16 +6,20 @@ html, body {
     height: 100%;
 }
 
-/*  全局字体大小 */
+/* 全局字体和基础样式设置 */
 body {
-    font-size: 16px;
+    font-size: 1rem; /* 使用 rem 作为全局字体大小的基准单位 */
+    font-family: 'Avenir', 'Helvetica', 'Arial', sans-serif;
+    line-height: 1.5; /* 设置较为舒适的行距 */
+    color: #333; /* 全局文本颜色 */
+    background-color: #f5f5f5; /* 设置一个默认的背景颜色 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* 小屏幕调整 */
 @media (max-width: 600px) {
     body {
-        font-size: 14px;
+        font-size: 0.875rem; /* 缩小字体大小（14px相当于0.875rem） */
     }
 }
-
-

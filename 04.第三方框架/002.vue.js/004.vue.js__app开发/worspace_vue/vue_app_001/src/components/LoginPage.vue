@@ -67,56 +67,59 @@ export default {
 </script>
 
 <style scoped>
-
 .full-page {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  
   background-size: auto; /* 保持图片的原始大小 */
   background-position: auto; /* 可以根据需要调整显示位置 */
 }
 
 .login-page {
-  max-width: 300px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-size: cover;
-  background-position: center;
-  color: #fff;
-  margin-top: 200px; /* 距离顶部 200px */
+  max-width: 18rem; /* 设置最大宽度，确保在大屏幕上不显得太大 */
+  margin: 12rem auto; /* 水平居中，顶部外边距为 12rem */
+  padding: 2.25rem; /* 使用 rem 单位 */
+  border: 0.1rem solid #ccc; /* 使用 rem 单位，确保不同分辨率下的一致性 */
+  border-radius: 0.5rem; /* 使用 rem 单位 */
+  background-color: rgba(255, 255, 255, 0.9); /* 使用半透明背景，提升可读性 */
+  color: #333; /* 字体颜色改为较深的颜色，提升可读性 */
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1); /* 添加阴影，提升视觉层次 */
 }
+
+
+
 
 input[type="text"],
 input[type="password"] {
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 0.8rem; /* 使用 rem 单位 */
+  margin: 0.8rem 0; /* 使用 rem 单位 */
+  border: 0.1rem solid #ccc; /* 使用 rem 单位 */
+  border-radius: 0.5rem; /* 使用 rem 单位 */
   box-sizing: border-box;
+  font-size: 1rem; /* 确保输入框文字大小一致 */
 }
 
 input::placeholder {
-  color: #ccc; /* 浅色的提示文本颜色 */
+  color: #999; /* 调整 placeholder 的颜色，使其更明显 */
 }
 
 button {
   width: 100%;
-  padding: 10px;
-  margin-top: 10px;
+  padding: 0.8rem; /* 使用 rem 单位 */
+  margin-top: 1rem; /* 使用 rem 单位 */
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.5rem; /* 使用 rem 单位 */
   cursor: pointer;
+  font-size: 1rem; /* 按钮文字大小 */
 }
 
 button:hover {
   background-color: #0056b3;
 }
 </style>
+

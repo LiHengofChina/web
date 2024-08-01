@@ -56,7 +56,7 @@ name: 'HomePage',
 </script>
 
 <style scoped>
-    .homepage {
+.homepage {
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -65,7 +65,7 @@ name: 'HomePage',
 
 .content {
     flex: 1;
-    padding: 20px;
+    padding: 2rem;
     overflow-y: auto; /* 允许内容区域滚动 */
 }
 
@@ -73,9 +73,9 @@ name: 'HomePage',
     display: flex;
     justify-content: space-around;
     align-items: center;
-    border-top: 1px solid #ccc;
+    border-top: 0.1rem solid #ccc;
     background-color: #fff;
-    padding: 10px 0;
+    padding: 1rem 0;
     position: fixed; /* 固定位置 */
     bottom: 0;
     left: 0;
@@ -92,12 +92,12 @@ name: 'HomePage',
 }
 
 .nav-icon {
-    font-size: 24px;
+    font-size: 1.5rem;
 }
 
 .separator {
-    width: 1px;
-    height: 24px;
+    width: 0.1rem;
+    height: 1.5rem;
     background-color: #ccc;
 }
 </style>
