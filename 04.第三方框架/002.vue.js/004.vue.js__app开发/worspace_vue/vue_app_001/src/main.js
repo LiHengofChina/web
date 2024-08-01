@@ -5,6 +5,9 @@ import store from './store';
 import '@fortawesome/fontawesome-free/css/all.css';
 import VueLazyload from 'vue-lazyload';
 
+// 引入全局样式
+import '@/assets/styles/global.css';
+
 // 配置 VueLazyload
 const app = createApp(App);
 

@@ -1,0 +1,21 @@
+/* src/assets/styles/global.css */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/*  全局字体大小 */
+body {
+    font-size: 16px;
+}
+
+/* 小屏幕调整 */
+@media (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+
