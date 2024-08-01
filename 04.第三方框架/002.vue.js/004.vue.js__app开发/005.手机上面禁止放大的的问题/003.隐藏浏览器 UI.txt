@@ -1,0 +1,117 @@
+
+//================（3）隐藏浏览器 UI
+//================（3）隐藏浏览器 UI
+
+（1）在某些情况下，你可能希望隐藏移动浏览器的 "地址栏" 和 "状态栏"，以提供更 "沉浸式的体验"。
+
+（2）虽然你无法完全控制这一点，但可以通过以下方式提示用户将网页添加到主屏幕，
+		以实现类似原生应用的体验：
+		（1）PWA（渐进式网页应用）：通过将应用配置为 PWA，当用户将网站添加到主屏幕后，
+			 可以全屏模式启动，类似于原生应用。
+			 你需要创建一个 manifest.json 文件，并确保你的服务器支持 HTTPS。
+
+		（2）Web App Capable：在 iOS 上，
+			 你可以通过 apple-mobile-web-app-capable meta 标签来实现全屏显示：
+
+//==========================================================
+//==========================================================
+
+要实现隐藏移动浏览器的地址栏和状态栏，以提供更沉浸式的体验，
+你可以考虑使用渐进式网页应用（PWA）和 Web App Capable 设置。
+
+
+
+
+//========================================================== 以下是详细的实现步骤：
+//========================================================== 以下是详细的实现步骤：
+
+//========================================================== 1. PWA（渐进式网页应用）
+//========================================================== 1. PWA（渐进式网页应用）
+
+PWA 通过利用现代 Web 技术，如服务工作者（Service Worker）和 Web 应用清单（manifest.json），
+为用户提供类似原生应用的体验。
+以下是配置 PWA 的步骤：
+
+//===========1.1 创建 manifest.json
+//===========1.1 创建 manifest.json
+在你的 Vue.js 项目根目录下创建一个 manifest.json 文件，用于定义应用的名称、图标、启动方式等。
+{
+  "name": "My App",
+  "short_name": "App",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007bff",
+  "icons": [
+    {
+      "src": "/path/to/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/path/to/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+name: 应用的全名。
+short_name: 应用的短名。
+start_url: 应用的启动路径。
+display: 设置为 standalone，可以隐藏浏览器的地址栏和状态栏。
+background_color: 应用加载时的背景颜色。
+theme_color: 主题颜色。
+icons: 应用图标，需提供多种尺寸以适应不同设备。
+
+
+//===========1.2 引入 manifest.json
+//===========1.2 引入 manifest.json
+
+在 public/index.html 文件的 <head> 部分添加以下代码，引入 manifest.json：
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#007bff">
+
+
+//===========1.3 配置 HTTPS
+//===========1.3 配置 HTTPS
+
+
+PWA 要求网站通过 HTTPS 提供服务。确保你的服务器配置了 HTTPS，并且所有资源都通过 HTTPS 加载。
+
+//===========1.4 注册 Service Worker
+//===========1.4 注册 Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js').then(registration => {
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }).catch(error => {
+      console.error('ServiceWorker registration failed: ', error);
+    });
+  });
+}
+
+//========================================================== 2. Web App Capable（仅 iOS）
+//========================================================== 2. Web App Capable（仅 iOS）
+
+对于 iOS，可以通过以下 meta 标签提示 Safari 浏览器将应用添加到主屏幕，并以全屏模式启动：
+
+在 public/index.html 文件的 <head> 部分添加：
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="My App">
+
+apple-mobile-web-app-capable: 设置为 yes，启用全屏显示。
+apple-mobile-web-app-status-bar-style: 设置状态栏的样式，常用选项包括 default，black 和 black-translucent。
+apple-mobile-web-app-title: 设置应用的标题。
+
+//========================================================== 3. 其他注意事项
+//========================================================== 3. 其他注意事项
+
+1. 图标和启动图像: 确保提供了适当的图标和启动图像，以获得最佳显示效果。
+2. 跨浏览器兼容性: 测试你的 PWA 在不同设备和浏览器中的表现，确保一致的用户体验。
+3. 提示用户: 在应用中提供提示，引导用户将 PWA 添加到主屏幕，以便更好地享受全屏体验。
+
+
+

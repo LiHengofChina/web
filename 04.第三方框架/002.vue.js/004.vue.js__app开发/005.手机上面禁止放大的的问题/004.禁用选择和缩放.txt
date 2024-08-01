@@ -1,0 +1,21 @@
+ 
+
+
+
+
+//================（4）. 禁用选择和缩放
+//================（4）. 禁用选择和缩放
+
+（1）你可以通过 CSS 来禁用用户选择文本和缩放网页的功能，
+	 以提供更加原生的用户体验：
+
+	body {
+		-webkit-touch-callout: none; /* 禁用长按链接和图片的操作菜单 */
+		-webkit-user-select: none; /* 禁用文本选择 */
+		-webkit-overflow-scrolling: touch; /* 启用弹性滚动 */
+		touch-action: manipulation; /* 禁用默认的触控操作，如双击缩放 */
+	}
+
+
+
+

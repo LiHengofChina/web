@@ -8,6 +8,13 @@ html, body {
     /* overflow: hidden;  禁止上下、左右滚动 */
 }
 
+button {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+    background: none;
+}
 
 /* 全局字体和基础样式设置 */
 body {

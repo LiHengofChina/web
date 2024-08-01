@@ -1,0 +1,24 @@
+//================（7）. 使用框架和库
+//================（7）. 使用框架和库
+
+考虑使用专门为移动端设计的前端框架（如 Vant、WeUI 等），这些框架提供了符合移动端使用习惯的组件和样式。
+
+
+
+（1）npm install vant
+
+（2）
+import { createApp } from 'vue';
+import App from './App.vue';
+import { Button } from 'vant';
+import 'vant/lib/index.css';
+
+const app = createApp(App);
+app.use(Button);
+app.mount('#app');
+
+
+（3）使用
+ <van-button type="primary" block native-type="submit">登录</van-button>
+ 
+ 

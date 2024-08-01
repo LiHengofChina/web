@@ -78,7 +78,7 @@
             computed: {// computed 计算属性会在 state.count 发生变化后自动触发更新
                 count_2() {
                     return this.$store.getters.double_liheng;//调用上面的函数 ，
-							//这里调用 double_liheng
+							//这里调用 double_liheng，为什么不直接使用 this.$store.state.count * 2
 							//因为 double_liheng 可以在多个地方使用，逻辑复用：
                 }
             }
