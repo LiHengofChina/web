@@ -19,7 +19,7 @@
             placeholder="请输入密码"
           />
         </div>
-        <button type="submit">登录</button>
+        <van-button type="primary" block native-type="submit">登录</van-button>
       </form>
     </div>
   </div>
@@ -88,9 +88,6 @@ export default {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1); /* 添加阴影，提升视觉层次 */
 }
 
-
-
-
 input[type="text"],
 input[type="password"] {
   width: 100%;
@@ -106,20 +103,4 @@ input::placeholder {
   color: #999; /* 调整 placeholder 的颜色，使其更明显 */
 }
 
-button {
-  width: 100%;
-  padding: 0.8rem; /* 使用 rem 单位 */
-  margin-top: 1rem; /* 使用 rem 单位 */
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 0.5rem; /* 使用 rem 单位 */
-  cursor: pointer;
-  font-size: 1rem; /* 按钮文字大小 */
-}
-
-button:hover {
-  background-color: #0056b3;
-}
 </style>
-

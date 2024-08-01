@@ -4,7 +4,10 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
+
+    /* overflow: hidden;  禁止上下、左右滚动 */
 }
+
 
 /* 全局字体和基础样式设置 */
 body {
@@ -15,6 +18,11 @@ body {
     background-color: #f5f5f5; /* 设置一个默认的背景颜色 */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    -webkit-touch-callout: none; /* 禁用长按链接和图片的操作菜单 */
+    -webkit-user-select: none; /* 禁用文本选择 */
+    -webkit-overflow-scrolling: touch; /* 启用弹性滚动 */
+    touch-action: manipulation; /* 禁用默认的触控操作，如双击缩放 */    
 }
 
 /* 小屏幕调整 */
