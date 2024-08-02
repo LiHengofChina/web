@@ -78,3 +78,76 @@ import '@fortawesome/fontawesome-free/css/all.css';
 
 		//但是，在不使用懒加载的情况下，图片的加载顺序仍然相对靠后。这可能是由于浏览器的默认行为，
 		//先处理和加载其他更重要的资源（如 JavaScript、CSS 等），之后再加载较大的图像资源。
+
+
+//============================================================================================================ 两各动态导入
+//============================================================================================================ 两各动态导入
+
+
+const api = () => import('@/api/login/index');
+const { default: api } = await import('@/api/login/index'); 
+
+
+//==========================================立即调用的动态导入
+//==========================================立即调用的动态导入
+
+const { default: api } = await import('@/api/login/index');
+	//这行代码表示立即进行动态导入。
+	//await import('@/api/login/index') 会返回一个 Promise，该 Promise 解决时包含导入模块的所有导出内容。
+
+	//{ default: api } 是对象解构赋值语法，用于提取默认导出（default）并将其赋值给 api 变量。
+
+	//由于使用了 await，代码会等待导入完成，然后继续执行。这要求代码必须在 async 函数中，因为 await 只能在 async 函数内使用。
+
+	//===========使用场景
+	//===========使用场景
+	立即需要模块: 适用于在调用点立即需要使用该模块的情况下，例如在函数中需要立即调用模块的某个方法。
+	同步风格: 使用 await 可以让异步代码看起来像同步代码，有助于减少嵌套，提升可读性。
+	//=========== 示例
+	//=========== 示例
+    async submitLogin() {
+      try {
+
+          const { default: api } = await import('@/api/login/index');//动态导入
+
+          const response = await api.login(this.opNo, this.password);//调用登陆接口
+          console.log('Login successful:', response);
+
+          this.$router.push('/');
+
+      } catch (error) {
+          console.error('Login failed:', error);
+      }
+    },
+
+//========================================== 延迟执行的动态导入
+//========================================== 延迟执行的动态导入
+
+	const api = () => import('@/api/login/index');
+	解释
+	（1）这行代码定义了一个函数 api，该函数返回调用 import('@/api/login/index') 的结果。
+		 这里并未实际执行导入操作，而是定义了一个函数，当你调用 api() 时才会执行动态导入。
+
+	（2）这种方式不会立即等待或获取模块，而是将获取模块的操作推迟到调用 api() 时。
+	//===========使用场景
+	//===========使用场景
+	延迟加载: 适用于在某些条件下或事件触发时才需要导入模块的场景，例如在用户交互（如按钮点击）后才导入模块。
+	控制导入时机: 通过延迟调用，可以精确控制导入模块的时机，从而优化资源加载和性能。
+
+	//=========== 示例
+	//=========== 示例
+	const Home = () => import(/* webpackChunkName: "home" */ '@/components/HomePage.vue');
+	const LoginPage = () => import(/* webpackChunkName: "log" */ '@/views/login/LoginPage.vue');
+
+	const routes = [
+		{
+			path: '/',
+			name: 'Home',
+			component: Home
+		},
+		{
+			path: '/login',
+			name: 'LoginPage',
+			component: LoginPage,
+		}
+	];

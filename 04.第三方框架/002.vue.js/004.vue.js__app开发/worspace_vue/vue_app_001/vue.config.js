@@ -14,6 +14,7 @@ module.exports = defineConfig({
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src'),
+        '#': path.resolve(__dirname, 'static'),
       },
     },
     
@@ -83,19 +84,23 @@ module.exports = defineConfig({
                           "imagemin-svgo",
                           {
                             plugins: [
-                              {
-                                name: "preset-default",
-                                params: {
-                                  overrides: {
-                                    removeViewBox: false,
-                                    addAttributesToSVGElement: {
-                                      params: {
-                                        attributes: [{ xmlns: "http://www.w3.org/2000/svg" }],
-                                      },
+                                {
+                                  name: 'preset-default',
+                                  params: {
+                                    overrides: {
+                                      // 禁用某些默认插件或进行其他调整
+                                      removeViewBox: false, // 例如，不移除 viewBox 属性
                                     },
                                   },
                                 },
-                              },
+                                {
+                                  name: 'addAttributesToSVGElement',
+                                  params: {
+                                    attributes: [
+                                      { xmlns: 'http://www.w3.org/2000/svg' },
+                                    ],
+                                  },
+                                },
                             ],
                           },
                         ],

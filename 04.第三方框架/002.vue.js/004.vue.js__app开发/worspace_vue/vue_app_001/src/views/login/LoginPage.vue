@@ -6,8 +6,8 @@
         <div>
           <input
             type="text"
-            id="username"
-            v-model="username"
+            id="opNo"
+            v-model="opNo"
             placeholder="请输入账号"
           />
         </div>
@@ -26,11 +26,12 @@
 </template>
 
 <script>
+
 export default {
   name: 'LoginPage',
   data() {
     return {
-      username: '',
+      opNo: '',
       password: '',
       fullPageBackground: '', // 用于存储懒加载的全页背景图片
       loginPageBackground: '' // 用于存储懒加载的登录区域背景图片
@@ -40,11 +41,19 @@ export default {
     this.lazyLoadBackgrounds();
   },
   methods: {
-    submitLogin() {
-      // 在这里处理登录逻辑，例如调用API验证用户凭证
-      console.log('Login attempt:', this.username, this.password);
-      // 假设登录成功，跳转到其他页面
-      this.$router.push('/'); // 登录后重定向到首页或其他页面
+    async submitLogin() {
+      try {
+
+          const { default: api } = await import('@/api/login/index');//立即：动态导入
+
+          const response = await api.login(this.opNo, this.password);//调用登陆接口
+          console.log('Login successful:', response);
+
+          this.$router.push('/');
+
+      } catch (error) {
+          console.error('Login failed:', error);
+      }
     },
     lazyLoadBackgrounds() {
   
@@ -79,7 +88,7 @@ export default {
 
 .login-page {
   max-width: 18rem; /* 设置最大宽度，确保在大屏幕上不显得太大 */
-  margin: 12rem auto; /* 水平居中，顶部外边距为 12rem */
+  margin: 8rem auto; /* 水平居中，顶部外边距为 8rem */
   padding: 2.25rem; /* 使用 rem 单位 */
   border: 0.1rem solid #ccc; /* 使用 rem 单位，确保不同分辨率下的一致性 */
   border-radius: 0.5rem; /* 使用 rem 单位 */

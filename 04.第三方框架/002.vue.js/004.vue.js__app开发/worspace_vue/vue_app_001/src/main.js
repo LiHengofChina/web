@@ -1,10 +1,10 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import { Button } from 'vant';
 import router from './router';
 import store from './store';
 import '@fortawesome/fontawesome-free/css/all.css';
 import VueLazyload from 'vue-lazyload';
+
 
 // 引入全局样式
 import '@/assets/styles/global.css';
@@ -21,5 +21,4 @@ app.use(VueLazyload, {
 
 app.use(store)
 .use(router)
-.use(Button)
 .mount('#app');

@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 
-
+//延迟：动态导入
 const Home = () => import(/* webpackChunkName: "home" */ '@/components/HomePage.vue');
-const LoginPage = () => import(/* webpackChunkName: "log" */ '@/components/LoginPage.vue');
+const LoginPage = () => import(/* webpackChunkName: "log" */ '@/views/login/LoginPage.vue');
 
 
 
@@ -15,7 +15,7 @@ const routes = [
         component: Home
     },
     {
-        path: '/log',
+        path: '/login',
         name: 'LoginPage',
         component: LoginPage,
     }
