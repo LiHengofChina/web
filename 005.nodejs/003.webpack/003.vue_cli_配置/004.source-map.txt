@@ -1,0 +1,20 @@
+
+
+//========================================= source-map
+//========================================= source-map
+// 为开发环境配置 source-map
+if (process.env.NODE_ENV !== 'production') {
+  config.devtool('source-map');
+}
+
+source-map 是一种映射文件格式，
+它将编译后或压缩后的代码映射回源代码。
+这在现代前端开发中非常有用，
+因为开发者通常会编写高级别的代码（如 ES6+、TypeScript、SCSS 等），
+然后通过构建工具（如 Babel、TypeScript 编译器、Webpack 等）
+
+将这些代码转换成浏览器可以执行的较低级别代码（如 ES5 的 JavaScript 和普通的 CSS）。
+这些构建工具生成的代码通常经过压缩和优化，变得难以阅读和调试。
+
+
+

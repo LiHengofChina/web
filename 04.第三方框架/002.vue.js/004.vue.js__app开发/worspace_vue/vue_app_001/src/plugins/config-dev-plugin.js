@@ -5,8 +5,8 @@ const config = {
     }
 };
 
-
-(function (window) {   
-    window.config = config;
-})(this);
-
+export default {
+    install(Vue) {
+        Vue.prototype.$config = config;
+    }
+};

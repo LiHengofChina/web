@@ -1,7 +1,25 @@
 
 
-https://blog.csdn.net/gao_xu_520/article/details/77894110
+在 Webpack 或 Vue CLI 项目中，
+可以通过配置 output.filename 和 output.chunkFilename 来控制输出文件的命名格式。
+通常，为了便于管理和调试，可以指定更有意义的文件名。
 
+module.exports = defineConfig({
+  // 其他配置...
+
+  configureWebpack: {
+    output: {
+      filename: 'js/[name].[contenthash].js', // 用于入口文件
+      chunkFilename: 'js/[name].[contenthash].js' // 用于分块文件
+    },
+[name] 是一个占位符，在 Webpack 的配置中会被模块的原始名称替代。
+它通常代表模块的入口文件名或代码分块（chunk）的名称。
+
+
+
+
+
+//=================================================
 //=================================================
 配置 output 选项可以控制 webpack 如何向硬盘写入编译文件。
 

@@ -1,0 +1,114 @@
+
+
+vue create vue_app_001 这种方式属于 Vue CLI（Vue Command Line Interface）的使用方法之一。
+Vue CLI 是 Vue.js 官方提供的脚手架工具，用于快速创建和管理 Vue.js 项目。
+
+
+vue.config.js 是 Vue CLI 项目的一部分，用于配置 Vue 应用的构建和开发环境。它适用于使用 Vue CLI 创建的项目，
+
+
+
+//============================================================== 这两部分有什么不一样吗，为什么要分开 写
+//============================================================== 这两部分有什么不一样吗，为什么要分开 写
+
+configureWebpack: config => {
+},
+
+chainWebpack: config => { 
+		/
+},
+
+
+configureWebpack 和 chainWebpack 都是 vue.config.js 中用于自定义 Webpack 配置的方法
+但它们的用法和作用方式有所不同。两者提供了不同的自定义 Webpack 配置的途径，以满足不同程度的需求。
+
+//============== （1）configureWebpack
+//============== （1）configureWebpack
+configureWebpack 允许你直接传递一个对象或一个修改配置的函数，
+以添加或覆盖 Vue CLI 内置的 Webpack 配置。它的使用方式比较简单和直接。
+	//=========== 用法
+	//=========== 用法
+	（1）对象形式:你可以直接提供一个对象，Vue CLI 会将这个对象合并到内部的 Webpack 配置中。
+		module.exports = {
+		  configureWebpack: 
+		  {
+			plugins: [
+			  new MyAwesomeWebpackPlugin()
+			]
+		  }
+		};
+	（1）函数形式:
+		你可以提供一个函数，该函数接收已经解析好的 Webpack 配置作为参数，
+		并可以返回一个对象来进行合并，或者直接修改该配置。
+		module.exports = {
+		  configureWebpack: config => {
+			
+			 // 修改配置
+			 config.plugins.push(new MyAwesomeWebpackPlugin());
+
+			 // 不需要显式返回 config
+			 // 你直接修改了 config 对象，这个对象是 Vue CLI 提供给你的原始配置对象。
+			 // 由于 JavaScript 的对象是按引用传递的，
+			 // 你对 config 对象所做的任何修改都会直接反映在实际的配置中，因此不需要返回它。
+
+				
+		  }
+		};
+
+
+//============== （2）chainWebpack
+//============== （2）chainWebpack
+
+chainWebpack 提供了一种更细粒度、更灵活的方式来修改 Webpack 配置。
+它使用 webpack-chain 库，允许你以链式调用的方式有条件地修改内部配置。它
+非常适合需要  "深度定制 Webpack 配置" 的场景。
+
+	//=========== 用法
+	//=========== 用法
+	（1）链式操作：通过 chainWebpack，你可以以 "链式操作" 的方式访问并修改内部的 Webpack 配置。
+					webpack-chain 的优势在于，它提供了比直接修改对象更精细的控制。
+
+		module.exports = {
+		  chainWebpack: config => {
+			// 例如：修改 HTML 插件的配置
+			config.plugin('html')
+			  .tap(args => {
+				args[0].title = 'My App';
+				return args;
+			  });
+
+			// 设置别名
+			config.resolve.alias
+			  .set('@', path.resolve(__dirname, 'src'))
+			  .set('assets', path.resolve(__dirname, 'src/assets'));
+		  }
+		};
+	（2）条件修改: 你可以根据不同的条件动态修改配置，如在不同的环境中设置不同的插件或规则。
+
+
+
+
+//============================================================== 选择使用 configureWebpack 还是 chainWebpack
+//============================================================== 选择使用 configureWebpack 还是 chainWebpack
+（1）简单的修改: 如果你只是想添加一些插件或简单地修改配置，使用 configureWebpack 更为简单直接。
+（2）复杂的自定义需求: 如果你需要进行复杂的配置修改，比如深入定制插件选项、规则设置、优化选项等，chainWebpack 提供的链式调用方法更为灵活和强大。
+
+//============================================================== 总结
+//============================================================== 总结
+
+（1）configureWebpack 是一种简单的方式来添加或覆盖 Webpack 配置，它直接操作配置对象，适合不需要复杂修改的情况。
+（2）chainWebpack 提供了更细粒度的控制，通过 webpack-chain 库的链式操作可以进行深入的自定义，适合需要复杂调整和控制的情况。
+
+通过组合使用这两种方法，开发者可以根据具体需求对 Webpack 进行各种程度的定制。
+
+
+//============================================================== 这两部分有什么不一样吗，为什么要分开 写
+//============================================================== 这两部分有什么不一样吗，为什么要分开 写
+
+configureWebpack: config => {
+		//不需要判断环境的
+},
+
+chainWebpack: config => { 
+		//需要判断环境的
+},

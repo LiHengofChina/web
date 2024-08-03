@@ -12,6 +12,7 @@
     "axios": "^1.7.3",
     "core-js": "^3.8.3",
     "mftcc-npm": "^1.2.43",
+    "path-browserify": "^1.0.1",
     "vue": "^3.2.13",
     "vue-lazyload": "^3.0.0",
     "vue-router": "^4.4.0",

@@ -1,0 +1,112 @@
+
+
+resolve
+	Webpack 在启动后会从"配置的入口模块"出发找出"所有依赖的模块"
+
+	Resolve 配置 Webpack 如何寻找模块所对应的文件。
+
+	//Webpack 内置 JavaScript 模块化语法解析功能，
+	//默认会采用模块化标准里约定好的规则去寻找，
+	//但你也可以根据自己的需要修改默认的规则。
+
+
+
+//==========================================================
+//==========================================================
+
+resolve:{
+	modules:['./src/components','node_modules'],
+
+
+
+指定 Webpack 去哪些目录下寻找第三方模块
+1). //默认是只会去  node_modules  目录下寻找。
+2). 假如那些被大量导入的模块都在  ./src/components  目录下，
+把  modules  配置成，
+
+modules:['./src/components','node_modules']			
+
+
+//========================================================== extensions: ['.js', '.json'],
+//========================================================== extensions: ['.js', '.json'],
+	 
+导入语句没带文件后缀时，
+Webpack 会自动带上后缀后去尝试访问文件是否存在。
+resolve.extensions 用于配置在尝试过程中用到的后缀列表，
+
+extensions: ['.js', '.json']
+
+//============示例：
+也就是说当遇到  require('./data')  这样的导入语句时，
+Webpack 会先去寻找  
+./data.js  文件，如果该文件不存在就去寻找  
+./data.json  文件， 如果还是找不到就报错。
+
+
+//========================================================== 指定 Node.js 核心模块的替代实现的配置选项 
+//========================================================== 指定 Node.js 核心模块的替代实现的配置选项
+fallback 
+由于 Webpack 5 不再自动包含这些核心模块的 polyfills（即兼容性的替代实现），
+如果在浏览器环境中使用这些模块，就需要手动指定它们的替代实现。
+
+//=== resolve.fallback 的作用
+//=== resolve.fallback 的作用
+resolve.fallback 提供了一个机制，当模块中尝试引用 Node.js 核心模块时，
+Webpack 会查找替代的实现（polyfill），
+以确保这些模块可以在非 Node.js 环境中（如浏览器）运行。
+
+//=== 示例
+//=== 示例
+module.exports = {
+  resolve: {
+    fallback: {
+      "path": require.resolve("path-browserify")
+    }
+  }
+};
+
+path 是 Node.js 的核心模块之一，
+它提供了一些用于处理文件和目录路径的实用工具。
+如果你的代码或某些依赖项使用了 path 模块，
+在浏览器中是无法原生支持的。
+
+path-browserify 是一个用 JavaScript 实现的 path 模块的替代品，
+专为在浏览器环境中使用。
+
+通过设置 fallback，你告诉 Webpack：如果在代码中找到了对 path 模块的引用，
+它应该使用 path-browserify 作为替代，
+而不是寻找 path 这个 Node.js 的原生实现。
+
+//========================================================== 取别名
+//========================================================== 取别名
+alias: {
+	'@': path.resolve(__dirname, 'src'),
+	'#': path.resolve(__dirname, 'static'),
+	'npm': path.resolve(__dirname, 'node_modules'), 
+	'@config': path.resolve(__dirname, 'config'), 
+},
+
+
+				*/
+	mainFields: ['jsnext:main', 'browser', 'main'],
+				/**
+						mainFields: ['jsnext:main', 'browser', 'main']
+				*/	
+				
+				
+	descriptionFiles: ['package.json'],
+	
+	
+	
+	
+	fallback:{//退路 TODO
+		path: require.resolve("path-browserify")
+	}
+			 
+	
+	
+	
+	
+}
+ 
+ 

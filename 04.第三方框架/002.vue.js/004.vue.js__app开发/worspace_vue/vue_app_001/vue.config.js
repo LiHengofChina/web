@@ -5,17 +5,38 @@ const TerserPlugin = require('terser-webpack-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 const FontminPlugin = require('fontmin-webpack');
 
+//日志输出：vue-cli 自动设置的环境变量
+if (process.env.NODE_ENV === 'development') {
+  console.log('This is a development build');
+} else if (process.env.NODE_ENV === 'production') {
+  console.log('This is a production build');
+}
+
+
+
+
 module.exports = defineConfig({
+
+  publicPath: process.env.NODE_ENV === 'production' ? '/my-app/' : '/',
+  
   transpileDependencies: true,
 
   // 配置Webpack
   configureWebpack: {
 
+    output: {
+      filename: 'js/[name].[contenthash].js',
+      chunkFilename: 'js/[name].[contenthash].js'
+    },    
     resolve: {
+      fallback: {
+        "path": require.resolve("path-browserify")
+      },      
       alias: {
         '@': path.resolve(__dirname, 'src'),
         '#': path.resolve(__dirname, 'static'),
         'npm': path.resolve(__dirname, 'node_modules'), 
+        '@config': path.resolve(__dirname, 'config'), 
       },
     },
     
@@ -129,10 +150,37 @@ module.exports = defineConfig({
 
   },
 
+  chainWebpack: config => {
+
+    config.plugin('html').tap(args => {
+      if (process.env.NODE_ENV === 'production') {
+        args[0].title = 'My App - Production';
+      } else {
+        args[0].title = 'My App - Development';
+      }
+      return args;
+    });
+
+    
+    if (process.env.NODE_ENV === 'development') {
+      config.devtool('source-map');
+    } else if (process.env.NODE_ENV === 'production') {
+      config.devtool(false); 
+    }
+    
+
+  },
 
   // 开发服务器配置
   devServer: {
-    // proxy: 'http://localhost:8080'
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:3000',
+    //     changeOrigin: true,
+    //   }
+    // },
+    port: 8080
   }
+
 });
 

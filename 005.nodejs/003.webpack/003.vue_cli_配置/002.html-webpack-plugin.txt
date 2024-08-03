@@ -1,0 +1,106 @@
+
+html-webpack-plugin 插件
+//================================================================================ （一）
+//================================================================================ （一）
+
+
+
+html-webpack-plugin 是一个 Webpack 插件，用于简化创建 HTML 文件的过程。
+它通常与 Webpack 一起使用，
+用于将打包后的资源（如 JavaScript 和 CSS 文件）自动注入到生成的 HTML 文件中。
+
+//================================================== 示例 vue_cli 下使用它
+//================================================== 示例 vue_cli 下使用它
+
+
+config.plugin('html').tap(args => {
+  if (process.env.NODE_ENV === 'production') {
+    args[0].title = 'My App - Production';
+  } else {
+    args[0].title = 'My App - Development';
+  }
+  return args;
+});
+
+
+（1）config.plugin('html'): 获取名为 'html' 的插件配置
+		//这里的 'html' 是 html-webpack-plugin 插件在 Vue CLI 配置中的默认名称。
+
+（2）.tap(args => { ... }): tap 方法用于 "修改插件的选项"。
+	  args 是一个数组，包含了插件的选项对象。
+
+（3） args[0].title = '...': 这里通过修改 args[0] 的 title 属性来设置生成的 HTML 文件的 <title>。
+	  具体的内容根据 process.env.NODE_ENV 的值进行区分：
+
+	（1）生产环境 ('production'): 设置标题为 'My App - Production'。
+	（2）开发环境 ('development'): 设置标题为 'My App - Development'。
+
+
+
+//================================================================================（二）
+//================================================================================（二）
+
+不使用 html-webpack-plugin 插件，也能正常生成html文件
+
+在 Vue CLI 项目中，即使你没有显式地使用或配置 html-webpack-plugin，Vue CLI 也会默认使用这个插件来生成 HTML 文件。
+这是因为 Vue CLI 内部集成了 html-webpack-plugin，并提供了一套默认配置来简化开发体验。
+
+使用 html-webpack-plugin ，可以有更多的选择，如多个程序的入口等什么的
+
+
+
+//================================================================================（三）
+//================================================================================（三）
+
+html-webpack-plugin 插件的基本作用就是生成html文件，
+
+将 webpack中`entry`配置的相关入口chunk  和`extract-text-webpack-plugin`抽取的css样式   
+插入到该插件提供的`template`或者`templateContent`配置项指定的内容基础上生成一个html文件，
+具体插入方式是将样式`link`插入到`head`元素中，
+`script`插入到`head`或者`body`中。
+
+
+
+//====================================
+//====================================
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+webpackconfig = {
+	...
+	plugins: [
+		new HtmlWebpackPlugin(),
+		
+		new HtmlWebpackPlugin({
+			filename: 'index.html',		     // filename 生成的主文件
+			template: 'index_template.html', //指html模板文件
+			inject: true
+		}),
+		
+	]
+}
+
+不配置任何选项的html-webpack-plugin插件，
+他会默认将webpack中的entry
+配置所有入口thunk和extract-text-webpack-plugin抽取的css样式都插入到文件指定的位置。
+例如上面生成的html文件内容如下：
+
+<!DOCTYPE html>
+<html>
+	  <head>
+			<meta charset="UTF-8">
+			<title>Webpack App</title>
+	  <link href="index-af150e90583a89775c77.css" rel="stylesheet"></head>
+	  <body>
+		  <script type="text/javascript" src="common-26a14e7d42a7c7bbc4c2.js"></script>
+		  <script type="text/javascript" src="index-af150e90583a89775c77.js"></script>
+	  </body>
+</html>
+//==================================== 注意自定义的 index.html 名字要避免和 vue.js 默认index.html 名字冲突
+//==================================== 注意自定义的 index.html 名字要避免和 vue.js 默认名字冲突
+
+		new HtmlWebpackPlugin({
+			filename: 'index.html',		     // filename 生成的主文件
+			template: 'index_template.html', //指html模板文件
+			inject: true
+		}),
+
+
