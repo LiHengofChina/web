@@ -1,0 +1,12 @@
+
+
+const config = require('../config')	//
+
+
+在 Node.js 环境中，使用 require 引入模块时，
+		如果指定的是一个文件夹路径，Node.js 会自动查找该文件夹下的 index.js 文件
+		
+并将其内容作为模块导出。因此，const config = require('../config') 这行代码是正确的，
+它会导入 config 文件夹中的 index.js 文件的内容。
+
+

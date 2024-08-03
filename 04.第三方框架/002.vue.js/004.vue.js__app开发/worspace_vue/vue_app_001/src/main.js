@@ -6,6 +6,9 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import VueLazyload from 'vue-lazyload';
 
 
+// 引入配置中的 servers 部分配置
+var servers = window.config.servers;
+window.$servers = servers;
 
 // 引入全局样式
 import '@/assets/styles/global.css';
