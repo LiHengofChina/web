@@ -45,9 +45,15 @@ export default {
       try {
 
           const { default: api } = await import('@/api/login/index');//立即：动态导入
-
-          const response = await api.login(this.opNo, this.password);//调用登陆接口
-          console.log('Login successful:', response);
+          //调用登陆接口
+          await api.login({ opNo: this.opNo, password: this.password },
+                      (reponsex) => {
+                        console.log(reponsex);
+                      },
+                      (error) => {
+                        console.log(error);
+                      }
+          );
 
           this.$router.push('/');
 

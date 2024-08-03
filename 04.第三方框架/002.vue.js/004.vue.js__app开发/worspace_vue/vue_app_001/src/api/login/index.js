@@ -1,14 +1,31 @@
 // login/index.js
-import http from '../http';
+
 
 const api = {
-    login: (username, password) => {
-        // "/" + $servers.sys + "/login"
-		return http.post('/login', { username, password });
+
+    login: async (data, success, error) => {
+        const { default: axiosModule } = await import("npm/mftcc-npm/src/axios/index");
+        const { postJsonNoLoading } = axiosModule;
+        postJsonNoLoading(
+			"/" + $servers.sys + "/login",
+            data,
+            true,
+            success,
+            error
+        );
     },
-	logout: () => {
-		return http.post('/logout');
-	}
+    loginOut: async(data, success, error) => {
+		const { default: axiosModule } = await import("npm/mftcc-npm/src/axios/index");
+        const { postJsonNoLoading } = axiosModule;
+        postJsonNoLoading(
+            "/" + $servers.sys + "/loginOut",
+            data,
+            true,
+            success,
+            error
+        );
+    }
+
 };
 
 export default api;

@@ -1,0 +1,63 @@
+
+
+在 JavaScript 中，async 和 await 是用于处理异步操作的关键字。
+async 用于声明一个异步函数。
+
+而 await 用于等待一个 Promise 完成，并返回其结果。
+
+使用这两个关键字可以使 "异步代码" 看起来像 "同步代码"，从而提高代码的可读性和维护性。
+
+//====================================================== 为什么要使用 async 和 await
+//====================================================== 为什么要使用 async 和 await
+
+
+（1）async 函数:
+	 当一个函数被声明为 async 时，
+	 它会 "自动返回一个 Promise"。
+
+	 即使函数中 "没有显式地返回 Promise"，
+	 JavaScript 也会自动将 "返回值" 封装在一个 "已解决的 Promise " 中。
+
+	 在 async 函数内部，可以使用 await 关键字来 "暂停函数的执行"，
+	 直到 Promise 被解决。
+
+（2）await 关键字:
+	（1）await 只能在 async 函数内部使用，它会暂停函数的执行，
+		 直到 "其右侧的表达式"（通常是一个 Promise）被解决为止。
+
+	（2）当 Promise 解决（fulfilled）时，await 表达式会返回结果值；
+		 如果 Promise 被拒绝（rejected），
+		 它会抛出一个异常，可以通过 try-catch 进行捕获和处理。
+
+//====================================================== 代码示例解释
+//====================================================== 代码示例解释
+methods: {
+  async submitLogin() {
+    try {
+      const { default: api } = await import('@/api/login');
+      const response = await api.login(this.opNo, this.password);
+      console.log('Login successful:', response);
+      this.$router.push('/');
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
+  },
+  // 其他方法...
+}
+
+（1）
+	sync submitLogin(): 声明 submitLogin 是一个异步函数。
+	这意味着它会返回一个 Promise，并且你可以在函数内部使用 await。
+
+（2）
+	await import('@/api/login'): 这里使用 await 等待动态导入模块完成。
+	动态导入返回一个 Promise，当模块加载完成时，Promise 解决并返回模块对象。
+
+	// 这行代码暂停了 submitLogin 函数的执行，直到 import 返回的 Promise 解决，然后将 api 模块解构赋值。
+
+（3）
+	await api.login(this.opNo, this.password): 这里的 await 等待 api.login 方法返回的 Promise 完成。
+	//这使得 response 变量获得登录请求的结果。
+
+（4）错误处理 (try-catch):
+	如果在执行 await 的过程中发生错误（如网络错误或后端返回错误响应），异常会被捕获到 catch 块中，并执行错误处理逻辑。

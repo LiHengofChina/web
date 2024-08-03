@@ -15,6 +15,7 @@ module.exports = defineConfig({
       alias: {
         '@': path.resolve(__dirname, 'src'),
         '#': path.resolve(__dirname, 'static'),
+        'npm': path.resolve(__dirname, 'node_modules'), 
       },
     },
     
