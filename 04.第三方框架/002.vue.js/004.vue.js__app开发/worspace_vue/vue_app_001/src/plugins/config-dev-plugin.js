@@ -6,7 +6,7 @@ const config = {
 };
 
 export default {
-    install(Vue) {
-        Vue.prototype.$config = config;
+    install(app) {
+        app.config.globalProperties.$config = config;
     }
 };

@@ -22,10 +22,11 @@ app.use(VueLazyload, {
 // 引入配置中的 系统配置 部分配置
 let loadConfigPlugin;
 if (process.env.NODE_ENV === 'development') {
-    loadConfigPlugin = import('@/plugins/config-dev-plugin');
+    loadConfigPlugin = import(/* webpackChunkName: "config-dev-plugin" */ '@/plugins/config-dev-plugin');
 } else if (process.env.NODE_ENV === 'production') {
-    loadConfigPlugin = import('@/plugins/config-prod-plugin');
+    loadConfigPlugin = import(/* webpackChunkName: "config-prod-plugin" */ '@/plugins/config-prod-plugin');
 }
+
 
 loadConfigPlugin
 .then(({ default: configPlugin }) => {

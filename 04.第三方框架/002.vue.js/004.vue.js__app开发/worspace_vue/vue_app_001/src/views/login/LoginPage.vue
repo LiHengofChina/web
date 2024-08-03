@@ -44,7 +44,8 @@ export default {
     async submitLogin() {
       try {
 
-          const { default: api } = await import('@/api/login/index');//立即：动态导入
+          const { default: api } = await import(/* webpackChunkName: "login-api" */ '@/api/login/index');//立即：动态导入
+
           //调用登陆接口
           await api.login({ opNo: this.opNo, password: this.password },
                       (reponsex) => {

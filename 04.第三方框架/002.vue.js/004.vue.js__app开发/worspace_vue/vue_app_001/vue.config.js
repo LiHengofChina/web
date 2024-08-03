@@ -26,7 +26,7 @@ module.exports = defineConfig({
 
     output: {
       filename: 'js/[name].[contenthash].js',
-      chunkFilename: 'js/[name].[contenthash].js'
+      chunkFilename: 'js/[name].[contenthash].js',
     },    
     resolve: {
       fallback: {
@@ -161,11 +161,11 @@ module.exports = defineConfig({
       return args;
     });
 
-    
+    //TODO
     if (process.env.NODE_ENV === 'development') {
-      config.devtool('source-map');
+      // config.devtool('source-map');
     } else if (process.env.NODE_ENV === 'production') {
-      config.devtool(false); 
+      // config.devtool(false);
     }
     
 

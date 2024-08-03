@@ -18,3 +18,16 @@ source-map 是一种映射文件格式，
 
 
 
+//=========================================  
+//=========================================  
+
+
+（1）默认 和 写 config.devtool('source-map'); 的时候，
+		
+		vue-cli-service build 命令会生成 .map文件
+
+（2）写config.devtool(false);
+		vue-cli-service build 命令会生成 .map文件
+
+（3）不管怎么样，vue-cli-service serve都不会生成
+
