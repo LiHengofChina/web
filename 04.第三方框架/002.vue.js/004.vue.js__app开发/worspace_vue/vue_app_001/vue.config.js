@@ -165,7 +165,7 @@ module.exports = defineConfig({
     if (process.env.NODE_ENV === 'development') {
       // config.devtool('source-map');
     } else if (process.env.NODE_ENV === 'production') {
-      // config.devtool(false);
+      config.devtool(false);
     }
     
 

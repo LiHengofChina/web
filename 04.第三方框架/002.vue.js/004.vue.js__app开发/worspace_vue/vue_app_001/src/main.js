@@ -10,17 +10,6 @@ import VueLazyload from 'vue-lazyload'; // 导入 VueLazyload 插件
 //======== 暴露：Vuex
 import Vuex from 'vuex';
 window.Vuex = Vuex;
-
-//======== 暴露：VueRouter //TODO
-// import VueRouter from 'vue-router'; 
-// const routerPush = VueRouter.prototype.push;
-// VueRouter.prototype.push = function push(location) {
-//     return routerPush.call(this, location).catch(error => error);
-// };
-// window.VueRouter = VueRouter;
-
-
-
 // 创建应用实例
 const app = createApp(App);
 
@@ -34,16 +23,12 @@ app.use(VueLazyload, {
 
 
 //======== 暴露：应用实例
-window.Vue = app;  // 这里暴露的是应用实例
-
-
-
-// 动态导入配置插件
+window.Vue = app;  // 这里暴露的是应用实例// 动态导入配置插件
 let loadConfigPlugin;
 if (process.env.NODE_ENV === 'development') {
-    loadConfigPlugin = import(/* webpackChunkName: "config-dev-plugin" */ '@/plugins/config-dev-plugin');
+    loadConfigPlugin = import(/* webpackChunkName: "config-dev-plugin" */ '@/static/config-dev');
 } else if (process.env.NODE_ENV === 'production') {
-    loadConfigPlugin = import(/* webpackChunkName: "config-prod-plugin" */ '@/plugins/config-prod-plugin');
+    loadConfigPlugin = import(/* webpackChunkName: "config-prod-plugin" */ '@/static/config-prod');
 }
 
 // 加载配置插件后挂载应用

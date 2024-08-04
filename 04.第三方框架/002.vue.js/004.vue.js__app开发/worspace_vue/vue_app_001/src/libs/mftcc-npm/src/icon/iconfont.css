@@ -1,0 +1,19 @@
+@font-face {
+  font-family: "mftccdevicon"; /* Project id 2628528 */
+  src: url('iconfont.woff2?t=1624433692191') format('woff2'),
+       url('iconfont.woff?t=1624433692191') format('woff'),
+       url('iconfont.ttf?t=1624433692191') format('truetype');
+}
+
+.mftccdevicon {
+  font-family: "mftccdevicon" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.mf-dev-icon-disabled:before {
+  content: "\e706";
+}
+
