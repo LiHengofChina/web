@@ -1,25 +1,44 @@
-import { createApp } from 'vue';
-import App from './App.vue';
-import router from './router';
-import store from './store';
-import '@fortawesome/fontawesome-free/css/all.css';
-import VueLazyload from 'vue-lazyload';
 
-// 引入全局样式
-import '@/assets/styles/global.css';
+import { createApp } from 'vue'; // 从 'vue' 模块导入 createApp 函数
 
-// 创建 app
+import App from '@/App.vue'; // 导入根组件 App
+import router from '@/router'; // 导入路由配置
+import store from '@/store'; // 导入 Vuex store
+import '@fortawesome/fontawesome-free/css/all.css'; // 导入全局样式
+import VueLazyload from 'vue-lazyload'; // 导入 VueLazyload 插件
+
+//======== 暴露：Vuex
+import Vuex from 'vuex';
+window.Vuex = Vuex;
+
+//======== 暴露：VueRouter //TODO
+// import VueRouter from 'vue-router'; 
+// const routerPush = VueRouter.prototype.push;
+// VueRouter.prototype.push = function push(location) {
+//     return routerPush.call(this, location).catch(error => error);
+// };
+// window.VueRouter = VueRouter;
+
+
+
+// 创建应用实例
 const app = createApp(App);
 
-// 配置 VueLazyload
+// 使用插件和全局配置
 app.use(VueLazyload, {
     preLoad: 1.3,
-    error: require('@/assets/error.png'), // 使用 require 导入资源路径
+    error: require('@/assets/error.png'),
     loading: require('@/assets/loading.gif'),
     attempt: 1
 });
 
-// 引入配置中的 系统配置 部分配置
+
+//======== 暴露：应用实例
+window.Vue = app;  // 这里暴露的是应用实例
+
+
+
+// 动态导入配置插件
 let loadConfigPlugin;
 if (process.env.NODE_ENV === 'development') {
     loadConfigPlugin = import(/* webpackChunkName: "config-dev-plugin" */ '@/plugins/config-dev-plugin');
@@ -27,15 +46,13 @@ if (process.env.NODE_ENV === 'development') {
     loadConfigPlugin = import(/* webpackChunkName: "config-prod-plugin" */ '@/plugins/config-prod-plugin');
 }
 
-
+// 加载配置插件后挂载应用
 loadConfigPlugin
-.then(({ default: configPlugin }) => {
-    app.use(configPlugin);
-    // 在插件加载完后再挂载 app
-    app.use(store).use(router).mount('#app');
-})
-.catch(error => {
-    console.error("Failed to load config plugin:", error);
-    // 在插件加载失败的情况下也挂载 app，以免应用无法使用
-    app.use(store).use(router).mount('#app');
-});
+    .then(({ default: configPlugin }) => {
+        app.use(configPlugin);
+        app.use(store).use(router).mount('#app');
+    })
+    .catch(error => {
+        console.error("Failed to load config plugin:", error);
+        app.use(store).use(router).mount('#app');
+    });
