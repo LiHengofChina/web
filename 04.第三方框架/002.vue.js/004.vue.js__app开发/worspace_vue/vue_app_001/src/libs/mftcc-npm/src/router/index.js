@@ -1,43 +1,43 @@
+import { createRouter, createWebHistory } from 'vue-router';
 import handle from "../router/handle";
 import config from "@config/index";
 
-const routerPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push(location) {
-  return routerPush.call(this, location).catch(error => error);
+// 替代 Vue 2 中的 VueRouter.prototype.push
+const routerPush = (router, location) => {
+  return router.push(location).catch(error => error);
 };
 
-VueRouter.prototype.pushMain = function pushMain(location) {
-  if (typeof location == "string") {
-    singleSpaNavigate(location);
-  } else if (typeof location == "object") {
+// 自定义的 pushMain 方法
+const pushMain = (router, location) => {
+  if (typeof location === "string") {
+    // 需要实现 singleSpaNavigate 或者替代方案
+    console.error("singleSpaNavigate is not defined");
+  } else if (typeof location === "object") {
     let path = location.path;
     if (location.query) {
       path += "?";
       for (let key in location.query) {
-        path = path + key + "=" + location.query[key] + "&";
+        path += `${key}=${location.query[key]}&`;
       }
-      path = path.substring(0, path.length - 1);
+      path = path.slice(0, -1);
     }
-    singleSpaNavigate(path);
+    // 需要实现 singleSpaNavigate 或者替代方案
+    console.error("singleSpaNavigate is not defined");
   } else {
     console.error("pushMain路由参数错误");
   }
 };
 
-Vue.use(VueRouter);
+const base = (window.$show_base_path && window.$productName)
+  ? `/${window.$productName}/${config.productName}/`
+  : `/${config.productName}/`;
 
-let base = "/" + config.productName + "/";
-
-if (window.$show_base_path && window.$productName) {
-  base = "/" + window.$productName + base;
-}
-
-const router = new VueRouter({
-  base: base,
-  mode: "history",
+const router = createRouter({
+  history: createWebHistory(base),
   routes: handle
 });
 
+// 路由守卫
 router.beforeEach((to, from, next) => {
   const whiteList = window.config.router_white_list;
   if (whiteList.indexOf("/") > -1) {
@@ -50,8 +50,8 @@ router.beforeEach((to, from, next) => {
   ) {
     next();
   } else {
-    let token = $store.getters.token;
-    if (token === null || token === "") {
+    let token = window.$store.getters.token; // 假设 window.$store 是你的 Vuex store
+    if (!token) {
       next("/");
     } else {
       next();
@@ -59,39 +59,25 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-Vue.mixin({
-  beforeRouteLeave(to, from, next) {
-    let flag = true;
-    if (
-      from.path.toLowerCase().endsWith("list") &&
-      (to.path.toLowerCase().endsWith("detail") ||
-        to.path.toLowerCase().endsWith("detail/") ||
-        to.path.toLowerCase().endsWith("details") ||
-        to.path.toLowerCase().endsWith("details/") ||
-        to.path.toLowerCase().endsWith("update") ||
-        to.path.toLowerCase().endsWith("update/"))
-    ) {
-      flag = false;
-    }
-
-    if (
-      flag &&
-      this.$vnode.parent &&
-      this.$vnode.parent.componentInstance.cache
-    ) {
-      let key = this.$vnode.key; // 当前关闭的组件名
-      let cache = this.$vnode.parent.componentInstance.cache; // 缓存的组件
-      let keys = this.$vnode.parent.componentInstance.keys; // 缓存的组件名
-      if (cache[key] != null) {
-        delete cache[key];
-        let index = keys.indexOf(key);
-        if (index > -1) {
-          keys.splice(index, 1);
-        }
-      }
-    }
-    next();
+// 路由离开前清理缓存
+router.beforeEach((to, from, next) => {
+  if (
+    from.path.toLowerCase().endsWith("list") &&
+    (to.path.toLowerCase().endsWith("detail") ||
+      to.path.toLowerCase().endsWith("detail/") ||
+      to.path.toLowerCase().endsWith("details") ||
+      to.path.toLowerCase().endsWith("details/") ||
+      to.path.toLowerCase().endsWith("update") ||
+      to.path.toLowerCase().endsWith("update/"))
+  ) {
+    // 缓存清理逻辑
+    console.error("Cache cleaning logic needs implementation.");
   }
+  next();
 });
+
+// 暴露 push 和 pushMain 方法
+window.routerPush = (location) => routerPush(router, location);
+window.pushMain = (location) => pushMain(router, location);
 
 export default router;

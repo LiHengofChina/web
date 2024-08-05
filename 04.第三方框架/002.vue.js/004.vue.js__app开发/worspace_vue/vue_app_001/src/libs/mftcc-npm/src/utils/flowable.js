@@ -1,3 +1,9 @@
+
+// import ElementUI from '../../node_modules/element-ui';
+// // import '../../node_modules/element-ui/lib/theme-chalk/index.css';
+// // 挂载全局对象
+// window.ELEMENT = ElementUI;
+
 const { MessageBox } = ELEMENT;
 function flowableHandler (that) {
   window.removeEventListener('message', variablesHandler);

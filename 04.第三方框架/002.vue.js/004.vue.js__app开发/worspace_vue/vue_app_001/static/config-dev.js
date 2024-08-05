@@ -1,5 +1,8 @@
 
 const config = {
+    host: {
+        gateway_path: "http://192.168.100.191:7019"
+    },
     servers: {
         sys: "mftcc-sys-server", //登录后台
     },
@@ -14,4 +17,5 @@ export default {
 // 确保在浏览器环境中才执行以下代码
 if (typeof window !== 'undefined') {
     window.config = config;
+    window.$config = config;
 }

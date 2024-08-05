@@ -3,6 +3,12 @@
  * 包括 get、post、delete、put等方式
  */
 import { aes, md5, sha256 } from "../plugins/crypto";
+
+// import ElementUI from '../../node_modules/element-ui';
+// import '../../node_modules/element-ui/lib/theme-chalk/index.css';
+// 挂载全局对象
+// window.ELEMENT = ElementUI;
+
 const { Message, Loading, MessageBox } = ELEMENT;
 import store from "../store";
 import router from "../router";

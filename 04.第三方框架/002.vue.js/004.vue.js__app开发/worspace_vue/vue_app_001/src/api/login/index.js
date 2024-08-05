@@ -4,10 +4,9 @@
 const api = {
 
     login: async (data, success, error) => {
-        const { default: axiosModule } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
-        const { postJsonNoLoading } = axiosModule;
+        const {  postJsonNoLoading } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
         postJsonNoLoading(
-			"/" + this.$config.servers.sys + "/login",
+			"/" + window.$config.servers.sys + "/login",
             data,
             true,
             success,
@@ -15,10 +14,9 @@ const api = {
         );
     },
     loginOut: async(data, success, error) => {
-        const { default: axiosModule } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
-        const { postJsonNoLoading } = axiosModule;
+        const {  postJsonNoLoading } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
         postJsonNoLoading(
-            "/" + this.$config.servers.sys + "/loginOut",
+            "/" + window.$config.servers.sys + "/loginOut",
             data,
             true,
             success,

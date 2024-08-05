@@ -1,4 +1,10 @@
 import { setToken, getToken } from '../utils/storeUtil.js'
+
+// import ElementUI from '../../node_modules/element-ui';
+// // import '../../node_modules/element-ui/lib/theme-chalk/index.css';
+// // 挂载全局对象
+// window.ELEMENT = ElementUI;
+
 const { Message } = ELEMENT;
 import store from '../store';
 import router from '../router/index';
