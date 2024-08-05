@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 
 //延迟：动态导入
-const Home = () => import(/* webpackChunkName: "home" */ '@/components/HomePage.vue');
+const Home = () => import(/* webpackChunkName: "home" */ '@/views/home/HomePage.vue');
 const LoginPage = () => import(/* webpackChunkName: "log" */ '@/views/login/LoginPage.vue');
 
 

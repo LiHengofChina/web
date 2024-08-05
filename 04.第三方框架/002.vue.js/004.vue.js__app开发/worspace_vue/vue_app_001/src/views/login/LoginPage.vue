@@ -47,17 +47,39 @@ export default {
           const { default: api } = await import(/* webpackChunkName: "login-api" */ '@/api/login/index');//立即：动态导入
 
           //调用登陆接口
-          await api.login({ opNo: this.opNo, password: this.password },
-                      (reponsex) => {
-                        console.log(reponsex);
+          await api.login({ opNo: this.opNo, password: this.password },this.$config,
+                      (response) => {
+                        
+                        if (response.code == '0') {
+
+                          let data = response.data;
+                          this.$store.commit('changeLogin', {
+                            user: data.sysUserInfo,
+                            token: data.token,
+                          });
+
+                          let user = this.$store.getters['user'];
+                          console.log(user);
+
+
+                          let index_router = this.$config.index_router;
+                          this.$router.push({ path: index_router });
+
+
+                          
+                        }else if (response.code == '300'){
+                          console.log("2");
+                        }else {
+                          console.log("3");
+                        }
+
                       },
                       (error) => {
                         console.log(error);
                       }
           );
 
-          this.$router.push('/');
-
+          
       } catch (error) {
           console.error('Login failed:', error);
       }

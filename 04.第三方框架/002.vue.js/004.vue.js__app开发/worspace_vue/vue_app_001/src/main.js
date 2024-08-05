@@ -27,6 +27,11 @@ app.use(VueLazyload, {
     attempt: 1
 });
 
+
+
+
+
+
 // 动态导入配置插件
 let loadConfigPlugin;
 if (process.env.NODE_ENV === 'development') {
@@ -45,6 +50,9 @@ loadConfigPlugin
         console.error("Failed to load config plugin:", error);
         app.use(store).use(router).mount('#app');
     });
+
+
+
 
 //======== 暴露：应用实例
 window.Vue = app; // 这里暴露的是应用实例

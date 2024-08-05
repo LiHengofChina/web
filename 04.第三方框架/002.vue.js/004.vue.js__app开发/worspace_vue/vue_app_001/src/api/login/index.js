@@ -3,20 +3,20 @@
 
 const api = {
 
-    login: async (data, success, error) => {
+    login: async (data,config,success, error) => {
         const {  postJsonNoLoading } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
         postJsonNoLoading(
-			"/" + window.$config.servers.sys + "/login",
+			"/" + config.servers.sys + "/login",
             data,
             true,
             success,
             error
         );
     },
-    loginOut: async(data, success, error) => {
+    loginOut: async(data,config,success, error) => {
         const {  postJsonNoLoading } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
         postJsonNoLoading(
-            "/" + window.$config.servers.sys + "/loginOut",
+            "/" + config.servers.sys + "/loginOut",
             data,
             true,
             success,
