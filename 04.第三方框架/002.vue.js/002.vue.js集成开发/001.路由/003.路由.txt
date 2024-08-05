@@ -1,0 +1,62 @@
+
+
+"Vue.js 3" 使用 Vue Router 作为 "官方路由" 解决方案，
+它允许我们在 "单页应用程序 (SPA)" 中定义多个 "视图和路由"。
+"Vue Router" 使得 "URL" 和 "应用状态" 保持同步，
+并提供了 "导航守卫" 等强大功能。
+
+//==================================== 安装 Vue Router
+//==================================== 安装 Vue Router
+npm install vue-router
+
+
+//==================================== 基本使用
+//==================================== 基本使用
+
+（1）定义路由：首先，我们需要定义 "路由" 映射关系，
+			   即 "URL" 和 "组件" 之间的 "对应关系"。
+
+	 import { createRouter, createWebHistory } from 'vue-router';
+	 import Home from './components/Home.vue';
+	 import About from './components/About.vue';
+
+	 const routes = [ // routes 这里有s
+	   { path: '/', component: Home },
+	   { path: '/about', component: About },
+	 ];
+
+	 //这里没有s
+	 const router = createRouter({  //使用 createRouter 方法创建路由实例，
+	   history: createWebHistory(), //并使用 createWebHistory 来管理路由历史记录。
+	   routes,
+	 });
+
+	 export default router;
+
+
+
+（2）挂载路由：在 Vue 应用中挂载路由实例。
+
+	import { createApp } from 'vue';
+	import App from './App.vue';
+	import router from './router';
+
+	const app = createApp(App);
+	app.use(router);
+	app.mount('#app');
+
+（3）在模板中使用：在组件中使用 <router-link> 进行导航，
+	 使用 <router-view> 显示匹配的组件。
+
+	 <template>
+	 	  <div id="app">
+	 			<nav>
+	 				  <router-link to="/">Home</router-link>
+	 				  <router-link to="/about">About</router-link>
+	 			</nav>
+	 			<router-view></router-view>
+	 	  </div>
+	 </template>
+	 
+
+

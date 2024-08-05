@@ -1,0 +1,80 @@
+
+
+导航守卫（或路由守卫）在 Vue Router 中的作用类似于  "过滤器" 和 "拦截器"。
+它们在 "路由导航" 过程中 "拦截或过滤" 请求，
+以便执行一些逻辑，如 "权限验证"、"数据获取"、"状态检查"等。
+
+
+
+//=========================================================================== 几种类型的导航守卫
+//=========================================================================== 几种类型的导航守卫
+
+导航守卫可以在导航发生之前、之后以及导航完成后执行特定的代码逻辑，
+从而控制用户的访问和行为。
+Vue Router 提供了几种类型的导航守卫：
+
+
+（1）全局前置守卫 (beforeEach)：在每次导航之前调用，可以在此检查是否允许导航。
+router.beforeEach((to, from, next) => {
+  // 执行逻辑，如权限检查
+  if (to.meta.requiresAuth && !isLoggedIn()) {
+    next('/login');
+  } else {
+    next();
+  }
+});
+
+
+（2）全局解析守卫 (beforeResolve)：在导航被 "确认之前" 且在 "所有组件内守卫" 和 "异步路由组件" 被解析之后调用。
+router.beforeResolve((to, from, next) => {
+  // 执行逻辑
+  next();
+});
+
+
+（3）全局后置钩子 (afterEach)：在每次导航结束后调用，不会改变导航结果。
+router.afterEach((to, from) => {
+  // 执行逻辑，如日志记录
+});
+
+
+（4）路由独享守卫：定义在路由配置对象内的 beforeEnter，仅对特定路由生效。
+
+const routes = [
+  {
+    path: '/admin',
+    component: Admin,
+    beforeEnter: (to, from, next) => {
+      // 执行逻辑，如权限检查
+      if (isAdmin()) {
+        next();
+      } else {
+        next('/login');
+      }
+    }
+  }
+];
+
+（5）组件内的守卫：可以在组件内定义的钩子，
+	 如 beforeRouteEnter、beforeRouteUpdate 和 beforeRouteLeave，用于处理 "组件特定的路由逻辑"。
+
+export default {
+  beforeRouteEnter(to, from, next) {
+    // 在进入路由前执行
+    next();
+  },
+  beforeRouteUpdate(to, from, next) {
+    // 在路由更新时执行
+    next();
+  },
+  beforeRouteLeave(to, from, next) {
+    // 在离开路由时执行
+    next();
+  }
+};
+
+
+这些导航守卫允许开发者在不同的阶段插入自定义逻辑，例如在用户访问受保护页面之前进行身份验证检查，
+或者在离开页面之前提示用户保存未保存的数据。
+总之，它们提供了一种强大的机制来管理应用的导航逻辑。
+
