@@ -10,7 +10,7 @@ const config = {
         sys: "mftcc-sys-server", //登录后台
     },
     //首页路由地址
-    index_router: "/",
+    index_router: "/index",
     session_storage_key: "sys",
 };
 
