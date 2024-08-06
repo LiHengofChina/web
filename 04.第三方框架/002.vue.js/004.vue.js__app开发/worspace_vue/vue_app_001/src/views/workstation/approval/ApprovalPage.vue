@@ -10,7 +10,7 @@
     <div class="tab" :class="{ active: activeTab === 'completed' }" @click="activeTab = 'completed'">已处理</div>
     </div>
 
-    <div class="sub-tabs" v-if="activeTab === 'pending'">
+    <div v-if="activeTab === 'pending'" class="sub-tabs">
     <div class="sub-tab" :class="{ active: activeSubTab === 'leaseApproval' }" @click="activeSubTab = 'leaseApproval'">租赁审批</div>
     <div class="sub-tab" :class="{ active: activeSubTab === 'leaseExtension' }" @click="activeSubTab = 'leaseExtension'">租赁展期主流程</div>
     </div>
@@ -89,7 +89,7 @@ name: 'ApprovalPage',
 data() {
     return {
     activeTab: 'pending',
-    activeSubTab: 'leaseApproval', // 默认激活的子选项卡
+    activeSubTab: 'leaseApproval',
     leaseApprovalItems: [
         { id: 1, type: '租赁审批', position: '经理', customerName: '张三', approver: '张三', requestTime: '2024-08-06' },
         { id: 2, type: '租赁审批', position: '主管', customerName: '李四', approver: '李四', requestTime: '2024-08-07' }
@@ -157,24 +157,52 @@ color: #333;
 font-size: 1.2rem;
 }
 
-.tabs, .sub-tabs {
+.tabs {
 display: flex;
-background-color: #f8f9fa;
+background-color: #f0f0f0;
 border-bottom: 1px solid #ddd;
 margin-top: 2.5rem;
 }
 
-.tab, .sub-tab {
+.tab {
 flex: 1;
 text-align: center;
 padding: 0.5rem 0;
 cursor: pointer;
-color: #007bff;
+color: #333; /* 默认黑色 */
+font-size: 1.2rem;
+font-weight: normal; /* 默认字体不加粗 */
 }
 
-.tab.active, .sub-tab.active {
-border-bottom: 2px solid #007bff;
+.tab.active {
+color: #2c3e50; /* 激活时的颜色 */
+border-bottom: 2px solid #2c3e50; /* 激活时的边框颜色 */
+font-weight: bold; /* 激活时加粗 */
 }
+
+.sub-tabs {
+display: flex;
+background-color: #fafafa;
+border-bottom: 1px solid #ddd;
+padding-left: 1rem;
+}
+
+.sub-tab {
+flex: 1;
+text-align: center;
+padding: 0.5rem 0;
+cursor: pointer;
+color: #333; /* 默认黑色 */
+font-size: 1rem;
+font-weight: normal; /* 默认字体不加粗 */
+}
+
+.sub-tab.active {
+color: #2c3e50; /* 激活时的颜色 */
+border-bottom: 2px solid #2c3e50; /* 激活时的边框颜色 */
+font-weight: bold; /* 激活时加粗 */
+}
+
 
 .content {
 flex: 1;
