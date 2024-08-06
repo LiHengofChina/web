@@ -10,27 +10,48 @@
     <div class="tab" :class="{ active: activeTab === 'completed' }" @click="activeTab = 'completed'">已处理</div>
     </div>
 
+    <div class="sub-tabs" v-if="activeTab === 'pending'">
+    <div class="sub-tab" :class="{ active: activeSubTab === 'leaseApproval' }" @click="activeSubTab = 'leaseApproval'">租赁审批</div>
+    <div class="sub-tab" :class="{ active: activeSubTab === 'leaseExtension' }" @click="activeSubTab = 'leaseExtension'">租赁展期主流程</div>
+    </div>
+
     <div class="content">
     <div v-if="activeTab === 'pending'" class="list">
-        <div class="category" v-for="category in pendingCategories" :key="category.type">
-        <div class="category-header" @click="toggleCategory(category.type)">
-            {{ category.type }}
-        </div>
-        <div v-show="activeCategory === category.type" class="item-details">
-            <div class="details-header">
+        <div v-if="activeSubTab === 'leaseApproval'" class="category">
+        <div class="details-header">
+            <span>审批类型</span>
             <span>审批岗位</span>
+            <span>客户名称</span>
             <span>审批人</span>
-            <span>申请时间</span>
             <span>操作</span>
-            </div>
-            <div v-for="item in category.items" :key="item.id" class="list-item">
+        </div>
+        <div v-for="item in leaseApprovalItems" :key="item.id" class="list-item">
+            <div class="item-field">{{ item.type }}</div>
             <div class="item-field">{{ item.position }}</div>
+            <div class="item-field">{{ item.customerName }}</div>
             <div class="item-field">{{ item.approver }}</div>
-            <div class="item-field">{{ item.requestTime }}</div>
             <div class="item-field">
-                <button @click="approve(item.id)">批准</button>
-                <button @click="reject(item.id)">拒绝</button>
+            <button @click="approve(item.id)">批准</button>
+            <button @click="reject(item.id)">拒绝</button>
             </div>
+        </div>
+        </div>
+        <div v-if="activeSubTab === 'leaseExtension'" class="category">
+        <div class="details-header">
+            <span>审批类型</span>
+            <span>审批岗位</span>
+            <span>客户名称</span>
+            <span>审批人</span>
+            <span>操作</span>
+        </div>
+        <div v-for="item in leaseExtensionItems" :key="item.id" class="list-item">
+            <div class="item-field">{{ item.type }}</div>
+            <div class="item-field">{{ item.position }}</div>
+            <div class="item-field">{{ item.customerName }}</div>
+            <div class="item-field">{{ item.approver }}</div>
+            <div class="item-field">
+            <button @click="approve(item.id)">批准</button>
+            <button @click="reject(item.id)">拒绝</button>
             </div>
         </div>
         </div>
@@ -42,6 +63,23 @@
         </div>
     </div>
     </div>
+
+    <div class="navbar">
+    <div class="nav-item" @click="navigate('apply')">
+        <i class="fas fa-plus nav-icon"></i>
+        <span>发起申请</span>
+    </div>
+    <div class="separator"></div>
+    <div class="nav-item" @click="navigate('approvals')">
+        <i class="fas fa-user-check nav-icon"></i>
+        <span>我审批的</span>
+    </div>
+    <div class="separator"></div>
+    <div class="nav-item" @click="navigate('submitted')">
+        <i class="fas fa-file-alt nav-icon"></i>
+        <span>已提交</span>
+    </div>
+    </div>
 </div>
 </template>
 
@@ -51,22 +89,14 @@ name: 'ApprovalPage',
 data() {
     return {
     activeTab: 'pending',
-    activeCategory: null, // 当前展开的类别
-    pendingCategories: [
-        {
-        type: '租赁审批',
-            items: [
-                { id: 1, position: '经理', approver: '张三', requestTime: '2024-08-06', operation: '操作1' },
-                { id: 2, position: '主管', approver: '李四', requestTime: '2024-08-07', operation: '操作2' }
-            ]
-        },
-        {
-        type: '租赁展期主流程',
-            items: [
-                { id: 3, position: '总监', approver: '王五', requestTime: '2024-08-08', operation: '操作3' },
-                { id: 4, position: '助理', approver: '赵六', requestTime: '2024-08-09', operation: '操作4' }
-            ]
-        }
+    activeSubTab: 'leaseApproval', // 默认激活的子选项卡
+    leaseApprovalItems: [
+        { id: 1, type: '租赁审批', position: '经理', customerName: '张三', approver: '张三', requestTime: '2024-08-06' },
+        { id: 2, type: '租赁审批', position: '主管', customerName: '李四', approver: '李四', requestTime: '2024-08-07' }
+    ],
+    leaseExtensionItems: [
+        { id: 3, type: '租赁展期', position: '总监', customerName: '王五', approver: '王五', requestTime: '2024-08-08' },
+        { id: 4, type: '租赁展期', position: '助理', customerName: '赵六', approver: '赵六', requestTime: '2024-08-09' }
     ],
     completedItems: [
         { id: 1, title: '已处理项目1', date: '2024-08-01' },
@@ -78,19 +108,17 @@ methods: {
     goBack() {
     this.$router.go(-1);
     },
-    toggleCategory(type) {
-    this.activeCategory = this.activeCategory === type ? null : type;
-    },
     approve(id) {
-    // 批准逻辑
     console.log(`批准项目ID: ${id}`);
     },
     reject(id) {
-    // 拒绝逻辑
     console.log(`拒绝项目ID: ${id}`);
+    },
+    navigate(page) {
+    this.$router.push({ name: page });
     }
 }
-}
+};
 </script>
 
 <style scoped>
@@ -129,14 +157,14 @@ color: #333;
 font-size: 1.2rem;
 }
 
-.tabs {
+.tabs, .sub-tabs {
 display: flex;
 background-color: #f8f9fa;
 border-bottom: 1px solid #ddd;
 margin-top: 2.5rem;
 }
 
-.tab {
+.tab, .sub-tab {
 flex: 1;
 text-align: center;
 padding: 0.5rem 0;
@@ -144,9 +172,8 @@ cursor: pointer;
 color: #007bff;
 }
 
-.tab.active {
+.tab.active, .sub-tab.active {
 border-bottom: 2px solid #007bff;
-font-weight: bold;
 }
 
 .content {
@@ -155,52 +182,10 @@ overflow-y: auto;
 padding: 3rem 1rem 1rem 1rem;
 }
 
-
-.category-title {
-font-size: 1rem; /* 设置字体大小 */
-font-weight: bold; /* 设置为粗体 */
-color: #333; /* 设置字体颜色 */
-text-align: left; /* 左对齐 */
-margin-bottom: 0.5rem; /* 标题和列表间的距离 */
-}
-
-.category-header {
-display: flex;
-font-size: 1rem; /* 字段名的字体大小 */
-font-weight: bold; /* 设置为粗体 */
-color: #333; /* 设置字体颜色 */
-padding: 0.5rem 0; /* 设置内边距 */
-border-bottom: 1px solid #ddd; /* 设置底部边框 */
-}
-
-.category-header div {
-flex: 1;
-text-align: center;
-}
-
-.category-item {
-display: flex;
-align-items: center;
-padding: 0.5rem 0;
-border-bottom: 1px solid #ddd;
-}
-
-.category-item div {
-flex: 1;
-text-align: center;
-}
-  
-
-.item-details {
-background-color: #fff;
-border-radius: 0.5rem;
-padding: 0.5rem;
-}
-
 .details-header {
 display: flex;
 justify-content: space-between;
-font-weight: bold;
+font-weight: normal;
 margin-bottom: 0.5rem;
 }
 
@@ -216,13 +201,37 @@ flex: 1;
 text-align: center;
 }
 
-form button {
-padding: 0.5rem 1rem;
-color: #fff;
-background-color: #007bff;
-border: none;
-border-radius: 0.2rem;
+.navbar {
+display: flex;
+justify-content: space-around;
+align-items: center;
+position: fixed;
+bottom: 0;
+left: 0;
+width: 100%;
+height: 4rem;
+border-top: 1px solid #ccc;
+background-color: #fff;
+z-index: 1000;
+}
+
+.nav-item {
+display: flex;
+align-items: center;
+flex-direction: column;
+flex: 1;
+text-align: center;
 cursor: pointer;
-margin-left: 0.5rem;
+color: #888;
+}
+
+.nav-icon {
+font-size: 1.5rem;
+}
+
+.separator {
+width: 0.1rem;
+height: 1.5rem;
+background-color: #ccc;
 }
 </style>
