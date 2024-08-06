@@ -140,12 +140,16 @@ text-align: center;
 font-size: 1.2rem;
 }
 
+
 .tabs {
 display: flex;
+width: 100%;
 background-color: #f0f0f0;
 border-bottom: 1px solid #ddd;
 margin-top: 2.5rem;
 }
+
+
 
 .tab {
 flex: 1;
@@ -166,7 +170,7 @@ font-weight: bold; /* 激活时加粗 */
 .content {
 flex: 1;
 overflow-y: auto;
-padding: 3.5rem 1rem 1rem 1rem;
+padding: 1rem 1rem 1rem 1rem;
 }
 
 
@@ -175,7 +179,9 @@ background-color: #fff;
 margin-bottom: 1rem;
 border-radius: 0.5rem;
 /* 新的阴影效果 */
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
+
 padding: 1rem;
 }
 
