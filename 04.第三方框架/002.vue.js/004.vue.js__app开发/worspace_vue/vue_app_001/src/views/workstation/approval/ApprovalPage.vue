@@ -12,27 +12,30 @@
 
     <div class="content">
     <div v-if="activeTab === 'pending'" class="list">
-        <!-- 待处理内容列表 -->
-        <div v-for="item in pendingItems" :key="item.id" class="list-item">
-        <div class="item-header" @click="toggleForm(item.id)">
-            <div class="item-type" :class="item.type">{{ item.type }}</div>
-            <div class="item-title">{{ item.title }}</div>
+        <div class="category" v-for="category in pendingCategories" :key="category.type">
+        <div class="category-header" @click="toggleCategory(category.type)">
+            {{ category.type }}
         </div>
-        <div class="item-date">{{ item.date }}</div>
-        <div v-if="activeForm === item.id" class="form-container">
-            <!-- 表单内容，使用 item.id 作为唯一标识符 -->
-            <form @submit.prevent="submitForm(item.id)">
-            <div class="form-group">
-                <label>审批意见：</label>
-                <textarea v-model="item.opinion" rows="3"></textarea>
+        <div v-show="activeCategory === category.type" class="item-details">
+            <div class="details-header">
+            <span>审批岗位</span>
+            <span>审批人</span>
+            <span>申请时间</span>
+            <span>操作</span>
             </div>
-            <button type="submit">提交</button>
-            </form>
+            <div v-for="item in category.items" :key="item.id" class="list-item">
+            <div class="item-field">{{ item.position }}</div>
+            <div class="item-field">{{ item.approver }}</div>
+            <div class="item-field">{{ item.requestTime }}</div>
+            <div class="item-field">
+                <button @click="approve(item.id)">批准</button>
+                <button @click="reject(item.id)">拒绝</button>
+            </div>
+            </div>
         </div>
         </div>
     </div>
     <div v-else-if="activeTab === 'completed'" class="list">
-        <!-- 已处理内容列表 -->
         <div v-for="item in completedItems" :key="item.id" class="list-item">
         <div class="item-title">{{ item.title }}</div>
         <div class="item-date">{{ item.date }}</div>
@@ -47,34 +50,44 @@ export default {
 name: 'ApprovalPage',
 data() {
     return {
-    activeTab: 'pending', // 默认激活的标签
-    activeForm: null, // 当前展开的表单ID
-    pendingItems: [
-        { id: 1, title: '审批项目A', date: '2024-08-06', type: '类型1', opinion: '' },
-        { id: 2, title: '审批项目B', date: '2024-08-07', type: '类型2', opinion: '' },
-        // 更多待处理项目
+    activeTab: 'pending',
+    activeCategory: null, // 当前展开的类别
+    pendingCategories: [
+        {
+        type: '类型1',
+        items: [
+            { id: 1, position: '经理', approver: '张三', requestTime: '2024-08-06', operation: '操作1' },
+            { id: 2, position: '主管', approver: '李四', requestTime: '2024-08-07', operation: '操作2' }
+        ]
+        },
+        {
+        type: '类型2',
+        items: [
+            { id: 3, position: '总监', approver: '王五', requestTime: '2024-08-08', operation: '操作3' },
+            { id: 4, position: '助理', approver: '赵六', requestTime: '2024-08-09', operation: '操作4' }
+        ]
+        }
     ],
     completedItems: [
         { id: 1, title: '已处理项目1', date: '2024-08-01' },
-        { id: 2, title: '已处理项目2', date: '2024-08-02' },
-        // 更多已处理项目
+        { id: 2, title: '已处理项目2', date: '2024-08-02' }
     ]
     };
 },
 methods: {
     goBack() {
-    this.$router.go(-1); // 返回上一个页面
+    this.$router.go(-1);
     },
-    toggleForm(id) {
-    this.activeForm = this.activeForm === id ? null : id;
+    toggleCategory(type) {
+    this.activeCategory = this.activeCategory === type ? null : type;
     },
-    submitForm(id) {
-    // 提交表单逻辑
-    const item = this.pendingItems.find(i => i.id === id);
-    if (item) {
-        console.log(`提交项目ID: ${id}, 意见: ${item.opinion}`);
-        // 处理提交逻辑
-    }
+    approve(id) {
+    // 批准逻辑
+    console.log(`批准项目ID: ${id}`);
+    },
+    reject(id) {
+    // 拒绝逻辑
+    console.log(`拒绝项目ID: ${id}`);
     }
 }
 }
@@ -142,59 +155,43 @@ overflow-y: auto;
 padding: 3rem 1rem 1rem 1rem;
 }
 
-.list {
+.category {
+background-color: #f9f9f9;
+border-radius: 0.5rem;
+margin-bottom: 1rem;
+padding: 0.5rem;
+}
+
+.category-header {
+font-size: 0.9rem;
+color: #555;
+cursor: pointer;
+margin-bottom: 0.5rem;
+}
+
+.item-details {
+background-color: #fff;
+border-radius: 0.5rem;
+padding: 0.5rem;
+}
+
+.details-header {
 display: flex;
-flex-direction: column;
+justify-content: space-between;
+font-weight: bold;
+margin-bottom: 0.5rem;
 }
 
 .list-item {
+display: flex;
+justify-content: space-between;
 padding: 0.5rem 0;
 border-bottom: 1px solid #ddd;
 }
 
-.item-header {
-display: flex;
-align-items: center;
-cursor: pointer;
-}
-
-.item-type {
-font-size: 0.8rem;
-color: #fff;
-background-color: #007bff;
-padding: 0.2rem 0.5rem;
-border-radius: 0.2rem;
-margin-right: 1rem;
-}
-
-.item-title {
-font-size: 1rem;
-color: #333;
-}
-
-.item-date {
-font-size: 0.8rem;
-color: #999;
-}
-
-.form-container {
-padding: 1rem;
-background-color: #f9f9f9;
-}
-
-.form-group {
-margin-bottom: 1rem;
-}
-
-form label {
-font-size: 0.9rem;
-color: #333;
-}
-
-form textarea {
-width: 100%;
-padding: 0.5rem;
-font-size: 0.9rem;
+.item-field {
+flex: 1;
+text-align: center;
 }
 
 form button {
@@ -204,5 +201,6 @@ background-color: #007bff;
 border: none;
 border-radius: 0.2rem;
 cursor: pointer;
+margin-left: 0.5rem;
 }
 </style>
