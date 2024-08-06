@@ -22,7 +22,7 @@
         @click="navigate('workstation')"
       >
         <i class="fas fa-desktop nav-icon"></i>
-        <span>工作站</span>
+        <span>工作台</span>
       </div>
       <div class="separator"></div>
       <div
@@ -67,7 +67,7 @@ export default {
           this.title = '首页';
           break;
         case 'workstation':
-          this.title = '工作站';
+          this.title = '工作台';
           break;
         case 'message':
           this.title = '消息';

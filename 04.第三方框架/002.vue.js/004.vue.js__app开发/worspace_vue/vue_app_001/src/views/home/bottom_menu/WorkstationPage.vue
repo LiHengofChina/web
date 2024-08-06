@@ -1,20 +1,20 @@
 <template>
   <div class="workstation-page">
 
-    <div class="cards">
 
+    <div class="cards">
       <div class="card">
         <div class="card-title">待办</div>
         <div class="options">
           <div class="option" @click="navigate('approval')">
             <div class="option-icon">
-              <i class="fas fa-stamp"></i> <!-- 图标，可以替换为需要的图标 -->
+              <i class="fas fa-stamp"></i>
             </div>
             <div class="option-label">审批</div>
           </div>
           <div class="option" @click="navigate('announcement')">
             <div class="option-icon">
-              <i class="fas fa-bullhorn"></i> <!-- 图标，可以替换为需要的图标 -->
+              <i class="fas fa-bullhorn"></i>
             </div>
             <div class="option-label">公告</div>
           </div>
@@ -45,22 +45,40 @@
         </div>
       </div>
 
-
-      
       <!-- 更多卡片 -->
     </div>
+
+
   </div>
 </template>
 
 <script>
 export default {
   name: 'WorkstationPage',
-  methods: {
-    navigate(page) {
-      // 导航到对应页面的逻辑
-      this.$router.push({ name: page });
+    methods: {
+      navigate(page) {
+        console.log(page);
+        switch(page) {
+          case 'approval':
+            this.$router.push({ path: '/approval' });
+            break;
+          // case 'announcement':
+          //   this.$router.push({ path: '/announcement' });
+          //   break;
+          // case 'forms':
+          //   this.$router.push({ path: '/forms' });
+          //   break;
+          // case 'calendar':
+          //   this.$router.push({ path: '/calendar' });
+          //   break;
+          // case 'meetings':
+          //   this.$router.push({ path: '/meetings' });
+          //   break;
+          default:
+            console.warn('Unknown navigation target:', page);
+        }
+      }
     }
-  }
 }
 </script>
 
@@ -74,7 +92,6 @@ export default {
   text-align: center;
   margin-bottom: 1rem;
 }
-
 .cards {
   display: flex;
   flex-direction: column;
