@@ -54,18 +54,18 @@ data() {
     activeCategory: null, // 当前展开的类别
     pendingCategories: [
         {
-        type: '类型1',
-        items: [
-            { id: 1, position: '经理', approver: '张三', requestTime: '2024-08-06', operation: '操作1' },
-            { id: 2, position: '主管', approver: '李四', requestTime: '2024-08-07', operation: '操作2' }
-        ]
+        type: '租赁审批',
+            items: [
+                { id: 1, position: '经理', approver: '张三', requestTime: '2024-08-06', operation: '操作1' },
+                { id: 2, position: '主管', approver: '李四', requestTime: '2024-08-07', operation: '操作2' }
+            ]
         },
         {
-        type: '类型2',
-        items: [
-            { id: 3, position: '总监', approver: '王五', requestTime: '2024-08-08', operation: '操作3' },
-            { id: 4, position: '助理', approver: '赵六', requestTime: '2024-08-09', operation: '操作4' }
-        ]
+        type: '租赁展期主流程',
+            items: [
+                { id: 3, position: '总监', approver: '王五', requestTime: '2024-08-08', operation: '操作3' },
+                { id: 4, position: '助理', approver: '赵六', requestTime: '2024-08-09', operation: '操作4' }
+            ]
         }
     ],
     completedItems: [
@@ -155,19 +155,41 @@ overflow-y: auto;
 padding: 3rem 1rem 1rem 1rem;
 }
 
-.category {
-background-color: #f9f9f9;
-border-radius: 0.5rem;
-margin-bottom: 1rem;
-padding: 0.5rem;
+
+.category-title {
+font-size: 1rem; /* 设置字体大小 */
+font-weight: bold; /* 设置为粗体 */
+color: #333; /* 设置字体颜色 */
+text-align: left; /* 左对齐 */
+margin-bottom: 0.5rem; /* 标题和列表间的距离 */
 }
 
 .category-header {
-font-size: 0.9rem;
-color: #555;
-cursor: pointer;
-margin-bottom: 0.5rem;
+display: flex;
+font-size: 1rem; /* 字段名的字体大小 */
+font-weight: bold; /* 设置为粗体 */
+color: #333; /* 设置字体颜色 */
+padding: 0.5rem 0; /* 设置内边距 */
+border-bottom: 1px solid #ddd; /* 设置底部边框 */
 }
+
+.category-header div {
+flex: 1;
+text-align: center;
+}
+
+.category-item {
+display: flex;
+align-items: center;
+padding: 0.5rem 0;
+border-bottom: 1px solid #ddd;
+}
+
+.category-item div {
+flex: 1;
+text-align: center;
+}
+  
 
 .item-details {
 background-color: #fff;
