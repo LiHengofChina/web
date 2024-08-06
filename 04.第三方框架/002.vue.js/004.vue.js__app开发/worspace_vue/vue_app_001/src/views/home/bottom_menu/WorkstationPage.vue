@@ -1,11 +1,10 @@
 <template>
   <div class="workstation-page">
-    <!-- <div class="header">
-      <h1>工作台</h1>
-    </div> -->
+
     <div class="cards">
+
       <div class="card">
-        <h2>内部管理</h2>
+        <div class="card-title">待办</div>
         <div class="options">
           <div class="option" @click="navigate('approval')">
             <div class="option-icon">
@@ -21,29 +20,33 @@
           </div>
         </div>
       </div>
+
       <div class="card">
-        <h2>效率工具</h2>
+        <div class="card-title">其它</div>
         <div class="options">
           <div class="option" @click="navigate('forms')">
             <div class="option-icon">
-              <i class="fas fa-file-alt"></i> <!-- 图标，可以替换为需要的图标 -->
+              <i class="fas fa-file-alt"></i>
             </div>
-            <div class="option-label">收集表</div>
+            <div class="option-label">文档</div>
           </div>
           <div class="option" @click="navigate('calendar')">
             <div class="option-icon">
-              <i class="fas fa-calendar-alt"></i> <!-- 图标，可以替换为需要的图标 -->
+              <i class="fas fa-calendar-alt"></i>
             </div>
             <div class="option-label">日程</div>
           </div>
           <div class="option" @click="navigate('meetings')">
             <div class="option-icon">
-              <i class="fas fa-video"></i> <!-- 图标，可以替换为需要的图标 -->
+              <i class="fas fa-video"></i>
             </div>
             <div class="option-label">会议</div>
           </div>
         </div>
       </div>
+
+
+      
       <!-- 更多卡片 -->
     </div>
   </div>
@@ -85,10 +88,11 @@ export default {
   padding: 1rem;
 }
 
-.card h2 {
-  margin: 0 0 1rem 0;
-  font-size: 1rem;
-  color: #333;
+.card-title {
+  margin-bottom: 1rem;
+  font-size: 0.9rem; /* 缩小字符 */
+  color: #bbb; /* 更浅的灰色字符 */
+  text-align: left; /* 左对齐 */
 }
 
 .options {
