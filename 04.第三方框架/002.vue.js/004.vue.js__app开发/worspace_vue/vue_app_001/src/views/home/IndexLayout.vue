@@ -7,36 +7,36 @@
       <router-view />
     </div>
     <div class="navbar">
-      <div 
-        class="nav-item" 
-        :class="{ active: currentTab === 'home' }" 
+      <div
+        class="nav-item"
+        :class="{ active: currentTab === 'home' }"
         @click="navigate('home')"
       >
         <i class="fas fa-home nav-icon"></i>
         <span>首页</span>
       </div>
       <div class="separator"></div>
-      <div 
-        class="nav-item" 
-        :class="{ active: currentTab === 'workstation' }" 
+      <div
+        class="nav-item"
+        :class="{ active: currentTab === 'workstation' }"
         @click="navigate('workstation')"
       >
         <i class="fas fa-desktop nav-icon"></i>
         <span>工作站</span>
       </div>
       <div class="separator"></div>
-      <div 
-        class="nav-item" 
-        :class="{ active: currentTab === 'tasks' }" 
+      <div
+        class="nav-item"
+        :class="{ active: currentTab === 'tasks' }"
         @click="navigate('tasks')"
       >
         <i class="fas fa-tasks nav-icon"></i>
         <span>待办</span>
       </div>
       <div class="separator"></div>
-      <div 
-        class="nav-item" 
-        :class="{ active: currentTab === 'profile' }" 
+      <div
+        class="nav-item"
+        :class="{ active: currentTab === 'profile' }"
         @click="navigate('profile')"
       >
         <i class="fas fa-user nav-icon"></i>
@@ -91,39 +91,45 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  overflow: hidden;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2.5rem;
   background-color: #f0f0f0; /* 浅灰色背景 */
   border-bottom: 1px solid #ddd;
   font-size: 0.5rem; /* 调整字体大小 */
   font-weight: bold;
   color: #333;
+  z-index: 1000;
 }
-
-
 
 .content {
   flex: 1;
   overflow-y: auto;
+  margin-top: 2.5rem; /* 确保内容不被固定的header覆盖 */
+  margin-bottom: 3rem; /* 确保内容不被固定的navbar覆盖 */
 }
 
 .navbar {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border-top: 0.1rem solid #ccc;
-  background-color: #fff;
-  padding: 1rem 0;
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
+  height: 3rem;
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+  padding: 0.5rem 0;
+  z-index: 1000;
 }
 
 .nav-item {
