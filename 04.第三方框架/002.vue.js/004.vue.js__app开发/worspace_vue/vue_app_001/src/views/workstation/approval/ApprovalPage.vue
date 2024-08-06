@@ -17,7 +17,9 @@
 
     <div class="content">
     <div v-if="activeTab === 'pending'" class="list">
+
         <div v-if="activeSubTab === 'leaseApproval'" class="category">
+
         <div class="details-header">
             <span>审批类型</span>
             <span>审批岗位</span>
@@ -25,6 +27,7 @@
             <span>审批人</span>
             <span>操作</span>
         </div>
+
         <div v-for="item in leaseApprovalItems" :key="item.id" class="list-item">
             <div class="item-field">{{ item.type }}</div>
             <div class="item-field">{{ item.position }}</div>
@@ -36,6 +39,7 @@
             </div>
         </div>
         </div>
+
         <div v-if="activeSubTab === 'leaseExtension'" class="category">
         <div class="details-header">
             <span>审批类型</span>
@@ -44,6 +48,7 @@
             <span>审批人</span>
             <span>操作</span>
         </div>
+
         <div v-for="item in leaseExtensionItems" :key="item.id" class="list-item">
             <div class="item-field">{{ item.type }}</div>
             <div class="item-field">{{ item.position }}</div>
@@ -56,68 +61,87 @@
         </div>
         </div>
     </div>
+
     <div v-else-if="activeTab === 'completed'" class="list">
         <div v-for="item in completedItems" :key="item.id" class="list-item">
         <div class="item-title">{{ item.title }}</div>
         <div class="item-date">{{ item.date }}</div>
         </div>
     </div>
+
     </div>
 
     <div class="navbar">
-    <div class="nav-item" @click="navigate('apply')">
-        <i class="fas fa-plus nav-icon"></i>
-        <span>发起申请</span>
+        <div 
+            class="nav-item" 
+            :class="{ active: selectedNav === 'apply' }" 
+            @click="navigate('apply')"
+        >
+            <i class="fas fa-plus nav-icon"></i>
+            <span>发起申请</span>
+        </div>
+        <div class="separator"></div>
+        <div 
+            class="nav-item" 
+            :class="{ active: selectedNav === 'approvals' }" 
+            @click="navigate('approvals')"
+        >
+            <i class="fas fa-user-check nav-icon"></i>
+            <span>我审批的</span>
+        </div>
+        <div class="separator"></div>
+        <div 
+            class="nav-item" 
+            :class="{ active: selectedNav === 'submitted' }" 
+            @click="navigate('submitted')"
+        >
+            <i class="fas fa-file-alt nav-icon"></i>
+            <span>已提交</span>
+        </div>
     </div>
-    <div class="separator"></div>
-    <div class="nav-item" @click="navigate('approvals')">
-        <i class="fas fa-user-check nav-icon"></i>
-        <span>我审批的</span>
-    </div>
-    <div class="separator"></div>
-    <div class="nav-item" @click="navigate('submitted')">
-        <i class="fas fa-file-alt nav-icon"></i>
-        <span>已提交</span>
-    </div>
-    </div>
+    
+
 </div>
 </template>
 
 <script>
 export default {
-name: 'ApprovalPage',
-data() {
-    return {
-    activeTab: 'pending',
-    activeSubTab: 'leaseApproval',
-    leaseApprovalItems: [
-        { id: 1, type: '租赁审批', position: '经理', customerName: '张三', approver: '张三', requestTime: '2024-08-06' },
-        { id: 2, type: '租赁审批', position: '主管', customerName: '李四', approver: '李四', requestTime: '2024-08-07' }
-    ],
-    leaseExtensionItems: [
-        { id: 3, type: '租赁展期', position: '总监', customerName: '王五', approver: '王五', requestTime: '2024-08-08' },
-        { id: 4, type: '租赁展期', position: '助理', customerName: '赵六', approver: '赵六', requestTime: '2024-08-09' }
-    ],
-    completedItems: [
-        { id: 1, title: '已处理项目1', date: '2024-08-01' },
-        { id: 2, title: '已处理项目2', date: '2024-08-02' }
-    ]
-    };
-},
-methods: {
-    goBack() {
-    this.$router.go(-1);
+    name: 'ApprovalPage',
+    data() {
+        return {
+            activeTab: 'pending', // 默认激活的主选项卡
+            activeSubTab: 'leaseApproval', // 默认激活的子选项卡
+            selectedNav: 'approvals', // 默认激活的底部导航项
+            leaseApprovalItems: [
+                { id: 1, type: '租赁审批', position: '经理', customerName: '张三', approver: '张三', requestTime: '2024-08-06' },
+                { id: 2, type: '租赁审批', position: '主管', customerName: '李四', approver: '李四', requestTime: '2024-08-07' }
+            ],
+            leaseExtensionItems: [
+                { id: 3, type: '租赁展期', position: '总监', customerName: '王五', approver: '王五', requestTime: '2024-08-08' },
+                { id: 4, type: '租赁展期', position: '助理', customerName: '赵六', approver: '赵六', requestTime: '2024-08-09' }
+            ],
+            completedItems: [
+                { id: 1, title: '已处理项目1', date: '2024-08-01' },
+                { id: 2, title: '已处理项目2', date: '2024-08-02' }
+            ]
+        };
     },
-    approve(id) {
-    console.log(`批准项目ID: ${id}`);
-    },
-    reject(id) {
-    console.log(`拒绝项目ID: ${id}`);
-    },
-    navigate(page) {
-    this.$router.push({ name: page });
+    methods: {
+        goBack() {
+            this.$router.go(-1);
+        },
+        approve(id) {
+            console.log(`批准项目ID: ${id}`);
+        },
+        reject(id) {
+            console.log(`拒绝项目ID: ${id}`);
+        },
+        navigate(page) {
+            this.selectedNav = page;
+            this.$router.push({ name: page });
+        }
     }
-}
+
 };
 </script>
 
@@ -251,6 +275,11 @@ flex: 1;
 text-align: center;
 cursor: pointer;
 color: #888;
+}
+
+.nav-item.active {
+    color: #2c3e50; /* 激活时的颜色 */
+    font-weight: bold; /* 激活时加粗 */
 }
 
 .nav-icon {

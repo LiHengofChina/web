@@ -146,6 +146,7 @@ export default {
 
 .nav-item.active {
   color: #122c5e;
+  font-weight: bold; /* 激活时加粗 */
 }
 
 .nav-icon {
