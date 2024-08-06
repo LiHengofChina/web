@@ -4,7 +4,7 @@ import IndexLayout from '@/views/home/IndexLayout.vue';
 
 const HomePage = () => import(/* webpackChunkName: "home-page" */ '@/views/home/bottom_menu/HomePage.vue');
 const WorkstationPage = () => import(/* webpackChunkName: "workstation-page" */ '@/views/home/bottom_menu/WorkstationPage.vue');
-const TaskList = () => import(/* webpackChunkName: "task-list" */ '@/views/home/bottom_menu/TaskList.vue');
+const MessageList = () => import(/* webpackChunkName: "message-list" */ '@/views/home/bottom_menu/MessageList.vue');
 const UserProfile = () => import(/* webpackChunkName: "user-profile" */ '@/views/home/bottom_menu/UserProfile.vue');
 
 const LoginPage = () => import(/* webpackChunkName: "log" */ '@/views/login/LoginPage.vue');
@@ -30,9 +30,9 @@ const routes = [
                 component: WorkstationPage
             },
             {
-                path: 'tasks',
-                name: 'tasks',
-                component: TaskList
+                path: 'messages',
+                name: 'messages',
+                component: MessageList
             },
             {
                 path: 'profile',

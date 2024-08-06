@@ -36,15 +36,15 @@ npm install vue-router
 
 
 （2）挂载路由：在 Vue 应用中挂载路由实例。
-
-	import { createApp } from 'vue';
-	import App from './App.vue';
-	import router from './router';
-
-	const app = createApp(App);
-	app.use(router);
-	app.mount('#app');
-
+    
+	 import { createApp } from 'vue';
+	 import App from './App.vue';
+	 import router from './router';
+    
+	 const app = createApp(App);
+	 app.use(router);
+	 app.mount('#app');
+    
 （3）在模板中使用：在组件中使用 <router-link> 进行导航，
 	 使用 <router-view> 显示匹配的组件。
 

@@ -27,11 +27,11 @@
       <div class="separator"></div>
       <div
         class="nav-item"
-        :class="{ active: currentTab === 'tasks' }"
-        @click="navigate('tasks')"
+        :class="{ active: currentTab === 'messages' }"
+        @click="navigate('messages')"
       >
-        <i class="fas fa-tasks nav-icon"></i>
-        <span>待办</span>
+        <i class="fas fa-envelope nav-icon"></i>
+        <span>消息</span>
       </div>
       <div class="separator"></div>
       <div
@@ -69,8 +69,8 @@ export default {
         case 'workstation':
           this.title = '工作站';
           break;
-        case 'tasks':
-          this.title = '待办';
+        case 'message':
+          this.title = '消息';
           break;
         case 'profile':
           this.title = '我的';
@@ -113,9 +113,9 @@ export default {
 
 .content {
   flex: 1;
-  overflow-y: auto;
   padding-top: 2.5rem; /* 确保内容不被固定的header覆盖 */
   padding-bottom: 4rem; /* 确保内容不被固定的navbar覆盖 */
+  overflow: hidden; /* 防止内容区域外的滚动 */
 }
 
 .navbar {
