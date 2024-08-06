@@ -1,8 +1,8 @@
 <template>
 <div class="approval-page">
     <div class="header">
-    <i class="fas fa-arrow-left back-icon" @click="goBack"></i>
-    <h1 class="title">审批</h1>
+        <i class="fas fa-chevron-left back-icon" @click="goBack"></i>
+        <h1 class="title">审批</h1>
     </div>
 
     <div class="tabs">
@@ -74,8 +74,8 @@ export default {
             activeTab: 'pending',
             selectedNav: 'approvals',
             pendingItems: [
-            { id: 1, type: '租赁审批', position: '经理', customerName: '张三', approver: '张三', requestTime: '2024-08-06' },
-            { id: 2, type: '租赁审批', position: '主管', customerName: '李四', approver: '李四', requestTime: '2024-08-07' }
+                { id: 1, type: '租赁审批', position: '经理', customerName: '张三', approver: '张三', requestTime: '2024-08-06' },
+                { id: 2, type: '租赁审批', position: '主管', customerName: '李四', approver: '李四', requestTime: '2024-08-07' }
             ],
             completedItems: [
             { id: 1, title: '已处理项目1', date: '2024-08-01' },
@@ -169,13 +169,16 @@ overflow-y: auto;
 padding: 3.5rem 1rem 1rem 1rem;
 }
 
+
 .card {
 background-color: #fff;
 margin-bottom: 1rem;
 border-radius: 0.5rem;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* 新的阴影效果 */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 padding: 1rem;
 }
+
 
 .card-header {
 font-weight: bold;
