@@ -91,6 +91,7 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: hidden; /* 防止全局滚动 */
 }
 
 .header {
@@ -104,7 +105,7 @@ export default {
   height: 2.5rem;
   background-color: #f0f0f0; /* 浅灰色背景 */
   border-bottom: 1px solid #ddd;
-  font-size: 0.5rem; /* 调整字体大小 */
+  font-size: 0.7rem; /* 调整字体大小 */
   font-weight: bold;
   color: #333;
   z-index: 1000;
@@ -113,8 +114,8 @@ export default {
 .content {
   flex: 1;
   overflow-y: auto;
-  margin-top: 2.5rem; /* 确保内容不被固定的header覆盖 */
-  margin-bottom: 3rem; /* 确保内容不被固定的navbar覆盖 */
+  padding-top: 2.5rem; /* 确保内容不被固定的header覆盖 */
+  padding-bottom: 4rem; /* 确保内容不被固定的navbar覆盖 */
 }
 
 .navbar {
@@ -128,7 +129,6 @@ export default {
   height: 3rem;
   border-top: 1px solid #ccc;
   background-color: #fff;
-  padding: 0.5rem 0;
   z-index: 1000;
 }
 
