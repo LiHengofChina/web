@@ -105,7 +105,7 @@ export default {
   height: 2.5rem;
   background-color: #f0f0f0; /* 浅灰色背景 */
   border-bottom: 1px solid #ddd;
-  font-size: 0.7rem; /* 调整字体大小 */
+  font-size: 0.6rem; /* 调整字体大小 */
   font-weight: bold;
   color: #333;
   z-index: 1000;
@@ -126,7 +126,7 @@ export default {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 3rem;
+  height: 4rem;
   border-top: 1px solid #ccc;
   background-color: #fff;
   z-index: 1000;
