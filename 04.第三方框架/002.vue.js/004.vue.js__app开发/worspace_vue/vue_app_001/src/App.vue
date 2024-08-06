@@ -18,7 +18,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 4rem; /* 使用 rem 单位代替 px */
+  margin-top: 1rem;
 }
 </style>
 

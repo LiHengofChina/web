@@ -1,12 +1,10 @@
 <template>
   <div class="index-layout">
+    <div class="header">
+      <h1>{{ title }}</h1>
+    </div>
     <div class="content">
       <router-view />
-      <!--
-      <p>
-        欢迎使用本应用！这里是主页内容。
-      </p>
-      -->
     </div>
     <div class="navbar">
       <div 
@@ -24,7 +22,7 @@
         @click="navigate('workstation')"
       >
         <i class="fas fa-desktop nav-icon"></i>
-        <span>工作台</span>
+        <span>工作站</span>
       </div>
       <div class="separator"></div>
       <div 
@@ -53,14 +51,37 @@ export default {
   name: 'IndexLayout',
   data() {
     return {
-      currentTab: 'home' // 默认选中的标签
+      currentTab: 'home', // 默认选中的标签
+      title: '首页' // 默认标题
     };
   },
   methods: {
     navigate(page) {
       this.currentTab = page;
       this.$router.push({ name: page });
+      this.updateTitle(page);
+    },
+    updateTitle(page) {
+      switch (page) {
+        case 'home':
+          this.title = '首页';
+          break;
+        case 'workstation':
+          this.title = '工作站';
+          break;
+        case 'tasks':
+          this.title = '待办';
+          break;
+        case 'profile':
+          this.title = '我的';
+          break;
+        default:
+          this.title = '应用';
+      }
     }
+  },
+  created() {
+    this.updateTitle(this.currentTab);
   }
 }
 </script>
@@ -73,9 +94,22 @@ export default {
   overflow: hidden;
 }
 
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  background-color: #f0f0f0; /* 浅灰色背景 */
+  border-bottom: 1px solid #ddd;
+  font-size: 0.5rem; /* 调整字体大小 */
+  font-weight: bold;
+  color: #333;
+}
+
+
+
 .content {
   flex: 1;
-  padding: 0;
   overflow-y: auto;
 }
 
@@ -99,11 +133,11 @@ export default {
   flex: 1;
   text-align: center;
   cursor: pointer;
-  color: #888; /* 初始状态的灰色 */
+  color: #888;
 }
 
 .nav-item.active {
-  color: #122c5e; /* 选中时的颜色 */
+  color: #122c5e;
 }
 
 .nav-icon {
