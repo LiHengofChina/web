@@ -99,8 +99,8 @@ export default {
                 const { default: api } = await import(/* webpackChunkName: "workstation-approval-api" */ '@/api/workstation/approval');
 
                 // 获取 token 和 refresh token
-                const token = this.$store.getters.token;
-                const refreshToken = this.$store.getters.refreshToken;
+                const token = this.$store.getters['auth/token'];
+                const refreshToken = this.$store.getters['auth/refreshToken'];
                 if (!token || !refreshToken) {
                     console.error('Token or Refresh Token is missing');
                     return;

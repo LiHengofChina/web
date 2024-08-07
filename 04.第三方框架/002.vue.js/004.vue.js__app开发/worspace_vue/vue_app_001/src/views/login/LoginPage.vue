@@ -53,13 +53,14 @@ export default {
                         if (response.code == '0') {
 
                           let data = response.data;
-                          this.$store.commit('changeLogin', {
-                            user: data.sysUserInfo,
-                            token: data.token,
-                            refreshToken: data.refreshToken,
+                          this.$store.commit('auth/changeLogin', {
+                              user: data.sysUserInfo,
+                              token: data.token,
+                              refreshToken: data.refreshToken,
                           });
 
-                          let user = this.$store.getters['user'];
+
+                          let user = this.$store.getters['auth/user'];
                           console.log(user);
 
 
