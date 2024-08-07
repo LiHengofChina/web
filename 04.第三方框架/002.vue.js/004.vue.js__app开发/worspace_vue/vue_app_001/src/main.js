@@ -69,3 +69,5 @@ window.ELEMENT = ElementPlus;
 //======== 暴露：axios
 import axios from 'axios';
 window.axios = axios;
+
+window.$$$store = store

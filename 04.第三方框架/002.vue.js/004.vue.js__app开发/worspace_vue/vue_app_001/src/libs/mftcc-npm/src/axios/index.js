@@ -28,27 +28,36 @@ const ajax = axios.create({
 });
 /****** request拦截器==>对请求参数做处理 ******/
 ajax.interceptors.request.use(
-  config => {
-    if (config.url === "/login") {
-      //如果是登录和注册操作，则不需要携带header里面的token
-    } else {
-      let token = store.getters.token;
-      if (!token) {
-        let data = sessionStorage.getItem(window.config.session_storage_key || "mftcc_vuex");
-        if (data) {
-          token = JSON.parse(data)["token"];
+
+
+config => {
+  if (config.url === "/login") {
+    //如果是登录和注册操作，则不需要携带header里面的token
+  } else {
+
+
+        // token
+        let token =  $$$store.getters.token;
+        if (!token) {
+            let data = sessionStorage.getItem(window.config.session_storage_key || "mftcc_vuex");
+            if (data) {
+            token = JSON.parse(data)["token"];
+            }
         }
-      }
-      config.headers.token = token;
-      let refreshToken = store.getters.refreshToken;
-      if (!refreshToken) {
-        let data = sessionStorage.getItem(window.config.session_storage_key || "mftcc_vuex");
-        if (data) {
-          refreshToken = JSON.parse(data)["refreshToken"];
+        config.headers.token = token;
+
+        // refreshToken
+        let refreshToken = $$$store.getters.refreshToken;
+        if (!refreshToken) {
+            let data = sessionStorage.getItem(window.config.session_storage_key || "mftcc_vuex");
+            if (data) {
+              refreshToken = JSON.parse(data)["refreshToken"];
+            }
         }
-      }
-      config.headers.refreshToken = refreshToken;
-      config.headers.tenantId = store.getters.tenantId;
+        config.headers.refreshToken = refreshToken;
+
+        config.headers.tenantId = store.getters.tenantId;
+
     }
     return config;
   },
@@ -57,6 +66,8 @@ ajax.interceptors.request.use(
     Promise.reject(error);
   }
 );
+
+
 let responseBlob = error => {
   return new Promise(function (resolve, reject) {
     if (error.response && error.response.config.responseType == "blob") {
@@ -614,46 +625,63 @@ const getConfig = (
   onProgress = null,
   libraryReq = false
 ) => {
+
+
   if (isShowLoad === true) {
     showFullScreenLoading();
   }
   params = params || {};
+
+
   let isSign = window.config.data_verify_sign || false;
   /* 数据是否验签 */
   let paramsObj = Object.assign({}, params);
   let signMsg = null;
+
   if (isSign === true && JSON.stringify(params) != "{}") {
+
+    console.log("#######");
+
     /* 将所有参数进行ASCII码升序排序
-       将排序后的参数键值对用&拼接起来（例 key1=value1&key2=value2）
+    将排序后的参数键值对用&拼接起来（例 key1=value1&key2=value2）
     */
     var keysArr = Object.keys(paramsObj).sort();
     params = {};
     let paramStr = "";
+
     for (var i in keysArr) {
-      let key = keysArr[i];
-      // if (paramsObj[key]) {
-      // let value = encodeURIComponent(paramsObj[key]);
-      let value = paramsObj[key];
-      if (
+        let key = keysArr[i];
+
+        let value = paramsObj[key];
+        if (
         (paramsObj[key] == "" ||
-          paramsObj[key] == undefined ||
-          paramsObj[key] == null) &&
+        paramsObj[key] == undefined ||
+        paramsObj[key] == null) &&
         paramsObj[key] !== 0 &&
         paramsObj[key] !== "0"
-      ) {
-        value = "";
-      }
-      paramStr += key + "=" + value + "&";
-      // }
-      params[key] = value;
+        ) {
+          value = "";
+        }
+        paramStr += key + "=" + value + "&";
+        console.log("===>" + paramStr);
+
+        params[key] = value;
     }
+
+
+
+
+
     //通讯秘钥
     let md5Key = "d551cae65e43b9cda21e9f00502f4d94";
     /* 将通讯秘钥以“&key=通讯密钥”进行拼接 */
     paramStr += "md5Key=" + md5Key;
     /* 进行MD5加密 生成签名 */
     signMsg = sha256(paramStr).toUpperCase();
+
   }
+
+
   /* 数据是否加密 */
   if (
     isCrypto === true &&
@@ -686,7 +714,9 @@ const getConfig = (
     config_.onUploadProgress = onProgress;
   }
   // 表单提交参数
+  console.log("__________-1");
   if (!isjson) {
+    console.log("__________-2");
     config_.headers["Content-Type"] = "application/x-www-form-urlencoded";
     config_.responseType = "text";
     config_.transformRequest = [
@@ -707,22 +737,40 @@ const getConfig = (
     config_.data = params;
   }
   config_.headers["x-requested-with"] = "XMLHttpRequest";
+
+
+
+  // console.log(params.Token);
+  // console.log(params.Refreshtoken);
+  // config_.headers["Token"] = params.Token;
+  // config_.headers["Refreshtoken"] = params.Refreshtoken;
+
+  // console.log("__________-3" + config_.headers["Token"]);
+
+
   return config_;
 };
 
 let loading; //定义loading变量
 function startLoading() {
+
+  //TODO LIHENG
+
   //使用Element loading-start 方法
-  loading = Loading.service({
-    fullscreen: true,
-    lock: true,
-    text: "拼命加载中",
-    background: "rgba(0, 0, 0, 0)"
-  });
+  // loading = Loading.service({
+  //   fullscreen: true,
+  //   lock: true,
+  //   text: "拼命加载中",
+  //   background: "rgba(0, 0, 0, 0)"
+  // });
 }
 function endLoading() {
+
+    
+  //TODO LIHENG
+
   //使用Element loading-close 方法
-  loading.close();
+  // loading.close();
 }
 //那么 showFullScreenLoading() tryHideFullScreenLoading() 要干的事儿就是将同一时刻的请求合并。
 //声明一个变量 needLoadingRequestCount，每次调用showFullScreenLoading方法 needLoadingRequestCount + 1。

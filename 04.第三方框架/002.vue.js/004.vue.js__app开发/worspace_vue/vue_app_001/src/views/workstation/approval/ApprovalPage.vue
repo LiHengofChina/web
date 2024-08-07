@@ -73,11 +73,7 @@ export default {
         return {
             activeTab: 'pending',
             selectedNav: 'approvals',
-            // pendingItems: [],
-            pendingItems: [
-                { id: 1, type: '租赁审批', position: '经理', customerName: '张三', approver: '张三', requestTime: '2024-08-06' },
-                { id: 2, type: '租赁审批', position: '主管', customerName: '李四', approver: '李四', requestTime: '2024-08-07' }
-            ],
+            pendingItems: [],
             completedItems: [
                 { id: 1, title: '已处理项目1', date: '2024-08-01' },
                 { id: 2, title: '已处理项目2', date: '2024-08-02' }
@@ -111,7 +107,16 @@ export default {
                 }
 
                 await api.getSysTaskInfo(
-                    { Token: token, Refreshtoken: refreshToken },
+                    {"dynamicQuery":"",
+                    "bizMark":"lease_approve_flow",
+                    "queryType":"task",
+                    "opNo":"xuebeibei",
+                    "pageNo":1,
+                    "pageSize":10,
+                    "sort":"[]",
+                    "tableId":"flowable/taskList",
+                    "initQuery":"{\"dynamicQuery\":\"\",\"bizMark\":\"lease_approve_flow\",\"queryType\":\"task\",\"opNo\":\"xuebeibei\"}"
+                    },
                     this.$config,
                     (response) => {
                         if (response && response.code === 0 && response.list && Array.isArray(response.list.records)) {
