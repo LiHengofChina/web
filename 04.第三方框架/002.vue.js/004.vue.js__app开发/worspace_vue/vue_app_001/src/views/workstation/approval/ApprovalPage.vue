@@ -14,15 +14,15 @@
         <div v-if="activeTab === 'pending'">
             <div v-for="item in pendingItems" :key="item.id" class="card">
                 <div class="card-content">
-                <div class="card-header">{{ item.type }} - {{ item.position }}</div>
-                <div class="card-body">
-                    <p>客户: {{ item.customerName }}</p>
-                    <p>审批人: {{ item.approver }}</p>
-                </div>
-                <div class="card-actions">
-                    <button @click="approve(item.id)">审批</button>
-                    <button @click="transfer(item.id)">转办</button>
-                </div>
+                    <div class="card-header">{{ item.type }} - {{ item.position }}</div>
+                    <div class="card-body">
+                        <p>客户: {{ item.customerName }}</p>
+                        <p>审批人: {{ item.approver }}</p>
+                    </div>
+                    <div class="card-actions">
+                        <button @click="approve(item.id)">审批</button>
+                        <button @click="transfer(item.id)">转办</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -36,36 +36,36 @@
     </div>
 
     <div class="navbar">
-    <div 
-        class="nav-item" 
-        :class="{ active: selectedNav === 'apply' }" 
-        @click="navigate('apply')"
-    >
-        <i class="fas fa-plus nav-icon"></i>
-        <span>发起申请</span>
-    </div>
-    <div class="separator"></div>
-    <div 
-        class="nav-item" 
-        :class="{ active: selectedNav === 'approvals' }" 
-        @click="navigate('approvals')"
-    >
-        <i class="fas fa-user-check nav-icon"></i>
-        <span>我审批的</span>
-    </div>
-    <div class="separator"></div>
-    <div 
-        class="nav-item" 
-        :class="{ active: selectedNav === 'submitted' }" 
-        @click="navigate('submitted')"
-    >
-        <i class="fas fa-file-alt nav-icon"></i>
-        <span>已提交</span>
-    </div>
+        <div 
+            class="nav-item" 
+            :class="{ active: selectedNav === 'apply' }" 
+            @click="navigate('apply')"
+        >
+            <i class="fas fa-plus nav-icon"></i>
+            <span>发起申请</span>
+        </div>
+        <div class="separator"></div>
+        <div 
+            class="nav-item" 
+            :class="{ active: selectedNav === 'approvals' }" 
+            @click="navigate('approvals')"
+        >
+            <i class="fas fa-user-check nav-icon"></i>
+            <span>我审批的</span>
+        </div>
+        <div class="separator"></div>
+        <div 
+            class="nav-item" 
+            :class="{ active: selectedNav === 'submitted' }" 
+            @click="navigate('submitted')"
+        >
+            <i class="fas fa-file-alt nav-icon"></i>
+            <span>已提交</span>
+        </div>
     </div>
 </div>
 </template>
-
+    
 <script>
 export default {
     name: 'ApprovalPage',
@@ -73,15 +73,16 @@ export default {
         return {
             activeTab: 'pending',
             selectedNav: 'approvals',
+            // pendingItems: [],
             pendingItems: [
                 { id: 1, type: '租赁审批', position: '经理', customerName: '张三', approver: '张三', requestTime: '2024-08-06' },
                 { id: 2, type: '租赁审批', position: '主管', customerName: '李四', approver: '李四', requestTime: '2024-08-07' }
             ],
             completedItems: [
-            { id: 1, title: '已处理项目1', date: '2024-08-01' },
-            { id: 2, title: '已处理项目2', date: '2024-08-02' }
+                { id: 1, title: '已处理项目1', date: '2024-08-01' },
+                { id: 2, title: '已处理项目2', date: '2024-08-02' }
             ]
-        };
+		};
     },
     methods: {
         goBack() {
@@ -96,7 +97,47 @@ export default {
         navigate(page) {
             this.selectedNav = page;
             this.$router.push({ name: page });
-        }
+        },
+        async fetchPendingItems() {
+            try {
+                const { default: api } = await import(/* webpackChunkName: "workstation-approval-api" */ '@/api/workstation/approval');
+
+                // 获取 token 和 refresh token
+                const token = this.$store.getters.token;
+                const refreshToken = this.$store.getters.refreshToken;
+                if (!token || !refreshToken) {
+                    console.error('Token or Refresh Token is missing');
+                    return;
+                }
+
+                await api.getSysTaskInfo(
+                    { Token: token, Refreshtoken: refreshToken },
+                    this.$config,
+                    (response) => {
+                        if (response && response.code === 0 && response.list && Array.isArray(response.list.records)) {
+                            this.pendingItems = response.list.records.map(record => ({
+                                id: record.ID,
+                                type: record.APPROVE_TITLE || '未知审批',
+                                position: record.TASK_NAME || '未知岗位',
+                                customerName: record.CUS_NAME || '未知客户',
+                                approver: record.ASSIGNEE_NAME || '未知审批人',
+                                requestTime: record.CREATE_TIME || '未知时间'
+                            }));
+                        } else {
+                            console.error('Unexpected API response:', response);
+                        }
+                    },
+                    (error) => {
+                        console.error('API Error:', error);
+                    }
+                );
+            } catch (error) {
+                console.error('Failed to fetch pending items:', error);
+            }
+        },
+    },
+    created() {
+        this.fetchPendingItems(); // 组件创建时获取待处理项目
     }
 };
 </script>

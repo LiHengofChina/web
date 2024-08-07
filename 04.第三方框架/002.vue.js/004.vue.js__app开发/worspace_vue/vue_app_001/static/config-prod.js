@@ -7,6 +7,7 @@ const config = {
     router_white_list: ["/login"],
 
     servers: {
+        flowable: "mftcc-flowable-server", //流程后台
         sys: "mftcc-sys-server", //登录后台
     },
     //首页路由地址

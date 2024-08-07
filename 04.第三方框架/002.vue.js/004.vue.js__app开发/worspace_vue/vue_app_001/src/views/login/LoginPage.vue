@@ -56,6 +56,7 @@ export default {
                           this.$store.commit('changeLogin', {
                             user: data.sysUserInfo,
                             token: data.token,
+                            refreshToken: data.refreshToken,
                           });
 
                           let user = this.$store.getters['user'];
