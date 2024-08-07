@@ -82,7 +82,7 @@ export default {
     },
     methods: {
         goBack() {
-            this.$router.go(-1);
+            this.$root.navigate('workstation');
         },
         approve(id) {
             console.log(`审批项目ID: ${id}`);

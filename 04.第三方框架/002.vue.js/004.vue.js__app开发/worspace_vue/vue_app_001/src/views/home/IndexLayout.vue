@@ -49,6 +49,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'IndexLayout',
   data() {
@@ -57,13 +58,22 @@ export default {
       title: '首页' // 默认标题
     };
   },
+
+
   methods: {
     navigate(page) {
-      this.currentTab = page;
-      this.$router.push({ name: page });
-      this.updateTitle(page);
+        this.currentTab = page;
+        this.updateTitle(page);
+
+        this.$router.push({ name: page }).then(() => {
+            console.log("Navigated to: " + page);
+        }).catch(err => {
+            console.error("Navigation error:", err);
+        });
     },
+
     updateTitle(page) {
+      console.log("=============" + page);
       switch (page) {
         case 'home':
           this.title = '首页';
@@ -80,7 +90,12 @@ export default {
         default:
           this.title = '应用';
       }
+      console.log(page);
+      console.log(this.title);
     }
+  },
+  mounted() {
+    this.$root.navigate = this.navigate;
   },
   created() {
     this.updateTitle(this.currentTab);

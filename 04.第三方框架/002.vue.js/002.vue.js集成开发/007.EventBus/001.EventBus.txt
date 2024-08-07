@@ -1,0 +1,39 @@
+ 
+EventBus 是一个 Vue 实例，用于在组件之间传递事件。
+在你的项目中，你需要创建一个 eventBus.js 文件并定义 EventBus。
+ 
+（1）安装 	npm install mitt
+（2）创建 EventBus
+	在你的项目 src 目录下创建一个名为 eventBus.js 的文件，并添加以下内容：
+
+	// src/event/eventBus.js
+	import mitt from 'mitt';
+	export const EventBus = mitt();
+
+ 
+
+（3）修改 IndexLayout.vue
+	import { EventBus } from '@/event/eventBus';
+
+  mounted() {
+    // 监听 EventBus 事件
+    EventBus.on('navigate', this.navigate);
+  },
+  beforeUnmount() {
+    // 移除 EventBus 事件监听
+    EventBus.off('navigate', this.navigate);
+  }
+
+（4）修改 ApprovalPage.vue
+
+	import { EventBus } from '@/event/eventBus';
+
+
+	goBack() {
+		// 通过 EventBus 发送导航事件
+		EventBus.emit('navigate', 'workstation');
+		this.$router.push({ name: 'workstation' });
+	},
+
+
+ 
