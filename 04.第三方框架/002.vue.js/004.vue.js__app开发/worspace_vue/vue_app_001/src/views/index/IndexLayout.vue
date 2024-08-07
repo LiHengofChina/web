@@ -1,10 +1,8 @@
 <template>
   <div class="index-layout">
-
     <div class="header">
       <h1>{{ title }}</h1>
     </div>
-
     <div class="content">
       <router-view />
     </div>
@@ -49,53 +47,45 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'IndexLayout',
-  data() {
-    return {
-      currentTab: 'home', // 默认选中的标签
-      title: '首页' // 默认标题
-    };
+  computed: {
+    ...mapState('index', ['currentTab', 'title']),
   },
-
-
   methods: {
+    ...mapMutations('index', ['setCurrentTab', 'setTitle']),
     navigate(page) {
-        this.currentTab = page;
-        this.updateTitle(page);
+      this.setCurrentTab(page);
+      this.updateTitle(page);
 
-        this.$router.push({ name: page }).then(() => {
-            console.log("Navigated to: " + page);
-        }).catch(err => {
-            console.error("Navigation error:", err);
-        });
+      this.$router.push({ name: page }).then(() => {
+        console.log("Navigated to: " + page);
+      }).catch(err => {
+        console.error("Navigation error:", err);
+      });
     },
-
     updateTitle(page) {
-      console.log("=============" + page);
+      let title;
       switch (page) {
         case 'home':
-          this.title = '首页';
+          title = '首页';
           break;
         case 'workstation':
-          this.title = '工作台';
+          title = '工作台';
           break;
-        case 'message':
-          this.title = '消息';
+        case 'messages':
+          title = '消息';
           break;
         case 'profile':
-          this.title = '我的';
+          title = '我的';
           break;
         default:
-          this.title = '应用';
+          title = '应用';
       }
-      console.log(page);
-      console.log(this.title);
+      this.setTitle(title);
     }
-  },
-  mounted() {
-    this.$root.navigate = this.navigate;
   },
   created() {
     this.updateTitle(this.currentTab);
