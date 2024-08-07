@@ -87,6 +87,9 @@ export default {
       this.setTitle(title);
     }
   },
+  mounted() {
+    this.$root.navigate = this.navigate;
+  },  
   created() {
     this.updateTitle(this.currentTab);
   }

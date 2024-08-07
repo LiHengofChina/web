@@ -1,5 +1,3 @@
-//src/store/index/index.js
-
 // src/store/index/index.js
 const state = {
     currentTab: 'home',

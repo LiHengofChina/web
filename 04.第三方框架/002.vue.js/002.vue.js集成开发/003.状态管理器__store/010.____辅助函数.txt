@@ -1,0 +1,91 @@
+
+mapState 和 mapMutations 是 Vuex 提供的辅助函数，
+用于在组件中方便地访问和修改 Vuex store 中的状态。
+一般情况下，这些函数直接从 vuex 库中导入即可，不需要进行懒加载。
+
+懒加载（Lazy Loading）通常用于按需加载某些模块以优化应用的性能，
+减少初始加载时间。对于 mapState 和 mapMutations 这样的函数，
+它们本身非常小且轻量，因此没有必要进行懒加载。
+懒加载通常应用于大型组件或页面，而不是用于辅助函数。
+
+
+ 
+//========================================================  mapState
+//========================================================  mapState
+ 
+
+将原本定义在 data() 函数中的数据替换成 computed 属性，
+
+使用 mapState 辅助函数的目的：是将组件的数据与 Vuex 状态管理器中的"状态"绑定。
+这么做的好处是确保  "组件中的数据" 与 "Vuex store 中的状态" 保持同步，
+同时可以更好地组织和管理应用的全局状态。
+
+
+//================= 原来的定义
+//================= 原来的定义
+data() {
+  return {
+    currentTab: 'home', // 默认选中的标签
+    title: '首页' // 默认标题
+  };
+}
+
+在这种情况下，currentTab 和 title 是组件自身的本地状态，
+它们仅在这个组件中使用和管理。
+
+//================= 使用 Vuex 状态管理
+//================= 使用 Vuex 状态管理
+computed: {
+  ...mapState('index', ['currentTab', 'title']),
+}
+这里使用了 Vuex 的 mapState 辅助函数，将 currentTab 和 title 映射到组件的计算属性中。
+
+（1）mapState 函数用于将 "Vuex store 中的状态" 映射为 "计算属性"。
+（2）'index' 是模块的命名空间，表示这些状态是从 index 模块中获取的。
+（3）['currentTab', 'title'] 是状态的名称，表示我们要获取 index 模块中的 currentTab 和 title 状态。
+
+/**
+
+效果
+	同步状态：现在 currentTab 和 title 的值是直接从 Vuex store 中获取的，
+			  任何对 Vuex store 中这些状态的更新都会立即反映到组件中，反之亦然。
+	集中管理：通过使用 Vuex store，应用的状态可以集中管理，便于维护和调试。
+	模块化：可以将状态拆分到不同的模块中，使代码结构更加清晰和可维护。
+*/
+
+//========================================================  mapMutations
+//========================================================  mapMutations
+
+...mapMutations('index', ['setCurrentTab', 'setTitle']),
+
+mapMutations是 Vuex 提供的辅助函数，
+
+用于将 " Vuex store 中的  mutations " 映射到 组件的 methods"" 中。
+通过这种方式，你可以在组件中方便地调用 "Vuex store 中的 mutations"。
+
+//============== 作用
+//============== 作用
+（1）简化代码：使用 mapMutations 可以避免手动从 Vuex store 调用 mutations，使代码更简洁和易读。
+（2）自动绑定上下文：mapMutations 会自动将 mutations 方法绑定到 "当前组件的上下文" 中，
+	 无需手动传递 context。
+
+methods: {
+  ...mapMutations('index', ['setCurrentTab', 'setTitle']),
+  navigate(page) {
+	  ......
+    this.setCurrentTab(page);
+	......
+  },
+  updateTitle(page) {
+	......
+    this.setTitle(title);
+	......
+  }
+}
+/**
+（1）...mapMutations('index', ['setCurrentTab', 'setTitle'])：
+	 这行代码将  "Vuex store 中 index 模块下的 setCurrentTab 和 setTitle mutations" 映射到组件的 methods 中。
+	 之后，你可以在组件中通过 this.setCurrentTab 和 this.setTitle 直接调用这些 mutations。
+（2）this.setCurrentTab(page)：调用 Vuex store 中 index 模块的 setCurrentTab mutation，更新 currentTab 的值。
+（3）this.setTitle(title)：调用 Vuex store 中 index 模块的 setTitle mutation，更新 title 的值。
+*/
