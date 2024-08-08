@@ -88,10 +88,7 @@ export default {
   background-color: #f0f0f0; /* 设置背景颜色 */
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 1rem;
-}
+
 .cards {
   display: flex;
   flex-direction: column;

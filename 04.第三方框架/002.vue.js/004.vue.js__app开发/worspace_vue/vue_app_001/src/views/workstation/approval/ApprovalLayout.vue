@@ -94,6 +94,7 @@ export default {
 .header {
     display: flex;
     align-items: center;
+    justify-content: center;
     position: fixed;
     top: 0;
     left: 0;
@@ -118,13 +119,15 @@ export default {
     text-align: center;
     font-size: 1.2rem;
 }
-    
+
 .content {
     flex: 1;
     padding-top: 2.5rem; /* 确保内容不被固定的header覆盖 */
     padding-bottom: 4rem; /* 确保内容不被固定的navbar覆盖 */
-    overflow: hidden; /* 防止内容区域外的滚动 */
+    overflow: hidden; /* 禁止内容区域的滚动 */
 }
+
+
 
 .navbar {
     display: flex;

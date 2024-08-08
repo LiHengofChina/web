@@ -1,12 +1,12 @@
 <template>
-
     <div class="approval-page">
+
         <div class="tabs">
             <div class="tab" :class="{ active: activeTab === 'pending' }" @click="setActiveTab('pending')">待处理</div>
             <div class="tab" :class="{ active: activeTab === 'completed' }" @click="setActiveTab('completed')">已处理</div>
         </div>
 
-        <div class="content">
+        <div class="contentx">
             <div v-if="activeTab === 'pending'">
                 <div v-for="item in pendingItems" :key="item.id" class="card">
                     <div class="card-content">
@@ -25,8 +25,8 @@
 
             <div v-else-if="activeTab === 'completed'">
                 <div v-for="item in completedItems" :key="item.id" class="list-item">
-                <div class="item-title">{{ item.title }}</div>
-                <div class="item-date">{{ item.date }}</div>
+                    <div class="item-title">{{ item.title }}</div>
+                    <div class="item-date">{{ item.date }}</div>
                 </div>
             </div>
 
@@ -35,22 +35,30 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
+
 export default {
     name: 'MyApprovalsPage',
     computed: {
-    ...mapState('approval', ['activeTab']),
+        ...mapState('approval', ['activeTab']),
     },
     data() {
         return {
-        pendingItems: [],
+            pendingItems: [
+                { id: 1, type: '待处理项目1', position: '职位1', customerName: '客户A', approver: '审批人1' },
+                { id: 2, type: '待处理项目2', position: '职位2', customerName: '客户B', approver: '审批人2' },
+                { id: 3, type: '待处理项目3', position: '职位3', customerName: '客户C', approver: '审批人3' },
+                { id: 4, type: '待处理项目4', position: '职位4', customerName: '客户D', approver: '审批人4' },
+                { id: 5, type: '待处理项目5', position: '职位5', customerName: '客户E', approver: '审批人5' }
+            ],
+            completedItems: [
+                { id: 1, title: '已处理项目1', date: '2024-08-01' },
+                { id: 2, title: '已处理项目2', date: '2024-08-02' }
+            ]
         };
     },
     methods: {
-        ...mapActions('approval', ['updateActiveTab']),
-        setActiveTab(tab) {
-            this.updateActiveTab(tab);
-        },
+        ...mapMutations('approval', ['setActiveTab']),
         approve(id) {
             console.log(`审批项目ID: ${id}`);
         },
@@ -69,44 +77,51 @@ export default {
 
 <style scoped>
 .approval-page {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
+    padding: 1rem;
+
 }
+
+
 
 .tabs {
-display: flex;
-width: 100%;
-background-color: #f0f0f0;
-border-bottom: 1px solid #ddd;
-margin-top: 2.5rem;
+    display: flex;
+    height: 2rem;
+    width: 100%;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+    top: 6rem; /* 确保在 header 下面 */
+    left: 0.5rem;
+    right: 0.5rem;
+    position: fixed;
+    z-index: 1000; /* 保证在内容上层 */
 }
-
 
 
 .tab {
-flex: 1;
-text-align: center;
-padding: 0.5rem 0;
-cursor: pointer;
-color: #333; /* 默认黑色 */
-font-size: 1.2rem;
-font-weight: normal; /* 默认字体不加粗 */
+    flex: 1;
+    text-align: center;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    color: #333; /* 默认黑色 */
+    font-size: 1.2rem;
+    font-weight: normal; /* 默认字体不加粗 */
 }
 
 .tab.active {
-color: #2c3e50; /* 激活时的颜色 */
-border-bottom: 2px solid #2c3e50; /* 激活时的边框颜色 */
-font-weight: bold; /* 激活时加粗 */
+    color: #2c3e50; /* 激活时的颜色 */
+    border-bottom: 2px solid #2c3e50; /* 激活时的边框颜色 */
+    font-weight: bold; /* 激活时加粗 */
 }
-    
 
 
-.content {
+.contentx {
     flex: 1;
-    overflow-y: auto;
-    padding: 1rem 1rem 1rem 1rem;
+    padding: 1rem;
+    padding-top: 6rem; /* 确保内容不被 header 和 tabs 覆盖 */
+
+    overflow-y: auto; /* 允许上下滚动 */
+    height: calc(100vh - 4rem); /* 设置高度，确保能够滚动 */
+
 }
 
 
@@ -114,13 +129,9 @@ font-weight: bold; /* 激活时加粗 */
     background-color: #fff;
     margin-bottom: 1rem;
     border-radius: 0.5rem;
-    /* 新的阴影效果 */
-
     box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
-
     padding: 1rem;
 }
-
 
 .card-header {
     font-weight: bold;
