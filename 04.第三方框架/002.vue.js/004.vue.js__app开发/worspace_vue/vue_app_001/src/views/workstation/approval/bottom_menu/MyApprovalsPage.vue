@@ -78,24 +78,20 @@ export default {
 <style scoped>
 .approval-page {
     padding: 1rem;
-
+    background-color: #f0f0f0; /* 设置背景颜色 */
+    padding-top: 0rem; 
 }
-
 
 
 .tabs {
     display: flex;
-    height: 2rem;
+    height: 2.5rem;
     width: 100%;
     background-color: #f0f0f0;
     border-bottom: 1px solid #ddd;
-    top: 6rem; /* 确保在 header 下面 */
-    left: 0.5rem;
-    right: 0.5rem;
-    position: fixed;
+    top: 2.5rem; /* 确保在 header 下面 */
     z-index: 1000; /* 保证在内容上层 */
 }
-
 
 .tab {
     flex: 1;
@@ -111,17 +107,23 @@ export default {
     color: #2c3e50; /* 激活时的颜色 */
     border-bottom: 2px solid #2c3e50; /* 激活时的边框颜色 */
     font-weight: bold; /* 激活时加粗 */
+    background-color: #d9d9d9; /* 激活时的背景颜色 */
 }
+
 
 
 .contentx {
     flex: 1;
     padding: 1rem;
-    padding-top: 6rem; /* 确保内容不被 header 和 tabs 覆盖 */
+    padding-top: 1rem; /* 确保内容不被 tabs 覆盖 */
+    overflow-y: scroll; /* 允许上下滚动 */
+    height: calc(100vh - 6rem); /* 设置高度，确保能够滚动 */
+    scrollbar-width: none; /* 对 Firefox 有效 */
+    -ms-overflow-style: none;  /* 对 Internet Explorer 和 Edge 有效 */
+}
 
-    overflow-y: auto; /* 允许上下滚动 */
-    height: calc(100vh - 4rem); /* 设置高度，确保能够滚动 */
-
+.contentx::-webkit-scrollbar {
+    display: none; /* 对 Webkit 浏览器（如 Chrome 和 Safari）有效 */
 }
 
 
