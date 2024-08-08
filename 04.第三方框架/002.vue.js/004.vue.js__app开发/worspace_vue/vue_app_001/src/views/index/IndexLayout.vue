@@ -136,7 +136,7 @@ export default {
   flex-direction: column;
   padding-top: 2.5rem; /* 确保不被 header 覆盖 */
   padding-bottom: 5rem; /* 确保不被 navbar 覆盖 */
-  overflow-y: hidden; /* 允许滚动 */
+  overflow-y: auto; /* 允许滚动 */
 }
 
 .navbar {
