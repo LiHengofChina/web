@@ -49,16 +49,23 @@ import { mapState, mapMutations } from 'vuex';
 export default {
     name: 'ApprovalLayout',
     computed: {
-    ...mapState('approval', ['currentTab', 'title' ]),
+    ...mapState('approval', ['currentTab', 'title', 'activeTab' ]),
     },
     methods: {
-        ...mapMutations('approval', ['setCurrentTab', 'setTitle' ]),
+        ...mapMutations('approval', ['setCurrentTab', 'setTitle', 'setActiveTab' ]),
         goBack() {
             this.$root.navigate('workstation');
         },
         navigate(page) {
             this.setCurrentTab(page);
             this.updateTitle(page);
+
+            this.$router.push({ name: page }).then(() => {
+                console.log("Navigated to: " + page);
+            }).catch(err => {
+                console.error("Navigation error:", err);
+            });
+
         },
         updateTitle(page) {
             let title;
@@ -77,6 +84,13 @@ export default {
             }
             this.setTitle(title);
         }
+    },
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            vm.setCurrentTab('my-approvals');
+            vm.setTitle('我的审批');
+            vm.setActiveTab('pending');
+        });
     }
 };
 </script>
@@ -122,10 +136,13 @@ export default {
 
 .content {
     flex: 1;
-    padding-top: 2.5rem; /* 确保内容不被固定的header覆盖 */
-    padding-bottom: 4rem; /* 确保内容不被固定的navbar覆盖 */
-    overflow: hidden; /* 禁止内容区域的滚动 */
+    display: flex;
+    flex-direction: column;
+    padding-top: 2.5rem; /* 确保不被 header 覆盖 */
+    padding-bottom: 5rem; /* 确保不被 navbar 覆盖 */
+    overflow-y: hidden; /* 允许滚动 */
 }
+
 
 
 

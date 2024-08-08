@@ -77,8 +77,8 @@ export default {
 
 <style scoped>
 .approval-page {
-    padding: 1rem;
-    background-color: #f0f0f0; /* 设置背景颜色 */
+
+    /* background-color: #f0f0f0; 设置背景颜色 */
     padding-top: 0rem; 
 }
 

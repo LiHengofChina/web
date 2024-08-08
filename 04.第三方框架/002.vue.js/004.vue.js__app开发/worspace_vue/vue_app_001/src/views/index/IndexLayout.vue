@@ -132,9 +132,11 @@ export default {
 
 .content {
   flex: 1;
-  padding-top: 2.5rem; /* 确保内容不被固定的header覆盖 */
-  padding-bottom: 4rem; /* 确保内容不被固定的navbar覆盖 */
-  overflow: hidden; /* 防止内容区域外的滚动 */
+  display: flex;
+  flex-direction: column;
+  padding-top: 2.5rem; /* 确保不被 header 覆盖 */
+  padding-bottom: 5rem; /* 确保不被 navbar 覆盖 */
+  overflow-y: hidden; /* 允许滚动 */
 }
 
 .navbar {
