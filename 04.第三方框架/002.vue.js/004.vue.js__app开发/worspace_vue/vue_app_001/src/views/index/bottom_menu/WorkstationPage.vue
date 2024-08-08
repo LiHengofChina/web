@@ -60,7 +60,7 @@ export default {
         console.log(page);
         switch(page) {
           case 'approval':
-            this.$router.push({ path: '/approval' });
+            this.$router.push({ path: '/approval/my-approvals' });
             break;
           // case 'announcement':
           //   this.$router.push({ path: '/announcement' });

@@ -1,48 +1,60 @@
 <template>
   <div class="index-layout">
+
     <div class="header">
       <h1>{{ title }}</h1>
     </div>
+
     <div class="content">
       <router-view />
     </div>
+
     <div class="navbar">
-      <div
-        class="nav-item"
-        :class="{ active: currentTab === 'home' }"
-        @click="navigate('home')"
-      >
-        <i class="fas fa-home nav-icon"></i>
-        <span>首页</span>
-      </div>
-      <div class="separator"></div>
-      <div
-        class="nav-item"
-        :class="{ active: currentTab === 'workstation' }"
-        @click="navigate('workstation')"
-      >
-        <i class="fas fa-desktop nav-icon"></i>
-        <span>工作台</span>
-      </div>
-      <div class="separator"></div>
-      <div
-        class="nav-item"
-        :class="{ active: currentTab === 'messages' }"
-        @click="navigate('messages')"
-      >
-        <i class="fas fa-envelope nav-icon"></i>
-        <span>消息</span>
-      </div>
-      <div class="separator"></div>
-      <div
-        class="nav-item"
-        :class="{ active: currentTab === 'profile' }"
-        @click="navigate('profile')"
-      >
-        <i class="fas fa-user nav-icon"></i>
-        <span>我的</span>
-      </div>
+
+        <div
+          class="nav-item"
+          :class="{ active: currentTab === 'home' }"
+          @click="navigate('home')"
+        >
+          <i class="fas fa-home nav-icon"></i>
+          <span>首页</span>
+        </div>
+
+        <div class="separator"></div>
+
+        <div
+          class="nav-item"
+          :class="{ active: currentTab === 'workstation' }"
+          @click="navigate('workstation')"
+        >
+          <i class="fas fa-desktop nav-icon"></i>
+          <span>工作台</span>
+        </div>
+
+        <div class="separator"></div>
+
+        <div
+          class="nav-item"
+          :class="{ active: currentTab === 'messages' }"
+          @click="navigate('messages')"
+        >
+          <i class="fas fa-envelope nav-icon"></i>
+          <span>消息</span>
+        </div>
+
+        <div class="separator"></div>
+
+        <div
+          class="nav-item"
+          :class="{ active: currentTab === 'profile' }"
+          @click="navigate('profile')"
+        >
+          <i class="fas fa-user nav-icon"></i>
+          <span>我的</span>
+        </div>
+
     </div>
+
   </div>
 </template>
 
@@ -82,7 +94,7 @@ export default {
           title = '我的';
           break;
         default:
-          title = '应用';
+          title = '主页';
       }
       this.setTitle(title);
     }

@@ -2,7 +2,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import IndexLayout from '@/views/index/IndexLayout.vue';
 
-
 // ====================================================== 顶级页面组件
 // index页
 const HomePage = () => import(/* webpackChunkName: "home-page" */ '@/views/index/bottom_menu/HomePage.vue');
@@ -14,7 +13,10 @@ const LoginPage = () => import(/* webpackChunkName: "log" */ '@/views/login/Logi
 
 // ====================================================== 独立页面组件
 // 工作站-审批
-const ApprovalPage = () => import(/* webpackChunkName: "approval-page" */ '@/views/workstation/approval/ApprovalPage.vue');
+const ApprovalLayout = () => import(/* webpackChunkName: "approval-layout" */ '@/views/workstation/approval/ApprovalLayout.vue');
+const ApplyPage = () => import(/* webpackChunkName: "apply-page" */ '@/views/workstation/approval/bottom_menu/ApplyPage.vue');
+const MyApprovalsPage = () => import(/* webpackChunkName: "my-approvals-page" */ '@/views/workstation/approval/bottom_menu/MyApprovalsPage.vue');
+const SubmittedPage = () => import(/* webpackChunkName: "submitted-page" */ '@/views/workstation/approval/bottom_menu/SubmittedPage.vue');
 
 const routes = [
     {
@@ -47,12 +49,28 @@ const routes = [
                 component: UserProfile
             }
         ]
-    }, {
+    }, 
+    {
         path: '/approval',
-        name: 'approval',
-        component: ApprovalPage
+        component: ApprovalLayout,
+        children: [
+            {
+                path: 'apply',
+                name: 'apply',
+                component: ApplyPage
+            },
+            {
+                path: 'my-approvals',
+                name: 'my-approvals',
+                component: MyApprovalsPage
+            },
+            {
+                path: 'submitted',
+                name: 'submitted',
+                component: SubmittedPage
+            }
+        ]
     }
-    
 ];
 
 const router = createRouter({
