@@ -49,10 +49,10 @@ import { mapState, mapMutations } from 'vuex';
 export default {
     name: 'ApprovalLayout',
     computed: {
-    ...mapState('approval', ['currentTab', 'title', 'activeTab']),
+    ...mapState('approval', ['currentTab', 'title' ]),
     },
     methods: {
-        ...mapMutations('approval', ['setCurrentTab', 'setTitle', 'setActiveTab']),
+        ...mapMutations('approval', ['setCurrentTab', 'setTitle' ]),
         goBack() {
             this.$root.navigate('workstation');
         },

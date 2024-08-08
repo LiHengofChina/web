@@ -25,9 +25,11 @@ const mutations = {
 };
 
 const actions = {
-    updateTitleAndTab({ commit }, { currentTab, title, activeTab }) {
+    updateTitleAndTab({ commit }, { currentTab, title }) {
         commit('setCurrentTab', currentTab);
         commit('setTitle', title);
+    },
+    updateActiveTab({ commit }, { activeTab }) {
         commit('setActiveTab', activeTab);
     },
 };

@@ -2,8 +2,8 @@
 
     <div class="approval-page">
         <div class="tabs">
-            <div class="tab" :class="{ active: activeTab === 'pending' }" @click="activeTab = 'pending'">待处理</div>
-            <div class="tab" :class="{ active: activeTab === 'completed' }" @click="activeTab = 'completed'">已处理</div>
+            <div class="tab" :class="{ active: activeTab === 'pending' }" @click="setActiveTab('pending')">待处理</div>
+            <div class="tab" :class="{ active: activeTab === 'completed' }" @click="setActiveTab('completed')">已处理</div>
         </div>
 
         <div class="content">
@@ -35,14 +35,22 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 export default {
     name: 'MyApprovalsPage',
+    computed: {
+    ...mapState('approval', ['activeTab']),
+    },
     data() {
         return {
         pendingItems: [],
         };
     },
     methods: {
+        ...mapActions('approval', ['updateActiveTab']),
+        setActiveTab(tab) {
+            this.updateActiveTab(tab);
+        },
         approve(id) {
             console.log(`审批项目ID: ${id}`);
         },
@@ -68,28 +76,31 @@ export default {
 }
 
 .tabs {
-    display: flex;
-    width: 100%;
-    background-color: #f0f0f0;
-    border-bottom: 1px solid #ddd;
-    margin-top: 2.5rem;
+display: flex;
+width: 100%;
+background-color: #f0f0f0;
+border-bottom: 1px solid #ddd;
+margin-top: 2.5rem;
 }
 
+
+
 .tab {
-    flex: 1;
-    text-align: center;
-    padding: 0.5rem 0;
-    cursor: pointer;
-    color: #333; /* 默认黑色 */
-    font-size: 1.2rem;
-    font-weight: normal; /* 默认字体不加粗 */
+flex: 1;
+text-align: center;
+padding: 0.5rem 0;
+cursor: pointer;
+color: #333; /* 默认黑色 */
+font-size: 1.2rem;
+font-weight: normal; /* 默认字体不加粗 */
+}
+
+.tab.active {
+color: #2c3e50; /* 激活时的颜色 */
+border-bottom: 2px solid #2c3e50; /* 激活时的边框颜色 */
+font-weight: bold; /* 激活时加粗 */
 }
     
-.tab.active {
-    color: #2c3e50; /* 激活时的颜色 */
-    border-bottom: 2px solid #2c3e50; /* 激活时的边框颜色 */
-    font-weight: bold; /* 激活时加粗 */
-}
 
 
 .content {
