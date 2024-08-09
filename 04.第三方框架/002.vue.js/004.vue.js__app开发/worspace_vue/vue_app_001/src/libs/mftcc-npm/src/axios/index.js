@@ -25,43 +25,41 @@ const ajax = axios.create({
 
 /****** request拦截器==>对请求参数做处理 ******/
 ajax.interceptors.request.use(
+    config => {
+        if (config.url === "/login") {
+        //如果是登录和注册操作，则不需要携带header里面的token
+        } else {
 
 
-config => {
-  if (config.url === "/login") {
-    //如果是登录和注册操作，则不需要携带header里面的token
-  } else {
-
-
-        // token
-        let token =  $$$store.getters.token;
-        if (!token) {
-            let data = sessionStorage.getItem(window.config.session_storage_key || "mftcc_vuex");
-            if (data) {
-            token = JSON.parse(data)["token"];
+            // token
+            let token =  $$$store.getters.token;
+            if (!token) {
+                let data = sessionStorage.getItem(window.config.session_storage_key || "mftcc_vuex");
+                if (data) {
+                token = JSON.parse(data)["token"];
+                }
             }
-        }
-        config.headers.token = token;
+            config.headers.token = token;
 
-        // refreshToken
-        let refreshToken = $$$store.getters.refreshToken;
-        if (!refreshToken) {
-            let data = sessionStorage.getItem(window.config.session_storage_key || "mftcc_vuex");
-            if (data) {
-              refreshToken = JSON.parse(data)["refreshToken"];
+            // refreshToken
+            let refreshToken = $$$store.getters.refreshToken;
+            if (!refreshToken) {
+                let data = sessionStorage.getItem(window.config.session_storage_key || "mftcc_vuex");
+                if (data) {
+                  refreshToken = JSON.parse(data)["refreshToken"];
+                }
             }
+            config.headers.refreshToken = refreshToken;
+
+            config.headers.tenantId = store.getters.tenantId;
+
         }
-        config.headers.refreshToken = refreshToken;
-
-        config.headers.tenantId = store.getters.tenantId;
-
+        return config;
+    },
+    error => {
+      //请求错误处理
+      Promise.reject(error);
     }
-    return config;
-  },
-  error => {
-    //请求错误处理
-    Promise.reject(error);
-  }
 );
 
 

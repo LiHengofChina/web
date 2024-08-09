@@ -37,44 +37,47 @@ const router = createRouter({
   routes: handle
 });
 
-// 路由守卫
-router.beforeEach((to, from, next) => {
-  const whiteList = window.config.router_white_list;
-  if (whiteList.indexOf("/") > -1) {
-    next();
-  } else if (
-    whiteList &&
-    whiteList.length > 0 &&
-    (whiteList.indexOf(to.path) > -1 ||
-      whiteList.indexOf("/" + config.productName + to.path) > -1)
-  ) {
-    next();
-  } else {
-    let token = window.$store.getters.token; // 假设 window.$store 是你的 Vuex store
-    if (!token) {
-      next("/");
-    } else {
-      next();
-    }
-  }
-});
+// // 路由守卫
+// router.beforeEach((to, from, next) => {
+//   const whiteList = window.config.router_white_list;
+//   if (whiteList.indexOf("/") > -1) {
+//     next();
+//   } else if (
+//     whiteList &&
+//     whiteList.length > 0 &&
+//     (whiteList.indexOf(to.path) > -1 ||
+//       whiteList.indexOf("/" + config.productName + to.path) > -1)
+//   ) {
+//     next();
+//   } else {
+//     let token = window.$store.getters.token; // 假设 window.$store 是你的 Vuex store
+//     if (!token) {
+//       next("/");
+//     } else {
+//       next();
+//     }
+//   }
+// });
 
-// 路由离开前清理缓存
-router.beforeEach((to, from, next) => {
-  if (
-    from.path.toLowerCase().endsWith("list") &&
-    (to.path.toLowerCase().endsWith("detail") ||
-      to.path.toLowerCase().endsWith("detail/") ||
-      to.path.toLowerCase().endsWith("details") ||
-      to.path.toLowerCase().endsWith("details/") ||
-      to.path.toLowerCase().endsWith("update") ||
-      to.path.toLowerCase().endsWith("update/"))
-  ) {
-    // 缓存清理逻辑
-    console.error("Cache cleaning logic needs implementation.");
-  }
-  next();
-});
+// // 路由离开前清理缓存
+// router.beforeEach((to, from, next) => {
+//   if (
+//     from.path.toLowerCase().endsWith("list") &&
+//     (to.path.toLowerCase().endsWith("detail") ||
+//       to.path.toLowerCase().endsWith("detail/") ||
+//       to.path.toLowerCase().endsWith("details") ||
+//       to.path.toLowerCase().endsWith("details/") ||
+//       to.path.toLowerCase().endsWith("update") ||
+//       to.path.toLowerCase().endsWith("update/"))
+//   ) {
+//     // 缓存清理逻辑
+//     console.error("Cache cleaning logic needs implementation.");
+//   }
+//   next();
+// });
+
+
+
 
 // 暴露 push 和 pushMain 方法
 window.routerPush = (location) => routerPush(router, location);
