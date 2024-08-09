@@ -10,7 +10,6 @@ import { Toast, Dialog, Loading } from 'vant';
 import store from "../store";
 import router from "../router";
 import config from "@config/index";
- import sso from "./sso";
 
 let host = window.config.host.gateway_path;
 
@@ -178,7 +177,7 @@ ajax.interceptors.response.use(
 let isRefreshing = true;
 function checkStatus(response, retryCallback, callback) {
   if (window.config.host.sso_sts) {
-     sso.login();
+    //  sso.login();
   } else if (response.data.code === 1000) {
 
     if (document.getElementsByClassName("mftcc-err").length === 0) {

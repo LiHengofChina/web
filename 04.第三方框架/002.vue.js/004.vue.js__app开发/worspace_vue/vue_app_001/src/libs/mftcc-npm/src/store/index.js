@@ -3,12 +3,7 @@ import createPersistedState from "vuex-persistedstate";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  plugins: [
-    // createPersistedState({
-    //   key: this.$config.session_storage_key || "mftcc_vuex",
-    //   storage: window.sessionStorage
-    // })
-  ],
+  plugins: [ ],
   state: {
     // 存储token
     user: {},
