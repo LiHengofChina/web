@@ -40,7 +40,7 @@ import { mapState, mapMutations } from 'vuex';
 export default {
     name: 'MyApprovalsPage',
     computed: {
-        ...mapState('approval', ['activeTab']),
+        ...mapState('approval_my_approvals', ['activeTab']),
     },
     data() {
         return {
@@ -58,7 +58,7 @@ export default {
         };
     },
     methods: {
-        ...mapMutations('approval', ['setActiveTab']),
+        ...mapMutations('approval_my_approvals', ['setActiveTab']),
         approve(id) {
             console.log(`审批项目ID: ${id}`);
         },

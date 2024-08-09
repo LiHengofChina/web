@@ -51,16 +51,11 @@ import { mapState, mapMutations } from 'vuex';
 export default {
     name: 'ApprovalLayout',
     computed: {
-
     ...mapState('approval', ['currentTab', 'title' ]),
-    ...mapState('approval_my_approvals', ['activeTab' ]),
 
     },
     methods: {
-
         ...mapMutations('approval', ['setCurrentTab', 'setTitle' ]),
-        ...mapMutations('approval_my_approvals', ['setActiveTab' ]),
-
         goBack() {
             this.$root.navigate('workstation');
         },
@@ -95,11 +90,12 @@ export default {
     },
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            vm.setCurrentTab('my-approvals');
-            vm.setTitle('我的审批');
-            vm.setActiveTab('pending');
+            vm.$store.commit('approval/setCurrentTab', 'my-approvals'); // 调用 approval 模块的 setCurrentTab
+            vm.$store.commit('approval/setTitle', '我的审批'); // 调用 approval 模块的 setTitle
+            vm.$store.commit('approval_my_approvals/setActiveTab', 'pending'); // 调用 approval_my_approvals 模块的 setActiveTab
         });
     }
+
 };
 </script>
 
