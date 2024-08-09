@@ -66,7 +66,50 @@ export default {
             console.log(`转办项目ID: ${id}`);
         },
         async fetchPendingItems() {
-            console.log("-----------xxx");
+            try {
+                const { default: api } = await import(/* webpackChunkName: "workstation-approval-my-approvals-api" */ '@/api/workstation/approval/my-approvals');
+
+                // 获取 token 和 refresh token
+                const token = this.$store.getters['auth/token'];
+                const refreshToken = this.$store.getters['auth/refreshToken'];
+                if (!token || !refreshToken) {
+                    console.error('Token or Refresh Token is missing');
+                    return;
+                }
+
+                await api.getSysTaskInfo(
+                    {"dynamicQuery":"",
+                    "bizMark":"lease_approve_flow",
+                    "queryType":"task",
+                    "opNo":"xuebeibei",
+                    "pageNo":1,
+                    "pageSize":10,
+                    "sort":"[]",
+                    "tableId":"flowable/taskList",
+                    "initQuery":"{\"dynamicQuery\":\"\",\"bizMark\":\"lease_approve_flow\",\"queryType\":\"task\",\"opNo\":\"xuebeibei\"}"
+                    },
+                    this.$config,
+                    (response) => {
+                        if (response && response.code === 0 && response.list && Array.isArray(response.list.records)) {
+                            this.pendingItems = response.list.records.map(record => ({
+                                id: record.ID,
+                                type: record.APPROVE_TITLE || '未知审批',
+                                position: record.TASK_NAME || '未知岗位',
+                                customerName: record.CUS_NAME || '未知客户',
+                                approver: record.ASSIGNEE_NAME || '未知审批人',
+                                requestTime: record.CREATE_TIME || '未知时间'
+                            }));
+                        } else {
+                            console.error('Unexpected API response:', response);
+                        }
+                    },
+                    (error) => {
+                        console.error('API Error:', error);
+                    }
+                );
+            } catch (error) {
+                console.error('Failed to fetch pending items:', error);
+            }
         },
     },
     created() {
