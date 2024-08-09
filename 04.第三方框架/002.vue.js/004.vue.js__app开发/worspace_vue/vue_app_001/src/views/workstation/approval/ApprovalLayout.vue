@@ -3,7 +3,9 @@
         <div class="header">
             <i class="fas fa-chevron-left back-icon" @click="goBack"></i>
             <h1 class="title">{{ title }}</h1>
+            <div class="spacer"></div>
         </div>
+                
 
         <div class="content">
             <router-view />
@@ -103,12 +105,10 @@ export default {
     overflow: hidden;
 }
 
-
-
 .header {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between; /* 确保返回按钮和spacer均匀分布在两边 */
     position: fixed;
     top: 0;
     left: 0;
@@ -122,17 +122,26 @@ export default {
     z-index: 1000;
     padding: 0 1rem;
 }
+
 .back-icon {
     cursor: pointer;
-    font-size: 1.2rem;
-    margin-right: 1rem;
+    font-size: 1.2rem; /* 使用 rem 单位 */
     color: #333;
 }
+
 .title {
     flex: 1;
     text-align: center;
     font-size: 1.2rem;
+    margin: 0;
 }
+
+.spacer {
+    width: 2.8rem; /* 使用 rem 单位，与 back-icon 相同宽度 */
+    height: 100%; /* 保持占位符的高度 */
+}
+
+
 
 .content {
     flex: 1;
