@@ -4,14 +4,14 @@
 import { createStore } from 'vuex';
 
 //index页
-import auth from './index/auth.js';
-import index from './index/index.js';
+import auth from './index/authStore.js';
+import index from './index/indexStore.js';
 
 
 //工作台-审批
-import approval from './workstation/approval.js';
+import approval from './workstation/approvalStore.js';
 //工作台-审批-我的审批
-import approval_my_approvals from './workstation/approval/my-approvals.js';
+import approval_my_approvals from './workstation/approval/my-approvalsStore.js';
 
 
 
