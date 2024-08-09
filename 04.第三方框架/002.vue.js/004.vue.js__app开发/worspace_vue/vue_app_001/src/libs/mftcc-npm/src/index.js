@@ -38,7 +38,7 @@ import formUtil from "./utils/formUtil.js";
 import htmlToPdf from "./utils/htmlToPdf.js";
 
 import watermark from "./utils/watermark.js";
-import sso from "./axios/sso";
+// import sso from "./axios/sso";
 
 import "./style/transition.css";
 import "./icon/iconfont.css";
@@ -129,7 +129,7 @@ export {
   router,
   store,
   axios,
-  sso,
+  // sso,
   hasBtnPermission,
   promise,
   bus,

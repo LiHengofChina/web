@@ -1,10 +1,8 @@
 
-// import ElementUI from '../../node_modules/element-ui';
-// // import '../../node_modules/element-ui/lib/theme-chalk/index.css';
-// // 挂载全局对象
-// window.ELEMENT = ElementUI;
 
-const { MessageBox } = ELEMENT;
+import {  Dialog } from 'vant';
+
+
 function flowableHandler (that) {
   window.removeEventListener('message', variablesHandler);
   window.addEventListener('message', variablesHandler);
@@ -40,10 +38,17 @@ function flowableHandler (that) {
           window.parent.postMessage(data, "*");
         });
       } else {
-        MessageBox.alert("流程提交函数发生错误", "提示", {
-          type: "error",
-          dangerouslyUseHTMLString: true,
+
+        Dialog.alert({
+              title: '提示',  // 弹窗标题
+              message: '流程提交函数发生错误',  // 弹窗消息内容
+              confirmButtonText: '确定',  // 确认按钮文本
+              className: 'error-dialog',  // 自定义类名，用于根据错误类型设置样式
+              allowHtml: true  // 允许消息内容包含 HTML，类似于 dangerouslyUseHTMLString
+        }).then(() => {
+              // 用户点击确认后的逻辑处理
         });
+
       }
     }
   }

@@ -1,11 +1,7 @@
 import { setToken, getToken } from '../utils/storeUtil.js'
 
-// import ElementUI from '../../node_modules/element-ui';
-// // import '../../node_modules/element-ui/lib/theme-chalk/index.css';
-// // 挂载全局对象
-// window.ELEMENT = ElementUI;
+import { Toast  } from 'vant';
 
-const { Message } = ELEMENT;
 import store from '../store';
 import router from '../router/index';
 
@@ -30,11 +26,14 @@ const promise = function () {
       window.addEventListener('message', handler);
       function handler (e) {
         if (e.data.code == 401) {
-          Message.error({
-            showClose: true,
-            message: e.data.message,
-            type: 'error'
+
+          
+          Toast.fail({
+            message: e.data.message,  // 显示的错误消息
+            duration: 2000,  // 显示时间（2秒），可根据需要调整
+            closeOnClick: true,  // 点击时关闭消息
           });
+
           router.push({ path: "/" });
         } else if (e.data.code == 1000) {
           store.commit('set_token', e.data.token);

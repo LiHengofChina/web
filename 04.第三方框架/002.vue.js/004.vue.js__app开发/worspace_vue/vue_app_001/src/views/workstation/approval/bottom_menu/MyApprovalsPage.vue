@@ -45,11 +45,11 @@ export default {
     data() {
         return {
             pendingItems: [
-                { id: 1, type: '待处理项目1', position: '职位1', customerName: '客户A', approver: '审批人1' },
-                { id: 2, type: '待处理项目2', position: '职位2', customerName: '客户B', approver: '审批人2' },
-                { id: 3, type: '待处理项目3', position: '职位3', customerName: '客户C', approver: '审批人3' },
-                { id: 4, type: '待处理项目4', position: '职位4', customerName: '客户D', approver: '审批人4' },
-                { id: 5, type: '待处理项目5', position: '职位5', customerName: '客户E', approver: '审批人5' }
+                // { id: 1, type: '待处理项目1', position: '职位1', customerName: '客户A', approver: '审批人1' },
+                // { id: 2, type: '待处理项目2', position: '职位2', customerName: '客户B', approver: '审批人2' },
+                // { id: 3, type: '待处理项目3', position: '职位3', customerName: '客户C', approver: '审批人3' },
+                // { id: 4, type: '待处理项目4', position: '职位4', customerName: '客户D', approver: '审批人4' },
+                // { id: 5, type: '待处理项目5', position: '职位5', customerName: '客户E', approver: '审批人5' }
             ],
             completedItems: [
                 { id: 1, title: '已处理项目1', date: '2024-08-01' },
@@ -115,6 +115,14 @@ export default {
     created() {
         this.fetchPendingItems();
     },
+    watch: {
+        activeTab(newTab) {
+            if (newTab === 'pending') {
+                this.fetchPendingItems();
+            }
+        }
+    },
+
 };
 </script>
 

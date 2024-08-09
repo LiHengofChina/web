@@ -2,30 +2,28 @@
  * axios.js提供request请求封装
  * 包括 get、post、delete、put等方式
  */
-import { aes, md5, sha256 } from "../plugins/crypto";
+import { aes, sha256 } from "../plugins/crypto";
 
-// import ElementUI from '../../node_modules/element-ui';
-// import '../../node_modules/element-ui/lib/theme-chalk/index.css';
-// 挂载全局对象
-// window.ELEMENT = ElementUI;
 
-const { Message, Loading, MessageBox } = ELEMENT;
+import { Toast, Dialog, Loading } from 'vant';
+
 import store from "../store";
 import router from "../router";
 import config from "@config/index";
-import sso from "./sso";
+ import sso from "./sso";
+
 let host = window.config.host.gateway_path;
-if (
-  window.config.host.custom_gateway_path &&
-  window.config.host.custom_gateway_path[config.productName]
-) {
-  host = window.config.host.custom_gateway_path[config.productName];
-}
+
+
+
+
 const ajax = axios.create({
   baseURL: host,
   timeout: 3000000 // 超时毫秒数
   // withCredentials: true               // 携带认证信息cookie
 });
+
+
 /****** request拦截器==>对请求参数做处理 ******/
 ajax.interceptors.request.use(
 
@@ -161,9 +159,15 @@ ajax.interceptors.response.use(
         return Promise.reject(error.response);
       }
       if (msgShow == true) {
-        MessageBox.alert(errorMsg, "提示", {
-          type: msgType,
-          dangerouslyUseHTMLString: true
+        Dialog.alert({
+          title: '提示',  // 弹窗标题
+          message: errorMsg,  // 弹窗消息内容
+          confirmButtonText: '确定',  // 确认按钮文本
+          messageAlign: 'left',  // 文本对齐方式
+          className: msgType,  // 自定义类名，可根据类型设置样式
+          allowHtml: true  // 允许消息内容包含 HTML
+        }).then(() => {
+          // 确认按钮点击后的逻辑
         });
       }
       return Promise.reject(error.response);
@@ -174,21 +178,16 @@ ajax.interceptors.response.use(
 let isRefreshing = true;
 function checkStatus(response, retryCallback, callback) {
   if (window.config.host.sso_sts) {
-    sso.login();
+     sso.login();
   } else if (response.data.code === 1000) {
-    // if (top.location != self.location) {
-    //   window.parent.postMessage({ code: 401, message: response.data.message }, "*");
-    //   return;
-    // }
-    // sessionStorage.removeItem('token');
-    // if (msgShow == true) {
 
     if (document.getElementsByClassName("mftcc-err").length === 0) {
-      Message.error({
-        customClass: "mftcc-err",
-        showClose: true,
+      Toast.fail({
         message: response.data.message,
-        type: "error"
+        duration: 2000, // 自定义显示时间
+        forbidClick: true, // 禁止点击背景
+        className: 'mftcc-err', // 自定义类名
+        closeOnClick: true, // 点击关闭
       });
     }
     if (
@@ -223,15 +222,18 @@ function checkStatus(response, retryCallback, callback) {
       );
       return;
     }
-    // if (msgShow == true) {
+
     if (document.getElementsByClassName("mftcc-err").length === 0) {
-      Message.error({
-        customClass: "mftcc-err",
-        showClose: true,
-        message: response.data.message,
-        type: "error"
-      });
+        Toast.fail({
+          message: response.data.message,
+          duration: 2000, // 自定义显示时间
+          forbidClick: true, // 禁止点击背景
+          className: 'mftcc-err', // 自定义类名
+          closeOnClick: true, // 点击关闭
+        });
     }
+
+
     router.push({ path: "/" });
     window.location.reload();
     // }
@@ -714,64 +716,56 @@ const getConfig = (
     config_.onUploadProgress = onProgress;
   }
   // 表单提交参数
-  console.log("__________-1");
+
   if (!isjson) {
-    console.log("__________-2");
-    config_.headers["Content-Type"] = "application/x-www-form-urlencoded";
-    config_.responseType = "text";
-    config_.transformRequest = [
-      function (data) {
-        return param2String(data);
-      }
-    ];
+
+      config_.headers["Content-Type"] = "application/x-www-form-urlencoded";
+      config_.responseType = "text";
+      config_.transformRequest = [
+          function (data) {
+            return param2String(data);
+          }
+      ];
   }
   if (isFile === true) {
-    config_.responseType = "blob";
+      config_.responseType = "blob";
   }
   // 设置参数
   if (method in { get: true, delete: true }) {
-    if (typeof params === "object") {
-      config_.params = params;
-    }
+      if (typeof params === "object") {
+          config_.params = params;
+      }
   } else if (method in { post: true, put: true }) {
-    config_.data = params;
+          config_.data = params;
   }
   config_.headers["x-requested-with"] = "XMLHttpRequest";
-
-
-
-  // console.log(params.Token);
-  // console.log(params.Refreshtoken);
-  // config_.headers["Token"] = params.Token;
-  // config_.headers["Refreshtoken"] = params.Refreshtoken;
-
-  // console.log("__________-3" + config_.headers["Token"]);
 
 
   return config_;
 };
 
-let loading; //定义loading变量
+
+
+
+let loading; // 定义 loading 变量
+
 function startLoading() {
-
-  //TODO LIHENG
-
-  //使用Element loading-start 方法
-  // loading = Loading.service({
-  //   fullscreen: true,
-  //   lock: true,
-  //   text: "拼命加载中",
-  //   background: "rgba(0, 0, 0, 0)"
-  // });
+    // 使用 Vant 的 Toast.loading 方法
+    // loading = Toast.loading({
+    //     message: '拼命加载中',
+    //     forbidClick: true,  // 禁止点击背景区域
+    //     duration: 0,  // 持续显示，直到手动关闭
+    //     overlay: true,  // 显示遮罩层
+    // });
 }
+
 function endLoading() {
-
-    
-  //TODO LIHENG
-
-  //使用Element loading-close 方法
-  // loading.close();
+      // 使用 Vant 的 Toast.clear 方法关闭 loading
+      // loading.clear();
 }
+
+
+
 //那么 showFullScreenLoading() tryHideFullScreenLoading() 要干的事儿就是将同一时刻的请求合并。
 //声明一个变量 needLoadingRequestCount，每次调用showFullScreenLoading方法 needLoadingRequestCount + 1。
 //调用tryHideFullScreenLoading()方法，needLoadingRequestCount - 1。needLoadingRequestCount为 0 时，结束 loading。
@@ -784,29 +778,33 @@ export function showFullScreenLoading() {
 }
 
 export function tryHideFullScreenLoading() {
-  if (needLoadingRequestCount <= 0) return;
-  needLoadingRequestCount--;
-  if (needLoadingRequestCount === 0) {
-    endLoading();
-  }
+    if (needLoadingRequestCount <= 0) {
+        return;
+    }
+    needLoadingRequestCount--;
+    if (needLoadingRequestCount === 0) {
+        endLoading();
+    }
 }
+
 // 统一方法输出口
 export {
-  ajax,
-  get,
-  getNoLoading,
-  postJson,
-  postJsonNoLoading,
-  postForm,
-  del,
-  putJson,
-  putForm,
-  findByPage,
-  downloadFile,
-  getParameter,
-  findByList,
-  uploadFile,
-  downloadBlob,
-  sync,
-  postSSOJson
+      ajax,
+      get,
+      getNoLoading,
+      postJson,
+      postJsonNoLoading,
+      postForm,
+      del,
+      putJson,
+      putForm,
+      findByPage,
+      downloadFile,
+      getParameter,
+      findByList,
+      uploadFile,
+      downloadBlob,
+      sync,
+      postSSOJson
 };
+

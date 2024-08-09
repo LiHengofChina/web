@@ -4,10 +4,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   plugins: [
-    createPersistedState({
-      key: config.session_storage_key || "mftcc_vuex",
-      storage: window.sessionStorage
-    })
+    // createPersistedState({
+    //   key: this.$config.session_storage_key || "mftcc_vuex",
+    //   storage: window.sessionStorage
+    // })
   ],
   state: {
     // 存储token
@@ -48,11 +48,7 @@ export default new Vuex.Store({
     editConfigData: state => state.editConfigData,
     tenantId: state => state.tenantId
   },
-  /* actions: {
-     changeLogin(ctx,Authorization){
-       ctx.commit('changeLogin',Authorization);
-     }
-   },*/
+
   mutations: {
     changeLogin(state, user) {
       sessionStorage.clear();

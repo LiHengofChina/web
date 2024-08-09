@@ -3,10 +3,8 @@
  * 对 element-ui 的无限滚动在 el-table 上使用的封装
  */
 
-// import ElementUI from '../../../node_modules/element-ui';
-// // import '../../../node_modules/element-ui/lib/theme-chalk/index.css';
-// // 挂载全局对象
-// window.ELEMENT = ElementUI;
+
+ 
 
 const elInfiniteScroll = ELEMENT.InfiniteScroll;
 const elScope = 'ElInfiniteScroll'; // scope name
