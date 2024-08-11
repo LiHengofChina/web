@@ -109,7 +109,6 @@ export default {
 .index-layout {
   display: flex;
   flex-direction: column;
-  height: 100vh;
   overflow: hidden; /* 防止全局滚动 */
 }
 
