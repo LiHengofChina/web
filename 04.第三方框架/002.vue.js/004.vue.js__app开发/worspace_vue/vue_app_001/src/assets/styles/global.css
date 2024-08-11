@@ -16,6 +16,34 @@ button {
     background: none;
 }
 
+.content {
+flex: 1;
+display: flex;
+flex-direction: column;
+padding-top: 2.5rem; /* 确保不被 header 覆盖 */
+padding-bottom: 5rem; /* 确保不被 navbar 覆盖 */
+overflow-y: auto; /* 允许垂直滚动 */
+scrollbar-width: none; /* 隐藏 Firefox 中的滚动条 */
+-ms-overflow-style: none;  /* 隐藏 IE 和 Edge 中的滚动条 */
+}
+
+.content::-webkit-scrollbar {
+display: none; /* 隐藏 Chrome, Safari 和 Opera 中的滚动条 */
+}
+
+/* 子元素样式 */
+.content .child-element {
+overflow-y: auto; /* 允许垂直滚动 */
+scrollbar-width: none; /* 隐藏 Firefox 中的滚动条 */
+-ms-overflow-style: none;  /* 隐藏 IE 和 Edge 中的滚动条 */
+}
+
+.content .child-element::-webkit-scrollbar {
+display: none; /* 隐藏 Chrome, Safari 和 Opera 中的滚动条 */
+}
+
+
+
 /* 全局字体和基础样式设置 */
 body {
     font-size: 1rem; /* 使用 rem 作为全局字体大小的基准单位 */

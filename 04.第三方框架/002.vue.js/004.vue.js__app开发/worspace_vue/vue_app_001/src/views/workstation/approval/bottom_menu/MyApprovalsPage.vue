@@ -6,7 +6,7 @@
             <div class="tab" :class="{ active: activeTab === 'completed' }" @click="setActiveTab('completed')">已处理</div>
         </div>
 
-        <div class="contentx">
+        <div class="content">
             <div v-if="activeTab === 'pending'">
                 <div v-for="item in pendingItems" :key="item.id" class="card">
                     <div class="card-content">
@@ -163,7 +163,7 @@ export default {
 
 
 
-.contentx {
+.content{
     flex: 1;
     padding: 1rem;
     padding-top: 1rem; /* 确保内容不被 tabs 覆盖 */
@@ -173,7 +173,7 @@ export default {
     -ms-overflow-style: none;  /* 对 Internet Explorer 和 Edge 有效 */
 }
 
-.contentx::-webkit-scrollbar {
+.content::-webkit-scrollbar {
     display: none; /* 对 Webkit 浏览器（如 Chrome 和 Safari）有效 */
 }
 
