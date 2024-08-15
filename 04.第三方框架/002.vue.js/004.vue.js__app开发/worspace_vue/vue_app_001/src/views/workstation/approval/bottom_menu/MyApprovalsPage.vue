@@ -16,8 +16,11 @@
                             <p>审批人: {{ item.approver }}</p>
                         </div>
                         <div class="card-actions">
-                            <button @click="approve(item.id)">审批</button>
+                            <button @click="viewDetails(item.id)">详情</button>
                             <button @click="transfer(item.id)">转办</button>
+                            <button @click="viewHistory(item.id)">历史</button>
+                            <button @click="viewDiagram(item.id)">示意图</button>
+                            <button @click="approve(item.id)">审批</button>
                         </div>
                     </div>
                 </div>
@@ -34,6 +37,7 @@
     </div>
 </template>
 
+
 <script>
 import { mapState, mapMutations } from 'vuex';
 
@@ -45,11 +49,11 @@ export default {
     data() {
         return {
             pendingItems: [
-                // { id: 1, type: '待处理项目1', position: '职位1', customerName: '客户A', approver: '审批人1' },
-                // { id: 2, type: '待处理项目2', position: '职位2', customerName: '客户B', approver: '审批人2' },
-                // { id: 3, type: '待处理项目3', position: '职位3', customerName: '客户C', approver: '审批人3' },
-                // { id: 4, type: '待处理项目4', position: '职位4', customerName: '客户D', approver: '审批人4' },
-                // { id: 5, type: '待处理项目5', position: '职位5', customerName: '客户E', approver: '审批人5' }
+                { id: 1, type: '待处理项目1', position: '职位1', customerName: '客户A', approver: '审批人1' },
+                { id: 2, type: '待处理项目2', position: '职位2', customerName: '客户B', approver: '审批人2' },
+                { id: 3, type: '待处理项目3', position: '职位3', customerName: '客户C', approver: '审批人3' },
+                { id: 4, type: '待处理项目4', position: '职位4', customerName: '客户D', approver: '审批人4' },
+                { id: 5, type: '待处理项目5', position: '职位5', customerName: '客户E', approver: '审批人5' }
             ],
             completedItems: [
                 { id: 1, title: '已处理项目1', date: '2024-08-01' },
@@ -59,17 +63,30 @@ export default {
     },
     methods: {
         ...mapMutations('approval_my_approvals', ['setActiveTab']),
+        viewDetails(id) {
+            console.log(`查看详情项目ID: ${id}`);
+            // Add your logic to view details here
+        },
         approve(id) {
             console.log(`审批项目ID: ${id}`);
+            // Add your logic to approve here
+        },
+        viewHistory(id) {
+            console.log(`查看历史项目ID: ${id}`);
+            // Add your logic to view history here
+        },
+        viewDiagram(id) {
+            console.log(`查看示意图项目ID: ${id}`);
+            // Add your logic to view the complete approval diagram here
         },
         transfer(id) {
             console.log(`转办项目ID: ${id}`);
+            // Add your logic to transfer here
         },
         async fetchPendingItems() {
             try {
                 const { default: api } = await import(/* webpackChunkName: "workstation-approval-my-approvals-api" */ '@/api/workstation/approval/my-approvals');
 
-                // 获取 token 和 refresh token
                 const token = this.$store.getters['auth/token'];
                 const refreshToken = this.$store.getters['auth/refreshToken'];
                 if (!token || !refreshToken) {
@@ -122,17 +139,14 @@ export default {
             }
         }
     },
-
 };
 </script>
 
+
 <style scoped>
 .approval-page {
-
-    /* background-color: #f0f0f0; 设置背景颜色 */
     padding-top: 0rem; 
 }
-
 
 .tabs {
     display: flex;
@@ -140,8 +154,8 @@ export default {
     width: 100%;
     background-color: #f0f0f0;
     border-bottom: 1px solid #ddd;
-    top: 2.5rem; /* 确保在 header 下面 */
-    z-index: 1000; /* 保证在内容上层 */
+    top: 2.5rem;
+    z-index: 1000;
 }
 
 .tab {
@@ -149,34 +163,31 @@ export default {
     text-align: center;
     padding: 0.5rem 0;
     cursor: pointer;
-    color: #333; /* 默认黑色 */
+    color: #333;
     font-size: 1.2rem;
-    font-weight: normal; /* 默认字体不加粗 */
+    font-weight: normal;
 }
 
 .tab.active {
-    color: #2c3e50; /* 激活时的颜色 */
-    border-bottom: 2px solid #2c3e50; /* 激活时的边框颜色 */
-    font-weight: bold; /* 激活时加粗 */
-    background-color: #d9d9d9; /* 激活时的背景颜色 */
+    color: #2c3e50;
+    border-bottom: 2px solid #2c3e50;
+    font-weight: bold;
+    background-color: #d9d9d9;
 }
 
-
-
-.content{
+.content {
     flex: 1;
     padding: 1rem;
-    padding-top: 1rem; /* 确保内容不被 tabs 覆盖 */
-    overflow-y: scroll; /* 允许上下滚动 */
-    height: calc(100vh - 6rem); /* 设置高度，确保能够滚动 */
-    scrollbar-width: none; /* 对 Firefox 有效 */
-    -ms-overflow-style: none;  /* 对 Internet Explorer 和 Edge 有效 */
+    padding-top: 1rem;
+    overflow-y: scroll;
+    height: calc(100vh - 6rem);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .content::-webkit-scrollbar {
-    display: none; /* 对 Webkit 浏览器（如 Chrome 和 Safari）有效 */
+    display: none;
 }
-
 
 .card {
     background-color: #fff;
@@ -199,11 +210,12 @@ export default {
 .card-actions {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .card-actions button {
-    flex: 1;
-    margin: 0 0.5rem;
+    flex: 1 0 45%;
+    margin: 0.25rem;
     padding: 0.5rem 0;
     border: none;
     background-color: #2c3e50;
@@ -211,14 +223,6 @@ export default {
     border-radius: 0.25rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-.card-actions button:first-child {
-    margin-left: 0;
-}
-
-.card-actions button:last-child {
-    margin-right: 0;
 }
 
 .card-actions button:hover {
@@ -239,5 +243,5 @@ export default {
 .item-date {
     color: #888;
 }
-
 </style>
+
