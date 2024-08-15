@@ -138,17 +138,23 @@ export default {
 
 <style scoped>
 .approval-page {
-    padding-top: 0rem; 
+    padding-top: 0rem;
+    width: 100%;  /* 确保页面容器占据整个宽度 */
+    box-sizing: border-box; /* 确保内边距不会影响宽度 */
 }
 
 .tabs {
+    position: fixed;
     display: flex;
     height: 2.5rem;
     width: 100%;
+    max-width: 600px; /* 设置与 card 相同的最大宽度 */
     background-color: #f0f0f0;
     border-bottom: 1px solid #ddd;
     top: 2.5rem;
     z-index: 1000;
+    left: 0; /* 确保 tabs 从页面的最左侧开始 */
+    margin: 0 auto; /* 居中 */
 }
 
 .tab {
@@ -176,6 +182,8 @@ export default {
     height: calc(100vh - 6rem);
     scrollbar-width: none;
     -ms-overflow-style: none;
+    width: 100%;
+    box-sizing: border-box; /* 确保内边距不会影响宽度 */
 }
 
 .content::-webkit-scrollbar {
@@ -188,6 +196,9 @@ export default {
     border-radius: 0.5rem;
     box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
     padding: 1rem;
+    width: 100%;
+    max-width: 600px; /* 设置与 tabs 相同的最大宽度 */
+    box-sizing: border-box; /* 确保内边距不会影响宽度 */
 }
 
 .card-header {
@@ -221,12 +232,13 @@ export default {
 .card-actions button:hover {
     background-color: #1a252f;
 }
-
 .list-item {
     padding: 1rem 0;
     border-bottom: 1px solid #ddd;
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box; /* 确保内边距不会影响宽度 */
 }
 
 .item-title {
@@ -236,5 +248,6 @@ export default {
 .item-date {
     color: #888;
 }
+
 </style>
 
