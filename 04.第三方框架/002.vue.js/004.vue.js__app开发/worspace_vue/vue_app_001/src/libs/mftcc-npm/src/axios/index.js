@@ -32,7 +32,8 @@ ajax.interceptors.request.use(
 
 
             // token
-            let token =  $$$store.getters.token;
+            // let token =  $$$store.getters.token;
+            let token = $$$store.getters['auth/token'];
             if (!token) {
                 let data = sessionStorage.getItem(window.config.session_storage_key || "mftcc_vuex");
                 if (data) {
@@ -42,7 +43,8 @@ ajax.interceptors.request.use(
             config.headers.token = token;
 
             // refreshToken
-            let refreshToken = $$$store.getters.refreshToken;
+            // let refreshToken = $$$store.getters.refreshToken;
+            let refreshToken = $$$store.getters['auth/refreshToken'];
             if (!refreshToken) {
                 let data = sessionStorage.getItem(window.config.session_storage_key || "mftcc_vuex");
                 if (data) {
