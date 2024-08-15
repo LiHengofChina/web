@@ -148,7 +148,7 @@ export default {
     display: flex;
     height: 2.5rem;
     width: 100%;
-    max-width: 600px; /* 设置与 card 相同的最大宽度 */
+    max-width: 100vw; /* 设置与 card 相同的最大宽度 */
     background-color: #f0f0f0;
     border-bottom: 1px solid #ddd;
     top: 2.5rem;
@@ -197,7 +197,7 @@ export default {
     box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
     padding: 1rem;
     width: 100%;
-    max-width: 600px; /* 设置与 tabs 相同的最大宽度 */
+    max-width: 100vw; /* 设置与 tabs 相同的最大宽度 */
     box-sizing: border-box; /* 确保内边距不会影响宽度 */
 }
 
