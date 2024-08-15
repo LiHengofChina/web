@@ -1,6 +1,5 @@
 <template>
     <div class="approval-page">
-
         <div class="tabs">
             <div class="tab" :class="{ active: activeTab === 'pending' }" @click="setActiveTab('pending')">待处理</div>
             <div class="tab" :class="{ active: activeTab === 'completed' }" @click="setActiveTab('completed')">已处理</div>
@@ -32,7 +31,6 @@
                     <div class="item-date">{{ item.date }}</div>
                 </div>
             </div>
-
         </div>
     </div>
 </template>
@@ -64,28 +62,23 @@ export default {
     methods: {
         ...mapMutations('approval_my_approvals', ['setActiveTab']),
         viewDetails(id) {
-            console.log(`查看详情项目ID: ${id}`);
-            // Add your logic to view details here
+            this.$router.push({ name: 'workstation_approval_my-approvals_pending_detail', params: { id } });
         },
         approve(id) {
-            console.log(`审批项目ID: ${id}`);
-            // Add your logic to approve here
+            this.$router.push({ name: 'workstation_approval_my-approvals_pending_approval', params: { id } });
         },
         viewHistory(id) {
-            console.log(`查看历史项目ID: ${id}`);
-            // Add your logic to view history here
+            this.$router.push({ name: 'workstation_approval_my-approvals_pending_history', params: { id } });
         },
         viewDiagram(id) {
-            console.log(`查看示意图项目ID: ${id}`);
-            // Add your logic to view the complete approval diagram here
+            this.$router.push({ name: 'workstation_approval_my-approvals_pending_diagram', params: { id } });
         },
         transfer(id) {
-            console.log(`转办项目ID: ${id}`);
-            // Add your logic to transfer here
+            this.$router.push({ name: 'workstation_approval_my-approvals_pending_transfer', params: { id } });
         },
         async fetchPendingItems() {
             try {
-                const { default: api } = await import(/* webpackChunkName: "workstation-approval-my-approvals-api" */ '@/api/workstation/approval/my-approvals');
+                const { default: api } = await import('@/api/workstation/approval/my-approvals');
 
                 const token = this.$store.getters['auth/token'];
                 const refreshToken = this.$store.getters['auth/refreshToken'];
