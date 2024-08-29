@@ -39,7 +39,6 @@
                     <option value="否决">否决</option>
                 </select>
             </div>
-
         </div>
 
         <!-- Action Buttons Section -->
@@ -155,6 +154,7 @@ export default {
 
 .form-section {
     margin-top: 1rem;
+    text-align: left;
 }
 
 .form-section label {
@@ -170,6 +170,13 @@ export default {
     margin-bottom: 1rem;
     border: 1px solid #ddd;
     border-radius: 0.25rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-section textarea:focus,
+.form-section select:focus {
+    border-color: #007BFF; /* 聚焦时变成蓝色 */
+    outline: none;
 }
 
 .actions {
