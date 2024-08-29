@@ -16,12 +16,15 @@
 
         <!-- Scrollable Content Area -->
         <div class="content">
+
             <div v-if="activeTab === 'details'">
                 <p>详情内容...</p>
             </div>
+
             <div v-else-if="activeTab === 'document'">
                 <p>文档内容...</p>
             </div>
+
             <div v-else-if="activeTab === 'history'">
                 <p>审批历史内容...</p>
             </div>
@@ -46,6 +49,7 @@
             <button class="submit-btn" @click="submitApproval">提交</button>
             <button class="cancel-btn" @click="cancelApproval">取消</button>
         </div>
+
     </div>
 </template>
 
@@ -80,10 +84,10 @@ export default {
 .page-layout {
     display: flex;
     flex-direction: column;
-    width: 100vw; /* 将页面宽度设置为视口宽度 */
-    max-width: 100vw; /* 确保不会超出视口宽度 */
+    width: 100vw; /* 确保页面宽度填满视口 */
     height: 100vh;
     overflow: hidden;
+    box-sizing: border-box; /* 确保内边距和边框不会导致布局超出 */
 }
 
 .header {
@@ -129,6 +133,7 @@ export default {
     position: fixed;
     z-index: 1000;
     left: 0;
+    box-sizing: border-box;
 }
 
 .tab {
@@ -139,12 +144,14 @@ export default {
     color: #333;
     font-size: 1rem;
     border-right: 1px solid #ddd;
+    box-sizing: border-box;
 }
 
 .tab.active {
     background-color: #d9d9d9;
     font-weight: bold;
     color: #2c3e50;
+    border-bottom: 2px solid #2c3e50; /* 增加选中状态的下边框 */
 }
 
 .content {
@@ -152,6 +159,7 @@ export default {
     padding: 1rem;
     margin-top: 5rem;
     overflow-y: auto;
+    overflow-x: hidden; /* 防止横向滚动条 */
     height: calc(100vh - 8rem); /* 调整内容区域的高度以适应底部按钮 */
     box-sizing: border-box;
 }
@@ -159,6 +167,8 @@ export default {
 .form-section {
     margin: 1rem;
     text-align: left;
+    width: calc(100% - 2rem); /* 调整宽度以避免水平滚动 */
+    box-sizing: border-box;
 }
 
 .form-section label {
@@ -175,6 +185,7 @@ export default {
     border: 1px solid #ddd;
     border-radius: 0.25rem;
     transition: border-color 0.3s ease;
+    box-sizing: border-box;
 }
 
 .form-section textarea:focus,
@@ -186,7 +197,7 @@ export default {
 .actions {
     display: flex;
     justify-content: space-around; /* 使按钮在水平上居中 */
-    padding: 0.5rem 1rem;
+    padding: 0.5rem;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -206,6 +217,7 @@ export default {
     border-radius: 0.25rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    box-sizing: border-box;
 }
 
 .actions button:hover {
