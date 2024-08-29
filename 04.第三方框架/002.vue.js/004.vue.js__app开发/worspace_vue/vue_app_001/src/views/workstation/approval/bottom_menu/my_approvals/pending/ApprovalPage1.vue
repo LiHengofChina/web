@@ -20,20 +20,18 @@
                 <p>详情内容...</p>
             </div>
             <div v-else-if="activeTab === 'history'">
-
                 <div v-for="(timeline, index) in timeLineData" :key="index" class="timeline-item">
                     <div class="timeline-header">
-                        <span class="taskName">{{ getTaskName(timeline) }}</span>
-                        <span class="taskTime">{{ timeline.CREATE_TIME }}</span>
+                        <div class="taskName">{{ getTaskName(timeline) }}</div>
+                        <div class="taskTime">{{ timeline.CREATE_TIME }}</div>                        
                     </div>
                     <div class="timeline-body">
-                        <div class="approveType" :style="'color:' + timeline.dotcolor">{{ timeline.APPROVE_TYPE }}</div>
+                        <div class="approveType">{{ timeline.APPROVE_TYPE }}</div>
                         <div class="approveIdea">{{ resApproveIdea(timeline.APPROVE_IDEA) }}</div>
                         <div class="duration">耗时：{{ timeline.DURATION }}</div>
                         <div class="assignee">处理人：{{ timeline.ASSIGNEE_NAME }}</div>
                     </div>
                 </div>
-
             </div>
             <div v-else-if="activeTab === 'document'">
                 <p>文档内容...</p>
@@ -42,22 +40,14 @@
 
         <!-- Approval Description and Opinion Type fixed at bottom -->
         <div class="form-section">
-
-
             <label for="opinion-type"><span class="required">*</span> 意见类型</label>
             <div class="select-fake" @click="openModal">{{ opinionType || '请选择' }}</div>
-
-
             <label for="approval-description"><span class="required">*</span> 审批说明</label>
             <textarea id="approval-description" v-model="approvalDescription" rows="2" maxlength="500"></textarea>
-
-
         </div>
-
 
         <!-- Modal Overlay -->
         <div v-if="showModal" class="modal-overlay" @click="closeModal"></div>
-
 
         <!-- Modal Content -->
         <div v-if="showModal" class="modal-content">
@@ -67,17 +57,13 @@
             <div class="modal-item cancel" @click="closeModal">取消</div>
         </div>
 
-
         <!-- Action Buttons Section -->
         <div class="actions">
             <button class="submit-btn" @click="submitApproval">提交</button>
             <button class="cancel-btn" @click="closeApproval">关闭</button>
         </div>
-
-
     </div>
 </template>
-
 
 <script>
 export default {
@@ -89,21 +75,19 @@ export default {
             opinionType: '',
             showModal: false, // 控制弹出层显示
             opinionOptions: ['同意', '返回补充资料', '否决'], // 可选的意见类型
-            timeLineData: [], // 用于存储审批历史的数据            
+            timeLineData: [], // 用于存储审批历史的数据
         };
     },
     methods: {
         goBack() {
             this.$router.go(-1);
         },
-
         setActiveTab(tab) {
             this.activeTab = tab;
             if (tab === 'history') {
                 this.loadTimeLineData(); // 切换到审批历史标签时加载数据
             }
         },
-
         submitApproval() {
             // 提交逻辑
         },
@@ -143,16 +127,13 @@ export default {
                 },
             ];
         },
-
         getTaskName(timeline) {
             return timeline.TASK_NAME;
         },
         resApproveIdea(idea) {
             return idea || '无审批意见';
         },
-
     }
-
 };
 </script>
 
@@ -275,7 +256,6 @@ export default {
     appearance: none; /* 移除默认下拉箭头样式以便自定义 */
 }
 
-
 .form-section textarea:focus,
 .form-section select:focus {
     border-color: #007BFF;
@@ -312,6 +292,7 @@ export default {
 .actions button:hover {
     background-color: #1a252f;
 }
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -376,36 +357,66 @@ export default {
     margin-right: 0.25rem; /* 为 * 号和文本之间添加一些间距 */
 }
 
-/** 时间线的样式 */
+/* 时间线的样式 */
 .timeline-item {
     border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
+
 
 .timeline-header {
     display: flex;
+    flex-direction: column; /* 改为列方向，确保任务名称和时间分行显示 */
+    align-items: flex-start; /* 左对齐 */
     justify-content: space-between;
     font-weight: bold;
+    color: #333;
     margin-bottom: 5px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
 }
+
+.taskName {
+    font-weight: bold;
+    color: #909399; /* 设置为灰色 */
+    font-size: 1rem; /* 设置字体大小 */
+    margin-bottom: 4px; /* 添加一些底部间距，使名称和时间之间有间距 */
+}
+
+.taskTime {
+    color: #909399; /* 设置为灰色 */
+    font-size: 0.8rem; /* 时间的字体更小 */
+    font-weight: normal; /* 确保时间字体不加粗 */
+}
+
+
+
 
 .timeline-body {
     padding-left: 10px;
+    font-size: 14px;
+    color: #666;
 }
 
 .approveType {
     font-weight: bold;
+    color: #1EC5B5; /* 审批类型颜色 */
+    margin-bottom: 5px;
+}
+
+.approveIdea {
+    color: #ff9800; /* 审批意见颜色 */
+    margin-bottom: 5px;
 }
 
 .duration,
 .assignee {
     font-size: 0.9em;
-    color: #666;
+    color: #909399;
 }
-
-
 
 </style>
