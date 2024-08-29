@@ -25,14 +25,27 @@
             <div v-else-if="activeTab === 'history'">
                 <p>审批历史内容...</p>
             </div>
+
+            <!-- Approval Description and Opinion Type -->
+            <div class="form-section">
+                <label for="approval-description">* 审批说明</label>
+                <textarea id="approval-description" v-model="approvalDescription" rows="4" maxlength="500"></textarea>
+
+                <label for="opinion-type">* 意见类型</label>
+                <select id="opinion-type" v-model="opinionType">
+                    <option value="" disabled>请选择</option>
+                    <option value="同意">同意</option>
+                    <option value="返回补充资料">返回补充资料</option>
+                    <option value="否决">否决</option>
+                </select>
+            </div>
+
         </div>
 
         <!-- Action Buttons Section -->
         <div class="actions">
-            <button class="approve-btn">同意/拒绝</button>
-            <button class="comment-btn">同意，没有问题。</button>
-            <button class="submit-btn">提交</button>
-            <button class="cancel-btn">取消</button>
+            <button class="submit-btn" @click="submitApproval">提交</button>
+            <button class="cancel-btn" @click="cancelApproval">取消</button>
         </div>
     </div>
 </template>
@@ -42,7 +55,9 @@ export default {
     name: 'ApprovalPage1',
     data() {
         return {
-            activeTab: 'details'
+            activeTab: 'details',
+            approvalDescription: '',
+            opinionType: ''
         };
     },
     methods: {
@@ -51,6 +66,12 @@ export default {
         },
         setActiveTab(tab) {
             this.activeTab = tab;
+        },
+        submitApproval() {
+            // 提交逻辑
+        },
+        cancelApproval() {
+            // 取消逻辑
         }
     }
 };
@@ -130,6 +151,25 @@ export default {
     margin-top: 5rem;
     overflow-y: auto;
     height: calc(100vh - 9rem);
+}
+
+.form-section {
+    margin-top: 1rem;
+}
+
+.form-section label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-section textarea,
+.form-section select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
 }
 
 .actions {
