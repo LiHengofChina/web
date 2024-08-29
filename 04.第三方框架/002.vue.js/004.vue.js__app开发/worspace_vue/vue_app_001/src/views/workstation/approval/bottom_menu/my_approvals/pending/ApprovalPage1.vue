@@ -29,17 +29,29 @@
 
         <!-- Approval Description and Opinion Type fixed at bottom -->
         <div class="form-section">
-            <label for="approval-description">* 审批说明</label>
-            <textarea id="approval-description" v-model="approvalDescription" rows="4" maxlength="500"></textarea>
-
+            <label for="approval-description"> 审批说明</label>
+            <textarea id="approval-description" v-model="approvalDescription" rows="1" maxlength="500"></textarea>
+            
             <label for="opinion-type">* 意见类型</label>
-            <select id="opinion-type" v-model="opinionType">
-                <option value="" disabled>请选择</option>
-                <option value="同意">同意</option>
-                <option value="返回补充资料">返回补充资料</option>
-                <option value="否决">否决</option>
-            </select>
+            <div class="select-fake" @click="openModal">{{ opinionType || '请选择' }}</div>
+            
+
+
         </div>
+
+
+        <!-- Modal Overlay -->
+        <div v-if="showModal" class="modal-overlay" @click="closeModal"></div>
+
+        <!-- Modal Content -->
+        <div v-if="showModal" class="modal-content">
+            <div class="modal-item" v-for="option in opinionOptions" :key="option" @click="selectOption(option)">
+                {{ option }}
+            </div>
+            <div class="modal-item cancel" @click="closeModal">取消</div>
+        </div>
+
+
 
         <!-- Action Buttons Section -->
         <div class="actions">
@@ -52,14 +64,19 @@
 
 <script>
 export default {
+
     name: 'ApprovalPage1',
+
     data() {
         return {
             activeTab: 'details',
             approvalDescription: '',
-            opinionType: ''
+            opinionType: '',
+            showModal: false, // 控制弹出层显示
+            opinionOptions: ['同意', '返回补充资料', '否决'], // 可选的意见类型
         };
     },
+
     methods: {
         goBack() {
             this.$router.go(-1);
@@ -72,8 +89,19 @@ export default {
         },
         cancelApproval() {
             // 取消逻辑
+        },
+        openModal() {
+            this.showModal = true; // 显示弹出层
+        },
+        closeModal() {
+            this.showModal = false; // 隐藏弹出层
+        },
+        selectOption(option) {
+            this.opinionType = option; // 选择选项
+            this.closeModal(); // 关闭弹出层
         }
     }
+
 };
 </script>
 
@@ -232,6 +260,41 @@ export default {
 
 .actions button:hover {
     background-color: #1a252f;
+}
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+    z-index: 1001; /* 保证遮罩层在内容之上 */
+}
+
+.modal-content {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    border-top-left-radius: 10px; /* 圆角 */
+    border-top-right-radius: 10px;
+    padding: 1rem;
+    z-index: 1002; /* 保证内容在遮罩层之上 */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2); /* 阴影效果 */
+    transition: transform 0.3s ease; /* 添加过渡效果 */
+}
+
+.modal-item {
+    padding: 0.75rem 0;
+    text-align: center;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd; /* 每个选项之间的分隔线 */
+}
+
+.modal-item.cancel {
+    color: red; /* 取消按钮的特殊颜色 */
+    font-weight: bold;
 }
 
 </style>
