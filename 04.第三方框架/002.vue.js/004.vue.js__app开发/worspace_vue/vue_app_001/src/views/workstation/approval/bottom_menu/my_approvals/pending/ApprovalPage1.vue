@@ -25,20 +25,20 @@
             <div v-else-if="activeTab === 'history'">
                 <p>审批历史内容...</p>
             </div>
+        </div>
 
-            <!-- Approval Description and Opinion Type -->
-            <div class="form-section">
-                <label for="approval-description">* 审批说明</label>
-                <textarea id="approval-description" v-model="approvalDescription" rows="4" maxlength="500"></textarea>
+        <!-- Approval Description and Opinion Type fixed at bottom -->
+        <div class="form-section">
+            <label for="approval-description">* 审批说明</label>
+            <textarea id="approval-description" v-model="approvalDescription" rows="4" maxlength="500"></textarea>
 
-                <label for="opinion-type">* 意见类型</label>
-                <select id="opinion-type" v-model="opinionType">
-                    <option value="" disabled>请选择</option>
-                    <option value="同意">同意</option>
-                    <option value="返回补充资料">返回补充资料</option>
-                    <option value="否决">否决</option>
-                </select>
-            </div>
+            <label for="opinion-type">* 意见类型</label>
+            <select id="opinion-type" v-model="opinionType">
+                <option value="" disabled>请选择</option>
+                <option value="同意">同意</option>
+                <option value="返回补充资料">返回补充资料</option>
+                <option value="否决">否决</option>
+            </select>
         </div>
 
         <!-- Action Buttons Section -->
@@ -48,6 +48,7 @@
         </div>
     </div>
 </template>
+
 
 <script>
 export default {
@@ -94,8 +95,8 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0; /* 新增，确保从左到右填充 */
-    width: 100%; /* 确保填满整个宽度 */
+    right: 0;
+    width: 100%;
     height: 2.5rem;
     background-color: #f0f0f0;
     border-bottom: 1px solid #ddd;
@@ -125,14 +126,14 @@ export default {
     display: flex;
     height: 2.5rem;
     width: 100%;
-    max-width: 100%; /* 限制最大宽度 */
+    max-width: 100%;
     background-color: #f0f0f0;
     border-bottom: 1px solid #ddd;
     top: 2.5rem;
     position: fixed;
     z-index: 1000;
     left: 0;
-    right: 0; /* 新增，确保从左到右填充 */
+    right: 0;
     box-sizing: border-box;
 }
 
@@ -151,7 +152,7 @@ export default {
     background-color: #d9d9d9;
     font-weight: bold;
     color: #2c3e50;
-    border-bottom: 2px solid #2c3e50; /* 增加选中状态的下边框 */
+    border-bottom: 2px solid #2c3e50;
 }
 
 .content {
@@ -159,15 +160,19 @@ export default {
     padding: 1rem;
     margin-top: 5rem;
     overflow-y: auto;
-    overflow-x: hidden; /* 防止横向滚动条 */
-    height: calc(100vh - 8rem); /* 调整内容区域的高度以适应底部按钮 */
+    overflow-x: hidden;
+    height: calc(100vh - 11rem); /* 调整内容区域的高度以适应固定表单和按钮 */
     box-sizing: border-box;
 }
 
 .form-section {
-    margin: 1rem;
-    text-align: left;
-    width: calc(100% - 2rem); /* 调整宽度以避免水平滚动 */
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+    position: fixed;
+    bottom: 3rem; /* 与按钮区域的间距 */
+    left: 0;
+    right: 0;
     box-sizing: border-box;
 }
 
@@ -175,11 +180,12 @@ export default {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: bold;
+    text-align: left; /* 标签文本居左对齐 */
 }
 
 .form-section textarea,
 .form-section select {
-    width: 100%; /* 确保宽度填满可用空间 */
+    width: calc(100% - 2rem); /* 确保宽度填满可用空间 */
     padding: 0.5rem;
     margin-bottom: 1rem;
     border: 1px solid #ddd;
@@ -190,18 +196,18 @@ export default {
 
 .form-section textarea:focus,
 .form-section select:focus {
-    border-color: #007BFF; /* 聚焦时变成蓝色 */
+    border-color: #007BFF;
     outline: none;
 }
 
 .actions {
     display: flex;
-    justify-content: space-around; /* 使按钮在水平上居中 */
+    justify-content: space-around;
     padding: 0.5rem;
     position: fixed;
     bottom: 0;
     left: 0;
-    right: 0; /* 新增，确保从左到右填充 */
+    right: 0;
     width: 100%;
     background-color: #f0f0f0;
     border-top: 1px solid #ddd;
@@ -224,4 +230,5 @@ export default {
 .actions button:hover {
     background-color: #1a252f;
 }
+
 </style>
