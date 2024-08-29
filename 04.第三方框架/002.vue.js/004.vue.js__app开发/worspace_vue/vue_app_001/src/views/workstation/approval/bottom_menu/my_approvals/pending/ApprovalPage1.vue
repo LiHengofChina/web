@@ -133,7 +133,7 @@ export default {
                     APPROVE_TYPE: '同意',
                     APPROVE_IDEA: '审批意见内容',
                     DURATION: '0天0小时0分46秒',
-                    ASSIGNEE_NAME: '张三',
+                    ASSIGNEE_NAME: '张三1',
                     dotcolor: '#1EC5B5',
                     END_TIME: "2024-08-28 16:44:52",
                 },
@@ -143,7 +143,7 @@ export default {
                     APPROVE_TYPE: '同意',
                     APPROVE_IDEA: '审批意见内容',
                     DURATION: '0天0小时3分38秒',
-                    ASSIGNEE_NAME: '李四',
+                    ASSIGNEE_NAME: '李四2',
                     dotcolor: '#1EC5B5',
                     END_TIME: "2024-08-28 16:44:52",
                 },
@@ -153,7 +153,7 @@ export default {
                     APPROVE_TYPE: '同意',
                     APPROVE_IDEA: '审批意见内容',
                     DURATION: '0天0小时3分38秒',
-                    ASSIGNEE_NAME: '李四',
+                    ASSIGNEE_NAME: '李四3',
                     dotcolor: '#1EC5B5',
                     END_TIME: "2024-08-28 16:44:52",
                 },
@@ -163,7 +163,7 @@ export default {
                     APPROVE_TYPE: '同意',
                     APPROVE_IDEA: '审批意见内容',
                     DURATION: '0天0小时3分38秒',
-                    ASSIGNEE_NAME: '李四',
+                    ASSIGNEE_NAME: '李四4',
                     dotcolor: '#1EC5B5',
                     END_TIME: "2024-08-28 16:44:52",
                 },
@@ -173,7 +173,7 @@ export default {
                     APPROVE_TYPE: '同意',
                     APPROVE_IDEA: '审批意见内容',
                     DURATION: '0天0小时3分38秒',
-                    ASSIGNEE_NAME: '李四',
+                    ASSIGNEE_NAME: '李四5',
                     dotcolor: '#1EC5B5',
                     END_TIME: "2024-08-28 16:44:52",
                 },
@@ -183,7 +183,7 @@ export default {
                     APPROVE_TYPE: '同意',
                     APPROVE_IDEA: '审批意见内容',
                     DURATION: '0天0小时3分38秒',
-                    ASSIGNEE_NAME: '李四',
+                    ASSIGNEE_NAME: '李四6',
                     dotcolor: '#1EC5B5',
                     END_TIME: "2024-08-28 16:44:52",
                 },                                                                
@@ -277,6 +277,7 @@ export default {
     border-bottom: 2px solid #2c3e50;
 }
 
+
 .content {
     flex: 1;
     padding: 1rem;
@@ -285,7 +286,12 @@ export default {
     overflow-x: hidden;
     height: calc(100vh - 11rem); /* 调整内容区域的高度以适应固定表单和按钮 */
     box-sizing: border-box;
+    padding-bottom: 15rem; /* 为底部留出空间，防止内容被覆盖 */
 }
+
+
+
+
 
 .form-section {
     padding: 1rem;
@@ -428,6 +434,7 @@ export default {
 }
 
 
+
 /* Timeline item */
 .timeline-item {
     position: relative;
@@ -435,13 +442,13 @@ export default {
     margin-bottom: 2rem;
 }
 
-/* Timeline vertical line */
+
 .timeline::before {
     content: '';
     position: absolute;
-    top: 0;
+    top: 0.625rem; /* 从第一个圆圈的顶部开始 */
+    bottom: 11.625rem; /* 在最后一个圆圈的底部结束 11 + 0.625 */
     left: 0rem; /* 竖线的位置 */
-    bottom: 0;
     width: 2px;
     background-color: #ddd; /* 灰色竖线颜色 */
 }
@@ -474,7 +481,7 @@ export default {
     color: #333;
     margin-bottom: 5px;
     padding-bottom: 5px;
-    padding-left: 15px;
+    padding-left: 0px;
 }
 
 
