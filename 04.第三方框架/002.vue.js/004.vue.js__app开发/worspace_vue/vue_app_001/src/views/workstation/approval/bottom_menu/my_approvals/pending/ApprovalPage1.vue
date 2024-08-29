@@ -29,20 +29,22 @@
 
         <!-- Approval Description and Opinion Type fixed at bottom -->
         <div class="form-section">
-            <label for="approval-description"> 审批说明</label>
-            <textarea id="approval-description" v-model="approvalDescription" rows="1" maxlength="500"></textarea>
-            
-            <label for="opinion-type">* 意见类型</label>
+
+
+            <label for="opinion-type"> <span class="required">*</span> 意见类型</label>
             <div class="select-fake" @click="openModal">{{ opinionType || '请选择' }}</div>
+
+
+            <label for="approval-description">&nbsp; 审批说明</label>
+            <textarea id="approval-description" v-model="approvalDescription" rows="2" maxlength="500"></textarea>
+
+
         </div>
-        
-
-
-
 
 
         <!-- Modal Overlay -->
         <div v-if="showModal" class="modal-overlay" @click="closeModal"></div>
+
 
         <!-- Modal Content -->
         <div v-if="showModal" class="modal-content">
@@ -53,12 +55,13 @@
         </div>
 
 
-
         <!-- Action Buttons Section -->
         <div class="actions">
             <button class="submit-btn" @click="submitApproval">提交</button>
-            <button class="cancel-btn" @click="cancelApproval">取消</button>
+            <button class="cancel-btn" @click="closeApproval">关闭</button>
         </div>
+
+
     </div>
 </template>
 
@@ -88,7 +91,7 @@ export default {
         submitApproval() {
             // 提交逻辑
         },
-        cancelApproval() {
+        closeApproval() {
             // 取消逻辑
         },
         openModal() {
@@ -199,7 +202,7 @@ export default {
     background-color: #f9f9f9;
     border-top: 1px solid #ddd;
     position: fixed;
-    bottom: 3rem; /* 与按钮区域的间距 */
+    bottom: 2.5rem; /* 与按钮区域的间距 */
     left: 0;
     right: 0;
     box-sizing: border-box;
@@ -294,7 +297,7 @@ export default {
 }
 
 .modal-item.cancel {
-    color: red; /* 取消按钮的特殊颜色 */
+    /* color: red; 取消按钮的特殊颜色 */
     font-weight: bold;
 }
 
@@ -321,6 +324,9 @@ export default {
     right: 1rem; /* 确保箭头在右侧 */
 }
 
-
+.required {
+    color: red; /* 使 * 号变成红色 */
+    margin-right: 0.25rem; /* 为 * 号和文本之间添加一些间距 */
+}
 
 </style>
