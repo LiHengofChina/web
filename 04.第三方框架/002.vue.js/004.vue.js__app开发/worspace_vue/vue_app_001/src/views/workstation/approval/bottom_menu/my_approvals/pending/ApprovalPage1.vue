@@ -10,8 +10,8 @@
         <!-- Tabs Section -->
         <div class="tabs">
             <div class="tab" :class="{ active: activeTab === 'details' }" @click="setActiveTab('details')">详情</div>
-            <div class="tab" :class="{ active: activeTab === 'document' }" @click="setActiveTab('document')">文档</div>
-            <div class="tab" :class="{ active: activeTab === 'history' }" @click="setActiveTab('history')">审批历史</div>
+            <div class="tab" :class="{ activeTab === 'document' }" @click="setActiveTab('document')">文档</div>
+            <div class="tab" :class="{ activeTab === 'history' }" @click="setActiveTab('history')">审批历史</div>
         </div>
 
         <!-- Scrollable Content Area -->
@@ -153,7 +153,7 @@ export default {
 }
 
 .form-section {
-    margin-top: 1rem;
+    margin: 1rem;
     text-align: left;
 }
 
@@ -165,9 +165,9 @@ export default {
 
 .form-section textarea,
 .form-section select {
-    width: calc(100% - 2rem); /* 设置宽度使其与父容器对齐，考虑到 padding */
+    width: 100%; /* 确保宽度填满可用空间 */
     padding: 0.5rem;
-    margin: 0 1rem 1rem 1rem; /* 确保左对齐并与其他元素保持一致的间距 */
+    margin-bottom: 1rem;
     border: 1px solid #ddd;
     border-radius: 0.25rem;
     transition: border-color 0.3s ease;
