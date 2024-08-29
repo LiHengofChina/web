@@ -2,20 +2,20 @@
     <div class="page-layout">
         <div class="header">
             <i class="fas fa-chevron-left back-icon" @click="goBack"></i>
-            <h1 class="title">示意图</h1>
+            <h1 class="title">审批展示方案一</h1>
             <div class="spacer"></div>
         </div>
 
         <div class="content">
-            <!-- 示意图页面的具体内容 -->
-            <p>这是示意图页面。</p>
+            <!-- 审批页面的具体内容 -->
+            <p>这是审批页面。</p>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'DiagramPage',
+    name: 'ApprovalPage',
     methods: {
         goBack() {
             this.$router.go(-1);
@@ -31,6 +31,7 @@ export default {
     flex-direction: column;
     overflow: hidden;
 }
+
 .header {
     display: flex;
     align-items: center;

@@ -2,7 +2,7 @@
     <div class="page-layout">
         <div class="header">
             <i class="fas fa-chevron-left back-icon" @click="goBack"></i>
-            <h1 class="title">审批</h1>
+            <h1 class="title">审批展示方案二</h1>
             <div class="spacer"></div>
         </div>
 

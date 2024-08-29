@@ -15,11 +15,11 @@
                             <p>审批人: {{ item.approver }}</p>
                         </div>
                         <div class="card-actions">
-                            <button @click="viewDetails(item.id)">详情</button>
+
+                            <button @click="approve1(item.id)">审批1</button>
+                            <button @click="approve2(item.id)">审批2</button>
                             <button @click="transfer(item.id)">转办</button>
-                            <button @click="viewHistory(item.id)">历史</button>
-                            <button @click="viewDiagram(item.id)">示意图</button>
-                            <button @click="approve(item.id)">审批</button>
+
                         </div>
                     </div>
                 </div>
@@ -47,11 +47,11 @@ export default {
     data() {
         return {
             pendingItems: [
-                { id: 1, type: '待处理项目1', position: '职位1', customerName: '客户A', approver: '审批人1' },
-                { id: 2, type: '待处理项目2', position: '职位2', customerName: '客户B', approver: '审批人2' },
-                { id: 3, type: '待处理项目3', position: '职位3', customerName: '客户C', approver: '审批人3' },
-                { id: 4, type: '待处理项目4', position: '职位4', customerName: '客户D', approver: '审批人4' },
-                { id: 5, type: '待处理项目5', position: '职位5', customerName: '客户E', approver: '审批人5' }
+                { id: 1, type: '待处理项目1', position: '职位1', customerName: '客户A', approver: '薛贝贝' },
+                { id: 2, type: '待处理项目2', position: '职位2', customerName: '客户B', approver: '薛贝贝' },
+                { id: 3, type: '待处理项目3', position: '职位3', customerName: '客户C', approver: '薛贝贝' },
+                { id: 4, type: '待处理项目4', position: '职位4', customerName: '客户D', approver: '薛贝贝' },
+                { id: 5, type: '待处理项目5', position: '职位5', customerName: '客户E', approver: '薛贝贝' }
             ],
             completedItems: [
                 { id: 1, title: '已处理项目1', date: '2024-08-01' },
@@ -61,17 +61,11 @@ export default {
     },
     methods: {
         ...mapMutations('approval_my_approvals', ['setActiveTab']),
-        viewDetails(id) {
-            this.$router.push({ name: 'workstation_approval_my-approvals_pending_detail', params: { id } });
+        approve1(id) {
+            this.$router.push({ name: 'workstation_approval_my-approvals_pending_approval_1', params: { id } });
         },
-        approve(id) {
-            this.$router.push({ name: 'workstation_approval_my-approvals_pending_approval', params: { id } });
-        },
-        viewHistory(id) {
-            this.$router.push({ name: 'workstation_approval_my-approvals_pending_history', params: { id } });
-        },
-        viewDiagram(id) {
-            this.$router.push({ name: 'workstation_approval_my-approvals_pending_diagram', params: { id } });
+        approve2(id) {
+            this.$router.push({ name: 'workstation_approval_my-approvals_pending_approval_2', params: { id } });
         },
         transfer(id) {
             this.$router.push({ name: 'workstation_approval_my-approvals_pending_transfer', params: { id } });
