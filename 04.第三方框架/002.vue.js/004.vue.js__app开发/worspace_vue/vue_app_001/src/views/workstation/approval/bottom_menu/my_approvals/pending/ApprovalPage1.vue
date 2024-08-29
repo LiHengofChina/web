@@ -1,15 +1,18 @@
 <template>
     <div class="page-layout">
+
         <div class="header">
             <i class="fas fa-chevron-left back-icon" @click="goBack"></i>
             <h1 class="title">审批展示方案一</h1>
             <div class="spacer"></div>
         </div>
 
+
         <div class="content">
             <!-- 审批页面的具体内容 -->
-            <p>这是审批页面。</p>
+            <p>这是审批1页面。</p>
         </div>
+
     </div>
 </template>
 

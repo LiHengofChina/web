@@ -47,11 +47,11 @@ export default {
     data() {
         return {
             pendingItems: [
-                { id: 1, type: '待处理项目1', position: '职位1', customerName: '客户A', approver: '薛贝贝' },
-                { id: 2, type: '待处理项目2', position: '职位2', customerName: '客户B', approver: '薛贝贝' },
-                { id: 3, type: '待处理项目3', position: '职位3', customerName: '客户C', approver: '薛贝贝' },
-                { id: 4, type: '待处理项目4', position: '职位4', customerName: '客户D', approver: '薛贝贝' },
-                { id: 5, type: '待处理项目5', position: '职位5', customerName: '客户E', approver: '薛贝贝' }
+                { id: 1, type: '立项审批', position: '项目经理B岗', customerName: '金牛区星际航行软件开发工作室', approver: '薛贝贝' },
+                { id: 2, type: '立项审批', position: '项目经理B岗', customerName: '金牛区星际航行软件开发工作室', approver: '薛贝贝' },
+                { id: 3, type: '立项审批', position: '项目经理B岗', customerName: '金牛区星际航行软件开发工作室', approver: '薛贝贝' },
+                { id: 4, type: '立项审批', position: '项目经理B岗', customerName: '金牛区星际航行软件开发工作室', approver: '薛贝贝' },
+                { id: 5, type: '立项审批', position: '项目经理B岗', customerName: '金牛区星际航行软件开发工作室', approver: '薛贝贝' }
             ],
             completedItems: [
                 { id: 1, title: '已处理项目1', date: '2024-08-01' },
