@@ -185,14 +185,17 @@ export default {
 
 .form-section textarea,
 .form-section select {
-    width: calc(100% - 2rem); /* 确保宽度填满可用空间 */
+    width: 100%; /* 确保宽度填满可用空间 */
+    max-width: 100%; /* 确保不会超出父容器宽度 */
     padding: 0.5rem;
     margin-bottom: 1rem;
     border: 1px solid #ddd;
     border-radius: 0.25rem;
     transition: border-color 0.3s ease;
     box-sizing: border-box;
+    appearance: none; /* 移除默认下拉箭头样式以便自定义 */
 }
+
 
 .form-section textarea:focus,
 .form-section select:focus {
