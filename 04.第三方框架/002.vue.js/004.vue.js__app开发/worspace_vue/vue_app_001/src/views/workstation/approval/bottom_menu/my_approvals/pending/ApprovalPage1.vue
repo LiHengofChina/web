@@ -20,21 +20,37 @@
                 <p>详情内容...</p>
             </div>
             <div v-else-if="activeTab === 'history'">
-                <div v-for="(timeline, index) in timeLineData" :key="index" >
-                    <!-- Timeline Header moved outside the card -->
-                    <div class="timeline-header">
-                        <div class="taskName">{{ getTaskName(timeline) }}</div>
-                        <div class="taskTime">{{ timeline.CREATE_TIME }}</div>
-                    </div>
-                    <div class="timeline-card">
-                        <div class="timeline-body">
-                            <div class="approveType">{{ timeline.APPROVE_TYPE }}</div>
-                            <div class="approveIdea">{{ resApproveIdea(timeline.APPROVE_IDEA) }}</div>
-                            <div class="duration">耗时：{{ timeline.DURATION }}</div>
-                            <div class="assignee">处理人：{{ timeline.ASSIGNEE_NAME }}</div>
+                <div class="timeline">
+                    <div v-for="(timeline, index) in timeLineData" :key="index" class="timeline-item">
+                        <div class="timeline-header">
+                            <div class="taskName">{{ getTaskName(timeline) }}</div>
+                            <div class="taskTime">{{ timeline.CREATE_TIME }}</div>
                         </div>
+
+                        
+
+                        <div class="timeline-card">
+                            <div class="timeline-body">
+                                <div class="approve-type-duration">
+                                    <div class="approveType">{{ timeline.APPROVE_TYPE }}</div>
+                                    <div class="duration">耗时：{{ timeline.DURATION }}</div>
+                                </div>
+                            
+                                <div class="approveIdea">{{ resApproveIdea(timeline.APPROVE_IDEA) }}</div>
+                            
+                                <div class="assignee-end-time">
+                                    <span class="assignee">处理人：{{ timeline.ASSIGNEE_NAME }}</span>
+                                    <span class="endTime"><i class="fas fa-clock"></i> {{ timeline.END_TIME }}</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        
+
+
                     </div>
-                </div>
+                </div>                
             </div>
             <div v-else-if="activeTab === 'document'">
                 <p>文档内容...</p>
@@ -119,6 +135,7 @@ export default {
                     DURATION: '0天0小时0分46秒',
                     ASSIGNEE_NAME: '张三',
                     dotcolor: '#1EC5B5',
+                    END_TIME: "2024-08-28 16:44:52",
                 },
                 {
                     TASK_NAME: '市场运营部分管领导',
@@ -128,7 +145,48 @@ export default {
                     DURATION: '0天0小时3分38秒',
                     ASSIGNEE_NAME: '李四',
                     dotcolor: '#1EC5B5',
+                    END_TIME: "2024-08-28 16:44:52",
                 },
+                {
+                    TASK_NAME: '市场运营部分管领导',
+                    CREATE_TIME: '2024-08-28 16:48:30',
+                    APPROVE_TYPE: '同意',
+                    APPROVE_IDEA: '审批意见内容',
+                    DURATION: '0天0小时3分38秒',
+                    ASSIGNEE_NAME: '李四',
+                    dotcolor: '#1EC5B5',
+                    END_TIME: "2024-08-28 16:44:52",
+                },
+                {
+                    TASK_NAME: '市场运营部分管领导',
+                    CREATE_TIME: '2024-08-28 16:48:30',
+                    APPROVE_TYPE: '同意',
+                    APPROVE_IDEA: '审批意见内容',
+                    DURATION: '0天0小时3分38秒',
+                    ASSIGNEE_NAME: '李四',
+                    dotcolor: '#1EC5B5',
+                    END_TIME: "2024-08-28 16:44:52",
+                },
+                {
+                    TASK_NAME: '市场运营部分管领导',
+                    CREATE_TIME: '2024-08-28 16:48:30',
+                    APPROVE_TYPE: '同意',
+                    APPROVE_IDEA: '审批意见内容',
+                    DURATION: '0天0小时3分38秒',
+                    ASSIGNEE_NAME: '李四',
+                    dotcolor: '#1EC5B5',
+                    END_TIME: "2024-08-28 16:44:52",
+                },
+                {
+                    TASK_NAME: '市场运营部分管领导',
+                    CREATE_TIME: '2024-08-28 16:48:30',
+                    APPROVE_TYPE: '同意',
+                    APPROVE_IDEA: '审批意见内容',
+                    DURATION: '0天0小时3分38秒',
+                    ASSIGNEE_NAME: '李四',
+                    dotcolor: '#1EC5B5',
+                    END_TIME: "2024-08-28 16:44:52",
+                },                                                                
             ];
         },
         getTaskName(timeline) {
@@ -362,9 +420,52 @@ export default {
 }
 
 
+/* Timeline container */
+.timeline {
+    position: relative;
+    margin-left: 0rem; /* 给时间轴留出空间 */
+    padding-left: 0rem; /* 给时间轴留出空间 */
+}
+
+
+/* Timeline item */
+.timeline-item {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Timeline vertical line */
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0rem; /* 竖线的位置 */
+    bottom: 0;
+    width: 2px;
+    background-color: #ddd; /* 灰色竖线颜色 */
+}
+
+
+
+
+/* Timeline dot */
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -0.26rem; /* 这个值可能需要微调来匹配你的布局 */
+    top: 0.5rem; /* 通过调整这个值来确保圆圈与taskName文字垂直对齐 */
+    width: 0.625rem;
+    height: 0.625rem;
+    background-color: #ddd; /* 圆点颜色 */
+    border-radius: 50%;
+}
+
+
 
 /* Timeline header styles */
 .timeline-header {
+    padding-left: 0.5rem; /* 使标题与圆圈对齐 */    
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* 左对齐 */
@@ -375,6 +476,7 @@ export default {
     padding-bottom: 5px;
     padding-left: 15px;
 }
+
 
 /* New styles for the timeline card */
 .timeline-card {
@@ -402,27 +504,70 @@ export default {
 
 
 
+
 .timeline-body {
     padding-left: 10px;
     font-size: 14px;
     color: #666;
+    display: flex;
+    flex-direction: column; /* 改为列方向 */
+    align-items: center; /* 中心对齐 */
 }
+.assignee-end-time {
+    display: flex;
+    justify-content: flex-end; /* 右对齐 */
+    width: 100%; /* 占满容器宽度 */
+    margin-top: 10px; /* 添加适当的间距 */
+    flex-direction: column; /* 垂直排列 */
+    align-items: flex-end; /* 向右对齐 */
+}
+
 
 .approveType {
     font-weight: bold;
     color: #1EC5B5; /* 审批类型颜色 */
-    margin-bottom: 5px;
 }
+
+
+
 
 .approveIdea {
     color: #ff9800; /* 审批意见颜色 */
     margin-bottom: 5px;
+    text-align: center; /* 居中对齐 */
+    border-bottom: 1px solid #ddd; /* 添加下方的横线 */
+    padding-bottom: 5px; /* 添加一些内边距，以便横线和文字之间有间距 */
+    margin-top: 1.5rem; /* 添加上边距以增加空行 */
+    width: 100%; /* 占满容器宽度 */
 }
 
-.duration,
-.assignee {
+
+
+.duration {
     font-size: 0.9em;
     color: #909399;
+    text-align: right; /* 右对齐 */
 }
+
+.approve-type-duration {
+    display: flex;
+    justify-content: space-between; /* 左右对齐 */
+    width: 100%; /* 占满容器宽度 */
+    margin-bottom: 5px;
+}
+
+.end-time-assignee {
+    display: flex;
+    justify-content: space-between; /* 左右对齐 */
+    margin-top: 10px; /* 添加适当的间距 */
+}
+
+ 
+
+.endTime, .assignee {
+    color: #909399;
+    font-size: 0.8rem;
+}
+
 
 </style>
