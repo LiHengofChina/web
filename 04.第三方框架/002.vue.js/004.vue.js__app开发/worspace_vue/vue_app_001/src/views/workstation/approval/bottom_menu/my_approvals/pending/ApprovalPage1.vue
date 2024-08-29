@@ -34,10 +34,11 @@
             
             <label for="opinion-type">* 意见类型</label>
             <div class="select-fake" @click="openModal">{{ opinionType || '请选择' }}</div>
-            
-
-
         </div>
+        
+
+
+
 
 
         <!-- Modal Overlay -->
@@ -296,5 +297,30 @@ export default {
     color: red; /* 取消按钮的特殊颜色 */
     font-weight: bold;
 }
+
+.select-fake {
+    width: 100%; /* 填满可用宽度 */
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    text-align: left; /* 文本左对齐 */
+    position: relative;
+    cursor: pointer;
+    box-sizing: border-box;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.select-fake::after {
+    content: '▼'; /* 向下箭头 */
+    font-size: 0.8rem;
+    color: #333;
+    position: absolute;
+    right: 1rem; /* 确保箭头在右侧 */
+}
+
+
 
 </style>
