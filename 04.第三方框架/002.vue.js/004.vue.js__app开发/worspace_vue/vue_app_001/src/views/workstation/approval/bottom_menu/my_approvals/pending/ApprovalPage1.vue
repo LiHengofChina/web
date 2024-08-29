@@ -16,15 +16,12 @@
 
         <!-- Scrollable Content Area -->
         <div class="content">
-
             <div v-if="activeTab === 'details'">
                 <p>详情内容...</p>
             </div>
-
             <div v-else-if="activeTab === 'document'">
                 <p>文档内容...</p>
             </div>
-
             <div v-else-if="activeTab === 'history'">
                 <p>审批历史内容...</p>
             </div>
@@ -49,7 +46,6 @@
             <button class="submit-btn" @click="submitApproval">提交</button>
             <button class="cancel-btn" @click="cancelApproval">取消</button>
         </div>
-
     </div>
 </template>
 
@@ -85,6 +81,7 @@ export default {
     display: flex;
     flex-direction: column;
     width: 100vw; /* 确保页面宽度填满视口 */
+    max-width: 100%; /* 限制最大宽度，防止超出视口 */
     height: 100vh;
     overflow: hidden;
     box-sizing: border-box; /* 确保内边距和边框不会导致布局超出 */
@@ -97,7 +94,8 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    right: 0; /* 新增，确保从左到右填充 */
+    width: 100%; /* 确保填满整个宽度 */
     height: 2.5rem;
     background-color: #f0f0f0;
     border-bottom: 1px solid #ddd;
@@ -127,12 +125,14 @@ export default {
     display: flex;
     height: 2.5rem;
     width: 100%;
+    max-width: 100%; /* 限制最大宽度 */
     background-color: #f0f0f0;
     border-bottom: 1px solid #ddd;
     top: 2.5rem;
     position: fixed;
     z-index: 1000;
     left: 0;
+    right: 0; /* 新增，确保从左到右填充 */
     box-sizing: border-box;
 }
 
@@ -201,6 +201,7 @@ export default {
     position: fixed;
     bottom: 0;
     left: 0;
+    right: 0; /* 新增，确保从左到右填充 */
     width: 100%;
     background-color: #f0f0f0;
     border-top: 1px solid #ddd;
