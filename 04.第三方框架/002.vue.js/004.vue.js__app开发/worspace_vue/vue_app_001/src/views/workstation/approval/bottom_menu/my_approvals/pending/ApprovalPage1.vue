@@ -10,8 +10,8 @@
         <!-- Tabs Section -->
         <div class="tabs">
             <div class="tab" :class="{ active: activeTab === 'details' }" @click="setActiveTab('details')">详情</div>
-            <div class="tab" :class="{ activeTab === 'document' }" @click="setActiveTab('document')">文档</div>
-            <div class="tab" :class="{ activeTab === 'history' }" @click="setActiveTab('history')">审批历史</div>
+            <div class="tab" :class="{ active: activeTab === 'document' }" @click="setActiveTab('document')">文档</div>
+            <div class="tab" :class="{ active: activeTab === 'history' }" @click="setActiveTab('history')">审批历史</div>
         </div>
 
         <!-- Scrollable Content Area -->
