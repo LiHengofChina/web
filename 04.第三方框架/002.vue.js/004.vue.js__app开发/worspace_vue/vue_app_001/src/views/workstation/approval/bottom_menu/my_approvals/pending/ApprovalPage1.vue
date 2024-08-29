@@ -80,6 +80,8 @@ export default {
 .page-layout {
     display: flex;
     flex-direction: column;
+    width: 100vw; /* 将页面宽度设置为视口宽度 */
+    max-width: 100vw; /* 确保不会超出视口宽度 */
     height: 100vh;
     overflow: hidden;
 }
@@ -97,6 +99,7 @@ export default {
     border-bottom: 1px solid #ddd;
     z-index: 1000;
     padding: 0 1rem;
+    box-sizing: border-box;
 }
 
 .back-icon {
@@ -149,7 +152,8 @@ export default {
     padding: 1rem;
     margin-top: 5rem;
     overflow-y: auto;
-    height: calc(100vh - 9rem);
+    height: calc(100vh - 8rem); /* 调整内容区域的高度以适应底部按钮 */
+    box-sizing: border-box;
 }
 
 .form-section {
@@ -181,13 +185,15 @@ export default {
 
 .actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around; /* 使按钮在水平上居中 */
     padding: 0.5rem 1rem;
     position: fixed;
     bottom: 0;
+    left: 0;
     width: 100%;
     background-color: #f0f0f0;
     border-top: 1px solid #ddd;
+    box-sizing: border-box;
 }
 
 .actions button {
