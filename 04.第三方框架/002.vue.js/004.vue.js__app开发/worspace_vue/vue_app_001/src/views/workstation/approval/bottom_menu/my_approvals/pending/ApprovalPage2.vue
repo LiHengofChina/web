@@ -15,7 +15,7 @@
 
 <script>
 export default {
-    name: 'ApprovalPage',
+    name: 'ApprovalPage2',
     methods: {
         goBack() {
             this.$router.go(-1);

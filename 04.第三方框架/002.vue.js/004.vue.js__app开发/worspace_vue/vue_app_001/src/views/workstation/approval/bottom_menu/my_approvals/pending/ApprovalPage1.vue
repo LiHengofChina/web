@@ -20,7 +20,20 @@
                 <p>详情内容...</p>
             </div>
             <div v-else-if="activeTab === 'history'">
-                <p>审批历史内容...</p>
+
+                <div v-for="(timeline, index) in timeLineData" :key="index" class="timeline-item">
+                    <div class="timeline-header">
+                        <span class="taskName">{{ getTaskName(timeline) }}</span>
+                        <span class="taskTime">{{ timeline.CREATE_TIME }}</span>
+                    </div>
+                    <div class="timeline-body">
+                        <div class="approveType" :style="'color:' + timeline.dotcolor">{{ timeline.APPROVE_TYPE }}</div>
+                        <div class="approveIdea">{{ resApproveIdea(timeline.APPROVE_IDEA) }}</div>
+                        <div class="duration">耗时：{{ timeline.DURATION }}</div>
+                        <div class="assignee">处理人：{{ timeline.ASSIGNEE_NAME }}</div>
+                    </div>
+                </div>
+
             </div>
             <div v-else-if="activeTab === 'document'">
                 <p>文档内容...</p>
@@ -31,11 +44,11 @@
         <div class="form-section">
 
 
-            <label for="opinion-type"> <span class="required">*</span> 意见类型</label>
+            <label for="opinion-type"><span class="required">*</span> 意见类型</label>
             <div class="select-fake" @click="openModal">{{ opinionType || '请选择' }}</div>
 
 
-            <label for="approval-description">&nbsp; 审批说明</label>
+            <label for="approval-description"><span class="required">*</span> 审批说明</label>
             <textarea id="approval-description" v-model="approvalDescription" rows="2" maxlength="500"></textarea>
 
 
@@ -68,9 +81,7 @@
 
 <script>
 export default {
-
     name: 'ApprovalPage1',
-
     data() {
         return {
             activeTab: 'details',
@@ -78,16 +89,21 @@ export default {
             opinionType: '',
             showModal: false, // 控制弹出层显示
             opinionOptions: ['同意', '返回补充资料', '否决'], // 可选的意见类型
+            timeLineData: [], // 用于存储审批历史的数据            
         };
     },
-
     methods: {
         goBack() {
             this.$router.go(-1);
         },
+
         setActiveTab(tab) {
             this.activeTab = tab;
+            if (tab === 'history') {
+                this.loadTimeLineData(); // 切换到审批历史标签时加载数据
+            }
         },
+
         submitApproval() {
             // 提交逻辑
         },
@@ -103,7 +119,38 @@ export default {
         selectOption(option) {
             this.opinionType = option; // 选择选项
             this.closeModal(); // 关闭弹出层
-        }
+        },
+        loadTimeLineData() {
+            // 模拟获取审批历史数据的API调用
+            this.timeLineData = [
+                {
+                    TASK_NAME: '市场运营部门负责人',
+                    CREATE_TIME: '2024-08-28 16:44:05',
+                    APPROVE_TYPE: '同意',
+                    APPROVE_IDEA: '审批意见内容',
+                    DURATION: '0天0小时0分46秒',
+                    ASSIGNEE_NAME: '张三',
+                    dotcolor: '#1EC5B5',
+                },
+                {
+                    TASK_NAME: '市场运营部分管领导',
+                    CREATE_TIME: '2024-08-28 16:48:30',
+                    APPROVE_TYPE: '同意',
+                    APPROVE_IDEA: '审批意见内容',
+                    DURATION: '0天0小时3分38秒',
+                    ASSIGNEE_NAME: '李四',
+                    dotcolor: '#1EC5B5',
+                },
+            ];
+        },
+
+        getTaskName(timeline) {
+            return timeline.TASK_NAME;
+        },
+        resApproveIdea(idea) {
+            return idea || '无审批意见';
+        },
+
     }
 
 };
@@ -328,5 +375,37 @@ export default {
     color: red; /* 使 * 号变成红色 */
     margin-right: 0.25rem; /* 为 * 号和文本之间添加一些间距 */
 }
+
+/** 时间线的样式 */
+.timeline-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.timeline-body {
+    padding-left: 10px;
+}
+
+.approveType {
+    font-weight: bold;
+}
+
+.duration,
+.assignee {
+    font-size: 0.9em;
+    color: #666;
+}
+
+
 
 </style>
