@@ -20,16 +20,19 @@
                 <p>详情内容...</p>
             </div>
             <div v-else-if="activeTab === 'history'">
-                <div v-for="(timeline, index) in timeLineData" :key="index" class="timeline-item">
+                <div v-for="(timeline, index) in timeLineData" :key="index" >
+                    <!-- Timeline Header moved outside the card -->
                     <div class="timeline-header">
                         <div class="taskName">{{ getTaskName(timeline) }}</div>
-                        <div class="taskTime">{{ timeline.CREATE_TIME }}</div>                        
+                        <div class="taskTime">{{ timeline.CREATE_TIME }}</div>
                     </div>
-                    <div class="timeline-body">
-                        <div class="approveType">{{ timeline.APPROVE_TYPE }}</div>
-                        <div class="approveIdea">{{ resApproveIdea(timeline.APPROVE_IDEA) }}</div>
-                        <div class="duration">耗时：{{ timeline.DURATION }}</div>
-                        <div class="assignee">处理人：{{ timeline.ASSIGNEE_NAME }}</div>
+                    <div class="timeline-card">
+                        <div class="timeline-body">
+                            <div class="approveType">{{ timeline.APPROVE_TYPE }}</div>
+                            <div class="approveIdea">{{ resApproveIdea(timeline.APPROVE_IDEA) }}</div>
+                            <div class="duration">耗时：{{ timeline.DURATION }}</div>
+                            <div class="assignee">处理人：{{ timeline.ASSIGNEE_NAME }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -64,6 +67,7 @@
         </div>
     </div>
 </template>
+
 
 <script>
 export default {
@@ -357,8 +361,23 @@ export default {
     margin-right: 0.25rem; /* 为 * 号和文本之间添加一些间距 */
 }
 
-/* 时间线的样式 */
-.timeline-item {
+
+
+/* Timeline header styles */
+.timeline-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 左对齐 */
+    justify-content: space-between;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+}
+
+/* New styles for the timeline card */
+.timeline-card {
     border: 1px solid #ddd;
     padding: 15px;
     margin-bottom: 15px;
@@ -367,30 +386,17 @@ export default {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-
-.timeline-header {
-    display: flex;
-    flex-direction: column; /* 改为列方向，确保任务名称和时间分行显示 */
-    align-items: flex-start; /* 左对齐 */
-    justify-content: space-between;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 5px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 5px;
-}
-
 .taskName {
     font-weight: bold;
-    color: #909399; /* 设置为灰色 */
-    font-size: 1rem; /* 设置字体大小 */
-    margin-bottom: 4px; /* 添加一些底部间距，使名称和时间之间有间距 */
+    color: #909399;
+    font-size: 1rem;
+    margin-bottom: 4px;
 }
 
 .taskTime {
-    color: #909399; /* 设置为灰色 */
-    font-size: 0.8rem; /* 时间的字体更小 */
-    font-weight: normal; /* 确保时间字体不加粗 */
+    color: #909399;
+    font-size: 0.8rem;
+    font-weight: normal;
 }
 
 
