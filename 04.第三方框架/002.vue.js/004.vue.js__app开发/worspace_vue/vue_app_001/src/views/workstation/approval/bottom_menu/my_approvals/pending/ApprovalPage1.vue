@@ -49,9 +49,9 @@
         <!-- 弹出面板 -->
         <transition name="slide-up">
             <div v-if="showPanel" class="panel-content">
-                <!-- Approval Description and Opinion Type -->
-                <div class="form-section">
 
+                <div class="form-section">
+                    
                     <div class="form-row">
                         <label for="approval-description" class="form-label">
                             <span class="required">*</span> 审批说明
@@ -62,6 +62,17 @@
                     
 
                     <textarea id="approval-description" v-model="approvalDescription" rows="5" maxlength="500"></textarea>
+
+
+                    <!-- 添加的单选框部分 -->
+                    <div class="radio-group">
+                        <span class="required">*</span>
+                        <label v-for="option in opinionOptions" :key="option">
+                            <input type="radio" :value="option" v-model="selectedOpinion">
+                            {{ option }}
+                        </label>
+                    </div>
+
                 </div>
             </div>
         </transition>
@@ -78,6 +89,7 @@
 
 export default {
     name: 'ApprovalPage1',
+ 
     data() {
         return {
             activeTab: 'details',
@@ -85,10 +97,13 @@ export default {
             opinionType: '',
             showModal: false,
             showPanel: false, // 控制面板显示状态
-            // opinionOptions: ['同意', '返回补充资料', '否决'],
-            timeLineData: []
+            timeLineData: [],
+            opinionOptions: ['同意', '返回补充资料', '否决'], // 单选框选项
+            selectedOpinion: '' // 选中的选项
         };
     },
+
+
     methods: {
         goBack() {
             this.$router.go(-1);
@@ -618,6 +633,25 @@ export default {
     justify-content: center;
     align-items: center;
     width: 100%; /* 占满父容器的宽度 */
+}
+
+/**
+复选框样式
+*/
+.radio-group {
+    display: flex;
+    justify-content: space-around; /* 均匀分布 */
+    margin-top: 0rem; /* 上边距 */
+}
+.radio-group label {
+    font-size: 1rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    font-weight: normal; /* 确保字体不加粗 */
+}
+.radio-group input[type="radio"] {
+    margin-right: 0.5rem; /* 右边距 */
 }
 
 </style>
