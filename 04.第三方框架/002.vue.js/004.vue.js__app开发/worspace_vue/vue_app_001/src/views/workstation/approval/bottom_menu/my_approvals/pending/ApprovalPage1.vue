@@ -43,28 +43,29 @@
 
         <!-- 弹出面板按钮 -->
         <div class="panel-toggle" @click="togglePanel">
-            意见 ({{ panelItems.length }})
+            意见
+            <i class="fas fa-chevron-up arrow-icon"></i> <!-- FontAwesome 向上箭头图标 -->
         </div>
+
         <!-- 弹出面板 -->
         <transition name="slide-up">
             <div v-if="showPanel" class="panel-content">
                 <!-- Approval Description and Opinion Type -->
                 <div class="form-section">
-
                     <label for="approval-description"><span class="required">*</span> 审批说明</label>
-                    <textarea id="approval-description" v-model="approvalDescription" rows="2" maxlength="500"></textarea>
-
+                    <textarea id="approval-description" v-model="approvalDescription" rows="5" maxlength="500"></textarea>
                 </div>
-
             </div>
         </transition>
-
     </div>
 </template>
 
 
 
+
 <script>
+
+
 export default {
     name: 'ApprovalPage1',
     data() {
@@ -75,8 +76,7 @@ export default {
             showModal: false,
             showPanel: false, // 控制面板显示状态
             // opinionOptions: ['同意', '返回补充资料', '否决'],
-            timeLineData: [],
-            panelItems: ['选项 1', '选项 2', '选项 3'], // 示例内容
+            timeLineData: []
         };
     },
     methods: {
@@ -180,6 +180,7 @@ export default {
     overflow: hidden;
     box-sizing: border-box; /* 确保内边距和边框不会导致布局超出 */
 }
+
 
 .header {
     display: flex;
@@ -458,7 +459,7 @@ export default {
     margin-top: 10px; /* 添加适当的间距 */
 }
 
- 
+
 
 .endTime, .assignee {
     color: #909399;
@@ -466,16 +467,44 @@ export default {
 }
 
 
+
 /** 下方弹出面板 **/
 .panel-toggle {
     position: fixed;
     bottom: 0;
-    width: 100%;
+    left: 0;
+    width: 100%; /* 确保宽度占满 */
+    max-width: 100%; /* 确保不会超过可用空间 */
+    padding: 1rem; /* 内边距确保文本和图标的可见性 */
+    margin: 0; /* 清除任何默认的外边距 */
     background-color: #f0f0f0;
-    text-align: center;
-    padding: 1rem;
+    text-align: left;
     cursor: pointer;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box; /* 包括内边距在内 */
+}
+
+
+.panel-toggle i.arrow-icon {
+    font-size: 1.2rem !important; /* 强制应用字体大小 */
+    color: #333 !important; /* 强制应用颜色 */
+    margin-left: auto; /* 使箭头靠右对齐 */
+}
+
+
+
+
+.panel-text {
+    font-size: 1rem;
+    color: #333;
+}
+
+.arrow-icon {
+    font-size: 1.2rem;
+    color: #333;
 }
 
 .panel-content {
