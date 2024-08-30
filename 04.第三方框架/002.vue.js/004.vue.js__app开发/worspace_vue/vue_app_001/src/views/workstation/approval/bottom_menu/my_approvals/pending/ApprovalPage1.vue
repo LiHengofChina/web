@@ -1,11 +1,12 @@
 <template>
     <div class="page-layout">
-        <!-- Header Section -->
+        <!-- Header Section 
         <div class="header">
             <i class="fas fa-chevron-left back-icon" @click="goBack"></i>
             <h1 class="title">审批展示方案一</h1>
             <div class="spacer"></div>
         </div>
+        -->
 
         <!-- Tabs Section -->
         <div class="tabs">
@@ -251,7 +252,7 @@ export default {
     max-width: 100%;
     background-color: #f0f0f0;
     border-bottom: 1px solid #ddd;
-    top: 2.5rem;
+    top: 0rem; /** top: 2.5rem; */ 
     position: fixed;
     z-index: 1000;
     left: 0;
