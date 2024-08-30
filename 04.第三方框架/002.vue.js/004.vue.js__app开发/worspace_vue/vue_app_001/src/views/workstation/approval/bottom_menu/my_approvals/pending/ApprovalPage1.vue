@@ -44,19 +44,29 @@
         <!-- 弹出面板按钮 -->
         <div class="panel-toggle" @click="togglePanel">
             意见
-            <i class="fas fa-chevron-up arrow-icon"></i> <!-- FontAwesome 向上箭头图标 -->
+            <i class="fas fa-chevron-up arrow-up-icon"></i> <!-- FontAwesome 向上箭头图标 -->
         </div>
-
         <!-- 弹出面板 -->
         <transition name="slide-up">
             <div v-if="showPanel" class="panel-content">
                 <!-- Approval Description and Opinion Type -->
                 <div class="form-section">
-                    <label for="approval-description"><span class="required">*</span> 审批说明</label>
+
+                    <div class="form-row">
+                        <label for="approval-description" class="form-label">
+                            <span class="required">*</span> 审批说明
+                        </label>
+                        <i class="fas fa-chevron-down arrow-down-icon" @click="togglePanel"></i>
+                        <i class="fas fa-paper-plane send-icon" @click="sendApproval"></i>
+                    </div>
+                    
+
                     <textarea id="approval-description" v-model="approvalDescription" rows="5" maxlength="500"></textarea>
                 </div>
             </div>
         </transition>
+
+
     </div>
 </template>
 
@@ -89,11 +99,10 @@ export default {
                 this.loadTimeLineData(); // 切换到审批历史标签时加载数据
             }
         },
-        openModal() {
-            this.showModal = true; // 显示弹出层
-        },
+
         togglePanel() {
             this.showPanel = !this.showPanel; // 切换面板显示状态
+            console.log("xxx");
         },
         loadTimeLineData() {
             // 模拟获取审批历史数据的API调用
@@ -260,6 +269,7 @@ export default {
     padding-bottom: 3rem; /* 为底部留出空间，防止内容被覆盖 */
 }
 
+
 .form-section {
     padding: 1rem;
     background-color: #f9f9f9;
@@ -269,7 +279,70 @@ export default {
     left: 0;
     right: 0;
     box-sizing: border-box;
-    
+}
+
+
+.form-row {
+    display: flex;
+    justify-content: space-between; /* 均分子元素间的空间 */
+    align-items: center; /* 垂直居中对齐 */
+    width: 100%; /* 确保占满可用空间 */
+    margin-bottom: 1rem;
+}
+
+
+
+.form-label {
+    flex: 1; /* 调整 label 所占空间 */
+    text-align: left; /* 标签文本居左对齐 */
+    margin: 0; /* 去掉 margin */
+}
+
+
+.arrow-icon {
+    color: #007BFF;
+}
+
+
+/* 发送图标 */
+
+.send-icon {
+    flex: 1;
+    font-size: 1.2rem;
+    color: #333;
+    cursor: pointer;
+    text-align: center;
+    background-color: transparent; /* 确保没有背景色 */
+    margin-right: -3rem; /* 调整这里的值可以控制向右移动的距离 */
+}
+
+
+.arrow-icon, .send-icon {
+    flex: 1;
+    font-size: 1.2rem;
+    color: #333;
+    cursor: pointer;
+    text-align: center;
+}
+.arrow-down-icon, .send-icon {
+    flex: 1; /* 调整图标所占空间 */
+    text-align: center; /* 图标居中对齐 */
+    cursor: pointer; /* 鼠标指针样式 */
+}
+
+.arrow-icon:hover, .send-icon:hover {
+    color: #007BFF; /* 当鼠标悬停在按钮上时改变颜色 */
+    background-color: transparent; /* 确保没有背景色 */
+    box-shadow: none; /* 确保没有阴影 */
+    border: none; /* 移除任何边框 */
+    outline: none; /* 移除点击后的轮廓 */
+}
+
+
+
+.form-label, .arrow-icon, .send-icon {
+    flex: 1; /* 设置每一列的flex为1，均分空间 */
+    text-align: center; /* 确保文本和图标居中对齐 */
 }
 
 .form-section label {
@@ -505,6 +578,8 @@ export default {
 .arrow-icon {
     font-size: 1.2rem;
     color: #333;
+    cursor: pointer;
+    text-align: center;
 }
 
 .panel-content {
@@ -527,6 +602,22 @@ export default {
 
 .slide-up-enter, .slide-up-leave-to {
     transform: translateY(100%);
+}
+
+
+/* 向上的箭头靠右 */
+.arrow-up-icon {
+    position: absolute;
+    right: 1rem; /* 右侧的间距调整 */
+}
+
+
+/* 向下的箭头居中 */
+.arrow-down-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* 占满父容器的宽度 */
 }
 
 </style>
