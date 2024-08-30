@@ -1,13 +1,5 @@
 <template>
     <div class="page-layout">
-        <!-- Header Section 
-        <div class="header">
-            <i class="fas fa-chevron-left back-icon" @click="goBack"></i>
-            <h1 class="title">审批展示方案一</h1>
-            <div class="spacer"></div>
-        </div>
-        -->
-
         <!-- Tabs Section -->
         <div class="tabs">
             <div class="tab" :class="{ active: activeTab === 'details' }" @click="setActiveTab('details')">详情</div>
@@ -20,6 +12,7 @@
             <div v-if="activeTab === 'details'">
                 <p>详情内容...</p>
             </div>
+            <!-- 审批历史 -->
             <div v-else-if="activeTab === 'history'">
                 <div class="timeline">
                     <div v-for="(timeline, index) in timeLineData" :key="index" class="timeline-item">
@@ -27,29 +20,19 @@
                             <div class="taskName">{{ getTaskName(timeline) }}</div>
                             <div class="taskTime">{{ timeline.CREATE_TIME }}</div>
                         </div>
-
-                        
-
                         <div class="timeline-card">
                             <div class="timeline-body">
                                 <div class="approve-type-duration">
                                     <div class="approveType">{{ timeline.APPROVE_TYPE }}</div>
                                     <div class="duration">耗时：{{ timeline.DURATION }}</div>
                                 </div>
-                            
                                 <div class="approveIdea">{{ resApproveIdea(timeline.APPROVE_IDEA) }}</div>
-                            
                                 <div class="assignee-end-time">
                                     <span class="assignee">处理人：{{ timeline.ASSIGNEE_NAME }}</span>
                                     <span class="endTime"><i class="fas fa-clock"></i> {{ timeline.END_TIME }}</span>
                                 </div>
                             </div>
-                            
                         </div>
-                        
-                        
-
-
                     </div>
                 </div>                
             </div>
@@ -58,32 +41,27 @@
             </div>
         </div>
 
-        <!-- Approval Description and Opinion Type fixed at bottom -->
-        <div class="form-section">
-            <label for="opinion-type"><span class="required">*</span> 意见类型</label>
-            <div class="select-fake" @click="openModal">{{ opinionType || '请选择' }}</div>
-            <label for="approval-description"><span class="required">*</span> 审批说明</label>
-            <textarea id="approval-description" v-model="approvalDescription" rows="2" maxlength="500"></textarea>
+        <!-- 弹出面板按钮 -->
+        <div class="panel-toggle" @click="togglePanel">
+            意见 ({{ panelItems.length }})
         </div>
+        <!-- 弹出面板 -->
+        <transition name="slide-up">
+            <div v-if="showPanel" class="panel-content">
+                <!-- Approval Description and Opinion Type -->
+                <div class="form-section">
 
-        <!-- Modal Overlay -->
-        <div v-if="showModal" class="modal-overlay" @click="closeModal"></div>
+                    <label for="approval-description"><span class="required">*</span> 审批说明</label>
+                    <textarea id="approval-description" v-model="approvalDescription" rows="2" maxlength="500"></textarea>
 
-        <!-- Modal Content -->
-        <div v-if="showModal" class="modal-content">
-            <div class="modal-item" v-for="option in opinionOptions" :key="option" @click="selectOption(option)">
-                {{ option }}
+                </div>
+
             </div>
-            <div class="modal-item cancel" @click="closeModal">取消</div>
-        </div>
+        </transition>
 
-        <!-- Action Buttons Section -->
-        <div class="actions">
-            <button class="submit-btn" @click="submitApproval">提交</button>
-            <button class="cancel-btn" @click="closeApproval">关闭</button>
-        </div>
     </div>
 </template>
+
 
 
 <script>
@@ -94,9 +72,11 @@ export default {
             activeTab: 'details',
             approvalDescription: '',
             opinionType: '',
-            showModal: false, // 控制弹出层显示
-            opinionOptions: ['同意', '返回补充资料', '否决'], // 可选的意见类型
-            timeLineData: [], // 用于存储审批历史的数据
+            showModal: false,
+            showPanel: false, // 控制面板显示状态
+            // opinionOptions: ['同意', '返回补充资料', '否决'],
+            timeLineData: [],
+            panelItems: ['选项 1', '选项 2', '选项 3'], // 示例内容
         };
     },
     methods: {
@@ -109,21 +89,11 @@ export default {
                 this.loadTimeLineData(); // 切换到审批历史标签时加载数据
             }
         },
-        submitApproval() {
-            // 提交逻辑
-        },
-        closeApproval() {
-            // 取消逻辑
-        },
         openModal() {
             this.showModal = true; // 显示弹出层
         },
-        closeModal() {
-            this.showModal = false; // 隐藏弹出层
-        },
-        selectOption(option) {
-            this.opinionType = option; // 选择选项
-            this.closeModal(); // 关闭弹出层
+        togglePanel() {
+            this.showPanel = !this.showPanel; // 切换面板显示状态
         },
         loadTimeLineData() {
             // 模拟获取审批历史数据的API调用
@@ -278,7 +248,6 @@ export default {
     border-bottom: 2px solid #2c3e50;
 }
 
-
 .content {
     flex: 1;
     padding: 1rem;
@@ -287,12 +256,8 @@ export default {
     overflow-x: hidden;
     height: calc(100vh - 11rem); /* 调整内容区域的高度以适应固定表单和按钮 */
     box-sizing: border-box;
-    padding-bottom: 15rem; /* 为底部留出空间，防止内容被覆盖 */
+    padding-bottom: 3rem; /* 为底部留出空间，防止内容被覆盖 */
 }
-
-
-
-
 
 .form-section {
     padding: 1rem;
@@ -303,6 +268,7 @@ export default {
     left: 0;
     right: 0;
     box-sizing: border-box;
+    
 }
 
 .form-section label {
@@ -362,65 +328,6 @@ export default {
     background-color: #1a252f;
 }
 
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
-    z-index: 1001; /* 保证遮罩层在内容之上 */
-}
-
-.modal-content {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #fff;
-    border-top-left-radius: 10px; /* 圆角 */
-    border-top-right-radius: 10px;
-    padding: 1rem;
-    z-index: 1002; /* 保证内容在遮罩层之上 */
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2); /* 阴影效果 */
-    transition: transform 0.3s ease; /* 添加过渡效果 */
-}
-
-.modal-item {
-    padding: 0.75rem 0;
-    text-align: center;
-    cursor: pointer;
-    border-bottom: 1px solid #ddd; /* 每个选项之间的分隔线 */
-}
-
-.modal-item.cancel {
-    /* color: red; 取消按钮的特殊颜色 */
-    font-weight: bold;
-}
-
-.select-fake {
-    width: 100%; /* 填满可用宽度 */
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 0.25rem;
-    text-align: left; /* 文本左对齐 */
-    position: relative;
-    cursor: pointer;
-    box-sizing: border-box;
-    background-color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.select-fake::after {
-    content: '▼'; /* 向下箭头 */
-    font-size: 0.8rem;
-    color: #333;
-    position: absolute;
-    right: 1rem; /* 确保箭头在右侧 */
-}
-
 .required {
     color: red; /* 使 * 号变成红色 */
     margin-right: 0.25rem; /* 为 * 号和文本之间添加一些间距 */
@@ -434,15 +341,12 @@ export default {
     padding-left: 0rem; /* 给时间轴留出空间 */
 }
 
-
-
 /* Timeline item */
 .timeline-item {
     position: relative;
     padding-left: 1.5rem;
     margin-bottom: 2rem;
 }
-
 
 .timeline::before {
     content: '';
@@ -453,9 +357,6 @@ export default {
     width: 2px;
     background-color: #ddd; /* 灰色竖线颜色 */
 }
-
-
-
 
 /* Timeline dot */
 .timeline-item::before {
@@ -468,8 +369,6 @@ export default {
     background-color: #ddd; /* 圆点颜色 */
     border-radius: 50%;
 }
-
-
 
 /* Timeline header styles */
 .timeline-header {
@@ -484,7 +383,6 @@ export default {
     padding-bottom: 5px;
     padding-left: 0px;
 }
-
 
 /* New styles for the timeline card */
 .timeline-card {
@@ -509,10 +407,6 @@ export default {
     font-weight: normal;
 }
 
-
-
-
-
 .timeline-body {
     padding-left: 10px;
     font-size: 14px;
@@ -530,14 +424,10 @@ export default {
     align-items: flex-end; /* 向右对齐 */
 }
 
-
 .approveType {
     font-weight: bold;
     color: #1EC5B5; /* 审批类型颜色 */
 }
-
-
-
 
 .approveIdea {
     color: #ff9800; /* 审批意见颜色 */
@@ -548,8 +438,6 @@ export default {
     margin-top: 1.5rem; /* 添加上边距以增加空行 */
     width: 100%; /* 占满容器宽度 */
 }
-
-
 
 .duration {
     font-size: 0.9em;
@@ -577,5 +465,39 @@ export default {
     font-size: 0.8rem;
 }
 
+
+/** 下方弹出面板 **/
+.panel-toggle {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 1rem;
+    cursor: pointer;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.panel-content {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 1rem;
+    z-index: 1002;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(100%);
+}
+
+.slide-up-enter-active, .slide-up-leave-active {
+    transition: transform 0.3s ease-out;
+}
+
+.slide-up-enter, .slide-up-leave-to {
+    transform: translateY(100%);
+}
 
 </style>
