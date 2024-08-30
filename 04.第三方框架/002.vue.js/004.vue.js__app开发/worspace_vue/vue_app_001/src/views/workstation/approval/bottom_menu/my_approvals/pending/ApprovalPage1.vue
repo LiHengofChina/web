@@ -282,7 +282,7 @@ export default {
 .content {
     flex: 1;
     padding: 1rem;
-    margin-top: 5rem;
+    margin-top: 1rem;
     overflow-y: auto;
     overflow-x: hidden;
     height: calc(100vh - 11rem); /* 调整内容区域的高度以适应固定表单和按钮 */
