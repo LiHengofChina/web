@@ -4,14 +4,14 @@
         <div class="tabs">
             <div class="tab" :class="{ active: activeTab === 'details' }" @click="setActiveTab('details')">详情</div>
             <div class="tab" :class="{ active: activeTab === 'history' }" @click="setActiveTab('history')">审批历史</div>
-            <div class="tab" :class="{ active: activeTab === 'document' }" @click="setActiveTab('document')">资料</div>
+            <div class="tab" :class="{ active: activeTab === 'document' }" @click="setActiveTab('document')">文档</div>
         </div>
 
         <!-- Scrollable Content Area -->
         <div class="content">
 
             <div v-if="activeTab === 'details'">
-                <div class="details-form-title">基本信息</div>
+                <div class="details-form-title">立项申请</div>
                 <div class="details-form">
                     <div class="details-form-row">
                         <div class="details-form-label">客户名称</div>
@@ -232,9 +232,20 @@
                     </div>
                 </div>                
             </div>
+
             <div v-else-if="activeTab === 'document'">
-                <p>文档内容...</p>
+                <div class="details-form-title">企业融资租赁申请书</div>
+                <div class="document-list">
+                    <div class="document-item" v-for="(document, index) in documents" :key="index">
+                        <i class="fas fa-file-alt"></i>
+                        <span>{{ document.name }}</span>
+                        <span>{{ document.date }}</span>
+                    </div>
+                </div>
             </div>
+            
+            
+
         </div>
 
         <!-- 弹出面板按钮 -->
@@ -341,6 +352,13 @@ export default {
 
                     
             },
+
+            documents: [
+                { name: '文件1', date: '2024-09-01' },
+                { name: '文件2', date: '2024-08-28' },
+                { name: '文件3', date: '2024-08-15' }
+            ],
+
         };
     },
 
@@ -936,6 +954,55 @@ export default {
     font-size: 1rem;
     text-align: left; /* 左对齐 */
     flex: 6; /* 占据 6/10 的宽度 */
+}
+
+
+/** 文档样式 */
+.document-list {
+    margin-top: 1rem; /* 保持顶部间距 */
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.document-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease; /* 添加过渡效果，提升用户体验 */
+}
+
+.document-item:hover {
+    background-color: #f9f9f9; /* 鼠标悬停效果 */
+}
+
+.document-item:last-child {
+    border-bottom: none; /* 去除最后一个文档项的底部边框 */
+}
+
+.document-item i {
+    font-size: 1.5rem;
+    color: #007BFF;
+    margin-right: 1rem;
+}
+
+.document-info {
+    flex: 1;
+}
+
+.document-title {
+    font-size: 1rem;
+    color: #333;
+    margin: 0;
+    font-weight: bold; /* 使标题更显眼 */
+}
+
+.document-date {
+    font-size: 0.8rem;
+    color: #909399;
+    margin: 0;
 }
 
 
