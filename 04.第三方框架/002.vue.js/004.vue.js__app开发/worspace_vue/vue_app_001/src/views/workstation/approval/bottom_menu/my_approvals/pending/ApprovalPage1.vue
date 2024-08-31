@@ -9,9 +9,205 @@
 
         <!-- Scrollable Content Area -->
         <div class="content">
+
             <div v-if="activeTab === 'details'">
-                <p>详情内容...</p>
+                <div class="details-form-title">基本信息</div>
+                <div class="details-form">
+                    <div class="details-form-row">
+                        <div class="details-form-label">客户名称</div>
+                        <div class="details-form-value">{{ leaseApply.cusName }}</div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">产品名称</div>
+                        <div class="details-form-value">{{ leaseApply.productName }}</div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">项目名称</div>
+                        <div class="details-form-value">{{ leaseApply.applyName }}</div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">租赁本金</div>
+                        <div class="details-form-value">{{ leaseApply.applyAmt }}</div>
+                    </div>
+
+                    <div class="details-form-row">
+                        <div class="details-form-label">租赁期限</div>
+                        <div class="details-form-value">
+                            {{ leaseApply.term }}{{ leaseApply.termType === '1' ? '个月' : leaseApply.termType === '2' ? '天' : '' }}
+                        </div>                        
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">期限类型</div>
+                        <div class="details-form-value">
+                            {{ leaseApply.termType === '1' ? '月' : leaseApply.termType === '2' ? '天' : '未知' }}
+                        </div>                        
+                    </div>                    
+                    <div class="details-form-row">
+                        <div class="details-form-label">还款方式</div>
+                        <div class="details-form-value">
+                            {{ 
+                                leaseApply.leaseRepayType === '0' ? '等额租金后付' : 
+                                leaseApply.leaseRepayType === '1' ? '等额租金先付' : 
+                                leaseApply.leaseRepayType === '2' ? '自定义还款计划' : 
+                                leaseApply.leaseRepayType 
+                            }}                            
+                        </div>                           
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">还款周期</div>
+                        <div class="details-form-value">
+                            {{ 
+                                leaseApply.repayNumType === '1' ? '月' : 
+                                leaseApply.repayNumType === '2' ? '3个月' : 
+                                leaseApply.repayNumType === '3' ? '6个月' : 
+                                leaseApply.repayNumType 
+                            }}
+                        </div>                        
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">申报利率</div>
+                        <div class="details-form-value">{{ leaseApply.rate }}%</div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">利率类型</div>
+                        <div class="details-form-value">
+                            {{
+                                leaseApply.rateType === '1' ? '年利率(%)' :
+                                leaseApply.rateType === '2' ? '月利率(‰)' :
+                                leaseApply.rateType === '3' ? '日利率(‱)' :
+                                leaseApply.rateType === '4' ? '月利率(%)' :
+                                '未知类型'
+                            }}
+                        </div>                                            
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">逾期利率</div>
+                        <div class="details-form-value">{{ leaseApply.overRate }}%</div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">LPR利率</div>
+                        <div class="details-form-value">{{ leaseApply.baseRate }}%</div>
+                    </div>                    
+
+                    <div class="details-form-row">
+                        <div class="details-form-label">资金来源</div>
+                        <div class="details-form-value">
+                            {{
+                                leaseApply.capitalSource === '01' ? '股东借款' :
+                                leaseApply.capitalSource === '02' ? '自有资金' :
+                                leaseApply.capitalSource === '03' ? '外部融资' :
+                                leaseApply.capitalSource === '04' ? '其他' :
+                                '未知来源'
+                            }}
+                        </div>                        
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">业务类型</div>
+                        <div class="details-form-value">
+                            {{
+                                leaseApply.leaseBusType === '1' ? '售后回租' :
+                                leaseApply.leaseBusType === '2' ? '直租' :
+                                leaseApply.leaseBusType === '3' ? '租赁资产交易' :
+                                '未知类型'
+                            }}
+                        </div>                        
+                    </div>                        
+                    <div class="details-form-row">
+                        <div class="details-form-label">起租日</div>
+                        <div class="details-form-value">{{ formattedApplyBeginDate }}</div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">担保方式</div>
+                        <div class="details-form-value">
+                            {{ 
+                                leaseApply.vouType === '1' ? '信用' : 
+                                leaseApply.vouType === '2' ? '保证' : 
+                                leaseApply.vouType === '3' ? '抵押' : 
+                                leaseApply.vouType === '4' ? '质押' : 
+                                '未知方式' 
+                            }}
+                        </div>                        
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">是否购买保险</div>
+                        <div class="details-form-value">
+                            {{ leaseApply.ifBuyInsurance === '1' ? '是' : leaseApply.ifBuyInsurance === '0' ? '否' : '未知状态' }}
+                        </div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">是否超限额</div>
+                        <div class="details-form-value">
+                            {{ leaseApply.overQuota === '1' ? '是' : leaseApply.overQuota === '2' ? '否' : '未知状态' }}
+                        </div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">irr</div>
+                        <div class="details-form-value">{{ leaseApply.irrTax }}</div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">xirr</div>
+                        <div class="details-form-value">{{ leaseApply.xirrTax }}</div>
+                    </div>
+
+                    <div class="details-form-row">
+                        <div class="details-form-label">项目来源</div>
+                        <div class="details-form-value">{{ leaseApply.projectSource }}</div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">项目说明</div>
+                        <div class="details-form-value">{{ leaseApply.applyRemark }}</div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">租赁标的物</div>
+                        <div class="details-form-value">{{ leaseApply.subjectMatterOfLease }}</div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">资金用途</div>
+                        <div class="details-form-value">{{ leaseApply.useOfFunds }}</div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">还款来源</div>
+                        <div class="details-form-value">{{ leaseApply.repaymentSource }}</div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">担保措施</div>
+                        <div class="details-form-value">{{ leaseApply.guaranteeMeasures }}</div>
+                    </div>
+    
+                </div>
+
+                <div class="details-form-title">初步租赁方案</div>
+                <div class="details-form">
+
+                    <div class="details-form-row">
+                        <div class="details-form-label">主营项目</div>
+                        <div class="details-form-value">{{ leaseApply.mainProjects }}</div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">行业归属</div>
+                        <div class="details-form-value">{{ leaseApply.industryAffiliation }}</div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">客户情况概述</div>
+                        <div class="details-form-value">{{ leaseApply.customerSituation }}</div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">备注</div>
+                        <div class="details-form-value">{{ leaseApply.remark }}</div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">业务A角</div>
+                        <div class="details-form-value">{{ leaseApply.mngOpName }}</div>
+                    </div>
+                    <div class="details-form-row">
+                        <div class="details-form-label">业务B角</div>
+                        <div class="details-form-value">{{ leaseApply.busUserName }}</div>
+                    </div>
+
+                </div>
+
             </div>
+
             <!-- 审批历史 -->
             <div v-else-if="activeTab === 'history'">
                 <div class="timeline">
@@ -89,7 +285,6 @@
 
 export default {
     name: 'ApprovalPage1',
- 
     data() {
         return {
             activeTab: 'details',
@@ -99,7 +294,53 @@ export default {
             showPanel: false, // 控制面板显示状态
             timeLineData: [],
             opinionOptions: ['同意', '返回补充资料', '否决'], // 单选框选项
-            selectedOpinion: '' // 选中的选项
+            selectedOpinion: '', // 选中的选项
+            leaseApply: {
+                "cusName": '金牛区星际航行软件开发工作室',
+                "productName": '公用事业租赁通',
+                "applyName": 'liheng-test-001',
+                "applyAmt": 200.00,
+
+                "termType": "1",
+                "term": 11,
+                "leaseRepayType": "0",
+                "repayNumType": "1",
+
+                "rate": 11.00,
+                "rateType": "1",   
+
+                "overRate": 1.00,
+                "baseRate": 3.650000000,
+
+                "capitalSource": "02",
+
+                "leaseBusType": "1",
+                "vouType": "4",
+
+                "applyBeginDate": "2024-08-29T00:00:00.000+08:00",
+                "ifBuyInsurance": "0",
+
+                "overQuota": "2",
+
+                "irrTax": 39.650000000,
+                "xirrTax": 47.670000000,
+
+                "projectSource": "liheng-test-001",
+                "applyRemark": "liheng-test-001",
+                "subjectMatterOfLease": "liheng-test-001",
+                "useOfFunds": "liheng-test-001",
+                "repaymentSource": "liheng-test-001",
+                "guaranteeMeasures": "liheng-test-001",
+
+                "mainProjects": "liheng-test-001",
+                "industryAffiliation": "liheng-test-001",
+                "customerSituation": "liheng-test-001",
+                "remark": "/liheng-test-001",
+                "mngOpName": "薛蓓蓓",	
+                "busUserName": "岳鹏",        
+
+                    
+            },
         };
     },
 
@@ -190,7 +431,13 @@ export default {
         resApproveIdea(idea) {
             return idea || '无审批意见';
         },
-    }
+    },
+    computed: {
+        formattedApplyBeginDate() {
+            const date = new Date(this.leaseApply.applyBeginDate);
+            return date.toISOString().split('T')[0]; // 格式化为 yyyy-mm-dd
+        }
+    },
 };
 </script>
 
@@ -304,6 +551,7 @@ export default {
     width: 100%; /* 确保占满可用空间 */
     margin-bottom: 1rem;
 }
+
 
 
 
@@ -653,5 +901,43 @@ export default {
 .radio-group input[type="radio"] {
     margin-right: 0.5rem; /* 右边距 */
 }
+
+.details-form {
+    padding: 1rem;
+    background-color: #fff;
+}
+.details-form-title {
+    width: 100%; /* 确保标题占据整行 */
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 0.5rem 0; /* 添加一些内边距 */
+    border-bottom: 1px solid #ddd; /* 添加下边框与其他内容区分 */
+    margin-top: 1rem; /* 添加顶部外边距以区分不同表单 */
+    color: #333; /* 字体颜色 */
+    text-align: left; /* 左对齐 */
+}
+
+.details-form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 垂直居中 */
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
+}
+.details-form-label {
+    color: #909399; /* 灰色 */
+    font-size: 1rem;
+    text-align: right; /* 右对齐 */
+    flex: 4; /* 占据 4/10 的宽度 */
+    margin-right: 1rem; /* 为值留出一些间距 */
+}
+.details-form-value {
+    color: #333; /* 黑色 */
+    font-size: 1rem;
+    text-align: left; /* 左对齐 */
+    flex: 6; /* 占据 6/10 的宽度 */
+}
+
+
 
 </style>
