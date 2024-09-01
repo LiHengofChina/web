@@ -1,0 +1,24 @@
+
+
+//============================================================
+//============================================================
+
+<div class="tab" :class="{ active: activeTab === 'details' }" @click="setActiveTab('details')">详情</div>
+
+
+:class="{ active: activeTab === 'details' }"
+是 Vue 的一个 "动态类名绑定" 语法
+
+
+//============== 工作原理
+//============== 工作原理
+（1）:class 用于绑定一个对象，该对象的键是类名，值是布尔表达式。
+		//当布尔表达式的值为 true 时，该类名会被应用到元素上。
+
+（2）当 activeTab 的值为 'details' 时，表达式 activeTab === 'details' 会返回 true，
+	   //于是 Vue 会在该元素上添加 active 类。
+	   如果 activeTab 不是 'details'，表达式返回 false，则 active 类不会被添加。
+
+（3）
+	因此，当 activeTab 的值为 'details' 时，HTML 实际上看起来像这样：
+	<div class="tab active">详情</div>
