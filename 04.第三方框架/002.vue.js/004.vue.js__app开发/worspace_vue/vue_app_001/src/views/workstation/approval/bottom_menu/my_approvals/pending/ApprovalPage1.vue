@@ -459,7 +459,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .page-layout {
     display: flex;
     flex-direction: column;

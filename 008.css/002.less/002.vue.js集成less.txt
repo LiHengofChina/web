@@ -1,0 +1,56 @@
+
+//================================================================== veu.js 集成 less
+//================================================================== veu.js 集成 less
+
+
+（1）安装 
+npm install less less-loader --save-dev
+
+
+（2）配置 Vue 项目以使用 LESS
+
+	使用的是 Vue CLI 创建的项目
+	默认支持 .vue 文件中的 LESS 语法。
+	只需在 .vue 文件的 <style> 部分指定 lang="less"。
+	/***
+			<template>
+			  <div class="example">
+				<p>Hello, LESS!</p>
+			  </div>
+			</template>
+
+			<script>
+			export default {
+			  name: 'ExampleComponent'
+			}
+			</script>
+
+			<style lang="less">
+			.example {
+			  p {
+				color: #3498db;
+				font-size: 20px;
+				&:hover {
+				  color: #2980b9;
+				}
+			  }
+			}
+			</style>
+	*/
+
+（3）配置打包脚本  webpack.config.js 或 vue.config.js
+
+	module.exports = {
+	  module: {
+		rules: [
+		  {
+			test: /\.less$/,
+			use: [
+			  'style-loader',
+			  'css-loader',
+			  'less-loader'
+			]
+		  }
+		]
+	  }
+	}

@@ -90,6 +90,15 @@ module.exports = defineConfig({
           test: /\.(jpe?g|png|gif|svg)$/i,
           type: "asset",
         },
+        // 处理 LESS 文件
+        {
+          test: /\.less$/,
+          use: [
+            'style-loader',
+            'css-loader',
+            'less-loader'
+          ]
+        },        
       ],
     },
     plugins: [
