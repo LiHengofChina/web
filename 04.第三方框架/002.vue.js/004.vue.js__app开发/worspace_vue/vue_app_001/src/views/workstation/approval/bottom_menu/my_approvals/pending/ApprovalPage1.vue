@@ -5,7 +5,7 @@
         <!-- Header Section  -->
         <div class="header">
             <i class="fas fa-chevron-left back-icon" @click="goBack"></i>
-            <h1 class="title">立项审批</h1>
+            <h1 class="title">合同审批</h1>
             <div class="spacer"></div>
         </div>
 
@@ -21,7 +21,7 @@
 
             <!-- 详情区域 -->
             <div v-if="activeTab === 'details'">
-                <div class="details-form-title">基本信息</div>
+                <div class="details-form-title">合同信息</div>
                 <div class="details-form">
                     <div class="details-form-row">
                         <div class="details-form-label">客户名称</div>
@@ -520,6 +520,7 @@ export default {
 }
 
 .title {
+    height: 1.5rem;    
     flex: 1;
     text-align: center;
     font-size: 1.2rem;
@@ -561,8 +562,8 @@ export default {
 .tab.active {
     /** background-color: #d9d9d9; */
     /** font-weight: bold; */
-    color: #00AEEF;
-    /** border-bottom: 0.1rem solid #00AEEF;*/
+    color: #007BFF;
+    /** border-bottom: 0.1rem solid #007BFF;*/
     position: relative; 
 }
 
@@ -574,7 +575,7 @@ export default {
     transform: translateX(-50%);
     width: 80%; /* 调整下划线的宽度 */
     height: 0.15rem; /* 下划线的高度 */
-    background-color: #00AEEF; /* 下划线的颜色 */
+    background-color: #007BFF; /* 下划线的颜色 */
 }
 
 /* 内容区域 ************************ */
@@ -598,15 +599,16 @@ export default {
 }
 .details-form-title {
     width: 100%; /* 确保标题占据整行 */
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: bold;
     padding: 0.5rem 0; /* 添加一些内边距 */
     border-bottom: 1px solid #ddd; /* 添加下边框与其他内容区分 */
     margin-top: 0.7rem; /* 添加顶部外边距以区分不同表单 */
     color: #909399; /* 字体颜色 */
-    
     text-align: left; /* 左对齐 */
+    font-family: 'STZhongsong', '华文中宋', serif;
 }
+
 
 .details-form-row {
     display: flex;
@@ -617,16 +619,24 @@ export default {
 }
 .details-form-label {
     color: #909399; /* 灰色 */
-    font-size: 1rem;
+    font-size: 0.9rem;
     text-align: right; /* 右对齐 */
-    flex: 4; /* 占据 4/10 的宽度 */
-    margin-right: 1rem; /* 为值留出一些间距 */
+    flex: 3.5; /* 占据 3/10 的宽度 */
+    /*   margin-right: 0.1rem; 为值留出一些间距 */
+    font-family: 'STZhongsong', '华文中宋', serif;
+}
+.details-form-label::after {
+    font-size: 0.9rem; 
+    content: "：";
+    color: #909399;
+    margin-left: 0.1rem;
 }
 .details-form-value {
-    color: #333; /* 黑色 */
-    font-size: 1rem;
+    color: #909399;
+    font-size: 0.9rem;
     text-align: left; /* 左对齐 */
-    flex: 6; /* 占据 6/10 的宽度 */
+    flex: 6.5; /* 占据 7/10 的宽度 */
+    font-family: 'STZhongsong', '华文中宋', serif;
 }
 
 /* 审批历史 ************************ */
@@ -824,7 +834,7 @@ export default {
 }
 
 .opinion-agree:active, .opinion-reject:active, .opinion-supplement:active {
-    color: #00AEEF; /* 点击时变为指定颜色 */
+    color: #007BFF; /* 点击时变为指定颜色 */
     box-shadow: 0 4px 16px rgba(0, 174, 239, 0.8); /* 增加阴影的不透明度和模糊半径 */
 }
 
