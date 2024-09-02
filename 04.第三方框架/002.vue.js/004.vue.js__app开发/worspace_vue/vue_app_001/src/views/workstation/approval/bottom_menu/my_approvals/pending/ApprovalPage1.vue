@@ -525,16 +525,7 @@ export default {
 
 /* 意见面板 ************************ */
 
-.form-section {
-    padding: 1rem;
-    background-color: #f9f9f9;
-    border-top: 1px solid #ddd;
-    position: fixed;
-    bottom: 2.5rem; /* 与按钮区域的间距 */
-    left: 0;
-    right: 0;
-    box-sizing: border-box;
-}
+
 
 
 .form-row {
@@ -594,38 +585,6 @@ export default {
     outline: none; /* 移除点击后的轮廓 */
 }
 
-
-
-.form-label, .arrow-icon, .send-icon {
-    flex: 1; /* 设置每一列的flex为1，均分空间 */
-    text-align: center; /* 确保文本和图标居中对齐 */
-}
-
-.form-section label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-    text-align: left; /* 标签文本居左对齐 */
-}
-
-.form-section textarea,
-.form-section select {
-    width: 100%; /* 确保宽度填满可用空间 */
-    max-width: 100%; /* 确保不会超出父容器宽度 */
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 0.25rem;
-    transition: border-color 0.3s ease;
-    box-sizing: border-box;
-    appearance: none; /* 移除默认下拉箭头样式以便自定义 */
-}
-
-.form-section textarea:focus,
-.form-section select:focus {
-    border-color: #007BFF;
-    outline: none;
-}
 
 .actions {
     display: flex;
@@ -707,14 +666,11 @@ export default {
     margin-left: 0rem; /* 给时间轴留出空间 */
     padding-left: 0rem; /* 给时间轴留出空间 */
 }
-
-/* Timeline item */
 .history-timeline-item {
     position: relative;
     padding-left: 1.5rem;
     margin-bottom: 2rem;
 }
-
 .history-timeline::before {
     content: '';
     position: absolute;
@@ -724,8 +680,6 @@ export default {
     width: 2px;
     background-color: #ddd; /* 灰色竖线颜色 */
 }
-
-/* Timeline dot */
 .history-timeline-item::before {
     content: '';
     position: absolute;
@@ -736,8 +690,6 @@ export default {
     background-color: #ddd; /* 圆点颜色 */
     border-radius: 50%;
 }
-
-/* Timeline header styles */
 .history-timeline-header {
     padding-left: 0.5rem; /* 使标题与圆圈对齐 */    
     display: flex;
@@ -750,8 +702,6 @@ export default {
     padding-bottom: 5px;
     padding-left: 0px;
 }
-
-/* New styles for the timeline card */
 .history-timeline-card {
     border: 1px solid #ddd;
     padding: 15px;
@@ -760,29 +710,25 @@ export default {
     background-color: #fff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-
 .history-taskName {
     font-weight: bold;
     color: #909399;
     font-size: 1rem;
     margin-bottom: 4px;
 }
-
 .history-taskTime {
     color: #909399;
     font-size: 0.8rem;
     font-weight: normal;
 }
-
 .history-timeline-body {
     padding-left: 10px;
     font-size: 14px;
     color: #666;
     display: flex;
-    flex-direction: column; /* 改为列方向 */
-    align-items: center; /* 中心对齐 */
+    flex-direction: column;
+    align-items: center;
 }
-
 .history-assignee-end-time {
     display: flex;
     justify-content: flex-end; /* 右对齐 */
@@ -791,12 +737,10 @@ export default {
     flex-direction: column; /* 垂直排列 */
     align-items: flex-end; /* 向右对齐 */
 }
-
 .history-approveType {
     font-weight: bold;
     color: #1EC5B5; /* 审批类型颜色 */
 }
-
 .history-approveIdea {
     color: #ff9800; /* 审批意见颜色 */
     margin-bottom: 5px;
@@ -806,33 +750,94 @@ export default {
     margin-top: 1.5rem; /* 添加上边距以增加空行 */
     width: 100%; /* 占满容器宽度 */
 }
-
 .history-duration {
     font-size: 0.9em;
     color: #909399;
     text-align: right; /* 右对齐 */
 }
-
 .history-approve-type-duration {
     display: flex;
     justify-content: space-between; /* 左右对齐 */
     width: 100%; /* 占满容器宽度 */
     margin-bottom: 5px;
 }
-
-.end-time-assignee {
-    display: flex;
-    justify-content: space-between; /* 左右对齐 */
-    margin-top: 10px; /* 添加适当的间距 */
-}
-
-
-
 .history-endTime, .history-assignee {
     color: #909399;
     font-size: 0.8rem;
 }
 
+
+
+/* 意见面板 ************************ */
+.panel-content {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 1rem;
+    z-index: 1002;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(100%);
+}
+
+.form-section {
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+    position: fixed;
+    bottom: 2.5rem; /* 与按钮区域的间距 */
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
+}
+.form-section label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    text-align: left; /* 标签文本居左对齐 */
+}
+.form-section textarea, .form-section select {
+    width: 100%; /* 确保宽度填满可用空间 */
+    max-width: 100%; /* 确保不会超出父容器宽度 */
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+    appearance: none; /* 移除默认下拉箭头样式以便自定义 */
+}
+
+.form-section textarea:focus, .form-section select:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+.form-label, .arrow-icon, .send-icon {
+    flex: 1; /* 设置每一列的flex为1，均分空间 */
+    text-align: center; /* 确保文本和图标居中对齐 */
+}
+
+/**
+复选框样式
+*/
+.radio-group {
+    display: flex;
+    justify-content: space-around; /* 均匀分布 */
+    margin-top: 0rem; /* 上边距 */
+}
+.radio-group label {
+    font-size: 1rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    font-weight: normal; /* 确保字体不加粗 */
+}
+.radio-group input[type="radio"] {
+    margin-right: 0.5rem; /* 右边距 */
+}
 
 
 /** 下方弹出面板 **/
@@ -876,19 +881,7 @@ export default {
     text-align: center;
 }
 
-.panel-content {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #fff;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    padding: 1rem;
-    z-index: 1002;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
-    transform: translateY(100%);
-}
+
 /**   */
 .slide-up-enter-active, .slide-up-leave-active {
     transition: transform 0.3s ease-out;
@@ -914,24 +907,6 @@ export default {
     width: 100%; /* 占满父容器的宽度 */
 }
 
-/**
-复选框样式
-*/
-.radio-group {
-    display: flex;
-    justify-content: space-around; /* 均匀分布 */
-    margin-top: 0rem; /* 上边距 */
-}
-.radio-group label {
-    font-size: 1rem;
-    color: #333;
-    display: flex;
-    align-items: center;
-    font-weight: normal; /* 确保字体不加粗 */
-}
-.radio-group input[type="radio"] {
-    margin-right: 0.5rem; /* 右边距 */
-}
 
 
 
