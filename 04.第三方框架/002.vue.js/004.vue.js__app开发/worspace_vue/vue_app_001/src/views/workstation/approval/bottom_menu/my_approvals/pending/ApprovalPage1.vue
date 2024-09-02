@@ -4,7 +4,7 @@
 
         <!-- 标签部分 -->
         <div class="tabs">
-            <div class="tab" :class="{ active: activeTab === 'details' }" @click="setActiveTab('details')">详情</div>
+            <div class="tab" :class="{ active: activeTab === 'details' }" @click="setActiveTab('details')">审批详情</div>
             <div class="tab" :class="{ active: activeTab === 'history' }" @click="setActiveTab('history')">审批历史</div>
             <div class="tab" :class="{ active: activeTab === 'document' }" @click="setActiveTab('document')">文档</div>
         </div>
@@ -14,7 +14,7 @@
 
             <!-- 详情区域 -->
             <div v-if="activeTab === 'details'">
-                <div class="details-form-title">立项申请</div>
+                <div class="details-form-title">基本信息</div>
                 <div class="details-form">
                     <div class="details-form-row">
                         <div class="details-form-label">客户名称</div>
