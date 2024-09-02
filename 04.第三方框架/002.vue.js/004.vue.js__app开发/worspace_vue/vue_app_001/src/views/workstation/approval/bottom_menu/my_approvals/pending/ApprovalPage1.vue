@@ -389,17 +389,17 @@ export default {
         },
         sendSupplement() {
             // 处理否决请求的逻辑
-            alert('返回补充资料已发送');
+            // alert('返回补充资料已发送');
             // 在这里添加实际的请求发送代码
         },
         sendReject() {
             // 处理否决请求的逻辑
-            alert('否决请求已发送');
+            // alert('否决请求已发送');
             // 在这里添加实际的请求发送代码
         },
         sendApproval() {
             // 处理审批发送的逻辑
-            alert('审批请求已发送');
+            // alert('审批请求已发送');
             // 在这里添加实际的请求发送代码
         },
         loadTimeLineData() {
@@ -806,7 +806,6 @@ export default {
 }
 
 
-
 .opinion-agree, .opinion-reject, .opinion-supplement {
     background-color: transparent; /* 移除按钮背景 */
     border: none; /* 移除按钮边框 */
@@ -821,12 +820,16 @@ export default {
     white-space: nowrap; /* 确保按钮在同一行 */
     overflow: hidden; /* 隐藏超出内容 */
     text-overflow: ellipsis; /* 如果内容超出显示省略号 */
-    transition: color 0.3s ease; /* 添加颜色变化的过渡效果 */
+    transition: color 0.3s ease, box-shadow 0.2s ease; /* 添加颜色和阴影变化的过渡效果 */
 }
 
 .opinion-agree:active, .opinion-reject:active, .opinion-supplement:active {
     color: #00AEEF; /* 点击时变为指定颜色 */
+    box-shadow: 0 4px 16px rgba(0, 174, 239, 0.8); /* 增加阴影的不透明度和模糊半径 */
 }
+
+
+
 
 
 
