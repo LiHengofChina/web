@@ -1,15 +1,18 @@
 <template>
+
     <div class="page-layout">
-        <!-- Tabs Section -->
+
+        <!-- 标签部分 -->
         <div class="tabs">
             <div class="tab" :class="{ active: activeTab === 'details' }" @click="setActiveTab('details')">详情</div>
             <div class="tab" :class="{ active: activeTab === 'history' }" @click="setActiveTab('history')">审批历史</div>
             <div class="tab" :class="{ active: activeTab === 'document' }" @click="setActiveTab('document')">文档</div>
         </div>
 
-        <!-- Scrollable Content Area -->
+        <!-- 可滚动的内容区域 -->
         <div class="content">
 
+            <!-- 详情区域 -->
             <div v-if="activeTab === 'details'">
                 <div class="details-form-title">立项申请</div>
                 <div class="details-form">
@@ -173,7 +176,7 @@
                         <div class="details-form-label">担保措施</div>
                         <div class="details-form-value">{{ leaseApply.guaranteeMeasures }}</div>
                     </div>
-    
+
                 </div>
 
                 <div class="details-form-title">初步租赁方案</div>
@@ -230,9 +233,11 @@
                             </div>
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
 
+
+            <!-- 文档 -->
             <div v-else-if="activeTab === 'document'">
                 <div class="details-form-title">企业融资租赁申请书</div>
                 <div class="document-list">
@@ -243,22 +248,24 @@
                     </div>
                 </div>
             </div>
-            
-            
 
         </div>
 
-        <!-- 弹出面板按钮 -->
+
+        <!-- “意见”按钮 -->
         <div class="panel-toggle" @click="togglePanel">
             意见
-            <i class="fas fa-chevron-up arrow-up-icon"></i> <!-- FontAwesome 向上箭头图标 -->
+            <i class="fas fa-chevron-up arrow-up-icon"></i>
         </div>
-        <!-- 弹出面板 -->
+
+        <!-- “意见”面板 -->
         <transition name="slide-up">
+
             <div v-if="showPanel" class="panel-content">
 
                 <div class="form-section">
-                    
+
+                    <!-- 意见标题和发送按钮 -->
                     <div class="form-row">
                         <label for="approval-description" class="form-label">
                             <span class="required">*</span> 审批说明
@@ -266,12 +273,11 @@
                         <i class="fas fa-chevron-down arrow-down-icon" @click="togglePanel"></i>
                         <i class="fas fa-paper-plane send-icon" @click="sendApproval"></i>
                     </div>
-                    
 
+                    <!-- 输入意见 -->
                     <textarea id="approval-description" v-model="approvalDescription" rows="5" maxlength="500"></textarea>
 
-
-                    <!-- 添加的单选框部分 -->
+                    <!-- radio -->
                     <div class="radio-group">
                         <span class="required">*</span>
                         <label v-for="option in opinionOptions" :key="option">
@@ -279,9 +285,9 @@
                             {{ option }}
                         </label>
                     </div>
-
                 </div>
             </div>
+
         </transition>
 
 
@@ -876,7 +882,7 @@ export default {
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
     transform: translateY(100%);
 }
-
+/**   */
 .slide-up-enter-active, .slide-up-leave-active {
     transition: transform 0.3s ease-out;
 }
