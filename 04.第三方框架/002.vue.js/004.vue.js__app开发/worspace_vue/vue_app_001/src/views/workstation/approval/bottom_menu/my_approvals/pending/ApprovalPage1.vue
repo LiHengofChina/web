@@ -2,6 +2,14 @@
 
     <div class="page-layout">
 
+
+        <!-- Header Section  -->
+        <div class="header">
+            <i class="fas fa-chevron-left back-icon" @click="goBack"></i>
+            <h1 class="title">立项审批</h1>
+            <div class="spacer"></div>
+        </div>
+
         <!-- 标签部分 -->
         <div class="tabs">
             <div class="tab" :class="{ active: activeTab === 'details' }" @click="setActiveTab('details')">审批详情</div>
@@ -480,6 +488,43 @@ export default {
     box-sizing: border-box; /* 确保内边距和边框不会导致布局超出 */
 }
 
+/* 标题部分 ************************ */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 2.5rem;
+    background-color: #00ADEF;
+    border-bottom: 1px solid #ddd;
+    z-index: 1000;
+    padding: 0 1rem;
+    box-sizing: border-box;
+}
+
+.back-icon {
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #FFFFFF;
+}
+
+.title {
+    flex: 1;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+.spacer {
+    width: 2.8rem;
+}
+
 /* Tab 顶部切换卡 ************************ */
 .tabs {
     display: flex;
@@ -488,7 +533,7 @@ export default {
     max-width: 100%;
     background-color: #f0f0f0;
     border-bottom: 1px solid #ddd;
-    top: 0rem; /** top: 2.5rem; */ 
+    top: 2.5rem;
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -501,24 +546,36 @@ export default {
     text-align: center;
     padding: 0.5rem 0;
     cursor: pointer;
-    color: #333;
+    color: #808080;
     font-size: 1rem;
-    border-right: 1px solid #ddd;
+    /**  border-right: 1px solid #ddd; */
     box-sizing: border-box;
 }
 
 .tab.active {
-    background-color: #d9d9d9;
-    font-weight: bold;
-    color: #2c3e50;
-    border-bottom: 2px solid #2c3e50;
+    /** background-color: #d9d9d9; */
+    /** font-weight: bold; */
+    color: #00AEEF;
+    /** border-bottom: 0.1rem solid #00AEEF;*/
+    position: relative; 
+}
+
+.tab.active::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -2px; /* 根据需要调整位置 */
+    transform: translateX(-50%);
+    width: 80%; /* 调整下划线的宽度 */
+    height: 0.15rem; /* 下划线的高度 */
+    background-color: #00AEEF; /* 下划线的颜色 */
 }
 
 /* 内容区域 ************************ */
 .content {
     flex: 1;
     padding: 1rem;
-    margin-top: 1rem;
+    margin-top: 2.8rem;
     overflow-y: auto;
     overflow-x: hidden;
     height: calc(100vh - 11rem); /* 调整内容区域的高度以适应固定表单和按钮 */
