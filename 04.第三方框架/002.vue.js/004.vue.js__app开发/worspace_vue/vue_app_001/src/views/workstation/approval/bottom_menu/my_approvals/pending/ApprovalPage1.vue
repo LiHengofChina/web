@@ -253,9 +253,9 @@
 
 
         <!-- “意见”按钮 -->
-        <div class="panel-toggle" @click="togglePanel">
+        <div class="opinion-panel-toggle" @click="togglePanel">
             意见
-            <i class="fas fa-chevron-up arrow-up-icon"></i>
+            <i class="fas fa-chevron-up opinion-arrow-up-icon"></i>
         </div>
 
         <!-- “意见”面板 -->
@@ -263,22 +263,22 @@
 
             <div v-if="showPanel" class="panel-content">
 
-                <div class="form-section">
+                <div class="opinion-form-section">
 
                     <!-- 意见标题和发送按钮 -->
-                    <div class="form-row">
-                        <label for="approval-description" class="form-label">
+                    <div class="opinion-form-row">
+                        <label for="approval-description" class="opinion-form-label">
                             <span class="required">*</span> 审批说明
                         </label>
-                        <i class="fas fa-chevron-down arrow-down-icon" @click="togglePanel"></i>
-                        <i class="fas fa-paper-plane send-icon" @click="sendApproval"></i>
+                        <i class="fas fa-chevron-down opinion-arrow-down-icon" @click="togglePanel"></i>
+                        <i class="fas fa-paper-plane opinion-send-icon" @click="sendApproval"></i>
                     </div>
 
                     <!-- 输入意见 -->
                     <textarea id="approval-description" v-model="approvalDescription" rows="5" maxlength="500"></textarea>
 
                     <!-- radio -->
-                    <div class="radio-group">
+                    <div class="opinion-radio-group">
                         <span class="required">*</span>
                         <label v-for="option in opinionOptions" :key="option">
                             <input type="radio" :value="option" v-model="selectedOpinion">
@@ -523,105 +523,6 @@ export default {
     padding-bottom: 3rem; /* 为底部留出空间，防止内容被覆盖 */
 }
 
-/* 意见面板 ************************ */
-
-
-
-
-.form-row {
-    display: flex;
-    justify-content: space-between; /* 均分子元素间的空间 */
-    align-items: center; /* 垂直居中对齐 */
-    width: 100%; /* 确保占满可用空间 */
-    margin-bottom: 1rem;
-}
-
-
-
-
-.form-label {
-    flex: 1; /* 调整 label 所占空间 */
-    text-align: left; /* 标签文本居左对齐 */
-    margin: 0; /* 去掉 margin */
-}
-
-
-.arrow-icon {
-    color: #007BFF;
-}
-
-
-/* 发送图标 */
-
-.send-icon {
-    flex: 1;
-    font-size: 1.2rem;
-    color: #333;
-    cursor: pointer;
-    text-align: center;
-    background-color: transparent; /* 确保没有背景色 */
-    margin-right: -3rem; /* 调整这里的值可以控制向右移动的距离 */
-}
-
-
-.arrow-icon, .send-icon {
-    flex: 1;
-    font-size: 1.2rem;
-    color: #333;
-    cursor: pointer;
-    text-align: center;
-}
-.arrow-down-icon, .send-icon {
-    flex: 1; /* 调整图标所占空间 */
-    text-align: center; /* 图标居中对齐 */
-    cursor: pointer; /* 鼠标指针样式 */
-}
-
-.arrow-icon:hover, .send-icon:hover {
-    color: #007BFF; /* 当鼠标悬停在按钮上时改变颜色 */
-    background-color: transparent; /* 确保没有背景色 */
-    box-shadow: none; /* 确保没有阴影 */
-    border: none; /* 移除任何边框 */
-    outline: none; /* 移除点击后的轮廓 */
-}
-
-
-.actions {
-    display: flex;
-    justify-content: space-around;
-    padding: 0.5rem;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    background-color: #f0f0f0;
-    border-top: 1px solid #ddd;
-    box-sizing: border-box;
-}
-
-.actions button {
-    flex: 1;
-    margin: 0 0.5rem;
-    padding: 0.5rem;
-    background-color: #2c3e50;
-    color: #fff;
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    box-sizing: border-box;
-}
-
-.actions button:hover {
-    background-color: #1a252f;
-}
-
-.required {
-    color: red; /* 使 * 号变成红色 */
-    margin-right: 0.25rem; /* 为 * 号和文本之间添加一些间距 */
-}
-
 
 /* 详情 ************************ */
 .details-form {
@@ -768,80 +669,51 @@ export default {
 
 
 
-/* 意见面板 ************************ */
-.panel-content {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
+/* 文档样式 ************************ */
+.document-list {
+    margin-top: 1rem; /* 保持顶部间距 */
+    padding: 1rem;
     background-color: #fff;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    padding: 1rem;
-    z-index: 1002;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
-    transform: translateY(100%);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-
-.form-section {
-    padding: 1rem;
-    background-color: #f9f9f9;
-    border-top: 1px solid #ddd;
-    position: fixed;
-    bottom: 2.5rem; /* 与按钮区域的间距 */
-    left: 0;
-    right: 0;
-    box-sizing: border-box;
-}
-.form-section label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-    text-align: left; /* 标签文本居左对齐 */
-}
-.form-section textarea, .form-section select {
-    width: 100%; /* 确保宽度填满可用空间 */
-    max-width: 100%; /* 确保不会超出父容器宽度 */
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 0.25rem;
-    transition: border-color 0.3s ease;
-    box-sizing: border-box;
-    appearance: none; /* 移除默认下拉箭头样式以便自定义 */
-}
-
-.form-section textarea:focus, .form-section select:focus {
-    border-color: #007BFF;
-    outline: none;
-}
-.form-label, .arrow-icon, .send-icon {
-    flex: 1; /* 设置每一列的flex为1，均分空间 */
-    text-align: center; /* 确保文本和图标居中对齐 */
-}
-
-/**
-复选框样式
-*/
-.radio-group {
-    display: flex;
-    justify-content: space-around; /* 均匀分布 */
-    margin-top: 0rem; /* 上边距 */
-}
-.radio-group label {
-    font-size: 1rem;
-    color: #333;
+.document-item {
     display: flex;
     align-items: center;
-    font-weight: normal; /* 确保字体不加粗 */
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease; /* 添加过渡效果，提升用户体验 */
 }
-.radio-group input[type="radio"] {
-    margin-right: 0.5rem; /* 右边距 */
+.document-item:hover {
+    background-color: #f9f9f9; /* 鼠标悬停效果 */
+}
+.document-item:last-child {
+    border-bottom: none; /* 去除最后一个文档项的底部边框 */
+}
+.document-item i {
+    font-size: 1.5rem;
+    color: #007BFF;
+    margin-right: 1rem;
+}
+.document-info {
+    flex: 1;
+}
+.document-title {
+    font-size: 1rem;
+    color: #333;
+    margin: 0;
+    font-weight: bold; /* 使标题更显眼 */
+}
+.document-date {
+    font-size: 0.8rem;
+    color: #909399;
+    margin: 0;
 }
 
 
-/** 下方弹出面板 **/
-.panel-toggle {
+
+/* 意见“按钮” ************************ */
+.opinion-panel-toggle {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -858,104 +730,126 @@ export default {
     align-items: center;
     box-sizing: border-box; /* 包括内边距在内 */
 }
-
-
-.panel-toggle i.arrow-icon {
-    font-size: 1.2rem !important; /* 强制应用字体大小 */
-    color: #333 !important; /* 强制应用颜色 */
-    margin-left: auto; /* 使箭头靠右对齐 */
-}
-
-
-
-
-.panel-text {
-    font-size: 1rem;
-    color: #333;
-}
-
-.arrow-icon {
-    font-size: 1.2rem;
-    color: #333;
-    cursor: pointer;
-    text-align: center;
-}
-
-
-/**   */
-.slide-up-enter-active, .slide-up-leave-active {
-    transition: transform 0.3s ease-out;
-}
-
-.slide-up-enter, .slide-up-leave-to {
-    transform: translateY(100%);
-}
-
-
-/* 向上的箭头靠右 */
-.arrow-up-icon {
+.opinion-arrow-up-icon {
     position: absolute;
     right: 1rem; /* 右侧的间距调整 */
 }
 
+/* 意见“面板” ************************ */
+.panel-content {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 1rem;
+    z-index: 1002;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(100%);
+}
+.opinion-form-section {
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+    position: fixed;
+    bottom: 2.5rem; /* 与按钮区域的间距 */
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
+}
+.opinion-form-section label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    text-align: left; /* 标签文本居左对齐 */
+}
+.opinion-form-section textarea, .opinion-form-section select {
+    width: 100%; /* 确保宽度填满可用空间 */
+    max-width: 100%; /* 确保不会超出父容器宽度 */
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+    appearance: none; /* 移除默认下拉箭头样式以便自定义 */
+}
 
-/* 向下的箭头居中 */
-.arrow-down-icon {
+.opinion-form-section textarea:focus, .opinion-form-section select:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+.required {
+    color: red; /* 使 * 号变成红色 */
+    margin-right: 0.25rem; /* 为 * 号和文本之间添加一些间距 */
+}
+
+
+/* 意见“面板”-顶部 ************************ */
+.opinion-form-row {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between; /* 均分子元素间的空间 */
+    align-items: center; /* 垂直居中对齐 */
+    width: 100%; /* 确保占满可用空间 */
+    margin-bottom: 1rem;
+}
+.opinion-form-label {
+    flex: 1; /* 调整 label 所占空间 */
+    text-align: center;
+    margin: 0; /* 去掉 margin */
     width: 100%; /* 占满父容器的宽度 */
 }
 
 
 
-
-/** 文档样式 */
-.document-list {
-    margin-top: 1rem; /* 保持顶部间距 */
-    padding: 1rem;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.document-item {
+.opinion-arrow-down-icon {
+    margin: 0; /* 去掉 margin */
     display: flex;
+    justify-content: center;
     align-items: center;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #ddd;
-    transition: background-color 0.3s ease; /* 添加过渡效果，提升用户体验 */
+    width: 100%; /* 占满父容器的宽度 */
+    flex: 1; /* 调整图标所占空间 */
+    text-align: right; /* 图标居中对齐 */
+    cursor: pointer; /* 鼠标指针样式 */
+    margin-right: -3rem; /* 调整这里的值可以控制向右移动的距离 */
 }
-
-.document-item:hover {
-    background-color: #f9f9f9; /* 鼠标悬停效果 */
-}
-
-.document-item:last-child {
-    border-bottom: none; /* 去除最后一个文档项的底部边框 */
-}
-
-.document-item i {
-    font-size: 1.5rem;
-    color: #007BFF;
-    margin-right: 1rem;
-}
-
-.document-info {
+.opinion-send-icon {
+    margin: 0; /* 去掉 margin */
     flex: 1;
+    font-size: 1.2rem;
+    color: #333;
+    cursor: pointer;
+    text-align: center;
+    background-color: transparent; /* 确保没有背景色 */
+    margin-right: -3rem; /* 调整这里的值可以控制向右移动的距离 */
+}
+.opinion-send-icon:hover {
+    color: #007BFF; /* 当鼠标悬停在按钮上时改变颜色 */
+    background-color: transparent; /* 确保没有背景色 */
+    box-shadow: none; /* 确保没有阴影 */
+    border: none; /* 移除任何边框 */
+    outline: none; /* 移除点击后的轮廓 */
 }
 
-.document-title {
+
+
+/* 意见“面板”-底部 ************************ */
+.opinion-radio-group {
+    display: flex;
+    justify-content: space-around; /* 均匀分布 */
+    margin-top: 0rem; /* 上边距 */
+}
+.opinion-radio-group label {
     font-size: 1rem;
     color: #333;
-    margin: 0;
-    font-weight: bold; /* 使标题更显眼 */
+    display: flex;
+    align-items: center;
+    font-weight: normal; /* 确保字体不加粗 */
 }
-
-.document-date {
-    font-size: 0.8rem;
-    color: #909399;
-    margin: 0;
+.opinion-radio-group input[type="radio"] {
+    margin-right: 0.5rem; /* 右边距 */
 }
 
 
