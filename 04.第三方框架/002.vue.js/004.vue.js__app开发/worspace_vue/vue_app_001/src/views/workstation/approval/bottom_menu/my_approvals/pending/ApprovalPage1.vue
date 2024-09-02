@@ -213,6 +213,7 @@
 
             <!-- 审批历史 -->
             <div v-else-if="activeTab === 'history'">
+
                 <div class="history-timeline">
                     <div v-for="(timeline, index) in timeLineData" :key="index" class="history-timeline-item">
                         <div class="history-timeline-header">
@@ -270,7 +271,9 @@
                         <label for="approval-description" class="opinion-form-label">
                             <span class="required">*</span> 审批说明
                         </label>
+                        
                         <i class="fas fa-chevron-down opinion-arrow-down-icon" @click="togglePanel"></i>
+
                         <i class="fas fa-paper-plane opinion-send-icon" @click="sendApproval"></i>
                     </div>
 
@@ -535,8 +538,9 @@ export default {
     font-weight: bold;
     padding: 0.5rem 0; /* 添加一些内边距 */
     border-bottom: 1px solid #ddd; /* 添加下边框与其他内容区分 */
-    margin-top: 1rem; /* 添加顶部外边距以区分不同表单 */
-    color: #333; /* 字体颜色 */
+    margin-top: 0.7rem; /* 添加顶部外边距以区分不同表单 */
+    color: #909399; /* 字体颜色 */
+    
     text-align: left; /* 左对齐 */
 }
 
@@ -563,6 +567,8 @@ export default {
 
 /* 审批历史 ************************ */
 .history-timeline {
+    
+    margin-top: 0.5rem; /* 添加顶部外边距以区分不同表单 */
     position: relative;
     margin-left: 0rem; /* 给时间轴留出空间 */
     padding-left: 0rem; /* 给时间轴留出空间 */
@@ -782,8 +788,12 @@ export default {
     outline: none;
 }
 .required {
-    color: red; /* 使 * 号变成红色 */
-    margin-right: 0.25rem; /* 为 * 号和文本之间添加一些间距 */
+    font-weight: bold;
+    color: red; 
+    padding-top: 1rem;
+    padding-right: 0rem;
+    text-align: center; 
+    justify-content: center;
 }
 
 
@@ -795,35 +805,32 @@ export default {
     width: 100%; /* 确保占满可用空间 */
     margin-bottom: 1rem;
 }
+
 .opinion-form-label {
-    flex: 1; /* 调整 label 所占空间 */
-    text-align: center;
     margin: 0; /* 去掉 margin */
-    width: 100%; /* 占满父容器的宽度 */
+    flex: 1; /* 调整 label 所占空间 */
+    text-align: left;
+    margin: 0; /* 去掉 margin */
 }
-
-
-
 .opinion-arrow-down-icon {
     margin: 0; /* 去掉 margin */
+    font-size: 1.2rem;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%; /* 占满父容器的宽度 */
     flex: 1; /* 调整图标所占空间 */
-    text-align: right; /* 图标居中对齐 */
+    text-align: center; /* 图标居中对齐 */
     cursor: pointer; /* 鼠标指针样式 */
-    margin-right: -3rem; /* 调整这里的值可以控制向右移动的距离 */
 }
 .opinion-send-icon {
     margin: 0; /* 去掉 margin */
     flex: 1;
+    width: 100%; /* 占满父容器的宽度 */
     font-size: 1.2rem;
-    color: #333;
     cursor: pointer;
-    text-align: center;
-    background-color: transparent; /* 确保没有背景色 */
-    margin-right: -3rem; /* 调整这里的值可以控制向右移动的距离 */
+    text-align: right;
+    margin-right: 1rem;
 }
 .opinion-send-icon:hover {
     color: #007BFF; /* 当鼠标悬停在按钮上时改变颜色 */
@@ -838,6 +845,7 @@ export default {
 /* 意见“面板”-底部 ************************ */
 .opinion-radio-group {
     display: flex;
+    flex-direction: row;
     justify-content: space-around; /* 均匀分布 */
     margin-top: 0rem; /* 上边距 */
 }
@@ -847,6 +855,10 @@ export default {
     display: flex;
     align-items: center;
     font-weight: normal; /* 确保字体不加粗 */
+    margin-bottom: -0.5rem !important;
+    margin-top: -0.3rem !important;
+    margin-left: 1.5rem !important;
+
 }
 .opinion-radio-group input[type="radio"] {
     margin-right: 0.5rem; /* 右边距 */
