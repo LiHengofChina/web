@@ -2,7 +2,6 @@
 
     <div class="page-layout">
 
-
         <!-- Header Section  -->
         <div class="header">
             <i class="fas fa-chevron-left back-icon" @click="goBack"></i>
@@ -260,17 +259,18 @@
 
         </div>
 
-
-        <!-- “意见”按钮 -->
-        <div class="opinion-panel-toggle" @click="togglePanel">
-            意见
-            <i class="fas fa-chevron-up opinion-arrow-up-icon"></i>
+        <!-- “意见” 操作栏 -->
+        <div class="opinion-panel-toggle">
+            <div class="opinion-agree" @click="togglePanel">同意</div>
+            <div class="opinion-supplement" @click="sendSupplement">返回补充资料</div>
+            <div class="opinion-reject" @click="sendReject">否决</div>
         </div>
 
-        <!-- “意见”面板 -->
+
+        <!-- “同意”面板 -->
         <transition name="slide-up">
 
-            <div v-if="showPanel" class="panel-content">
+            <div v-if="showPanel" class="opinion-panel-content">
 
                 <div class="opinion-form-section">
 
@@ -288,14 +288,6 @@
                     <!-- 输入意见 -->
                     <textarea id="approval-description" v-model="approvalDescription" rows="5" maxlength="500"></textarea>
 
-                    <!-- radio -->
-                    <div class="opinion-radio-group">
-                        <span class="required">*</span>
-                        <label v-for="option in opinionOptions" :key="option">
-                            <input type="radio" :value="option" v-model="selectedOpinion">
-                            {{ option }}
-                        </label>
-                    </div>
                 </div>
             </div>
 
@@ -395,6 +387,21 @@ export default {
             this.showPanel = !this.showPanel; // 切换面板显示状态
             console.log("xxx");
         },
+        sendSupplement() {
+            // 处理否决请求的逻辑
+            alert('返回补充资料已发送');
+            // 在这里添加实际的请求发送代码
+        },
+        sendReject() {
+            // 处理否决请求的逻辑
+            alert('否决请求已发送');
+            // 在这里添加实际的请求发送代码
+        },
+        sendApproval() {
+            // 处理审批发送的逻辑
+            alert('审批请求已发送');
+            // 在这里添加实际的请求发送代码
+        },
         loadTimeLineData() {
             // 模拟获取审批历史数据的API调用
             this.timeLineData = [
@@ -489,7 +496,6 @@ export default {
 }
 
 /* 标题部分 ************************ */
-
 .header {
     display: flex;
     align-items: center;
@@ -576,6 +582,7 @@ export default {
     flex: 1;
     padding: 1rem;
     margin-top: 2.8rem;
+    top: 2.8rem;
     overflow-y: auto;
     overflow-x: hidden;
     height: calc(100vh - 11rem); /* 调整内容区域的高度以适应固定表单和按钮 */
@@ -775,31 +782,56 @@ export default {
 
 
 
-/* 意见“按钮” ************************ */
+/* “意见” 操作栏 ************************ */
 .opinion-panel-toggle {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%; /* 确保宽度占满 */
+    display: flex;
+    align-items: center;
+    width: 100%;
     max-width: 100%; /* 确保不会超过可用空间 */
-    padding: 1rem; /* 内边距确保文本和图标的可见性 */
     margin: 0; /* 清除任何默认的外边距 */
     background-color: #f0f0f0;
-    text-align: left;
-    cursor: pointer;
-    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-sizing: border-box; /* 包括内边距在内 */
-}
-.opinion-arrow-up-icon {
-    position: absolute;
-    right: 1rem; /* 右侧的间距调整 */
+    padding: 1rem;
+    justify-content: space-around; /* 均匀分布 */
+    box-sizing: border-box;
+    height: 2.5rem;
+    border-top: 1px solid #ddd; /* 可以添加一个上边框 */
+    z-index: 1000;
+    position: fixed; /* 使用固定定位 */
+    bottom: 0; /* 确保它位于视口底部 */
+    left: 0;
+    right: 0;
 }
 
-/* 意见“面板” ************************ */
-.panel-content {
+
+.opinion-agree, .opinion-reject, .opinion-supplement {
+    background-color: transparent; /* 移除按钮背景 */
+    border: none; /* 移除按钮边框 */
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+    flex: 1; /* 平分宽度 */
+    margin: 0; /* 移除按钮之间的间距 */
+    box-sizing: border-box;
+    position: relative; /* 为了使用伪元素 */
+}
+
+.opinion-agree:not(:last-child)::after, .opinion-supplement:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.10rem;
+    height: 70%; /* 调整竖线的高度 */
+    background-color: #ddd; /* 竖线的颜色 */
+}
+
+
+
+
+/* “同意” 面板 ************************ */
+.opinion-panel-content {
     position: fixed;
     left: 0;
     right: 0;
@@ -896,31 +928,5 @@ export default {
     border: none; /* 移除任何边框 */
     outline: none; /* 移除点击后的轮廓 */
 }
-
-
-
-/* 意见“面板”-底部 ************************ */
-.opinion-radio-group {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around; /* 均匀分布 */
-    margin-top: 0rem; /* 上边距 */
-}
-.opinion-radio-group label {
-    font-size: 1rem;
-    color: #333;
-    display: flex;
-    align-items: center;
-    font-weight: normal; /* 确保字体不加粗 */
-    margin-bottom: -0.5rem !important;
-    margin-top: -0.3rem !important;
-    margin-left: 1.5rem !important;
-
-}
-.opinion-radio-group input[type="radio"] {
-    margin-right: 0.5rem; /* 右边距 */
-}
-
-
 
 </style>
