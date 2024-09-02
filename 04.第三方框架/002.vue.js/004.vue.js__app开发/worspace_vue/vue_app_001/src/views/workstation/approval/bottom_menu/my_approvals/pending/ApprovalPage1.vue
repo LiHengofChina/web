@@ -213,22 +213,22 @@
 
             <!-- 审批历史 -->
             <div v-else-if="activeTab === 'history'">
-                <div class="timeline">
-                    <div v-for="(timeline, index) in timeLineData" :key="index" class="timeline-item">
-                        <div class="timeline-header">
-                            <div class="taskName">{{ getTaskName(timeline) }}</div>
-                            <div class="taskTime">{{ timeline.CREATE_TIME }}</div>
+                <div class="history-timeline">
+                    <div v-for="(timeline, index) in timeLineData" :key="index" class="history-timeline-item">
+                        <div class="history-timeline-header">
+                            <div class="history-taskName">{{ getTaskName(timeline) }}</div>
+                            <div class="history-taskTime">{{ timeline.CREATE_TIME }}</div>
                         </div>
-                        <div class="timeline-card">
-                            <div class="timeline-body">
-                                <div class="approve-type-duration">
-                                    <div class="approveType">{{ timeline.APPROVE_TYPE }}</div>
-                                    <div class="duration">耗时：{{ timeline.DURATION }}</div>
+                        <div class="history-timeline-card">
+                            <div class="history-timeline-body">
+                                <div class="history-approve-type-duration">
+                                    <div class="history-approveType">{{ timeline.APPROVE_TYPE }}</div>
+                                    <div class="history-duration">耗时：{{ timeline.DURATION }}</div>
                                 </div>
-                                <div class="approveIdea">{{ resApproveIdea(timeline.APPROVE_IDEA) }}</div>
-                                <div class="assignee-end-time">
-                                    <span class="assignee">处理人：{{ timeline.ASSIGNEE_NAME }}</span>
-                                    <span class="endTime"><i class="fas fa-clock"></i> {{ timeline.END_TIME }}</span>
+                                <div class="history-approveIdea">{{ resApproveIdea(timeline.APPROVE_IDEA) }}</div>
+                                <div class="history-assignee-end-time">
+                                    <span class="history-assignee">处理人：{{ timeline.ASSIGNEE_NAME }}</span>
+                                    <span class="history-endTime"><i class="fas fa-clock"></i> {{ timeline.END_TIME }}</span>
                                 </div>
                             </div>
                         </div>
@@ -466,6 +466,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 .page-layout {
     display: flex;
     flex-direction: column;
@@ -476,41 +477,7 @@ export default {
     box-sizing: border-box; /* 确保内边距和边框不会导致布局超出 */
 }
 
-
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 2.5rem;
-    background-color: #f0f0f0;
-    border-bottom: 1px solid #ddd;
-    z-index: 1000;
-    padding: 0 1rem;
-    box-sizing: border-box;
-}
-
-.back-icon {
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: #333;
-}
-
-.title {
-    flex: 1;
-    text-align: center;
-    font-size: 1.2rem;
-    margin: 0;
-}
-
-.spacer {
-    width: 2.8rem;
-}
-
+/* Tab 顶部切换卡 ************************ */
 .tabs {
     display: flex;
     height: 2.5rem;
@@ -544,6 +511,7 @@ export default {
     border-bottom: 2px solid #2c3e50;
 }
 
+/* 内容区域 ************************ */
 .content {
     flex: 1;
     padding: 1rem;
@@ -555,6 +523,7 @@ export default {
     padding-bottom: 3rem; /* 为底部留出空间，防止内容被覆盖 */
 }
 
+/* 意见面板 ************************ */
 
 .form-section {
     padding: 1rem;
@@ -695,21 +664,58 @@ export default {
 }
 
 
-/* Timeline container */
-.timeline {
+/* 详情 ************************ */
+.details-form {
+    padding: 1rem;
+    background-color: #fff;
+}
+.details-form-title {
+    width: 100%; /* 确保标题占据整行 */
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 0.5rem 0; /* 添加一些内边距 */
+    border-bottom: 1px solid #ddd; /* 添加下边框与其他内容区分 */
+    margin-top: 1rem; /* 添加顶部外边距以区分不同表单 */
+    color: #333; /* 字体颜色 */
+    text-align: left; /* 左对齐 */
+}
+
+.details-form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 垂直居中 */
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
+}
+.details-form-label {
+    color: #909399; /* 灰色 */
+    font-size: 1rem;
+    text-align: right; /* 右对齐 */
+    flex: 4; /* 占据 4/10 的宽度 */
+    margin-right: 1rem; /* 为值留出一些间距 */
+}
+.details-form-value {
+    color: #333; /* 黑色 */
+    font-size: 1rem;
+    text-align: left; /* 左对齐 */
+    flex: 6; /* 占据 6/10 的宽度 */
+}
+
+/* 审批历史 ************************ */
+.history-timeline {
     position: relative;
     margin-left: 0rem; /* 给时间轴留出空间 */
     padding-left: 0rem; /* 给时间轴留出空间 */
 }
 
 /* Timeline item */
-.timeline-item {
+.history-timeline-item {
     position: relative;
     padding-left: 1.5rem;
     margin-bottom: 2rem;
 }
 
-.timeline::before {
+.history-timeline::before {
     content: '';
     position: absolute;
     top: 0.625rem; /* 从第一个圆圈的顶部开始 */
@@ -720,7 +726,7 @@ export default {
 }
 
 /* Timeline dot */
-.timeline-item::before {
+.history-timeline-item::before {
     content: '';
     position: absolute;
     left: -0.26rem; /* 这个值可能需要微调来匹配你的布局 */
@@ -732,7 +738,7 @@ export default {
 }
 
 /* Timeline header styles */
-.timeline-header {
+.history-timeline-header {
     padding-left: 0.5rem; /* 使标题与圆圈对齐 */    
     display: flex;
     flex-direction: column;
@@ -746,7 +752,7 @@ export default {
 }
 
 /* New styles for the timeline card */
-.timeline-card {
+.history-timeline-card {
     border: 1px solid #ddd;
     padding: 15px;
     margin-bottom: 15px;
@@ -755,20 +761,20 @@ export default {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.taskName {
+.history-taskName {
     font-weight: bold;
     color: #909399;
     font-size: 1rem;
     margin-bottom: 4px;
 }
 
-.taskTime {
+.history-taskTime {
     color: #909399;
     font-size: 0.8rem;
     font-weight: normal;
 }
 
-.timeline-body {
+.history-timeline-body {
     padding-left: 10px;
     font-size: 14px;
     color: #666;
@@ -776,7 +782,8 @@ export default {
     flex-direction: column; /* 改为列方向 */
     align-items: center; /* 中心对齐 */
 }
-.assignee-end-time {
+
+.history-assignee-end-time {
     display: flex;
     justify-content: flex-end; /* 右对齐 */
     width: 100%; /* 占满容器宽度 */
@@ -785,12 +792,12 @@ export default {
     align-items: flex-end; /* 向右对齐 */
 }
 
-.approveType {
+.history-approveType {
     font-weight: bold;
     color: #1EC5B5; /* 审批类型颜色 */
 }
 
-.approveIdea {
+.history-approveIdea {
     color: #ff9800; /* 审批意见颜色 */
     margin-bottom: 5px;
     text-align: center; /* 居中对齐 */
@@ -800,13 +807,13 @@ export default {
     width: 100%; /* 占满容器宽度 */
 }
 
-.duration {
+.history-duration {
     font-size: 0.9em;
     color: #909399;
     text-align: right; /* 右对齐 */
 }
 
-.approve-type-duration {
+.history-approve-type-duration {
     display: flex;
     justify-content: space-between; /* 左右对齐 */
     width: 100%; /* 占满容器宽度 */
@@ -821,7 +828,7 @@ export default {
 
 
 
-.endTime, .assignee {
+.history-endTime, .history-assignee {
     color: #909399;
     font-size: 0.8rem;
 }
@@ -926,41 +933,6 @@ export default {
     margin-right: 0.5rem; /* 右边距 */
 }
 
-.details-form {
-    padding: 1rem;
-    background-color: #fff;
-}
-.details-form-title {
-    width: 100%; /* 确保标题占据整行 */
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 0.5rem 0; /* 添加一些内边距 */
-    border-bottom: 1px solid #ddd; /* 添加下边框与其他内容区分 */
-    margin-top: 1rem; /* 添加顶部外边距以区分不同表单 */
-    color: #333; /* 字体颜色 */
-    text-align: left; /* 左对齐 */
-}
-
-.details-form-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* 垂直居中 */
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #ddd;
-}
-.details-form-label {
-    color: #909399; /* 灰色 */
-    font-size: 1rem;
-    text-align: right; /* 右对齐 */
-    flex: 4; /* 占据 4/10 的宽度 */
-    margin-right: 1rem; /* 为值留出一些间距 */
-}
-.details-form-value {
-    color: #333; /* 黑色 */
-    font-size: 1rem;
-    text-align: left; /* 左对齐 */
-    flex: 6; /* 占据 6/10 的宽度 */
-}
 
 
 /** 文档样式 */
