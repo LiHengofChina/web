@@ -17,7 +17,7 @@
         </div>
 
         <!-- 可滚动的内容区域 -->
-        <div class="content">
+        <div class="content-area">
 
             <!-- 详情区域 -->
             <div v-if="activeTab === 'details'">
@@ -262,8 +262,8 @@
         <!-- “意见” 操作栏 -->
         <div class="opinion-panel-toggle">
             <div class="opinion-agree" @click="togglePanel">同意</div>
-            <div class="opinion-supplement" @click="sendSupplement">返回补充资料</div>
             <div class="opinion-reject" @click="sendReject">否决</div>
+            <div class="opinion-supplement" @click="sendSupplement">返回补充资料</div>            
         </div>
 
 
@@ -579,17 +579,20 @@ export default {
 }
 
 /* 内容区域 ************************ */
-.content {
+.content-area {
     width: 100%; /* 确保表单占据整行 */
+    max-width: 100%;
+    position: fixed;
+    height: calc(100vh - 7.5rem);
+    left: 0;
+    right: 0;
     flex: 1;
     padding: 0;
     margin-top: 3.8rem;
     padding-bottom: 3.8rem; /* 为底部留出空间，防止内容被覆盖 */
     overflow-y: auto;
     overflow-x: hidden;
-    height: calc(100vh - 11rem); /* 调整内容区域的高度以适应固定表单和按钮 */
     box-sizing: border-box;
-
 }
 
 
@@ -605,8 +608,9 @@ export default {
     font-size: 1rem;
     font-weight: bold;
     padding: 0.5rem 0; /* 添加一些内边距 */
+    margin-top: 0.7rem;
+    padding-left: 0.7rem;
     border-bottom: 1px solid #ddd; /* 添加下边框与其他内容区分 */
-    margin-top: 0.7rem; /* 添加顶部外边距以区分不同表单 */
     color: #666666; /* 字体颜色 */
     background-color: #f0f0f0;  /**#f0f0f0 */    
     text-align: left; /* 左对齐 */
@@ -615,34 +619,37 @@ export default {
 }
 
 .details-form-row {
+
     display: flex;
+    width: 100%; /* 确保每一行占据整行 */
+    border-bottom: 1px solid #ddd;
+    padding: 0.5rem 0;
+    box-sizing: border-box; /* 包含内边距和边框 */
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #ddd;
-    width: 100%; /* 确保每一行占据整行 */
-    box-sizing: border-box; /* 包含内边距和边框 */
+
 }
 .details-form-label {
-    color: #909399; /* 灰色 */
+    color: #666666; /* 灰色 */
     font-size: 0.9rem;
     text-align: right; /* 右对齐 */
-    flex: 3; /* 占据 3/10 的宽度 */
-    /*   margin-right: 0.1rem; 为值留出一些间距 */
+    flex: 3; /* 调整为3:7的比例 */
+    /*margin-right: 1%;  为值留出一些间距 */
     font-family: 'STZhongsong', '华文中宋', serif;
     box-sizing: border-box; /* 包含内边距和边框 */
 }
+
 .details-form-label::after {
     font-size: 0.9rem; 
     content: "：";
-    color: #909399;
+    color: #666666;
     margin-left: 0.1rem;
 }
 .details-form-value {
-    color: #909399;
+    color: #666666;
     font-size: 0.9rem;
     text-align: left; /* 左对齐 */
-    flex: 7; /* 占据 7/10 的宽度 */
+    flex: 7; /* 调整为3:7的比例 */
     font-family: 'STZhongsong', '华文中宋', serif;
     box-sizing: border-box; /* 包含内边距和边框 */
 }
@@ -841,7 +848,7 @@ export default {
     transition: color 0.3s ease, box-shadow 0.2s ease; /* 添加颜色和阴影变化的过渡效果 */
 }
 
-.opinion-agree:active, .opinion-reject:active, .opinion-supplement:active {
+.opinion-agree:active, .opinion-reject:active, .opinion-reject:active {
     color: #007BFF; /* 点击时变为指定颜色 */
     box-shadow: 0 4px 16px rgba(0, 174, 239, 0.8); /* 增加阴影的不透明度和模糊半径 */
 }
