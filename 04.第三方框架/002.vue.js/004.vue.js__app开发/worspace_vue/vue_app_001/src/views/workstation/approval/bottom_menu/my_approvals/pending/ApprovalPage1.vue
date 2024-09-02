@@ -627,7 +627,7 @@ export default {
     color: #909399; /* 灰色 */
     font-size: 0.9rem;
     text-align: right; /* 右对齐 */
-    flex: 3.5; /* 占据 3/10 的宽度 */
+    flex: 3; /* 占据 3/10 的宽度 */
     /*   margin-right: 0.1rem; 为值留出一些间距 */
     font-family: 'STZhongsong', '华文中宋', serif;
     box-sizing: border-box; /* 包含内边距和边框 */
@@ -642,7 +642,7 @@ export default {
     color: #909399;
     font-size: 0.9rem;
     text-align: left; /* 左对齐 */
-    flex: 6.5; /* 占据 7/10 的宽度 */
+    flex: 7; /* 占据 7/10 的宽度 */
     font-family: 'STZhongsong', '华文中宋', serif;
     box-sizing: border-box; /* 包含内边距和边框 */
 }
