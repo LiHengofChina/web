@@ -286,7 +286,7 @@
                     </div>
 
                     <!-- 输入意见 -->
-                    <textarea id="approval-description" v-model="approvalDescription" rows="5" maxlength="500"></textarea>
+                    <textarea id="approval-description" v-model="approvalDescription" rows="7" maxlength="500"></textarea>
 
                 </div>
             </div>
@@ -800,7 +800,11 @@ export default {
     bottom: 0; /* 确保它位于视口底部 */
     left: 0;
     right: 0;
+    white-space: nowrap; /* 确保按钮在同一行 */
+    overflow: hidden; /* 隐藏超出内容 */
+    text-overflow: ellipsis; /* 如果内容超出显示省略号 */
 }
+
 
 
 .opinion-agree, .opinion-reject, .opinion-supplement {
@@ -814,7 +818,17 @@ export default {
     margin: 0; /* 移除按钮之间的间距 */
     box-sizing: border-box;
     position: relative; /* 为了使用伪元素 */
+    white-space: nowrap; /* 确保按钮在同一行 */
+    overflow: hidden; /* 隐藏超出内容 */
+    text-overflow: ellipsis; /* 如果内容超出显示省略号 */
+    transition: color 0.3s ease; /* 添加颜色变化的过渡效果 */
 }
+
+.opinion-agree:active, .opinion-reject:active, .opinion-supplement:active {
+    color: #00AEEF; /* 点击时变为指定颜色 */
+}
+
+
 
 .opinion-agree:not(:last-child)::after, .opinion-supplement:not(:last-child)::after {
     content: '';
@@ -849,7 +863,7 @@ export default {
     background-color: #f9f9f9;
     border-top: 1px solid #ddd;
     position: fixed;
-    bottom: 2.5rem; /* 与按钮区域的间距 */
+    bottom: 1rem; /* 与按钮区域的间距 */
     left: 0;
     right: 0;
     box-sizing: border-box;
