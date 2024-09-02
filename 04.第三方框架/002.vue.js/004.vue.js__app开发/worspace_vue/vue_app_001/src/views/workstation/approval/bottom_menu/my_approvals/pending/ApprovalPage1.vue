@@ -538,7 +538,7 @@ export default {
     height: 2.5rem;
     width: 100%;
     max-width: 100%;
-    background-color: #f0f0f0;
+    background-color: #FFFFFF;  /**#f0f0f0 */
     border-bottom: 1px solid #ddd;
     top: 2.5rem;
     position: fixed;
@@ -580,42 +580,48 @@ export default {
 
 /* 内容区域 ************************ */
 .content {
+    width: 100%; /* 确保表单占据整行 */
     flex: 1;
-    padding: 1rem;
-    margin-top: 2.8rem;
-    top: 2.8rem;
+    padding: 0;
+    margin-top: 3.8rem;
+    padding-bottom: 3.8rem; /* 为底部留出空间，防止内容被覆盖 */
     overflow-y: auto;
     overflow-x: hidden;
     height: calc(100vh - 11rem); /* 调整内容区域的高度以适应固定表单和按钮 */
     box-sizing: border-box;
-    padding-bottom: 3rem; /* 为底部留出空间，防止内容被覆盖 */
+
 }
 
 
 /* 详情 ************************ */
 .details-form {
-    padding: 1rem;
+    width: 100%; /* 确保表单占据整行 */
+    padding: 0; /* 移除内边距 */    
     background-color: #fff;
+    box-sizing: border-box; /* 包含内边距和边框 */
 }
 .details-form-title {
-    width: 100%; /* 确保标题占据整行 */
+    width: 100%;
     font-size: 1rem;
     font-weight: bold;
     padding: 0.5rem 0; /* 添加一些内边距 */
     border-bottom: 1px solid #ddd; /* 添加下边框与其他内容区分 */
     margin-top: 0.7rem; /* 添加顶部外边距以区分不同表单 */
-    color: #909399; /* 字体颜色 */
+    color: #666666; /* 字体颜色 */
+    background-color: #f0f0f0;  /**#f0f0f0 */    
     text-align: left; /* 左对齐 */
     font-family: 'STZhongsong', '华文中宋', serif;
+    box-sizing: border-box;
 }
-
 
 .details-form-row {
     display: flex;
     justify-content: space-between;
-    align-items: center; /* 垂直居中 */
+    align-items: center;
     padding: 0.5rem 0;
     border-bottom: 1px solid #ddd;
+    width: 100%; /* 确保每一行占据整行 */
+    box-sizing: border-box; /* 包含内边距和边框 */
 }
 .details-form-label {
     color: #909399; /* 灰色 */
@@ -624,6 +630,7 @@ export default {
     flex: 3.5; /* 占据 3/10 的宽度 */
     /*   margin-right: 0.1rem; 为值留出一些间距 */
     font-family: 'STZhongsong', '华文中宋', serif;
+    box-sizing: border-box; /* 包含内边距和边框 */
 }
 .details-form-label::after {
     font-size: 0.9rem; 
@@ -637,6 +644,7 @@ export default {
     text-align: left; /* 左对齐 */
     flex: 6.5; /* 占据 7/10 的宽度 */
     font-family: 'STZhongsong', '华文中宋', serif;
+    box-sizing: border-box; /* 包含内边距和边框 */
 }
 
 /* 审批历史 ************************ */
