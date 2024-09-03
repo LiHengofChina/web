@@ -275,11 +275,12 @@
             <div class="opinion-supplement" @click="sendSupplement">返回补充资料</div>            
         </div>
 
+        <!-- 遮罩层 -->
+        <div v-if="showPanel" class="opinion-overlay" @click="cancelApproval"></div>
+        
         <!-- “同意”面板 -->
         <transition name="slide-up">
-
             <div v-if="showPanel" class="opinion-form-section">
-
                 <!-- 意见标题 -->
                 <div class="opinion-form-row">
                     <label for="approval-description" class="opinion-form-label">
@@ -914,10 +915,16 @@ export default {
     height: 70%; /* 调整竖线的高度 */
     background-color: #ddd; /* 竖线的颜色 */
 }
-
-
-
-
+/* 遮罩层 ************************ */
+.opinion-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(112, 138, 140, 0.5); /* 半透明的灰蓝色 */
+    z-index: 1001; /* 确保遮罩在内容上面，面板下面 */
+}
 /* “同意” 面板 ************************ */
 .opinion-form-section {
     border-top: 1px solid #ddd;
@@ -940,9 +947,6 @@ export default {
     overflow: visible; /* 允许内容溢出 */
     
 }
-
-
-
 .opinion-form-section::after {
     content: '';
     position: absolute;
@@ -957,8 +961,6 @@ export default {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1001;
 }
-
-
 .opinion-form-section label {
     display: block;
     margin-bottom: 0.5rem;
@@ -983,6 +985,8 @@ export default {
     border-color: #007BFF;
     outline: none;
 }
+
+
 
 /* 同意面板-顶部 */
 .opinion-form-row {
