@@ -946,14 +946,14 @@ export default {
 .opinion-form-section::after {
     content: '';
     position: absolute;
-    bottom: -9.5%; /* 紧贴面板的下边 */
+    bottom: -0.5rem; /* 使箭头更靠近面板 */
     left: 50%;
     transform: translateX(-50%);
-    width: 15%; /* 箭头的宽度 */
-    height: 10%; /* 箭头的高度 */
+    width: 4rem; /* 调整箭头的宽度 */
+    height: 1rem; /* 调整箭头的高度 */
     background-color: #fff;  /** background-color: #007BFF; */
     clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
-    /* border: 1px solid rgba(0, 0, 0, 0.2); 添加边框，颜色和阴影一样 */
+    /*border: 1px solid rgba(0, 0, 0, 0.2);  添加边框，颜色和阴影一样 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1001;
 }
