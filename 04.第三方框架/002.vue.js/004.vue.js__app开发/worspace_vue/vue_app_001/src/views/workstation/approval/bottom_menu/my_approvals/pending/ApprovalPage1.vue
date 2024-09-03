@@ -222,6 +222,7 @@
             <div v-else-if="activeTab === 'history'">
 
                 <div class="history-timeline">
+
                     <div v-for="(timeline, index) in timeLineData" :key="index" class="history-timeline-item">
                         <div class="history-timeline-header">
                             <div class="history-taskName">{{ getTaskName(timeline) }}</div>
@@ -241,12 +242,14 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
 
 
             <!-- 文档 -->
             <div v-else-if="activeTab === 'document'">
+
                 <div class="details-form-title">企业融资租赁申请书</div>
                 <div class="document-list">
                     <div class="document-item" v-for="(document, index) in documents" :key="index">
@@ -255,6 +258,7 @@
                         <span>{{ document.date }}</span>
                     </div>
                 </div>
+
             </div>
 
         </div>
@@ -655,39 +659,43 @@ export default {
 }
 
 /* 审批历史 ************************ */
+
+/** 整体的 */
 .history-timeline {
-    
-    margin-top: 0.5rem; /* 添加顶部外边距以区分不同表单 */
     position: relative;
-    margin-left: 0rem; /* 给时间轴留出空间 */
-    padding-left: 0rem; /* 给时间轴留出空间 */
+    margin-top: 0.7rem;
+    padding-left: 0.7rem;
+    padding-right: 1.4rem;
 }
-.history-timeline-item {
-    position: relative;
-    padding-left: 1.5rem;
-    margin-bottom: 2rem;
-}
+/** 左边的竖线 */
 .history-timeline::before {
     content: '';
     position: absolute;
-    top: 0.625rem; /* 从第一个圆圈的顶部开始 */
-    bottom: 11.625rem; /* 在最后一个圆圈的底部结束 11 + 0.625 */
-    left: 0rem; /* 竖线的位置 */
+    top: 0.625rem;              /* 从第一个圆圈的顶部开始 */
+    bottom: 11.625rem;          /* 在最后一个圆圈的底部结束 7.5 + 0.625 */
+    left: 0.7rem;               /* 竖线的位置 */
     width: 2px;
     background-color: #ddd; /* 灰色竖线颜色 */
 }
+/** 每个阶段 */
+.history-timeline-item {
+    position: relative;
+    padding-left: 1.5rem;
+}
+/** 左边的圆点 */
 .history-timeline-item::before {
     content: '';
     position: absolute;
-    left: -0.26rem; /* 这个值可能需要微调来匹配你的布局 */
+    left: -0.26rem;
     top: 0.5rem; /* 通过调整这个值来确保圆圈与taskName文字垂直对齐 */
     width: 0.625rem;
     height: 0.625rem;
     background-color: #ddd; /* 圆点颜色 */
     border-radius: 50%;
 }
+/** 显示的卡片的内部 */
 .history-timeline-header {
-    padding-left: 0.5rem; /* 使标题与圆圈对齐 */    
+    padding-left: 0.7rem; /* 使标题与圆圈对齐 */    
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* 左对齐 */
