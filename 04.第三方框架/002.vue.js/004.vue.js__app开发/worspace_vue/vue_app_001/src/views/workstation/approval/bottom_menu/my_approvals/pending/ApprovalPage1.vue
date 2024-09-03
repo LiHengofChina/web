@@ -252,10 +252,10 @@
 
                 <div class="details-form-title">企业融资租赁申请书</div>
                 <div class="document-list">
-                    <div class="document-item" v-for="(document, index) in documents" :key="index">
-                        <i class="fas fa-file-alt"></i>
-                        <span>{{ document.name }}</span>
-                        <span>{{ document.date }}</span>
+                    <div v-for="(document, index) in documents" :key="index">
+                        <div class="document-form-row">
+                            <div class="document-form-label">{{ document.name }}</div>                     
+                        </div>
                     </div>
                 </div>
 
@@ -367,8 +367,8 @@ export default {
             },
 
             documents: [
-                { name: '文件1', date: '2024-09-01' },
-                { name: '文件2', date: '2024-08-28' },
+                { name: '售后回租合同', date: '2024-09-01' },
+                { name: '担保合同', date: '2024-08-28' },
                 { name: '文件3', date: '2024-08-15' }
             ],
 
@@ -612,7 +612,7 @@ export default {
     font-size: 1rem;
     font-weight: bold;
     padding: 0.5rem 0; /* 添加一些内边距 */
-    margin-top: 0.7rem;
+    margin-top: 0.3rem;
     padding-left: 0.7rem;
     border-bottom: 1px solid #ddd; /* 添加下边框与其他内容区分 */
     color: #666666; /* 字体颜色 */
@@ -774,45 +774,32 @@ export default {
 
 /* 文档样式 ************************ */
 .document-list {
-    margin-top: 1rem; /* 保持顶部间距 */
-    padding: 1rem;
+    margin-top: 0rem; /* 保持顶部间距 */
+    padding: 0rem;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-.document-item {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #ddd;
-    transition: background-color 0.3s ease; /* 添加过渡效果，提升用户体验 */
-}
-.document-item:hover {
-    background-color: #f9f9f9; /* 鼠标悬停效果 */
-}
-.document-item:last-child {
-    border-bottom: none; /* 去除最后一个文档项的底部边框 */
-}
-.document-item i {
-    font-size: 1.5rem;
-    color: #007BFF;
-    margin-right: 1rem;
-}
-.document-info {
-    flex: 1;
-}
-.document-title {
-    font-size: 1rem;
-    color: #333;
-    margin: 0;
-    font-weight: bold; /* 使标题更显眼 */
-}
-.document-date {
-    font-size: 0.8rem;
-    color: #909399;
-    margin: 0;
-}
+.document-form-row {
 
+    display: flex;
+    width: 100%; /* 确保每一行占据整行 */
+    border-bottom: 1px solid #ddd;
+    padding: 0.5rem 0;
+    box-sizing: border-box; /* 包含内边距和边框 */
+    justify-content: space-between;
+    align-items: center;
+
+}
+.document-form-label {
+    color: #00ADEF; /* 灰色 */
+    font-size: 0.9rem;
+    text-align: left; /* 左对齐 */
+    flex: 1;  
+    padding-left: 16%; 
+    font-family: 'STZhongsong', '华文中宋', serif;
+    box-sizing: border-box; /* 包含内边距和边框 */
+}
 
 
 /* “意见” 操作栏 ************************ */
