@@ -260,7 +260,7 @@
                 </div>
 
                 <!-- 浮动“上传”按钮 -->
-                <div class="fab">
+                <div class="fab" @click="handleFabClick">
                     <i class="fas fa-plus"></i>
                 </div>
 
@@ -390,9 +390,11 @@ export default {
 
 
     methods: {
+
         goBack() {
             this.$router.go(-1);
         },
+
         setActiveTab(tab) {
             this.activeTab = tab;
             if (tab === 'history') {
@@ -400,10 +402,17 @@ export default {
             }
         },
 
+        handleFabClick() {
+            // 处理按钮点击事件的逻辑
+            console.log("xxxx");
+            // 你可以在这里执行任何你想要的操作，例如打开一个表单或弹出一个模态框
+        },
+
         togglePanel() {
             this.showPanel = !this.showPanel; // 切换面板显示状态
             console.log("xxx");
         },
+
         sendSupplement() {
             // 处理否决请求的逻辑
             // alert('返回补充资料已发送');
