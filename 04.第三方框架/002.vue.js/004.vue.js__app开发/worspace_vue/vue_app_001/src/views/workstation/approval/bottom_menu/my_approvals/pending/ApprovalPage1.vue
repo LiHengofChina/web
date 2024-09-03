@@ -920,7 +920,6 @@ export default {
 
 /* “同意” 面板 ************************ */
 .opinion-form-section {
-    background-color: #f9f9f9;
     border-top: 1px solid #ddd;
     position: fixed;
     box-sizing: border-box;
@@ -929,12 +928,17 @@ export default {
     transform: translate(-50%, 0); /* 水平居中 */
     width: 90%;
     background-color: #fff;
+
+    border: 1px solid rgba(0, 0, 0, 0.2); /* 添加边框，颜色和阴影一样 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 阴影保持不变 */
+
     border-radius: 10px;
     padding: 0rem;
     z-index: 1002;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow-y: hidden;
     overflow-x: hidden; /* 禁止水平滚动 */
+    overflow: visible; /* 允许内容溢出 */
+    
 }
 
 
@@ -942,16 +946,16 @@ export default {
 .opinion-form-section::after {
     content: '';
     position: absolute;
-    bottom: -10px; /* 根据箭头大小调整位置 */
+    bottom: -9.5%; /* 紧贴面板的下边 */
     left: 50%;
-    top: 100%; /* 使箭头紧贴面板底部 */
     transform: translateX(-50%);
-    width: 12%; /* 箭头的宽度 */
-    height: 12%; /* 箭头的高度 */
-    background-color: #007BFF; /* 箭头的背景颜色，和面板背景色一致 */
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%); /* 创建向下的箭头形状 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 给箭头添加阴影，和面板一致 */
-    z-index: 1003;
+    width: 15%; /* 箭头的宽度 */
+    height: 10%; /* 箭头的高度 */
+    background-color: #fff;  /** background-color: #007BFF; */
+    clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+    /* border: 1px solid rgba(0, 0, 0, 0.2); 添加边框，颜色和阴影一样 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
 }
 
 
