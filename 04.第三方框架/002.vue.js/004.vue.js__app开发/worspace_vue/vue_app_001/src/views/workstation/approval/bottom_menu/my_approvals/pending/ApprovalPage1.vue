@@ -259,6 +259,12 @@
                     </div>
                 </div>
 
+                <!-- 浮动“上传”按钮 -->
+                <div class="fab">
+                    <i class="fas fa-plus"></i>
+                </div>
+
+
             </div>
 
         </div>
@@ -369,7 +375,14 @@ export default {
             documents: [
                 { name: '售后回租合同', date: '2024-09-01' },
                 { name: '担保合同', date: '2024-08-28' },
-                { name: '文件3', date: '2024-08-15' }
+                { name: '文件3', date: '2024-08-15' },
+                { name: '售后回租合同', date: '2024-09-01' },
+                { name: '担保合同', date: '2024-08-28' },
+                { name: '文件3', date: '2024-08-15' },
+
+
+                
+
             ],
 
         };
@@ -800,6 +813,27 @@ export default {
     font-family: 'STZhongsong', '华文中宋', serif;
     box-sizing: border-box; /* 包含内边距和边框 */
 }
+/* 浮动（上传）按钮 */
+.fab {
+    position: fixed;
+    bottom: 4rem;       /* 距离页面底部的距离 */
+    right: 2rem;        /* 距离页面右侧的距离 */
+    width: 3.5rem;      /* 按钮的宽度 */
+    height: 3.5rem;     /* 按钮的高度 */
+    background-color: #587AFF; /* 按钮的背景颜色 */
+    /*  background: linear-gradient(to bottom right, #4A90E2, #0066CC); */
+    color: #ffffff; /* 图标的颜色 */
+    border-radius: 50%; /* 圆形按钮 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* 按钮的阴影效果 */
+    cursor: pointer;
+    z-index: 1001; /* 确保按钮在其他元素之上 */
+}
+.fab i {
+    font-size: 1.4rem; /* 图标的大小 */
+}
 
 
 /* “意见” 操作栏 ************************ */
@@ -824,8 +858,6 @@ export default {
     overflow: hidden; /* 隐藏超出内容 */
     text-overflow: ellipsis; /* 如果内容超出显示省略号 */
 }
-
-
 .opinion-agree, .opinion-reject, .opinion-supplement {
     background-color: transparent; /* 移除按钮背景 */
     border: none; /* 移除按钮边框 */
@@ -842,18 +874,13 @@ export default {
     text-overflow: ellipsis; /* 如果内容超出显示省略号 */
     transition: color 0.3s ease, box-shadow 0.2s ease; /* 添加颜色和阴影变化的过渡效果 */
 }
-
 .opinion-agree:active, .opinion-reject:active, .opinion-reject:active {
     color: #007BFF; /* 点击时变为指定颜色 */
     box-shadow: 0 4px 16px rgba(0, 174, 239, 0.8); /* 增加阴影的不透明度和模糊半径 */
 }
 
 
-
-
-
-
-.opinion-agree:not(:last-child)::after, .opinion-supplement:not(:last-child)::after {
+.opinion-agree:not(:last-child)::after, .opinion-reject:not(:last-child)::after {
     content: '';
     position: absolute;
     right: 0;
