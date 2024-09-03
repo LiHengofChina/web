@@ -933,9 +933,28 @@ export default {
     padding: 0rem;
     z-index: 1002;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    overflow-y: auto;
+    overflow-y: hidden;
     overflow-x: hidden; /* 禁止水平滚动 */
 }
+
+
+
+.opinion-form-section::after {
+    content: '';
+    position: absolute;
+    bottom: -10px; /* 根据箭头大小调整位置 */
+    left: 50%;
+    top: 100%; /* 使箭头紧贴面板底部 */
+    transform: translateX(-50%);
+    width: 12%; /* 箭头的宽度 */
+    height: 12%; /* 箭头的高度 */
+    background-color: #007BFF; /* 箭头的背景颜色，和面板背景色一致 */
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%); /* 创建向下的箭头形状 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 给箭头添加阴影，和面板一致 */
+    z-index: 1003;
+}
+
+
 .opinion-form-section label {
     display: block;
     margin-bottom: 0.5rem;
