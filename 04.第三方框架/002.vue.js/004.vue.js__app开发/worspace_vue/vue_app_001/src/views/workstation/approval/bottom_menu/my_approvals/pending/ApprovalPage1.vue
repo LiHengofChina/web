@@ -280,27 +280,24 @@
         <!-- “同意”面板 -->
         <transition name="slide-up">
 
-            <div v-if="showPanel" class="opinion-panel-content">
+            <div v-if="showPanel" class="opinion-form-section">
 
-                <div class="opinion-form-section">
-
-                    <!-- 意见标题 -->
-                    <div class="opinion-form-row">
-                        <label for="approval-description" class="opinion-form-label">
-                            审批意见
-                        </label>
-                    </div>
-
-                    <!-- 输入意见 -->
-                    <textarea id="approval-description" v-model="approvalDescription" rows="7" maxlength="500"></textarea>
-
-                    <!-- “取消”和“确定”按钮 -->
-                    <div class="opinion-form-buttons">
-                        <button class="cancel-button" @click="cancelApproval">取消</button>
-                        <button class="confirm-button" @click="sendApproval">确定</button>
-                    </div>
-
+                <!-- 意见标题 -->
+                <div class="opinion-form-row">
+                    <label for="approval-description" class="opinion-form-label">
+                        审批意见
+                    </label>
                 </div>
+
+                <!-- 输入意见 -->
+                <textarea id="approval-description" v-model="approvalDescription" rows="7" maxlength="500"></textarea>
+
+                <!-- “取消”和“确定”按钮 -->
+                <div class="opinion-form-buttons">
+                    <button class="cancel-button" @click="cancelApproval">取消</button>
+                    <button class="confirm-button" @click="sendApproval">确定</button>
+                </div>
+
             </div>
 
         </transition>
@@ -923,53 +920,54 @@ export default {
 
 
 /* “同意” 面板 ************************ */
-.opinion-panel-content {
-    position: fixed;
-    top: 80%; /* 垂直居中 */
-    left: 50%; /* 水平居中 */
-    transform: translate(-50%, -50%); /* 中心对齐 */
-    width: 80%; /* 调整宽度为视口的80% */
-    max-height: 80%; /* 高度限制为视口的80% */
-    background-color: #fff;
-    border-radius: 10px; /* 增加圆角效果 */
-    padding: 1rem; /* 增加内边距 */
-    z-index: 1002;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 增加阴影效果 */
-    overflow-y: auto; /* 如果内容溢出，则启用垂直滚动 */
-    box-sizing: border-box; /* 确保内边距和边框不会导致布局超出 */
-}
+
 .opinion-form-section {
-    padding: 1rem;
+ 
     background-color: #f9f9f9;
     border-top: 1px solid #ddd;
     position: fixed;
-    bottom: 1rem; /* 与按钮区域的间距 */
-    left: 0;
-    right: 0;
+
     box-sizing: border-box;
+    bottom: 20%;
+    left: 50%;
+    transform: translate(-50%, 0); /* 水平居中 */
+    width: 90%;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 0rem;
+    z-index: 1002;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    box-sizing: border-box;
+
 }
+
+
+
 .opinion-form-section label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: bold;
-    text-align: left; /* 标签文本居左对齐 */
+    text-align: center; /* 标签文本居左对齐 */
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
 }
-.opinion-form-section textarea{
-    width: 100%; /* 确保宽度填满可用空间 */
-    max-width: 100%; /* 确保不会超出父容器宽度 */
+.opinion-form-section textarea {
+    width: 90%; /* 填满面板宽度 */
+    max-width: 90%; /* 确保不会超出父容器宽度 */
+    height: 100px; /* 固定高度 */
     padding: 0.5rem;
     margin-bottom: 1rem;
     border: 1px solid #ddd;
     border-radius: 0.25rem;
     transition: border-color 0.3s ease;
     box-sizing: border-box;
-    appearance: none; /* 移除默认下拉箭头样式以便自定义 */
+    appearance: none;
 }
 .opinion-form-section textarea:focus {
     border-color: #007BFF;
     outline: none;
 }
-
 
 /* 同意面板-顶部 */
 .opinion-form-row {
@@ -980,8 +978,6 @@ export default {
     margin-bottom: 1rem;
     /*text-align: center;  使文字居中 */
 }
-
-
 
 .opinion-form-label {
     position: relative;
@@ -1007,26 +1003,23 @@ export default {
 .opinion-form-buttons {
     display: flex;
     justify-content: space-between;
-    margin-top: 1rem; /* 添加一些间距 */
+    margin-top: 1rem;
 }
-
 .cancel-button, .confirm-button {
-    flex: 1; /* 让按钮平分宽度 */
+    flex: 1;
     padding: 0.5rem 1rem;
-    margin: 0 0.5rem; /* 按钮之间的间距 */
+    margin: 0 0.5rem;
     font-size: 1rem;
     cursor: pointer;
     border: none;
     border-radius: 0.25rem;
 }
-
 .cancel-button {
-    background-color: #f0f0f0; /* 灰色背景 */
+    background-color: #f0f0f0;
     color: #333;
 }
-
 .confirm-button {
-    background-color: #007BFF; /* 蓝色背景 */
+    background-color: #007BFF;
     color: #fff;
 }
 
