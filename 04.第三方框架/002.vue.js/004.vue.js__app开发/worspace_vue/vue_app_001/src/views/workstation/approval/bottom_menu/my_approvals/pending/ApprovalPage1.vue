@@ -284,19 +284,21 @@
 
                 <div class="opinion-form-section">
 
-                    <!-- 意见标题和发送按钮 -->
+                    <!-- 意见标题 -->
                     <div class="opinion-form-row">
                         <label for="approval-description" class="opinion-form-label">
-                            <span class="required">*</span> 审批说明
+                            审批意见
                         </label>
-                        
-                        <i class="fas fa-chevron-down opinion-arrow-down-icon" @click="togglePanel"></i>
-
-                        <i class="fas fa-paper-plane opinion-send-icon" @click="sendApproval"></i>
                     </div>
 
                     <!-- 输入意见 -->
                     <textarea id="approval-description" v-model="approvalDescription" rows="7" maxlength="500"></textarea>
+
+                    <!-- “取消”和“确定”按钮 -->
+                    <div class="opinion-form-buttons">
+                        <button class="cancel-button" @click="cancelApproval">取消</button>
+                        <button class="confirm-button" @click="sendApproval">确定</button>
+                    </div>
 
                 </div>
             </div>
@@ -423,11 +425,28 @@ export default {
             // alert('否决请求已发送');
             // 在这里添加实际的请求发送代码
         },
-        sendApproval() {
-            // 处理审批发送的逻辑
-            // alert('审批请求已发送');
-            // 在这里添加实际的请求发送代码
+
+        cancelApproval() {
+            // 关闭面板
+            this.showPanel = false;
+            // 清除输入内容
+            this.approvalDescription = '';
         },
+
+        sendApproval() {
+            // 提交审批逻辑
+            // 如果输入的审批说明为空，则阻止提交并显示错误消息
+            if (this.approvalDescription.trim() === '') {
+                alert('请填写审批说明');
+                return;
+            }
+
+            // 提交后关闭面板
+            this.showPanel = false;
+            // 处理发送审批请求的代码...
+        },
+
+
         loadTimeLineData() {
             // 模拟获取审批历史数据的API调用
             this.timeLineData = [
@@ -906,16 +925,18 @@ export default {
 /* “同意” 面板 ************************ */
 .opinion-panel-content {
     position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 80%; /* 垂直居中 */
+    left: 50%; /* 水平居中 */
+    transform: translate(-50%, -50%); /* 中心对齐 */
+    width: 80%; /* 调整宽度为视口的80% */
+    max-height: 80%; /* 高度限制为视口的80% */
     background-color: #fff;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    padding: 1rem;
+    border-radius: 10px; /* 增加圆角效果 */
+    padding: 1rem; /* 增加内边距 */
     z-index: 1002;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
-    transform: translateY(100%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 增加阴影效果 */
+    overflow-y: auto; /* 如果内容溢出，则启用垂直滚动 */
+    box-sizing: border-box; /* 确保内边距和边框不会导致布局超出 */
 }
 .opinion-form-section {
     padding: 1rem;
@@ -933,7 +954,7 @@ export default {
     font-weight: bold;
     text-align: left; /* 标签文本居左对齐 */
 }
-.opinion-form-section textarea, .opinion-form-section select {
+.opinion-form-section textarea{
     width: 100%; /* 确保宽度填满可用空间 */
     max-width: 100%; /* 确保不会超出父容器宽度 */
     padding: 0.5rem;
@@ -944,62 +965,69 @@ export default {
     box-sizing: border-box;
     appearance: none; /* 移除默认下拉箭头样式以便自定义 */
 }
-
-.opinion-form-section textarea:focus, .opinion-form-section select:focus {
+.opinion-form-section textarea:focus {
     border-color: #007BFF;
     outline: none;
 }
-.required {
-    font-weight: bold;
-    color: red; 
-    padding-top: 1rem;
-    padding-right: 0rem;
-    text-align: center; 
-    justify-content: center;
-}
 
 
-/* 意见“面板”-顶部 ************************ */
+/* 同意面板-顶部 */
 .opinion-form-row {
     display: flex;
-    justify-content: space-between; /* 均分子元素间的空间 */
+    justify-content: center; /* 水平居中对齐 */
     align-items: center; /* 垂直居中对齐 */
-    width: 100%; /* 确保占满可用空间 */
+    width: 100%; /* 占满可用空间 */
     margin-bottom: 1rem;
+    /*text-align: center;  使文字居中 */
 }
 
+
+
 .opinion-form-label {
-    margin: 0; /* 去掉 margin */
-    flex: 1; /* 调整 label 所占空间 */
-    text-align: left;
-    margin: 0; /* 去掉 margin */
+    position: relative;
+    text-align: center; /* 确保文本在自身容器中居中 */
+    font-size: 0.9rem; /* 根据需要调整字体大小 */
+    font-weight: bold; /* 加粗字体 */
+    color: #666666; /* 设置文本颜色 */
+    width: 100%; /* 使其占满行宽以便可以使用flex */
+    padding-bottom: 0.5rem; /* 添加一些底部间距以留出下划线空间 */
 }
-.opinion-arrow-down-icon {
-    margin: 0; /* 去掉 margin */
-    font-size: 1.2rem;
+.opinion-form-label::after {
+    content: '';
+    display: block;
+    width: 100%; /* 下划线的宽度 */
+    height: 1px; /* 下划线的高度 */
+    background-color: #ddd; /* 下划线的颜色 */
+    position: absolute;
+    bottom: 0; /* 紧贴底部 */
+    left: 0; /* 左侧对齐 */
+}
+
+/* 同意面板-底部 */
+.opinion-form-buttons {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%; /* 占满父容器的宽度 */
-    flex: 1; /* 调整图标所占空间 */
-    text-align: center; /* 图标居中对齐 */
-    cursor: pointer; /* 鼠标指针样式 */
+    justify-content: space-between;
+    margin-top: 1rem; /* 添加一些间距 */
 }
-.opinion-send-icon {
-    margin: 0; /* 去掉 margin */
-    flex: 1;
-    width: 100%; /* 占满父容器的宽度 */
-    font-size: 1.2rem;
+
+.cancel-button, .confirm-button {
+    flex: 1; /* 让按钮平分宽度 */
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem; /* 按钮之间的间距 */
+    font-size: 1rem;
     cursor: pointer;
-    text-align: right;
-    margin-right: 1rem;
+    border: none;
+    border-radius: 0.25rem;
 }
-.opinion-send-icon:hover {
-    color: #007BFF; /* 当鼠标悬停在按钮上时改变颜色 */
-    background-color: transparent; /* 确保没有背景色 */
-    box-shadow: none; /* 确保没有阴影 */
-    border: none; /* 移除任何边框 */
-    outline: none; /* 移除点击后的轮廓 */
+
+.cancel-button {
+    background-color: #f0f0f0; /* 灰色背景 */
+    color: #333;
+}
+
+.confirm-button {
+    background-color: #007BFF; /* 蓝色背景 */
+    color: #fff;
 }
 
 </style>
