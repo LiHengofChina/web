@@ -246,7 +246,6 @@
                 </div>
             </div>
 
-
             <!-- 文档 -->
             <div v-else-if="activeTab === 'document'">
 
@@ -276,7 +275,6 @@
             <div class="opinion-supplement" @click="sendSupplement">返回补充资料</div>            
         </div>
 
-
         <!-- “同意”面板 -->
         <transition name="slide-up">
 
@@ -294,14 +292,15 @@
 
                 <!-- “取消”和“确定”按钮 -->
                 <div class="opinion-form-buttons">
-                    <button class="cancel-button" @click="cancelApproval">取消</button>
-                    <button class="confirm-button" @click="sendApproval">确定</button>
+                    <div class="spacer-div"></div>
+                    <div class="spacer-div"></div>
+                    <button class="cancel-button" @click="cancelApproval">取 消</button>
+                    <button class="confirm-button" @click="sendApproval">确 定</button>
                 </div>
 
             </div>
 
         </transition>
-
 
     </div>
 </template>
@@ -920,13 +919,10 @@ export default {
 
 
 /* “同意” 面板 ************************ */
-
 .opinion-form-section {
- 
     background-color: #f9f9f9;
     border-top: 1px solid #ddd;
     position: fixed;
-
     box-sizing: border-box;
     bottom: 20%;
     left: 50%;
@@ -938,12 +934,8 @@ export default {
     z-index: 1002;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow-y: auto;
-    box-sizing: border-box;
-
+    overflow-x: hidden; /* 禁止水平滚动 */
 }
-
-
-
 .opinion-form-section label {
     display: block;
     margin-bottom: 0.5rem;
@@ -953,11 +945,11 @@ export default {
     padding: 0.5rem 0;
 }
 .opinion-form-section textarea {
-    width: 90%; /* 填满面板宽度 */
-    max-width: 90%; /* 确保不会超出父容器宽度 */
-    height: 100px; /* 固定高度 */
+    width: 90%;
+    max-width: 90%;
+    height: 100px;
     padding: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem; /* 调整此处的间距以减少文本框下方的距离 */
     border: 1px solid #ddd;
     border-radius: 0.25rem;
     transition: border-color 0.3s ease;
@@ -978,7 +970,6 @@ export default {
     margin-bottom: 1rem;
     /*text-align: center;  使文字居中 */
 }
-
 .opinion-form-label {
     position: relative;
     text-align: center; /* 确保文本在自身容器中居中 */
@@ -998,28 +989,36 @@ export default {
     bottom: 0; /* 紧贴底部 */
     left: 0; /* 左侧对齐 */
 }
-
 /* 同意面板-底部 */
 .opinion-form-buttons {
     display: flex;
-    justify-content: space-between;
-    margin-top: 1rem;
+    justify-content: flex-end;
+    padding: 0;
+    width: 100%; /* 确保按钮占据整行 */
+}
+.spacer-div {
+    flex: 1; /* 每个空白 div 占据 25% 的宽度 */
 }
 .cancel-button, .confirm-button {
     flex: 1;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0rem;
     margin: 0 0.5rem;
-    font-size: 1rem;
+    font-size: 0.9rem;
     cursor: pointer;
     border: none;
     border-radius: 0.25rem;
+    width: 50%; 
+    max-width: calc(50% - 1rem);
+    margin-bottom: 1rem;
+    margin-top: 0.5rem; /* 减少按钮上方的间距 */
 }
 .cancel-button {
     background-color: #f0f0f0;
     color: #333;
+    margin-right: 0.5rem; /* 给取消按钮一些右边距 */
 }
 .confirm-button {
-    background-color: #007BFF;
+    background-color: #268FFF;
     color: #fff;
 }
 
