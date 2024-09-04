@@ -16,8 +16,7 @@
                         </div>
                         <div class="card-actions">
 
-                            <button @click="approve1(item.id)">审批1</button>
-                            <button @click="approve2(item.id)">审批2</button>
+                            <button @click="approve(item.id)">审批</button>
                             <button @click="transfer(item.id)">转办</button>
 
                         </div>
@@ -46,13 +45,7 @@ export default {
     },
     data() {
         return {
-            pendingItems: [
-                { id: 1, type: '立项审批', position: '项目经理B岗', customerName: '金牛区星际航行软件开发工作室', approver: '薛贝贝' },
-                { id: 2, type: '立项审批', position: '项目经理B岗', customerName: '金牛区星际航行软件开发工作室', approver: '薛贝贝' },
-                { id: 3, type: '立项审批', position: '项目经理B岗', customerName: '金牛区星际航行软件开发工作室', approver: '薛贝贝' },
-                { id: 4, type: '立项审批', position: '项目经理B岗', customerName: '金牛区星际航行软件开发工作室', approver: '薛贝贝' },
-                { id: 5, type: '立项审批', position: '项目经理B岗', customerName: '金牛区星际航行软件开发工作室', approver: '薛贝贝' }
-            ],
+            pendingItems: [],
             completedItems: [
                 { id: 1, title: '已处理项目1', date: '2024-08-01' },
                 { id: 2, title: '已处理项目2', date: '2024-08-02' }
@@ -61,11 +54,8 @@ export default {
     },
     methods: {
         ...mapMutations('approval_my_approvals', ['setActiveTab']),
-        approve1(id) {
-            this.$router.push({ name: 'workstation_approval_my-approvals_pending_approval_1', params: { id } });
-        },
-        approve2(id) {
-            this.$router.push({ name: 'workstation_approval_my-approvals_pending_approval_2', params: { id } });
+        approve(id) {
+            this.$router.push({ name: 'workstation_approval_my-approvals_pending_approval', params: { id } });
         },
         transfer(id) {
             this.$router.push({ name: 'workstation_approval_my-approvals_pending_transfer', params: { id } });

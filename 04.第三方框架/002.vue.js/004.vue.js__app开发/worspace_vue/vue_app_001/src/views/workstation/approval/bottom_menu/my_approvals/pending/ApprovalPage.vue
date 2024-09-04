@@ -313,7 +313,7 @@
 
 
 export default {
-    name: 'ApprovalPage1',
+    name: 'ApprovalPage',
     data() {
         return {
             activeTab: 'details',
@@ -324,7 +324,6 @@ export default {
             timeLineData: [],
             opinionOptions: ['同意', '返回补充资料', '否决'], // 单选框选项
             selectedOpinion: '', // 选中的选项
-            applyDetail: {},  // 初始化为空对象
 
             documents: [
                 { name: '售后回租合同', date: '2024-09-01' },
@@ -334,6 +333,9 @@ export default {
                 { name: '担保合同', date: '2024-08-28' },
                 { name: '文件3', date: '2024-08-15' },
             ],
+            
+            applyDetail: {},  // 初始化为空对象
+            id: null, // 用来存储传递过来的 id 参数
 
         };
     },
@@ -466,7 +468,7 @@ export default {
         resApproveIdea(idea) {
             return idea || '无审批意见';
         },
-        async fetchApplyDetail() {
+        async fetchApplyDetail(applyId) {
 
             try {
                 const { default: api } = await import('@/api/workstation/approval/my-approvals');
@@ -477,9 +479,6 @@ export default {
                     console.error('Token or Refresh Token is missing');
                     return;
                 }
-
-                //申请ID
-                const applyId = "aca9261e722342b5bc65a0cde22c4729";
 
                 await api.getOfferInfoById(
                     applyId,
@@ -517,7 +516,8 @@ export default {
         }
     },
     mounted() {
-        this.fetchApplyDetail();
+        this.id = this.$route.params.id;
+        this.fetchApplyDetail(this.id);
     }
 };
 </script>
