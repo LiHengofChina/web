@@ -25,41 +25,41 @@
                 <div class="details-form">
                     <div class="details-form-row">
                         <div class="details-form-label">客户名称</div>
-                        <div class="details-form-value">{{ leaseApply.cusName }}</div>
+                        <div class="details-form-value">{{ applyDetail.cusName }}</div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">产品名称</div>
-                        <div class="details-form-value">{{ leaseApply.productName }}</div>
+                        <div class="details-form-value">{{ applyDetail.productName }}</div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">项目名称</div>
-                        <div class="details-form-value">{{ leaseApply.applyName }}</div>
+                        <div class="details-form-value">{{ applyDetail.applyName }}</div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">租赁本金</div>
-                        <div class="details-form-value">{{ leaseApply.applyAmt }}</div>
+                        <div class="details-form-value">{{ applyDetail.applyAmt }}</div>
                     </div>
 
                     <div class="details-form-row">
                         <div class="details-form-label">租赁期限</div>
                         <div class="details-form-value">
-                            {{ leaseApply.term }}{{ leaseApply.termType === '1' ? '个月' : leaseApply.termType === '2' ? '天' : '' }}
+                            {{ applyDetail.term }}{{ applyDetail.termType === '1' ? '个月' : applyDetail.termType === '2' ? '天' : '' }}
                         </div>                        
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">期限类型</div>
                         <div class="details-form-value">
-                            {{ leaseApply.termType === '1' ? '月' : leaseApply.termType === '2' ? '天' : '未知' }}
+                            {{ applyDetail.termType === '1' ? '月' : applyDetail.termType === '2' ? '天' : '未知' }}
                         </div>                        
                     </div>                    
                     <div class="details-form-row">
                         <div class="details-form-label">还款方式</div>
                         <div class="details-form-value">
                             {{ 
-                                leaseApply.leaseRepayType === '0' ? '等额租金后付' : 
-                                leaseApply.leaseRepayType === '1' ? '等额租金先付' : 
-                                leaseApply.leaseRepayType === '2' ? '自定义还款计划' : 
-                                leaseApply.leaseRepayType 
+                                applyDetail.leaseRepayType === '0' ? '等额租金后付' : 
+                                applyDetail.leaseRepayType === '1' ? '等额租金先付' : 
+                                applyDetail.leaseRepayType === '2' ? '自定义还款计划' : 
+                                applyDetail.leaseRepayType 
                             }}                            
                         </div>                           
                     </div>
@@ -67,46 +67,46 @@
                         <div class="details-form-label">还款周期</div>
                         <div class="details-form-value">
                             {{ 
-                                leaseApply.repayNumType === '1' ? '月' : 
-                                leaseApply.repayNumType === '2' ? '3个月' : 
-                                leaseApply.repayNumType === '3' ? '6个月' : 
-                                leaseApply.repayNumType 
+                                applyDetail.repayNumType === '1' ? '月' : 
+                                applyDetail.repayNumType === '2' ? '3个月' : 
+                                applyDetail.repayNumType === '3' ? '6个月' : 
+                                applyDetail.repayNumType 
                             }}
                         </div>                        
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">申报利率</div>
-                        <div class="details-form-value">{{ leaseApply.rate }}%</div>
+                        <div class="details-form-value">{{ applyDetail.rate }}%</div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">利率类型</div>
                         <div class="details-form-value">
                             {{
-                                leaseApply.rateType === '1' ? '年利率(%)' :
-                                leaseApply.rateType === '2' ? '月利率(‰)' :
-                                leaseApply.rateType === '3' ? '日利率(‱)' :
-                                leaseApply.rateType === '4' ? '月利率(%)' :
+                                applyDetail.rateType === '1' ? '年利率(%)' :
+                                applyDetail.rateType === '2' ? '月利率(‰)' :
+                                applyDetail.rateType === '3' ? '日利率(‱)' :
+                                applyDetail.rateType === '4' ? '月利率(%)' :
                                 '未知类型'
                             }}
                         </div>                                            
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">逾期利率</div>
-                        <div class="details-form-value">{{ leaseApply.overRate }}%</div>
+                        <div class="details-form-value">{{ applyDetail.overRate }}%</div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">LPR利率</div>
-                        <div class="details-form-value">{{ leaseApply.baseRate }}%</div>
+                        <div class="details-form-value">{{ applyDetail.baseRate }}%</div>
                     </div>                    
 
                     <div class="details-form-row">
                         <div class="details-form-label">资金来源</div>
                         <div class="details-form-value">
                             {{
-                                leaseApply.capitalSource === '01' ? '股东借款' :
-                                leaseApply.capitalSource === '02' ? '自有资金' :
-                                leaseApply.capitalSource === '03' ? '外部融资' :
-                                leaseApply.capitalSource === '04' ? '其他' :
+                                applyDetail.capitalSource === '01' ? '股东借款' :
+                                applyDetail.capitalSource === '02' ? '自有资金' :
+                                applyDetail.capitalSource === '03' ? '外部融资' :
+                                applyDetail.capitalSource === '04' ? '其他' :
                                 '未知来源'
                             }}
                         </div>                        
@@ -115,9 +115,9 @@
                         <div class="details-form-label">业务类型</div>
                         <div class="details-form-value">
                             {{
-                                leaseApply.leaseBusType === '1' ? '售后回租' :
-                                leaseApply.leaseBusType === '2' ? '直租' :
-                                leaseApply.leaseBusType === '3' ? '租赁资产交易' :
+                                applyDetail.leaseBusType === '1' ? '售后回租' :
+                                applyDetail.leaseBusType === '2' ? '直租' :
+                                applyDetail.leaseBusType === '3' ? '租赁资产交易' :
                                 '未知类型'
                             }}
                         </div>                        
@@ -130,10 +130,10 @@
                         <div class="details-form-label">担保方式</div>
                         <div class="details-form-value">
                             {{ 
-                                leaseApply.vouType === '1' ? '信用' : 
-                                leaseApply.vouType === '2' ? '保证' : 
-                                leaseApply.vouType === '3' ? '抵押' : 
-                                leaseApply.vouType === '4' ? '质押' : 
+                                applyDetail.vouType === '1' ? '信用' : 
+                                applyDetail.vouType === '2' ? '保证' : 
+                                applyDetail.vouType === '3' ? '抵押' : 
+                                applyDetail.vouType === '4' ? '质押' : 
                                 '未知方式' 
                             }}
                         </div>                        
@@ -141,47 +141,47 @@
                     <div class="details-form-row">
                         <div class="details-form-label">是否购买保险</div>
                         <div class="details-form-value">
-                            {{ leaseApply.ifBuyInsurance === '1' ? '是' : leaseApply.ifBuyInsurance === '0' ? '否' : '未知状态' }}
+                            {{ applyDetail.ifBuyInsurance === '1' ? '是' : applyDetail.ifBuyInsurance === '0' ? '否' : '未知状态' }}
                         </div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">是否超限额</div>
                         <div class="details-form-value">
-                            {{ leaseApply.overQuota === '1' ? '是' : leaseApply.overQuota === '2' ? '否' : '未知状态' }}
+                            {{ applyDetail.overQuota === '1' ? '是' : applyDetail.overQuota === '2' ? '否' : '未知状态' }}
                         </div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">irr</div>
-                        <div class="details-form-value">{{ leaseApply.irrTax }}</div>
+                        <div class="details-form-value">{{ applyDetail.irrTax }}</div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">xirr</div>
-                        <div class="details-form-value">{{ leaseApply.xirrTax }}</div>
+                        <div class="details-form-value">{{ applyDetail.xirrTax }}</div>
                     </div>
 
                     <div class="details-form-row">
                         <div class="details-form-label">项目来源</div>
-                        <div class="details-form-value">{{ leaseApply.projectSource }}</div>
+                        <div class="details-form-value">{{ applyDetail.projectSource }}</div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">项目说明</div>
-                        <div class="details-form-value">{{ leaseApply.applyRemark }}</div>
+                        <div class="details-form-value">{{ applyDetail.applyRemark }}</div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">租赁标的物</div>
-                        <div class="details-form-value">{{ leaseApply.subjectMatterOfLease }}</div>
+                        <div class="details-form-value">{{ applyDetail.subjectMatterOfLease }}</div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">资金用途</div>
-                        <div class="details-form-value">{{ leaseApply.useOfFunds }}</div>
+                        <div class="details-form-value">{{ applyDetail.useOfFunds }}</div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">还款来源</div>
-                        <div class="details-form-value">{{ leaseApply.repaymentSource }}</div>
+                        <div class="details-form-value">{{ applyDetail.repaymentSource }}</div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">担保措施</div>
-                        <div class="details-form-value">{{ leaseApply.guaranteeMeasures }}</div>
+                        <div class="details-form-value">{{ applyDetail.guaranteeMeasures }}</div>
                     </div>
 
                 </div>
@@ -191,27 +191,27 @@
 
                     <div class="details-form-row">
                         <div class="details-form-label">主营项目</div>
-                        <div class="details-form-value">{{ leaseApply.mainProjects }}</div>
+                        <div class="details-form-value">{{ applyDetail.mainProjects }}</div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">行业归属</div>
-                        <div class="details-form-value">{{ leaseApply.industryAffiliation }}</div>
+                        <div class="details-form-value">{{ applyDetail.industryAffiliation }}</div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">客户情况概述</div>
-                        <div class="details-form-value">{{ leaseApply.customerSituation }}</div>
+                        <div class="details-form-value">{{ applyDetail.customerSituation }}</div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">备注</div>
-                        <div class="details-form-value">{{ leaseApply.remark }}</div>
+                        <div class="details-form-value">{{ applyDetail.remark }}</div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">业务A角</div>
-                        <div class="details-form-value">{{ leaseApply.mngOpName }}</div>
+                        <div class="details-form-value">{{ applyDetail.mngOpName }}</div>
                     </div>
                     <div class="details-form-row">
                         <div class="details-form-label">业务B角</div>
-                        <div class="details-form-value">{{ leaseApply.busUserName }}</div>
+                        <div class="details-form-value">{{ applyDetail.busUserName }}</div>
                     </div>
 
                 </div>
@@ -324,52 +324,7 @@ export default {
             timeLineData: [],
             opinionOptions: ['同意', '返回补充资料', '否决'], // 单选框选项
             selectedOpinion: '', // 选中的选项
-            leaseApply: {
-                "cusName": '金牛区星际航行软件开发工作室',
-                "productName": '公用事业租赁通',
-                "applyName": 'liheng-test-001',
-                "applyAmt": 200.00,
-
-                "termType": "1",
-                "term": 11,
-                "leaseRepayType": "0",
-                "repayNumType": "1",
-
-                "rate": 11.00,
-                "rateType": "1",   
-
-                "overRate": 1.00,
-                "baseRate": 3.650000000,
-
-                "capitalSource": "02",
-
-                "leaseBusType": "1",
-                "vouType": "4",
-
-                "applyBeginDate": "2024-08-29T00:00:00.000+08:00",
-                "ifBuyInsurance": "0",
-
-                "overQuota": "2",
-
-                "irrTax": 39.650000000,
-                "xirrTax": 47.670000000,
-
-                "projectSource": "liheng-test-001",
-                "applyRemark": "liheng-test-001",
-                "subjectMatterOfLease": "liheng-test-001",
-                "useOfFunds": "liheng-test-001",
-                "repaymentSource": "liheng-test-001",
-                "guaranteeMeasures": "liheng-test-001",
-
-                "mainProjects": "liheng-test-001",
-                "industryAffiliation": "liheng-test-001",
-                "customerSituation": "liheng-test-001",
-                "remark": "/liheng-test-001",
-                "mngOpName": "薛蓓蓓",	
-                "busUserName": "岳鹏",        
-
-                    
-            },
+            applyDetail: {},  // 初始化为空对象
 
             documents: [
                 { name: '售后回租合同', date: '2024-09-01' },
@@ -378,10 +333,6 @@ export default {
                 { name: '售后回租合同', date: '2024-09-01' },
                 { name: '担保合同', date: '2024-08-28' },
                 { name: '文件3', date: '2024-08-15' },
-
-
-                
-
             ],
 
         };
@@ -515,13 +466,59 @@ export default {
         resApproveIdea(idea) {
             return idea || '无审批意见';
         },
+        async fetchApplyDetail() {
+
+            try {
+                const { default: api } = await import('@/api/workstation/approval/my-approvals');
+                const token = this.$store.getters['auth/token'];
+                const refreshToken = this.$store.getters['auth/refreshToken'];
+
+                if (!token || !refreshToken) {
+                    console.error('Token or Refresh Token is missing');
+                    return;
+                }
+
+                //申请ID
+                const applyId = "aca9261e722342b5bc65a0cde22c4729";
+
+                await api.getOfferInfoById(
+                    applyId,
+                    this.$config,
+                    (response) => {
+                        if (response && response.code === 0 && response.data) {
+                            
+                            console.log("xxx" + response.data.applyDetail.rateType);
+
+                            this.applyDetail = response.data.applyDetail;
+                        } else {
+                            console.error('Unexpected API response:', response);
+                        }
+                    },
+                    (error) => {
+                        console.error('API Error:', error);
+                    }
+                );
+
+            } catch (error) {
+                console.error('Failed to fetch apply detail:', error);
+            }
+        },
     },
     computed: {
         formattedApplyBeginDate() {
-            const date = new Date(this.leaseApply.applyBeginDate);
+            if (!this.applyDetail.applyBeginDate) {
+                return '未知日期'; // 处理未定义的日期
+            }
+            const date = new Date(this.applyDetail.applyBeginDate);
+            if (isNaN(date.getTime())) {
+                return '无效日期'; // 处理无效的日期
+            }
             return date.toISOString().split('T')[0]; // 格式化为 yyyy-mm-dd
         }
     },
+    mounted() {
+        this.fetchApplyDetail();
+    }
 };
 </script>
 

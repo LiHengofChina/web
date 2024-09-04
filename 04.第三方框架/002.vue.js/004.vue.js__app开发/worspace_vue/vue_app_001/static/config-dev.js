@@ -1,7 +1,7 @@
 
 const config = {
     host: {
-        gateway_path: "http://192.168.100.191:7019"
+        gateway_path: "http://192.168.100.11:7019"
     },
 
     router_white_list: ["/login"],
@@ -9,9 +9,10 @@ const config = {
     servers: {
         flowable: "mftcc-flowable-server", //流程后台
 
-        sys: "mftcc-sys-server", //登录后台
+        lease: "mftcc-lease-server-liheng-remote", //租赁
 
-        // sys: "mftcc-sys-server-liheng-remote", //登录后台
+        sys: "mftcc-sys-server-liheng-remote", //登录后台
+        
 
     },
     //首页路由地址
