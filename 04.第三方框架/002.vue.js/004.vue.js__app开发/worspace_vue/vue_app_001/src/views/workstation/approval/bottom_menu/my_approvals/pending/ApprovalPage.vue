@@ -335,7 +335,7 @@ export default {
             ],
             
             applyDetail: {},  // 初始化为空对象
-            id: null, // 用来存储传递过来的 id 参数
+            trace_no: null, // 用来存储传递过来的 trace_no 参数
 
         };
     },
@@ -468,40 +468,96 @@ export default {
         resApproveIdea(idea) {
             return idea || '无审批意见';
         },
-        async fetchApplyDetail(applyId) {
+        fetchApplyDetail(trace_no) {
+            
 
-            try {
-                const { default: api } = await import('@/api/workstation/approval/my-approvals');
-                const token = this.$store.getters['auth/token'];
-                const refreshToken = this.$store.getters['auth/refreshToken'];
+            //（1）获取token
+            const token = this.$store.getters['auth/token'];
+            const refreshToken = this.$store.getters['auth/refreshToken'];
+            if (!token || !refreshToken) {
+                console.error('Token or Refresh Token is missing');
+                return;
+            }
 
-                if (!token || !refreshToken) {
-                    console.error('Token or Refresh Token is missing');
-                    return;
+            //（2）获取申请ID
+            this.getApplyId(trace_no)
+            .then(applyId => {
+                
+                //（3）判断是否成功获取applyId
+                if (!applyId) {
+                    throw new Error('No applyId found, skipping second API call');
                 }
 
-                await api.getOfferInfoById(
-                    applyId,
-                    this.$config,
-                    (response) => {
-                        if (response && response.code === 0 && response.data) {
-                            
-                            console.log("xxx" + response.data.applyDetail.rateType);
+                //（4）调用详情
+                return this.getOfferInfoById(applyId);
+        
+            }).then(response => {
 
-                            this.applyDetail = response.data.applyDetail;
-                        } else {
-                            console.error('Unexpected API response:', response);
-                        }
-                    },
-                    (error) => {
-                        console.error('API Error:', error);
-                    }
-                );
+                if (response && response.code === 0 && response.data) {
+                    console.log("xxx" + response.data.applyDetail.rateType);
+                    this.applyDetail = response.data.applyDetail;
+                } else {
+                    console.error('Unexpected API response:', response);
+                }
 
-            } catch (error) {
-                console.error('Failed to fetch apply detail:', error);
-            }
+            }).catch(error => {
+                console.error('Error in API chain:', error);
+            });
         },
+        getApplyId(trace_no) {
+            return import('@/api/workstation/approval/my-approvals')
+                .then(({ default: api }) => {
+                    return new Promise((resolve, reject) => {
+                        api.getTaskResultData(
+                            { traceNo: trace_no, bizMark: "lease_approve_flow" },
+                            this.$config,
+                            response => {
+                                if (response && response.code === 0 && response.data && response.data.taskList.length > 0) {
+                                    const applyId = response.data.taskList[0].taskDef.appPageMethodParam.applyId;
+                                    resolve(applyId);
+                                } else {
+                                    reject('Unexpected API response or empty task list');
+                                }
+                            },
+                            error => {
+                                reject('API Error: ' + error);
+                            }
+                        );
+                    });
+                })
+                .catch(err => {
+                    console.error('Failed to import API module: ', err);
+                    throw err;  // Propagate the error
+                });
+        },
+
+        getOfferInfoById(applyId) {
+            return import('@/api/workstation/approval/my-approvals')
+                .then(({ default: api }) => {
+                    return new Promise((resolve, reject) => {
+                        api.getOfferInfoById(
+                            applyId,
+                            this.$config,
+                            response => {
+                                if (response && response.code === 0 && response.data) {
+                                    resolve(response);
+                                } else {
+                                    reject('Unexpected API response');
+                                }
+                            },
+                            error => {
+                                reject('API Error: ' + error);
+                            }
+                        );
+                    });
+                })
+                .catch(err => {
+                    console.error('Failed to import API module: ', err);
+                    throw err;  // Propagate the error
+                });
+        }
+
+
     },
     computed: {
         formattedApplyBeginDate() {
@@ -516,8 +572,9 @@ export default {
         }
     },
     mounted() {
-        this.id = this.$route.params.id;
-        this.fetchApplyDetail(this.id);
+        this.trace_no = this.$route.params.trace_no;
+
+        this.fetchApplyDetail(this.trace_no);
     }
 };
 </script>

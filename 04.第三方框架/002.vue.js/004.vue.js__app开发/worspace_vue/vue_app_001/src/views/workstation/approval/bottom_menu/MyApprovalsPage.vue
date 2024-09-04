@@ -16,7 +16,7 @@
                         </div>
                         <div class="card-actions">
 
-                            <button @click="approve(item.id)">审批</button>
+                            <button @click="approve(item.trace_no)">审批</button>
                             <button @click="transfer(item.id)">转办</button>
 
                         </div>
@@ -54,8 +54,8 @@ export default {
     },
     methods: {
         ...mapMutations('approval_my_approvals', ['setActiveTab']),
-        approve(id) {
-            this.$router.push({ name: 'workstation_approval_my-approvals_pending_approval', params: { id } });
+        approve(trace_no) {
+            this.$router.push({ name: 'workstation_approval_my-approvals_pending_approval', params: { trace_no } });
         },
         transfer(id) {
             this.$router.push({ name: 'workstation_approval_my-approvals_pending_transfer', params: { id } });
@@ -87,6 +87,7 @@ export default {
                         if (response && response.code === 0 && response.list && Array.isArray(response.list.records)) {
                             this.pendingItems = response.list.records.map(record => ({
                                 id: record.ID,
+                                trace_no: record.TRACE_NO,
                                 type: record.APPROVE_TITLE || '未知审批',
                                 position: record.TASK_NAME || '未知岗位',
                                 customerName: record.CUS_NAME || '未知客户',

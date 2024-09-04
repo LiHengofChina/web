@@ -4,7 +4,7 @@ const api = {
 
 
     /***
-     * POST 获取
+     * POST 获取:获取审批列表
      */
     getSysTaskInfo: async( data, config, success) => {
         const {  postJson } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
@@ -13,6 +13,21 @@ const api = {
             data,
             true,
             success
+        );
+    },
+
+    /***
+     * POST 获取申请ID
+     */
+    getTaskResultData: async( data, config, success, error) => {
+        const {  postJson } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
+        const url = `/${config.servers.lease}/main/leaseMain/getTaskResultData`;
+        postJson(
+			url,
+            data,
+            true,
+            success,
+            error
         );
     },
 
