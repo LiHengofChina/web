@@ -1,0 +1,40 @@
+<div class="loading-indicator">
+    <div class="cube"></div>
+</div>
+
+
+
+.loading-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 让加载提示占据全屏 */
+    font-size: 1.5rem; /* 调整字体大小 */
+    color: #555; /* 设置文字颜色 */
+}
+.loading-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cube {
+    width: 40px;
+    height: 40px;
+    background-color: #007BFF;
+    animation: rotateCube 1.5s infinite ease-in-out;
+}
+
+@keyframes rotateCube {
+    0% {
+        transform: perspective(200px) rotateX(0) rotateY(0);
+    }
+    50% {
+        transform: perspective(200px) rotateX(180deg) rotateY(0);
+    }
+    100% {
+        transform: perspective(200px) rotateX(180deg) rotateY(180deg);
+    }
+}
+
+

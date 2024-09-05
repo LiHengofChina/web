@@ -1,5 +1,11 @@
 <template>
 
+    <div v-if="loading" class="loading-indicator" >
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+
     <div class="page-layout">
 
         <!-- Header Section  -->
@@ -336,7 +342,7 @@ export default {
             
             applyDetail: {},  // 初始化为空对象
             trace_no: null, // 用来存储传递过来的 trace_no 参数
-
+            loading: true,
         };
     },
 
@@ -362,7 +368,6 @@ export default {
 
         togglePanel() {
             this.showPanel = !this.showPanel; // 切换面板显示状态
-            console.log("xxx");
         },
 
         sendSupplement() {
@@ -469,7 +474,8 @@ export default {
             return idea || '无审批意见';
         },
         fetchApplyDetail(trace_no) {
-            
+            console.log("this.loading = true");
+            this.loading = true;
 
             //（1）获取token
             const token = this.$store.getters['auth/token'];
@@ -494,7 +500,6 @@ export default {
             }).then(response => {
 
                 if (response && response.code === 0 && response.data) {
-                    console.log("xxx" + response.data.applyDetail.rateType);
                     this.applyDetail = response.data.applyDetail;
                 } else {
                     console.error('Unexpected API response:', response);
@@ -502,6 +507,8 @@ export default {
 
             }).catch(error => {
                 console.error('Error in API chain:', error);
+            }).finally(() => {
+                this.loading = false;
             });
         },
         getApplyId(trace_no) {
@@ -590,6 +597,46 @@ export default {
     overflow: hidden;
     box-sizing: border-box; /* 确保内边距和边框不会导致布局超出 */
 }
+
+/* 加载中 ************************ */
+
+.loading-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 让加载提示占据全屏 */
+    font-size: 1.5rem; /* 调整字体大小 */
+    color: #555; /* 设置文字颜色 */
+}
+.loading-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dot {
+    width: 1rem;
+    height: 1rem;
+    margin: 0 5px;
+    background-color: #00ADEF;
+    border-radius: 50%;
+    animation: bounce 0.6s infinite alternate;
+}
+
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    to {
+        transform: translateY(-15px);
+    }
+}
+
 
 /* 标题部分 ************************ */
 .header {
