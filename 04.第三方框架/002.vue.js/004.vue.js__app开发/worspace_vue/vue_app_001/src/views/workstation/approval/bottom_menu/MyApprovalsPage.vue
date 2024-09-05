@@ -16,7 +16,7 @@
                         </div>
                         <div class="card-actions">
 
-                            <button @click="approve(item.trace_no,item.biz_id)">审批</button>
+                            <button @click="approve(item.trace_no, item.biz_id, item.lease_approve_type, op_no, item.task_def_id)">审批</button>
                             <button @click="transfer(item.id)">转办</button>
 
                         </div>
@@ -49,13 +49,24 @@ export default {
             completedItems: [
                 { id: 1, title: '已处理项目1', date: '2024-08-01' },
                 { id: 2, title: '已处理项目2', date: '2024-08-02' }
-            ]
+            ],
+            op_no: null,
         };
     },
     methods: {
         ...mapMutations('approval_my_approvals', ['setActiveTab']),
-        approve(trace_no,biz_id) {
-            this.$router.push({ name: 'workstation_approval_my-approvals_pending_approval', params: { trace_no, biz_id } });
+        approve(trace_no, biz_id, lease_approve_type, op_no, task_def_id) {
+
+            // 根据 lease_approve_type 的值来判断要跳转的路由
+            if (lease_approve_type === '立项审批') {
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_approval', params: { trace_no, biz_id, op_no ,task_def_id} });
+            } else if (lease_approve_type === '项目变更审批') {
+                console.log("项目变更审批TODO");
+            } else if (lease_approve_type === '项目尽调') {
+                console.log("项目尽调TODO");
+            } else {
+                console.log("TODO");
+            }
         },
         transfer(id) {
             this.$router.push({ name: 'workstation_approval_my-approvals_pending_transfer', params: { id } });
@@ -71,11 +82,13 @@ export default {
                     return;
                 }
 
+                this.op_no = "xuebeibei";
+
                 await api.getSysTaskInfo(
                     {"dynamicQuery":"",
                     "bizMark":"lease_approve_flow",
                     "queryType":"task",
-                    "opNo":"xuebeibei",
+                    "opNo": this.op_no,
                     "pageNo":1,
                     "pageSize":10,
                     "sort":"[]",
@@ -89,6 +102,8 @@ export default {
                                 id: record.ID,
                                 trace_no: record.TRACE_NO,
                                 biz_id: record.BIZ_ID,
+                                task_def_id: record.TASK_DEF_ID,
+                                lease_approve_type : record.LEASE_APPROVE_TYPE,
                                 type: record.APPROVE_TITLE || '未知审批',
                                 position: record.TASK_NAME || '未知岗位',
                                 customerName: record.CUS_NAME || '未知客户',

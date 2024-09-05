@@ -46,6 +46,20 @@ const api = {
         );
     },
 
+    /***
+     * POST 获取审批历史
+     */
+    getTimeLine: async( data, config, success, error) => {
+        const {  postJson } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
+        const url = `/${config.servers.flowable}/bpmn/getTimeLine`;
+        postJson(
+			url,
+            data,
+            true,
+            success,
+            error
+        );
+    },
 };
 
 export default api;

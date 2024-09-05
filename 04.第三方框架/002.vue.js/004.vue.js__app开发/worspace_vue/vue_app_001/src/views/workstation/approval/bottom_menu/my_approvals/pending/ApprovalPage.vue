@@ -341,9 +341,13 @@ export default {
             ],
             
             applyDetail: {},  // 初始化为空对象
-            trace_no: null, // 用来存储传递过来的 trace_no 参数
-            biz_id: null,// 用来存储传递过来的 biz_id 参数
             loading: true,
+
+            trace_no: null,
+            biz_id: null, 
+            op_no: null,
+            task_def_id: null,
+
         };
     },
 
@@ -474,7 +478,7 @@ export default {
         resApproveIdea(idea) {
             return idea || '无审批意见';
         },
-        fetchApplyDetail(trace_no, biz_id) {
+        fetchApplyDetail(trace_no, biz_id, op_no, task_def_id) {
             this.loading = true;
             //（1）获取token
             const token = this.$store.getters['auth/token'];
@@ -495,19 +499,34 @@ export default {
 
                 //（4）调用详情
                 return this.getOfferInfoById(applyId);
-        
-            }).then(response => {
+            })
+            .then(response => {
 
+                //（5）设置详情数据
                 if (response && response.code === 0 && response.data) {
                     this.applyDetail = response.data.applyDetail;
                 } else {
                     console.error('Unexpected API response:', response);
                 }
 
-            }).catch(error => {
-                console.error('Error in API chain:', error);
-            }).finally(() => {
+                //（6）设置 loading 为 false
                 this.loading = false;
+
+                //（7）调用审批历史接口
+                return this.getTimeLine(trace_no, biz_id, op_no, task_def_id);
+
+            })
+            .then(response => {
+                //（8）设置审批历史的数据
+                if (response && response.code === 0 && response.data) {
+                    //TODO
+                } else {
+                    console.error('Unexpected API response in third call:', response);
+                }
+            })
+
+            .catch(error => {
+                console.error('Error in API chain:', error);
             });
         },
         getApplyId(trace_no,biz_id) {
@@ -561,8 +580,32 @@ export default {
                     console.error('Failed to import API module: ', err);
                     throw err;  // Propagate the error
                 });
-        }
-
+        },
+        getTimeLine(trace_no, biz_id, op_no, task_def_id) {
+            return import('@/api/workstation/approval/my-approvals')
+                .then(({ default: api }) => {
+                    return new Promise((resolve, reject) => {
+                        api.getTimeLine(
+                            {traceNo: trace_no, bizMark: biz_id, taskDefId: task_def_id, isShowSign: "", opNo: op_no },
+                            this.$config,
+                            response => {
+                                if (response && response.code === 0 && response.data) {
+                                    resolve(response);
+                                } else {
+                                    reject('Unexpected API response');
+                                }
+                            },
+                            error => {
+                                reject('API Error: ' + error);
+                            }
+                        );
+                    });
+                })
+                .catch(err => {
+                    console.error('Failed to import API module: ', err);
+                    throw err;  // Propagate the error
+                });
+        },
 
     },
     computed: {
@@ -580,9 +623,11 @@ export default {
     mounted() {
         this.trace_no = this.$route.params.trace_no;
         this.biz_id = this.$route.params.biz_id;
-        
+        this.op_no = this.$route.params.op_no;
+        this.task_def_id = this.$route.params.task_def_id;
 
-        this.fetchApplyDetail(this.trace_no,this.biz_id);
+        this.fetchApplyDetail(this.trace_no, this.biz_id, this.op_no, this.task_def_id);
+
     }
 };
 </script>
