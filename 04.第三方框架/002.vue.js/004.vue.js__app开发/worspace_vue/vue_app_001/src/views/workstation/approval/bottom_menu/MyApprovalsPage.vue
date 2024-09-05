@@ -59,7 +59,7 @@ export default {
 
             // 根据 lease_approve_type 的值来判断要跳转的路由
             if (lease_approve_type === '立项审批') {
-                this.$router.push({ name: 'workstation_approval_my-approvals_pending_approval', params: { trace_no, biz_id, op_no ,task_def_id} });
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_project-initiation-approval', params: { trace_no, biz_id, op_no ,task_def_id} });
             } else if (lease_approve_type === '项目变更审批') {
                 console.log("项目变更审批TODO");
             } else if (lease_approve_type === '项目尽调') {

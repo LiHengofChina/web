@@ -319,7 +319,7 @@
 
 
 export default {
-    name: 'ApprovalPage',
+    name: 'ProjectInitiationApprovalPage',
     data() {
         return {
             activeTab: 'details',

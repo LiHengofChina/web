@@ -6,7 +6,8 @@ const ApplyPage = () => import(/* webpackChunkName: "apply-page" */ '@/views/wor
 const MyApprovalsPage = () => import(/* webpackChunkName: "my-approvals-page" */ '@/views/workstation/approval/bottom_menu/MyApprovalsPage.vue');
 const SubmittedPage = () => import(/* webpackChunkName: "submitted-page" */ '@/views/workstation/approval/bottom_menu/SubmittedPage.vue');
 
-const ApprovalPage = () => import(/* webpackChunkName: "approval-page" */ '@/views/workstation/approval/bottom_menu/my_approvals/pending/ApprovalPage.vue');
+//立项审批页
+const ProjectInitiationApprovalPage = () => import(/* webpackChunkName: "project-initiation-approval-page" */ '@/views/workstation/approval/bottom_menu/my_approvals/pending/ProjectInitiationApprovalPage.vue');
 const TransferPage = () => import(/* webpackChunkName: "transfer-page" */ '@/views/workstation/approval/bottom_menu/my_approvals/pending/TransferPage.vue');
 
 export default [
@@ -35,9 +36,9 @@ export default [
     
 
     {
-        path: '/workstation/approval/my-approvals/pending/approval/:trace_no/:biz_id/:op_no/:task_def_id',
-        name: 'workstation_approval_my-approvals_pending_approval',
-        component: ApprovalPage
+        path: '/workstation/approval/my-approvals/pending/project-initiation-approval/:trace_no/:biz_id/:op_no/:task_def_id',
+        name: 'workstation_approval_my-approvals_pending_project-initiation-approval',
+        component: ProjectInitiationApprovalPage
     },
 
     {
