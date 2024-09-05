@@ -342,6 +342,7 @@ export default {
             
             applyDetail: {},  // 初始化为空对象
             trace_no: null, // 用来存储传递过来的 trace_no 参数
+            biz_id: null,// 用来存储传递过来的 biz_id 参数
             loading: true,
         };
     },
@@ -473,10 +474,8 @@ export default {
         resApproveIdea(idea) {
             return idea || '无审批意见';
         },
-        fetchApplyDetail(trace_no) {
-            console.log("this.loading = true");
+        fetchApplyDetail(trace_no, biz_id) {
             this.loading = true;
-
             //（1）获取token
             const token = this.$store.getters['auth/token'];
             const refreshToken = this.$store.getters['auth/refreshToken'];
@@ -486,7 +485,7 @@ export default {
             }
 
             //（2）获取申请ID
-            this.getApplyId(trace_no)
+            this.getApplyId(trace_no,biz_id)
             .then(applyId => {
                 
                 //（3）判断是否成功获取applyId
@@ -511,12 +510,12 @@ export default {
                 this.loading = false;
             });
         },
-        getApplyId(trace_no) {
+        getApplyId(trace_no,biz_id) {
             return import('@/api/workstation/approval/my-approvals')
                 .then(({ default: api }) => {
                     return new Promise((resolve, reject) => {
                         api.getTaskResultData(
-                            { traceNo: trace_no, bizMark: "lease_approve_flow" },
+                            { traceNo: trace_no, bizMark: biz_id },
                             this.$config,
                             response => {
                                 if (response && response.code === 0 && response.data && response.data.taskList.length > 0) {
@@ -580,8 +579,10 @@ export default {
     },
     mounted() {
         this.trace_no = this.$route.params.trace_no;
+        this.biz_id = this.$route.params.biz_id;
+        
 
-        this.fetchApplyDetail(this.trace_no);
+        this.fetchApplyDetail(this.trace_no,this.biz_id);
     }
 };
 </script>

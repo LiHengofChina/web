@@ -35,7 +35,7 @@ export default [
     
 
     {
-        path: '/workstation/approval/my-approvals/pending/approval/:trace_no',
+        path: '/workstation/approval/my-approvals/pending/approval/:trace_no/:biz_id',
         name: 'workstation_approval_my-approvals_pending_approval',
         component: ApprovalPage
     },
