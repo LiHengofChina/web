@@ -276,10 +276,15 @@
 
         <!-- “意见” 操作栏 -->
         <div class="opinion-panel-toggle">
-            <div class="opinion-button" @click="openPanel('1')">同意</div>
-            <div class="opinion-button" @click="openPanel('2')">否决</div>
-            <div class="opinion-button" @click="openPanel('3')">返回补充资料</div>            
+            <div 
+                v-for="(btn) in approveBtnList" 
+                :key="btn.id" 
+                class="opinion-button" 
+                @click="openPanel(btn.approveType)">
+                {{ btn.approveIdea }}
+            </div>          
         </div>
+
 
         <!-- 遮罩层 -->
         <div v-if="showPanel" class="opinion-overlay" @click="cancelApproval"></div>
@@ -341,6 +346,9 @@ export default {
             task_def_id: null,
             apply_id: null,
             main_id: null,
+
+            approveBtnList: [],//审批按钮
+
         };
     },
     methods: {
@@ -411,6 +419,7 @@ export default {
                 }
                 //（6）设置 loading 为 false
                 this.loading = false;
+
                 //（7）调用审批历史接口
                 return this.getTimeLine(trace_no, biz_id, op_no, task_def_id);
             })
@@ -522,6 +531,9 @@ export default {
                             this.$config,
                             response => {
                                 if (response && response.code === 0 && response.data && response.data.approveBtnList.length > 0) {
+
+                                    this.approveBtnList = response.data.approveBtnList;
+
                                     const applyId = response.data.methodParam.applyId;
                                     const mainId = response.data.methodParam.mainId;
                                     this.apply_id = applyId;
