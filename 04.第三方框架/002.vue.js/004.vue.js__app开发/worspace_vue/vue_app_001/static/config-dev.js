@@ -9,10 +9,12 @@ const config = {
     servers: {
         flowable: "mftcc-flowable-server", //流程后台
 
+        doc: "mftcc-doc-server", //文档
+
         lease: "mftcc-lease-server-liheng-remote", //租赁
 
         sys: "mftcc-sys-server-liheng-remote", //登录后台
-        
+
 
     },
     //首页路由地址

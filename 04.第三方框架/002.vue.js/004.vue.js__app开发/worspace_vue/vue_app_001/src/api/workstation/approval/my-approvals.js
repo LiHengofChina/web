@@ -1,7 +1,36 @@
-// workstation/approval/index.js
+// workstation/approval/my-approvals.js
 
 const api = {
 
+    /***
+     * POST 获取文件资料
+     */
+    relatedFileList: async( data, config, success, error) => {
+        const {  postJson } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
+        const url = `/${config.servers.doc}/file/docFileInf/relatedFileList`;
+        postJson(
+			url,
+            data,
+            true,
+            success,
+            error
+        );
+    },
+
+    /***
+     * POST 文件参数列表
+     */
+    getFileParamList: async( data, config, success, error) => {
+        const {  postJson } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
+        const url = `/${config.servers.lease}/main/leaseMain/getFileParamList`;
+        postJson(
+			url,
+            data,
+            true,
+            success,
+            error
+        );
+    },
 
     /***
      * POST 获取:获取审批列表
@@ -15,13 +44,12 @@ const api = {
             success
         );
     },
-
     /***
-     * POST 获取申请ID
+     * POST 获取申请ID、按钮列表等等
      */
-    getTaskResultData: async( data, config, success, error) => {
+    getApprovalDetail: async( data, config, success, error) => {
         const {  postJson } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
-        const url = `/${config.servers.lease}/main/leaseMain/getTaskResultData`;
+        const url = `/${config.servers.flowable}/appcenter/getApprovalDetail`;
         postJson(
 			url,
             data,
@@ -29,17 +57,16 @@ const api = {
             success,
             error
         );
-    },
-
+    },    
     /***
-     * GET 根据ID 查看 “申请项目” 的详细信息
+     * POST 根据ID 查看 “申请项目” 的详细信息
      */
-    getOfferInfoById: async(apply_id, config, success, error) => {
-        const { get } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
-        const url = `/${config.servers.lease}/apply/leaseApply/getOfferInfoById/${apply_id}`;
-        get(
+    findApplyApproveInit: async(data, config, success, error) => {
+        const { postJson } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
+        const url = `/${config.servers.lease}/approve/apply/leaseApplyHis/findApplyApproveInit`;
+        postJson(
 			url,
-            null,
+            data,
             true,
             success,
             error

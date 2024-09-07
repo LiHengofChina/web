@@ -8,7 +8,16 @@ const config = {
 
     servers: {
         flowable: "mftcc-flowable-server", //流程后台
-        sys: "mftcc-sys-server", //登录后台
+
+
+        flowable: "mftcc-flowable-server", //流程后台
+
+        doc: "mftcc-doc-server",
+
+        lease: "mftcc-lease-server", //租赁
+
+        sys: "mftcc-sys-server", //登录后台     
+
     },
     //首页路由地址
     index_router: "/index",

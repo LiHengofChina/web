@@ -242,7 +242,7 @@
                                 </div>
                                 <div class="history-approveIdea">{{ resApproveIdea(timeline.APPROVE_IDEA) }}</div>
                                 <div class="history-assignee-end-time">
-                                    <span class="history-assignee">处理人：{{ timeline.ASSIGNEE_NAME }}</span>
+                                    <span class="history-assignee">处理人：<strong style="color: black;">{{ timeline.ASSIGNEE_NAME }}</strong></span>
                                     <span class="history-endTime"><i class="fas fa-clock"></i> {{ timeline.END_TIME }}</span>
                                 </div>
                             </div>
@@ -259,7 +259,7 @@
                 <div class="document-list">
                     <div v-for="(document, index) in documents" :key="index">
                         <div class="document-form-row">
-                            <div class="document-form-label">{{ document.name }}</div>                     
+                            <div class="document-form-label">{{ document.fileName }}</div>                     
                         </div>
                     </div>
                 </div>
@@ -276,9 +276,9 @@
 
         <!-- “意见” 操作栏 -->
         <div class="opinion-panel-toggle">
-            <div class="opinion-agree" @click="togglePanel">同意</div>
-            <div class="opinion-reject" @click="sendReject">否决</div>
-            <div class="opinion-supplement" @click="sendSupplement">返回补充资料</div>            
+            <div class="opinion-button" @click="openPanel('1')">同意</div>
+            <div class="opinion-button" @click="openPanel('2')">否决</div>
+            <div class="opinion-button" @click="openPanel('3')">返回补充资料</div>            
         </div>
 
         <!-- 遮罩层 -->
@@ -327,72 +327,44 @@ export default {
             opinionType: '',
             showModal: false,
             showPanel: false, // 控制面板显示状态
-            timeLineData: [],
             opinionOptions: ['同意', '返回补充资料', '否决'], // 单选框选项
             selectedOpinion: '', // 选中的选项
-
-            documents: [
-                { name: '售后回租合同', date: '2024-09-01' },
-                { name: '担保合同', date: '2024-08-28' },
-                { name: '文件3', date: '2024-08-15' },
-                { name: '售后回租合同', date: '2024-09-01' },
-                { name: '担保合同', date: '2024-08-28' },
-                { name: '文件3', date: '2024-08-15' },
-            ],
-            
-            applyDetail: {},  // 初始化为空对象
+            documents: [],    // 文件数据
+            timeLineData: [], // 审批历史数据
+            applyDetail: {},  // 立项详情数据
             loading: true,
-
+            task_id: null,
+            task_type: null,
             trace_no: null,
             biz_id: null, 
             op_no: null,
             task_def_id: null,
-
+            apply_id: null,
+            main_id: null,
         };
     },
-
-
     methods: {
-
         goBack() {
             this.$router.go(-1);
         },
-
         setActiveTab(tab) {
             this.activeTab = tab;
-            if (tab === 'history') {
-                this.loadTimeLineData(); // 切换到审批历史标签时加载数据
-            }
         },
-
         handleFabClick() {
             // 处理按钮点击事件的逻辑
             console.log("xxxx");
             // 你可以在这里执行任何你想要的操作，例如打开一个表单或弹出一个模态框
         },
-
-        togglePanel() {
+        openPanel(type) {
+            this.selectedOpinion = type; // 设置选中的操作类型
             this.showPanel = !this.showPanel; // 切换面板显示状态
-        },
-
-        sendSupplement() {
-            // 处理否决请求的逻辑
-            // alert('返回补充资料已发送');
-            // 在这里添加实际的请求发送代码
-        },
-        sendReject() {
-            // 处理否决请求的逻辑
-            // alert('否决请求已发送');
-            // 在这里添加实际的请求发送代码
-        },
-
+        },        
         cancelApproval() {
             // 关闭面板
             this.showPanel = false;
             // 清除输入内容
             this.approvalDescription = '';
         },
-
         sendApproval() {
             // 提交审批逻辑
             // 如果输入的审批说明为空，则阻止提交并显示错误消息
@@ -400,77 +372,9 @@ export default {
                 alert('请填写审批说明');
                 return;
             }
-
             // 提交后关闭面板
             this.showPanel = false;
             // 处理发送审批请求的代码...
-        },
-
-
-        loadTimeLineData() {
-            // 模拟获取审批历史数据的API调用
-            this.timeLineData = [
-                {
-                    TASK_NAME: '市场运营部门负责人',
-                    CREATE_TIME: '2024-08-28 16:44:05',
-                    APPROVE_TYPE: '同意',
-                    APPROVE_IDEA: '审批意见内容',
-                    DURATION: '0天0小时0分46秒',
-                    ASSIGNEE_NAME: '张三1',
-                    dotcolor: '#1EC5B5',
-                    END_TIME: "2024-08-28 16:44:52",
-                },
-                {
-                    TASK_NAME: '市场运营部分管领导',
-                    CREATE_TIME: '2024-08-28 16:48:30',
-                    APPROVE_TYPE: '同意',
-                    APPROVE_IDEA: '审批意见内容',
-                    DURATION: '0天0小时3分38秒',
-                    ASSIGNEE_NAME: '李四2',
-                    dotcolor: '#1EC5B5',
-                    END_TIME: "2024-08-28 16:44:52",
-                },
-                {
-                    TASK_NAME: '市场运营部分管领导',
-                    CREATE_TIME: '2024-08-28 16:48:30',
-                    APPROVE_TYPE: '同意',
-                    APPROVE_IDEA: '审批意见内容',
-                    DURATION: '0天0小时3分38秒',
-                    ASSIGNEE_NAME: '李四3',
-                    dotcolor: '#1EC5B5',
-                    END_TIME: "2024-08-28 16:44:52",
-                },
-                {
-                    TASK_NAME: '市场运营部分管领导',
-                    CREATE_TIME: '2024-08-28 16:48:30',
-                    APPROVE_TYPE: '同意',
-                    APPROVE_IDEA: '审批意见内容',
-                    DURATION: '0天0小时3分38秒',
-                    ASSIGNEE_NAME: '李四4',
-                    dotcolor: '#1EC5B5',
-                    END_TIME: "2024-08-28 16:44:52",
-                },
-                {
-                    TASK_NAME: '市场运营部分管领导',
-                    CREATE_TIME: '2024-08-28 16:48:30',
-                    APPROVE_TYPE: '同意',
-                    APPROVE_IDEA: '审批意见内容',
-                    DURATION: '0天0小时3分38秒',
-                    ASSIGNEE_NAME: '李四5',
-                    dotcolor: '#1EC5B5',
-                    END_TIME: "2024-08-28 16:44:52",
-                },
-                {
-                    TASK_NAME: '市场运营部分管领导',
-                    CREATE_TIME: '2024-08-28 16:48:30',
-                    APPROVE_TYPE: '同意',
-                    APPROVE_IDEA: '审批意见内容',
-                    DURATION: '0天0小时3分38秒',
-                    ASSIGNEE_NAME: '李四6',
-                    dotcolor: '#1EC5B5',
-                    END_TIME: "2024-08-28 16:44:52",
-                },                                                                
-            ];
         },
         getTaskName(timeline) {
             return timeline.TASK_NAME;
@@ -478,7 +382,7 @@ export default {
         resApproveIdea(idea) {
             return idea || '无审批意见';
         },
-        fetchApplyDetail(trace_no, biz_id, op_no, task_def_id) {
+        fetchApplyDetail(task_id, task_type, trace_no, biz_id, op_no, task_def_id) {
             this.loading = true;
             //（1）获取token
             const token = this.$store.getters['auth/token'];
@@ -487,59 +391,113 @@ export default {
                 console.error('Token or Refresh Token is missing');
                 return;
             }
-
             //（2）获取申请ID
-            this.getApplyId(trace_no,biz_id)
+            this.getApprovalDetail(task_id, task_type, trace_no,biz_id)
             .then(applyId => {
                 
                 //（3）判断是否成功获取applyId
                 if (!applyId) {
                     throw new Error('No applyId found, skipping second API call');
                 }
-
                 //（4）调用详情
-                return this.getOfferInfoById(applyId);
+                return this.findApplyApproveInit(applyId);
             })
             .then(response => {
-
                 //（5）设置详情数据
                 if (response && response.code === 0 && response.data) {
-                    this.applyDetail = response.data.applyDetail;
+                    this.applyDetail = response.data.leaseApply;
                 } else {
                     console.error('Unexpected API response:', response);
                 }
-
                 //（6）设置 loading 为 false
                 this.loading = false;
-
                 //（7）调用审批历史接口
                 return this.getTimeLine(trace_no, biz_id, op_no, task_def_id);
-
             })
             .then(response => {
                 //（8）设置审批历史的数据
                 if (response && response.code === 0 && response.data) {
-                    //TODO
+                    this.timeLineData = response.data.hisTask.map(task => {
+                        return {
+                            TASK_NAME: task.TASK_NAME,
+                            CREATE_TIME: task.CREATE_TIME,
+                            APPROVE_TYPE: task.APPROVE_TYPE,
+                            APPROVE_IDEA: task.APPROVE_IDEA,
+                            DURATION: task.DURATION,
+                            ASSIGNEE_NAME: task.ASSIGNEE_NAME,
+                            dotcolor: '#1EC5B5',
+                            END_TIME: task.END_TIME || '无结束时间'
+                        };
+                    });
                 } else {
                     console.error('Unexpected API response in third call:', response);
                 }
+                //（9）调用 文件参数列表 接口
+                return this.getFileParamList(this.apply_id, this.main_id);
             })
-
+            .then(response => {
+                //（10）调用 相关文件列表接口
+                return this.relatedFileList(response.data);
+            })
+            .then(response => {
+                //（11）设置 文件列表 // 提取 fileList
+                const fileList = response.data.fileList[0].fileList;
+                // 遍历 fileList 中的每一个文件，并根据需要进行操作或展示
+                if (fileList && fileList.length > 0) {
+                    const files = fileList.map(file => {
+                        return {
+                            fileId: file.fileId,
+                            fileName: file.fileName,
+                            typeName: file.typeName,
+                            createTime: file.createTime
+                        };
+                    });
+                    // 假设你有一个存储文件列表的 data 属性
+                    this.documents = files;
+                } else {
+                    console.warn('No files found in fileList');
+                }
+                
+            })            
             .catch(error => {
                 console.error('Error in API chain:', error);
             });
         },
-        getApplyId(trace_no,biz_id) {
+        relatedFileList(FileParamList){
             return import('@/api/workstation/approval/my-approvals')
                 .then(({ default: api }) => {
                     return new Promise((resolve, reject) => {
-                        api.getTaskResultData(
-                            { traceNo: trace_no, bizMark: biz_id },
+                        api.relatedFileList(
+                            FileParamList,
                             this.$config,
                             response => {
-                                if (response && response.code === 0 && response.data && response.data.taskList.length > 0) {
-                                    const applyId = response.data.taskList[0].taskDef.appPageMethodParam.applyId;
-                                    resolve(applyId);
+                                if (response && response.code === 0 && response.data) {
+                                    resolve(response);
+                                } else {
+                                    reject('Unexpected API response or empty file list');
+                                }
+                            },
+                            error => {
+                                reject('API Error: ' + error);
+                            }
+                        );
+                    });
+                })
+                .catch(err => {
+                    console.error('Failed to import API module: ', err);
+                    throw err;  // Propagate the error
+                });
+        },
+        getFileParamList(apply_id, main_id ){
+            return import('@/api/workstation/approval/my-approvals')
+                .then(({ default: api }) => {
+                    return new Promise((resolve, reject) => {
+                        api.getFileParamList(
+                            {applyId: apply_id, mainId: main_id ,entrance: "apply"},
+                            this.$config,
+                            response => {                                
+                                if (response && response.code === 0 && response.data) {
+                                    resolve(response);
                                 } else {
                                     reject('Unexpected API response or empty task list');
                                 }
@@ -555,13 +513,41 @@ export default {
                     throw err;  // Propagate the error
                 });
         },
-
-        getOfferInfoById(applyId) {
+        getApprovalDetail(task_id, task_type, trace_no,biz_id) {
             return import('@/api/workstation/approval/my-approvals')
                 .then(({ default: api }) => {
                     return new Promise((resolve, reject) => {
-                        api.getOfferInfoById(
-                            applyId,
+                        api.getApprovalDetail(
+                            {taskId: task_id, taskType: 0, bizMark: biz_id },
+                            this.$config,
+                            response => {
+                                if (response && response.code === 0 && response.data && response.data.approveBtnList.length > 0) {
+                                    const applyId = response.data.methodParam.applyId;
+                                    const mainId = response.data.methodParam.mainId;
+                                    this.apply_id = applyId;
+                                    this.main_id = mainId;
+                                    resolve(applyId);
+                                } else {
+                                    reject('Unexpected API response or empty task list');
+                                }
+                            },
+                            error => {
+                                reject('API Error: ' + error);
+                            }
+                        );
+                    });
+                })
+                .catch(err => {
+                    console.error('Failed to import API module: ', err);
+                    throw err;  // Propagate the error
+                });
+        },        
+        findApplyApproveInit(applyId) {
+            return import('@/api/workstation/approval/my-approvals')
+                .then(({ default: api }) => {
+                    return new Promise((resolve, reject) => {
+                        api.findApplyApproveInit(
+                            {applyId: applyId},
                             this.$config,
                             response => {
                                 if (response && response.code === 0 && response.data) {
@@ -580,7 +566,7 @@ export default {
                     console.error('Failed to import API module: ', err);
                     throw err;  // Propagate the error
                 });
-        },
+        },        
         getTimeLine(trace_no, biz_id, op_no, task_def_id) {
             return import('@/api/workstation/approval/my-approvals')
                 .then(({ default: api }) => {
@@ -606,7 +592,6 @@ export default {
                     throw err;  // Propagate the error
                 });
         },
-
     },
     computed: {
         formattedApplyBeginDate() {
@@ -621,13 +606,13 @@ export default {
         }
     },
     mounted() {
+        this.task_id = this.$route.params.task_id;
+        this.task_type = this.$route.params.task_type;      
         this.trace_no = this.$route.params.trace_no;
         this.biz_id = this.$route.params.biz_id;
         this.op_no = this.$route.params.op_no;
         this.task_def_id = this.$route.params.task_def_id;
-
-        this.fetchApplyDetail(this.trace_no, this.biz_id, this.op_no, this.task_def_id);
-
+        this.fetchApplyDetail(this.task_id, this.task_type, this.trace_no, this.biz_id, this.op_no, this.task_def_id);
     }
 };
 </script>
@@ -664,7 +649,7 @@ export default {
     width: 1rem;
     height: 1rem;
     margin: 0 5px;
-    background-color: #00ADEF;
+    background-color: #ddd;
     border-radius: 50%;
     animation: bounce 0.6s infinite alternate;
 }
@@ -927,7 +912,6 @@ export default {
     align-items: flex-end; /* 向右对齐 */
 }
 .history-approveType {
-    font-weight: bold;
     color: #1EC5B5; /* 审批类型颜色 */
 }
 .history-approveIdea {
@@ -953,6 +937,7 @@ export default {
 .history-endTime, .history-assignee {
     color: #909399;
     font-size: 0.8rem;
+    margin-top: 0.3rem;
 }
 
 
@@ -1030,7 +1015,7 @@ export default {
     overflow: hidden; /* 隐藏超出内容 */
     text-overflow: ellipsis; /* 如果内容超出显示省略号 */
 }
-.opinion-agree, .opinion-reject, .opinion-supplement {
+.opinion-button {
     background-color: transparent; /* 移除按钮背景 */
     border: none; /* 移除按钮边框 */
     padding: 0.5rem 1rem;
@@ -1046,13 +1031,12 @@ export default {
     text-overflow: ellipsis; /* 如果内容超出显示省略号 */
     transition: color 0.3s ease, box-shadow 0.2s ease; /* 添加颜色和阴影变化的过渡效果 */
 }
-.opinion-agree:active, .opinion-reject:active, .opinion-reject:active {
+.opinion-button:active {
     color: #007BFF; /* 点击时变为指定颜色 */
     box-shadow: 0 4px 16px rgba(0, 174, 239, 0.8); /* 增加阴影的不透明度和模糊半径 */
 }
-
-
-.opinion-agree:not(:last-child)::after, .opinion-reject:not(:last-child)::after {
+/* 为除最后一个按钮外的所有按钮添加竖线 */
+.opinion-button:not(:last-child)::after {
     content: '';
     position: absolute;
     right: 0;
@@ -1062,6 +1046,8 @@ export default {
     height: 70%; /* 调整竖线的高度 */
     background-color: #ddd; /* 竖线的颜色 */
 }
+
+
 /* 遮罩层 ************************ */
 .opinion-overlay {
     position: fixed;

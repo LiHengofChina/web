@@ -16,7 +16,8 @@
                         </div>
                         <div class="card-actions">
 
-                            <button @click="approve(item.trace_no, item.biz_id, item.lease_approve_type, op_no, item.task_def_id)">审批</button>
+                            <button @click="approve(item.task_id, item.task_type, item.trace_no, item.biz_id,   
+                                                    item.lease_approve_type, op_no, item.task_def_id)">审批</button>
                             <button @click="transfer(item.id)">转办</button>
 
                         </div>
@@ -55,11 +56,11 @@ export default {
     },
     methods: {
         ...mapMutations('approval_my_approvals', ['setActiveTab']),
-        approve(trace_no, biz_id, lease_approve_type, op_no, task_def_id) {
+        approve(task_id, task_type, trace_no, biz_id, lease_approve_type, op_no, task_def_id) {
 
             // 根据 lease_approve_type 的值来判断要跳转的路由
             if (lease_approve_type === '立项审批') {
-                this.$router.push({ name: 'workstation_approval_my-approvals_pending_project-initiation-approval', params: { trace_no, biz_id, op_no ,task_def_id} });
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_project-initiation-approval', params: { task_id, task_type, trace_no, biz_id, op_no ,task_def_id} });
             } else if (lease_approve_type === '项目变更审批') {
                 console.log("项目变更审批TODO");
             } else if (lease_approve_type === '项目尽调') {
@@ -82,7 +83,7 @@ export default {
                     return;
                 }
 
-                this.op_no = "xuebeibei";
+                this.op_no = "silinjie";
 
                 await api.getSysTaskInfo(
                     {"dynamicQuery":"",
@@ -93,7 +94,7 @@ export default {
                     "pageSize":10,
                     "sort":"[]",
                     "tableId":"flowable/taskList",
-                    "initQuery":"{\"dynamicQuery\":\"\",\"bizMark\":\"lease_approve_flow\",\"queryType\":\"task\",\"opNo\":\"xuebeibei\"}"
+                    "initQuery":"{\"dynamicQuery\":\"\",\"bizMark\":\"lease_approve_flow\",\"queryType\":\"task\",\"opNo\":\"silinjie\"}"
                     },
                     this.$config,
                     (response) => {
@@ -103,6 +104,8 @@ export default {
                                 trace_no: record.TRACE_NO,
                                 biz_id: record.BIZ_ID,
                                 task_def_id: record.TASK_DEF_ID,
+                                task_id: record.TASK_ID,
+                                task_type: record.TASK_TYPE,
                                 lease_approve_type : record.LEASE_APPROVE_TYPE,
                                 type: record.APPROVE_TITLE || '未知审批',
                                 position: record.TASK_NAME || '未知岗位',
