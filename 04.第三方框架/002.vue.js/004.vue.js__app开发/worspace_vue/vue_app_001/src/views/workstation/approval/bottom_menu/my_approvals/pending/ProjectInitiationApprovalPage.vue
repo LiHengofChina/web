@@ -275,7 +275,7 @@
         </div>
 
         <!-- “意见” 操作栏 -->
-        <div class="opinion-panel-toggle">
+        <div v-if="!loading > 0" class="opinion-panel-toggle">
             <div 
                 v-for="(btn) in approveBtnList" 
                 :key="btn.id" 
@@ -287,8 +287,8 @@
 
 
         <!-- 遮罩层 -->
-        <div v-if="showPanel" class="opinion-overlay" @click="cancelApproval"></div>
-        
+        <div v-if="showPanel " class="opinion-overlay" @click="cancelApproval"></div>
+
         <!-- “同意”面板 -->
         <transition name="slide-up">
             <div v-if="showPanel" class="opinion-form-section">
@@ -1068,8 +1068,10 @@ export default {
     width: 100vw;
     height: 100vh;
     background-color: rgba(112, 138, 140, 0.5); /* 半透明的灰蓝色 */
-    z-index: 1001; /* 确保遮罩在内容上面，面板下面 */
+    z-index: 1001; /* 确保遮罩在所有内容之上 */
 }
+
+
 /* “同意” 面板 ************************ */
 .opinion-form-section {
     border-top: 1px solid #ddd;
