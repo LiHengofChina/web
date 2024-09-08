@@ -9,7 +9,7 @@
             <div v-if="activeTab === 'pending'">
                 <div v-for="item in pendingItems" :key="item.id" class="card">
                     <div class="card-content">
-                        <div class="card-header">{{ item.type }} - {{ item.position }}</div>
+                        <div class="card-header">{{ item.approve_title }} - {{ item.position }}</div>
                         <div class="card-body">
                             <p>客户: {{ item.customerName }}</p>
                             <p>审批人: {{ item.approver }}</p>
@@ -17,7 +17,7 @@
                         <div class="card-actions">
 
                             <button @click="approve(item.task_id, item.task_type, item.trace_no, item.biz_id,   
-                                                    item.lease_approve_type, op_no, item.task_def_id)">审批</button>
+                                                    item.lease_approve_type, op_no, item.task_def_id, item.approve_title)">审批</button>
                             <button @click="transfer(item.id)">转办</button>
 
                         </div>
@@ -56,11 +56,11 @@ export default {
     },
     methods: {
         ...mapMutations('approval_my_approvals', ['setActiveTab']),
-        approve(task_id, task_type, trace_no, biz_id, lease_approve_type, op_no, task_def_id) {
+        approve(task_id, task_type, trace_no, biz_id, lease_approve_type, op_no, task_def_id, approve_title) {
 
             // 根据 lease_approve_type 的值来判断要跳转的路由
             if (lease_approve_type === '立项审批') {
-                this.$router.push({ name: 'workstation_approval_my-approvals_pending_project-initiation-approval', params: { task_id, task_type, trace_no, biz_id, op_no ,task_def_id} });
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_project-initiation-approval', params: { task_id, task_type, trace_no, biz_id, op_no ,task_def_id, approve_title} });
             } else if (lease_approve_type === '项目变更审批') {
                 console.log("项目变更审批TODO");
             } else if (lease_approve_type === '项目尽调') {
@@ -107,7 +107,7 @@ export default {
                                 task_id: record.TASK_ID,
                                 task_type: record.TASK_TYPE,
                                 lease_approve_type : record.LEASE_APPROVE_TYPE,
-                                type: record.APPROVE_TITLE || '未知审批',
+                                approve_title: record.APPROVE_TITLE || '未知审批',
                                 position: record.TASK_NAME || '未知岗位',
                                 customerName: record.CUS_NAME || '未知客户',
                                 approver: record.ASSIGNEE_NAME || '未知审批人',

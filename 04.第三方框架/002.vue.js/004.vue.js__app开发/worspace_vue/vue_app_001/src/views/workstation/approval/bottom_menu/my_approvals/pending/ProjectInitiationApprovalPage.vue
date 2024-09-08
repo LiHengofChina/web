@@ -11,7 +11,7 @@
         <!-- Header Section  -->
         <div class="header">
             <i class="fas fa-chevron-left back-icon" @click="goBack"></i>
-            <h1 class="title">合同审批</h1>
+            <h1 class="title">{{ approve_title }}</h1>
             <div class="spacer"></div>
         </div>
 
@@ -295,6 +295,7 @@
                 <!-- 意见标题 -->
                 <div class="opinion-form-row">
                     <label for="approval-description" class="opinion-form-label">
+                        <span v-if="selectedOpinion !== '1'" class="required">*</span>
                         审批意见
                     </label>
                 </div>
@@ -329,11 +330,7 @@ export default {
         return {
             activeTab: 'details',
             approvalDescription: '',
-            opinionType: '',
-            showModal: false,
             showPanel: false, // 控制面板显示状态
-            opinionOptions: ['同意', '返回补充资料', '否决'], // 单选框选项
-            selectedOpinion: '', // 选中的选项
             documents: [],    // 文件数据
             timeLineData: [], // 审批历史数据
             applyDetail: {},  // 立项详情数据
@@ -346,9 +343,10 @@ export default {
             task_def_id: null,
             apply_id: null,
             main_id: null,
+            approve_title: null,//标题
 
             approveBtnList: [],//审批按钮
-
+            selectedOpinion: '', // 当前点击的 “按钮的类型”
         };
     },
     methods: {
@@ -363,7 +361,7 @@ export default {
             console.log("xxxx");
             // 你可以在这里执行任何你想要的操作，例如打开一个表单或弹出一个模态框
         },
-        openPanel(type) {
+        openPanel(type) {            
             this.selectedOpinion = type; // 设置选中的操作类型
             this.showPanel = !this.showPanel; // 切换面板显示状态
         },        
@@ -624,6 +622,7 @@ export default {
         this.biz_id = this.$route.params.biz_id;
         this.op_no = this.$route.params.op_no;
         this.task_def_id = this.$route.params.task_def_id;
+        this.approve_title = this.$route.params.approve_title;
         this.fetchApplyDetail(this.task_id, this.task_type, this.trace_no, this.biz_id, this.op_no, this.task_def_id);
     }
 };
@@ -1072,7 +1071,7 @@ export default {
 }
 
 
-/* “同意” 面板 ************************ */
+/* 意见填写 面板 ************************ */
 .opinion-form-section {
     border-top: 1px solid #ddd;
     position: fixed;
@@ -1135,7 +1134,7 @@ export default {
 
 
 
-/* 同意面板-顶部 */
+/* 意见填写-顶部 */
 .opinion-form-row {
     display: flex;
     justify-content: center; /* 水平居中对齐 */
@@ -1143,6 +1142,15 @@ export default {
     width: 100%; /* 占满可用空间 */
     margin-bottom: 1rem;
     /*text-align: center;  使文字居中 */
+}
+.required {
+    color: red;
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+    margin-right: 0.2rem;
+    position: relative;
+    top: 2px; /* 细微调整符号的位置 */    
 }
 .opinion-form-label {
     position: relative;
@@ -1163,7 +1171,7 @@ export default {
     bottom: 0; /* 紧贴底部 */
     left: 0; /* 左侧对齐 */
 }
-/* 同意面板-底部 */
+/* 意见填写面板-底部 */
 .opinion-form-buttons {
     display: flex;
     justify-content: flex-end;

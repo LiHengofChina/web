@@ -36,7 +36,7 @@ export default [
     
 
     {
-        path: '/workstation/approval/my-approvals/pending/project-initiation-approval/:task_id/:task_type/:trace_no/:biz_id/:op_no/:task_def_id',
+        path: '/workstation/approval/my-approvals/pending/project-initiation-approval/:task_id/:task_type/:trace_no/:biz_id/:op_no/:task_def_id/:approve_title',
         name: 'workstation_approval_my-approvals_pending_project-initiation-approval',
         component: ProjectInitiationApprovalPage
     },
