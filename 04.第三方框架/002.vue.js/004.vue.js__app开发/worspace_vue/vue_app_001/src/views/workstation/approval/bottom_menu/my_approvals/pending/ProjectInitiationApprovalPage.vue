@@ -360,7 +360,6 @@ export default {
             applyDetail: {},  // 立项详情数据
             loading: true,
 
-            task_type: null,
             trace_no: null,
             biz_id: null, 
             op_no: null,
@@ -423,7 +422,7 @@ export default {
         resApproveIdea(idea) {
             return idea || '无审批意见';
         },
-        fetchApplyDetail(task_id, task_type, trace_no, biz_id, op_no, task_def_id) {
+        fetchApplyDetail(task_id, trace_no, biz_id, op_no, task_def_id) {
             this.loading = true;
             //（1）获取token
             const token = this.$store.getters['auth/token'];
@@ -433,7 +432,7 @@ export default {
                 return;
             }
             //（2）获取申请ID
-            this.getApprovalDetail(task_id, task_type, trace_no,biz_id)
+            this.getApprovalDetail(task_id, biz_id)
             .then(applyId => {
                 
                 //（3）判断是否成功获取applyId
@@ -578,7 +577,7 @@ export default {
                     throw err;  // Propagate the error
                 });
         },
-        getApprovalDetail(task_id, task_type, trace_no,biz_id) {
+        getApprovalDetail(task_id, biz_id) {
             return import('@/api/workstation/approval/my-approvals')
                 .then(({ default: api }) => {
                     return new Promise((resolve, reject) => {
@@ -674,14 +673,13 @@ export default {
         }
     },
     mounted() {
-        this.task_id = this.$route.params.task_id;
-        this.task_type = this.$route.params.task_type;      
+        this.task_id = this.$route.params.task_id;  
         this.trace_no = this.$route.params.trace_no;
         this.biz_id = this.$route.params.biz_id;
         this.op_no = this.$route.params.op_no;
         this.task_def_id = this.$route.params.task_def_id;
         this.approve_title = this.$route.params.approve_title;
-        this.fetchApplyDetail(this.task_id, this.task_type, this.trace_no, this.biz_id, this.op_no, this.task_def_id);
+        this.fetchApplyDetail(this.task_id, this.trace_no, this.biz_id, this.op_no, this.task_def_id);
     }
 };
 </script>
