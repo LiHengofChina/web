@@ -255,14 +255,37 @@
             <!-- 文档 -->
             <div v-else-if="activeTab === 'document'">
 
-                <div class="details-form-title">企业融资租赁申请书</div>
-                <div class="document-list">
-                    <div v-for="(document, index) in documents" :key="index">
-                        <div class="document-form-row">
-                            <div class="document-form-label">{{ document.fileName }}</div>                     
+                <div v-for="(group, groupIndex) in documents.groupList" :key="groupIndex">
+
+                    <!-- 一级标题 -->
+                    <div class="details-form-title">{{ group.groupName }}</div>
+
+                    <!-- 过滤并合并相同一级和二级标题下的文件 -->
+                    <div class="document-list">
+                        <div v-for="(fileGroup, index) in filterAndGroupFiles(group.groupNo)" :key="index">
+
+                            <!-- 二级标题 -->
+                            <div class="document-form-row">
+                                <div class="document-form-label-two">{{ fileGroup.firstTypeName }}</div>
+                            </div>
+
+                            <!-- 三级标题 -->
+                            <div class="document-form-row">
+                                <div class="document-form-label-three">{{ fileGroup.typeName }}</div>
+                            </div>
+
+                            <!-- 文件列表 -->
+                            <div v-for="(subFile, subIndex) in fileGroup.fileList" :key="subIndex">
+                                <div class="document-form-row">
+                                    <div class="document-form-label">{{ subFile.fileName }}</div> <!-- 文件名 -->
+                                </div>
+                            </div>
+
                         </div>
                     </div>
+
                 </div>
+
 
                 <!-- 浮动“上传”按钮 -->
                 <div class="fab" @click="handleFabClick">
@@ -331,7 +354,7 @@ export default {
             activeTab: 'details',
             approvalDescription: '',
             showPanel: false, // 控制面板显示状态
-            documents: [],    // 文件数据
+            documents: {},    // 文件数据
             timeLineData: [], // 审批历史数据
             applyDetail: {},  // 立项详情数据
             loading: true,
@@ -447,27 +470,50 @@ export default {
                 return this.relatedFileList(response.data);
             })
             .then(response => {
-                //（11）设置 文件列表 // 提取 fileList
-                const fileList = response.data.fileList[0].fileList;
-                // 遍历 fileList 中的每一个文件，并根据需要进行操作或展示
-                if (fileList && fileList.length > 0) {
-                    const files = fileList.map(file => {
-                        return {
-                            fileId: file.fileId,
-                            fileName: file.fileName,
-                            typeName: file.typeName,
-                            createTime: file.createTime
-                        };
-                    });
-                    // 假设你有一个存储文件列表的 data 属性
-                    this.documents = files;
+                //（11）设置 文件列表
+                const fileLists = response.data;
+                if (fileLists) {
+
+
+                    this.documents = fileLists;
+
+                    //=================  
+                    // 一级标题
+                    // this.documents.groupList.forEach(group => {
+                    //     console.log(`一级标题：${group.groupName}`);
+                    //     this.documents.fileList.forEach(file => {
+                    //         // 二级标题
+                    //         if (file.parentTypeNo === group.groupNo) {
+                    //             console.log(`  二级标题：${file.firstTypeName}`);
+                    //             file.fileList.forEach(subFile => {
+                    //                 // 三级标题
+                    //                 console.log(`    三级标题：${subFile.typeName}`);
+                    //                 //文件信息
+                    //                 console.log(`      文件名：${subFile.fileName}`);
+                    //             });
+                    //         }
+                    //     });
+                    // });
+
+
+
                 } else {
                     console.warn('No files found in fileList');
                 }
-                
-            })            
+            })
             .catch(error => {
                 console.error('Error in API chain:', error);
+            });
+        },
+        filterAndGroupFiles(groupNo) {
+        return this.documents.fileList
+            .filter(file => file.parentTypeNo === groupNo) // 匹配一级标题
+            .map(file => {
+                return {
+                    firstTypeName: file.firstTypeName, // 二级标题
+                    typeName: file.typeName,           // 三级标题
+                    fileList: file.fileList            // 文件列表
+                };
             });
         },
         relatedFileList(FileParamList){
@@ -788,7 +834,9 @@ export default {
     background-color: #fff;
     box-sizing: border-box; /* 包含内边距和边框 */
 }
-.details-form-title {
+
+/** 标题 和 一级标题*/
+.details-form-title { 
     width: 100%;
     font-size: 1rem;
     font-weight: bold;
@@ -802,6 +850,20 @@ export default {
     font-family: 'STZhongsong', '华文中宋', serif;
     box-sizing: border-box;
 }
+
+/** 二级标题*/
+.document-form-label-two {
+    font-size: 1rem;
+    font-weight: bold;
+    color: darkblue; /* 二级标题颜色 */
+}
+/** 三级标题*/
+.document-form-label-three {
+    font-size: 1rem;
+    font-weight: normal;
+    color: darkgreen; /* 三级标题颜色 */
+}
+
 
 .details-form-row {
 
@@ -972,8 +1034,17 @@ export default {
     align-items: center;
 
 }
+.document-form-label-three{
+    color: #ef3800;
+    font-size: 0.9rem;
+    text-align: left; /* 左对齐 */
+    flex: 1;  
+    padding-left: 16%; 
+    font-family: 'STZhongsong', '华文中宋', serif;
+    box-sizing: border-box; /* 包含内边距和边框 */
+}
 .document-form-label {
-    color: #00ADEF; /* 灰色 */
+    color: #00ADEF;
     font-size: 0.9rem;
     text-align: left; /* 左对齐 */
     flex: 1;  
