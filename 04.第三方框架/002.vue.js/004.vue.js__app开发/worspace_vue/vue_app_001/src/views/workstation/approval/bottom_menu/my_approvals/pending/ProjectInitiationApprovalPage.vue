@@ -264,10 +264,11 @@
                     <div class="document-list">
                         <div v-for="(fileGroup, index) in filterAndGroupFiles(group.groupNo)" :key="index">
 
-                            <!-- 二级标题 -->
+                            <!-- 二级标题 
                             <div class="document-form-row">
                                 <div class="document-form-label-two">{{ fileGroup.firstTypeName }}</div>
                             </div>
+                            -->
 
                             <!-- 三级标题 -->
                             <div class="document-form-row">
@@ -277,7 +278,7 @@
                             <!-- 文件列表 -->
                             <div v-for="(subFile, subIndex) in fileGroup.fileList" :key="subIndex">
                                 <div class="document-form-row">
-                                    <div class="document-form-label">{{ subFile.fileName }}</div> <!-- 文件名 -->
+                                    <div class="document-form-label">{{ subFile.fileName }}</div>
                                 </div>
                             </div>
 
