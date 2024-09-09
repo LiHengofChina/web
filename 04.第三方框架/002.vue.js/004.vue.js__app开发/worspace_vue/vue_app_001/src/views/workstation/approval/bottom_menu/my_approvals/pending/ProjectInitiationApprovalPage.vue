@@ -319,7 +319,7 @@
                 <!-- 意见标题 -->
                 <div class="opinion-form-row">
                     <label for="approval-description" class="opinion-form-label">
-                        <span v-if="selectedOpinion !== '1'" class="required">*</span>
+                        <span v-if="approveType !== '1'" class="required">*</span>
                         审批意见
                     </label>
                 </div>
@@ -359,7 +359,7 @@ export default {
             timeLineData: [], // 审批历史数据
             applyDetail: {},  // 立项详情数据
             loading: true,
-            task_id: null,
+
             task_type: null,
             trace_no: null,
             biz_id: null, 
@@ -370,7 +370,9 @@ export default {
             approve_title: null,//标题
 
             approveBtnList: [],//审批按钮
-            selectedOpinion: '', // 当前点击的 “按钮的类型”
+            approveType: '', // 当前点击的 “按钮的类型”
+
+            task_id: null,
         };
     },
     methods: {
@@ -386,7 +388,8 @@ export default {
             // 你可以在这里执行任何你想要的操作，例如打开一个表单或弹出一个模态框
         },
         openPanel(type) {            
-            this.selectedOpinion = type; // 设置选中的操作类型
+            this.approveType = type; // 设置选中的操作类型
+            this.approvalDescription = ''; // 清空意见输入框的值
             this.showPanel = !this.showPanel; // 切换面板显示状态
         },        
         cancelApproval() {
@@ -396,15 +399,23 @@ export default {
             this.approvalDescription = '';
         },
         sendApproval() {
-            // 提交审批逻辑
-            // 如果输入的审批说明为空，则阻止提交并显示错误消息
-            if (this.approvalDescription.trim() === '') {
+
+            if (this.approveType !== '1' && this.approvalDescription.trim() === '') {
                 alert('请填写审批说明');
                 return;
             }
+
+            console.log(this.approveType);
+            console.log(this.task_id);
+
+
+            //TODO
+            //taskId=8b69bcf6-6e56-11ef-b702-005056a7f4c9&approveType=4&targetNodeId=&variables=%7B%7D
+            //
+
             // 提交后关闭面板
             this.showPanel = false;
-            // 处理发送审批请求的代码...
+
         },
         getTaskName(timeline) {
             return timeline.TASK_NAME;
@@ -477,7 +488,7 @@ export default {
 
 
                     this.documents = fileLists;
-
+                    
                     //=================  
                     // 一级标题
                     // this.documents.groupList.forEach(group => {
