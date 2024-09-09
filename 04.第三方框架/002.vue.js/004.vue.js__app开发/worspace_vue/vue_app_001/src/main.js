@@ -29,7 +29,18 @@ app.use(VueLazyload, {
 
 
 
+//======== 暴露：ElementPlus
+import ElementPlus from 'element-plus';
 
+import 'element-plus/dist/index.css';
+app.use(ElementPlus);
+// 挂载全局对象
+window.ELEMENT = ElementPlus;
+
+import { ElMessageBox } from 'element-plus';
+// 全局挂载 ElMessageBox
+app.config.globalProperties.$confirm = ElMessageBox.confirm;
+app.config.globalProperties.$alert = ElMessageBox.alert;
 
 
 // 动态导入配置插件
@@ -59,12 +70,7 @@ window.Vue = app; // 这里暴露的是应用实例
 
 
 
-//======== 暴露：ElementPlus
-import ElementPlus from 'element-plus';
-import 'element-plus/dist/index.css';
 
-// 挂载全局对象
-window.ELEMENT = ElementPlus;
 
 //======== 暴露：axios
 import axios from 'axios';

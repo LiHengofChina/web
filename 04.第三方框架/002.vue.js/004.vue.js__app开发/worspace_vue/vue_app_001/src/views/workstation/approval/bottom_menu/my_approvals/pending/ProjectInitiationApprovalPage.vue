@@ -400,7 +400,13 @@ export default {
         sendApproval() {
 
             if (this.approveType !== '1' && this.approvalDescription.trim() === '') {
-                alert('请填写审批说明');
+                this.$alert('请填写审批说明',
+                    '提示',
+                    {
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                    }                    
+                );
                 return;
             }
 
@@ -408,10 +414,38 @@ export default {
 
             //（1）获取下一节点的处理人
             this.needOperated(this.task_id, this.approveType)
-            .then(response => {
+            .then(res => {
 
-                //（2）设置详情数据
-                console.log(response);
+                //（2）判断是否需要设置处理人
+                if (res.hasComplete === 0) {//需要指定人员
+                    console.log("1");
+
+                    // 从这里开始，//TODO
+
+                    // 提交后关闭面板 
+                    this.showPanel = false;
+
+                }else{//不需要指定人员
+                    this.$confirm(
+                        '此操作将提交该笔业务，是否继续？',
+                        '提示',
+                        {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                            type: 'warning',
+                        }
+                    ).then(() => {
+
+                        // this.doCommit();//TODO
+                        console.log("--点击ok--");
+
+                        // 提交后关闭面板 
+                        this.showPanel = false;
+
+                    }).catch(() => {
+                        console.log("--点击取消--");                        
+                    });                 
+                }
 
                 //（3）设置 loading 为 false
                 this.loading = false;
@@ -420,8 +454,7 @@ export default {
                 console.error('Error in API chain:', error);
             });
 
-            // 提交后关闭面板 
-            this.showPanel = false;
+
 
         },
         needOperated(task_id ,approveType){
