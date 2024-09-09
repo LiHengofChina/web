@@ -17,6 +17,20 @@ const api = {
         );
     },
 
+    /**
+     * POST form 提交
+     */
+    needOperated: async(data, config, success, error) => {
+        const {  postForm } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
+        const url = `/${config.servers.flowable}/flowable/needOperated`;
+        postForm(url,
+            data,
+            true,
+            success,
+            error
+        );
+    },
+
     /***
      * POST 文件参数列表
      */

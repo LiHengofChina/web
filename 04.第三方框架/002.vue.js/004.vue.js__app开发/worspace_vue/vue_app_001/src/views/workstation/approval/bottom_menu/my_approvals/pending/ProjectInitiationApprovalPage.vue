@@ -404,17 +404,57 @@ export default {
                 return;
             }
 
-            console.log(this.approveType);
-            console.log(this.task_id);
+            this.loading = true;
 
+            //（1）获取下一节点的处理人
+            this.needOperated(this.task_id, this.approveType)
+            .then(response => {
 
-            //TODO
-            //taskId=8b69bcf6-6e56-11ef-b702-005056a7f4c9&approveType=4&targetNodeId=&variables=%7B%7D
-            //
+                //（2）设置详情数据
+                console.log(response);
+
+                //（3）设置 loading 为 false
+                this.loading = false;
+
+            }).catch(error => {
+                console.error('Error in API chain:', error);
+            });
 
             // 提交后关闭面板
             this.showPanel = false;
 
+        },
+        needOperated(task_id ,approveType){
+            return import('@/api/workstation/approval/my-approvals')
+                .then(({ default: api }) => {
+                    return new Promise((resolve, reject) => {
+                        api.needOperated(
+                            {
+                            taskId: task_id,
+                            approveType: approveType,
+                            targetNodeId: '',
+                            variables: JSON.stringify({})
+                            },
+                            this.$config,
+                            response => {
+                                const parsedResponse = typeof response === 'string' ? JSON.parse(response) : response;
+                                if (parsedResponse && parsedResponse.code === 0) {
+                                    resolve(parsedResponse);
+                                } else {
+                                    reject('Unexpected API response or empty file list');
+                                }
+                            },
+                            error => {
+                                reject('API Error: ' + error);
+                            }
+                        );
+
+                    });
+                })
+                .catch(err => {
+                    console.error('Failed to import API module: ', err);
+                    throw err;  // Propagate the error
+                });
         },
         getTaskName(timeline) {
             return timeline.TASK_NAME;
@@ -485,9 +525,7 @@ export default {
                 const fileLists = response.data;
                 if (fileLists) {
 
-
                     this.documents = fileLists;
-                    
                     //=================  
                     // 一级标题
                     // this.documents.groupList.forEach(group => {
@@ -506,8 +544,6 @@ export default {
                     //     });
                     // });
 
-
-
                 } else {
                     console.warn('No files found in fileList');
                 }
@@ -517,15 +553,14 @@ export default {
             });
         },
         filterAndGroupFiles(groupNo) {
-        return this.documents.fileList
-            .filter(file => file.parentTypeNo === groupNo) // 匹配一级标题
-            .map(file => {
-                return {
-                    firstTypeName: file.firstTypeName, // 二级标题
-                    typeName: file.typeName,           // 三级标题
-                    fileList: file.fileList            // 文件列表
-                };
-            });
+                return this.documents.fileList.filter(file => file.parentTypeNo === groupNo) // 匹配一级标题
+                .map(file => {
+                    return {
+                        firstTypeName: file.firstTypeName, // 二级标题
+                        typeName: file.typeName,           // 三级标题
+                        fileList: file.fileList            // 文件列表
+                    };
+                });
         },
         relatedFileList(FileParamList){
             return import('@/api/workstation/approval/my-approvals')
@@ -594,6 +629,7 @@ export default {
                                     this.apply_id = applyId;
                                     this.main_id = mainId;
                                     resolve(applyId);
+
                                 } else {
                                     reject('Unexpected API response or empty task list');
                                 }
@@ -861,20 +897,6 @@ export default {
     box-sizing: border-box;
 }
 
-/** 二级标题*/
-.document-form-label-two {
-    font-size: 1rem;
-    font-weight: bold;
-    color: darkblue; /* 二级标题颜色 */
-}
-/** 三级标题*/
-.document-form-label-three {
-    font-size: 1rem;
-    font-weight: normal;
-    color: darkgreen; /* 三级标题颜色 */
-}
-
-
 .details-form-row {
 
     display: flex;
@@ -1044,15 +1066,25 @@ export default {
     align-items: center;
 
 }
+
+/** 二级标题*/
+.document-form-label-two {
+    font-size: 1rem;
+    font-weight: bold;
+    color: darkblue; /* 二级标题颜色 */
+}
+/** 三级标题*/
 .document-form-label-three{
-    color: #ef3800;
-    font-size: 0.9rem;
+    color: #909399; /* 三级标题颜色 */
+    font-size: 0.9rem;    
     text-align: left; /* 左对齐 */
     flex: 1;  
-    padding-left: 16%; 
+    padding-left: 0.7rem;
     font-family: 'STZhongsong', '华文中宋', serif;
     box-sizing: border-box; /* 包含内边距和边框 */
 }
+
+
 .document-form-label {
     color: #00ADEF;
     font-size: 0.9rem;
