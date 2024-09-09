@@ -278,7 +278,7 @@
                             <!-- 文件列表 -->
                             <div v-for="(subFile, subIndex) in fileGroup.fileList" :key="subIndex">
                                 <div class="document-form-row">
-                                    <div class="document-form-label">{{ subFile.fileName }}</div>
+                                    <div class="document-form-label-doc">{{ subFile.fileName }}</div>
                                 </div>
                             </div>
 
@@ -420,7 +420,7 @@ export default {
                 console.error('Error in API chain:', error);
             });
 
-            // 提交后关闭面板
+            // 提交后关闭面板 
             this.showPanel = false;
 
         },
@@ -1075,22 +1075,22 @@ export default {
 }
 /** 三级标题*/
 .document-form-label-three{
-    color: #909399; /* 三级标题颜色 */
+    color: #ff9800; /* 三级标题颜色 */
     font-size: 0.9rem;    
     text-align: left; /* 左对齐 */
     flex: 1;  
-    padding-left: 0.7rem;
+    padding-left: 1.7rem;
     font-family: 'STZhongsong', '华文中宋', serif;
     box-sizing: border-box; /* 包含内边距和边框 */
 }
 
 
-.document-form-label {
+.document-form-label-doc {
     color: #00ADEF;
     font-size: 0.9rem;
     text-align: left; /* 左对齐 */
     flex: 1;  
-    padding-left: 16%; 
+    padding-left: 3.7rem;
     font-family: 'STZhongsong', '华文中宋', serif;
     box-sizing: border-box; /* 包含内边距和边框 */
 }
