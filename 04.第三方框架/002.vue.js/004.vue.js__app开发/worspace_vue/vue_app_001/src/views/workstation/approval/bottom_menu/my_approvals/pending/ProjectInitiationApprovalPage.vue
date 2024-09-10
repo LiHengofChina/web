@@ -348,12 +348,12 @@
                 </div>
 
                 <!-- 审批人表格 -->
-                <div class="modal-content">
-                    <el-table :data="assignList" style="width: 100%">
-                        <el-table-column type="selection"></el-table-column>
-                        <el-table-column prop="opNo" label="编号"></el-table-column>
-                        <el-table-column prop="opName" label="姓名"></el-table-column>
-                        <el-table-column prop="brName" label="机构"></el-table-column>
+                <div class="modal-content" >
+                    <el-table :data="assignList" style="width: 100%" height="50vh"> <!-- height 固定table的高度，这样才能固定表头 -->
+                        <el-table-column type="selection" ></el-table-column>
+                        <el-table-column prop="opNo" label="编号" ></el-table-column>
+                        <el-table-column prop="opName" label="姓名" ></el-table-column>
+                        <el-table-column prop="brName" label="机构" ></el-table-column>
                     </el-table>
                 </div>
 
@@ -415,7 +415,7 @@ export default {
             assignListQueryParam: '',
             assignList: [],            // 存储审批人列表
             pageNo: 1,//审批人列表分页——第几页
-            pageSize: 1,//审批人列表分页——每页多少条
+            pageSize: 10,//审批人列表分页——每页多少条
             totalCount: 0,// 数据总条数，用于判断是否还有更多数据
         };
     },
@@ -1464,7 +1464,7 @@ export default {
 /* 审批人选择弹窗样式 */
 .user-select-modal-panel {
     position: fixed;
-    bottom: 20%;
+    bottom: 10%;
     left: 50%;
     transform: translate(-50%, 0);
     width: 90%;
@@ -1475,29 +1475,22 @@ export default {
     padding: 0;
     z-index: 1002;
     overflow: hidden;
-
-    max-height: 50vh;    /* 限制面板的最大高度 */
-    overflow-y: auto;    /* 允许垂直滚动 */
-    scrollbar-width: none;  /* 对于 Firefox */
-    -ms-overflow-style: none;  /* 对于 IE 和 Edge */
-
 }
-.user-select-modal-panel::-webkit-scrollbar {  /* 对于 Chrome、Safari 和 Opera */
-    display: none;
-}
-
 /* 审批人选择 */
 .modal-content {
     max-height: 50vh;    /* 设置内容部分的最大高度 */
     overflow-y: auto;    /* 允许垂直滚动 */
+    scrollbar-width: none;  /* 对于 Firefox：隐藏滚动条*/
+    -ms-overflow-style: none;  /* 对于 IE 和 Edge：隐藏滚动条 */    
 }
+.modal-content::-webkit-scrollbar {  /* 对于 Chrome、Safari 和 Opera ：隐藏滚动条*/
+    display: none;
+}
+
 .el-table th, .el-table td {
     width: 25%; /* 控制每列宽度为表格总宽度的25%，假设有4列 */
     text-align: center; /* 可选：设置文字居中 */
 }
-
-
-
 
 
 </style>
