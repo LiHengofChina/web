@@ -339,7 +339,7 @@
         <!-- 审批人选择弹窗 -->
         <div v-if="userSelectVisible" class="modal-overlay" @click="closeUserSelect"></div>
         <transition name="slide-up">
-            <div v-if="userSelectVisible" class="user-select-modal-panel">
+            <div v-if="userSelectVisible" class="user-select-modal-panel" @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd">
                 <!-- 弹窗头部 -->
                 <div class="modal-header">
                     <div class="modal-title">
@@ -350,12 +350,13 @@
                 <!-- 审批人表格 -->
                 <div class="modal-content">
                     <el-table :data="assignList" style="width: 100%">
-                        <el-table-column type="selection" width="30"></el-table-column>
-                        <el-table-column prop="opNo" label="审批人编号" width="95"></el-table-column>
-                        <el-table-column prop="opName" label="审批人名称" width="95"></el-table-column>
-                        <el-table-column prop="brName" label="机构名称" width="95"></el-table-column>
+                        <el-table-column type="selection"></el-table-column>
+                        <el-table-column prop="opNo" label="编号"></el-table-column>
+                        <el-table-column prop="opName" label="姓名"></el-table-column>
+                        <el-table-column prop="brName" label="机构"></el-table-column>
                     </el-table>
                 </div>
+
 
                 <!-- 弹窗底部按钮 -->
                 <div class="modal-footer">
@@ -405,16 +406,17 @@ export default {
 
             task_id: null,
 
-
-
-            assignList: [],            // 存储审批人列表
             selectedUsers: [],         // 存储已选择的审批人
 
             showOpinionPanel: false,  // 评论面板
             userSelectVisible: false,  // 审批人面板
+            
 
+            assignListQueryParam: '',
+            assignList: [],            // 存储审批人列表
             pageNo: 1,//审批人列表分页——第几页
             pageSize: 1,//审批人列表分页——每页多少条
+            totalCount: 0,// 数据总条数，用于判断是否还有更多数据
         };
     },
     methods: {
@@ -440,6 +442,75 @@ export default {
             // 清除输入内容
             this.approvalDescription = '';
         },
+
+        //=================================================================== "选择人员列表，滑动分页"——开始
+        handleTouchStart(event) {
+            this.touchStartY = event.touches[0].clientY;
+        },
+        handleTouchMove(event) {
+            this.touchEndY = event.touches[0].clientY;
+        },
+        handleTouchEnd() {
+            if (this.touchStartY - this.touchEndY > 50) {
+                // 向上滑动 - 加载更多
+                this.loadMoreData();
+            } else if (this.touchEndY - this.touchStartY > 50) {
+                // 向下滑动 - 
+                console.log('向下滑动');
+            }
+        },
+        loadMoreData() {
+            // 检查是否有更多数据需要加载
+            if (this.assignList.length < this.totalCount) {
+                this.pageNo++;
+                this.getNextUserList();
+                console.log("滑动加载");
+            } else {
+                console.log("没有更多数据了");
+            }
+        },
+        getNextUserList(){
+            return import('@/api/workstation/approval/my-approvals')
+            .then(({ default: api }) => {
+                return new Promise((resolve, reject) => {
+                    api.getNextUserList(
+                            {
+                                pageNo: this.pageNo,
+                                pageSize: this.pageSize,
+                                assignList: this.assignListQueryParam
+                            },
+                            this.$config,
+                            response => {
+                                if (response.code == 0) {
+                                    
+
+                                    //数据拼接
+                                    this.assignList = [...this.assignList, ...response.list.records] || []; // 拼接新数据
+                                    this.totalCount = response.list.total;  // 保存总记录数
+
+                                    //面板显示
+                                    this.userSelectVisible = true;
+                                    this.showOpinionPanel = false;
+
+                                } else {
+                                    this.$alert(response.msg, "提示", {
+                                        type: "error",
+                                        dangerouslyUseHTMLString: true
+                                    });
+                                }
+                            },
+                            error => {
+                                reject('API Error: ' + error);
+                            }
+                    );
+                });
+            })
+            .catch(err => {
+                    console.error('Failed to import API module: ', err);
+                    throw err;  // Propagate the error
+            });
+        },
+        //=================================================================== "选择人员列表，滑动分页"——结束
         sendApproval() {
 
             if (this.approveType !== '1' && this.approvalDescription.trim() === '') {
@@ -447,7 +518,7 @@ export default {
                     '提示',
                     {
                             confirmButtonText: '确定',
-                            type: 'info',
+                            type: 'warning',
                     }                    
                 );
                 return;
@@ -465,21 +536,8 @@ export default {
 
                     //========= 查询下一步的用户列表
                     if(res.result.assignList){
-                        this.getNextUserList(res.result.assignList)
-                        .then(response => {
-                            if (response.code === 0) {
-                                this.assignList = response.list.records || [];
-                                this.userSelectVisible = true;
-                                this.showOpinionPanel = false;
-                            } else {
-                                this.$alert(response.msg, "提示", {
-                                    type: "error",
-                                    dangerouslyUseHTMLString: true
-                                });
-                            }
-                        }).catch(error => {
-                            console.error('Error in API chain:', error);
-                        });
+                        this.assignListQueryParam = res.result.assignList;
+                        this.getNextUserList();
                     }
 
                 }else{//不需要指定人员
@@ -490,7 +548,7 @@ export default {
                         {
                             confirmButtonText: '确定',
                             cancelButtonText: '取消',
-                            type: 'info',
+                            type: 'warning',
                         }
                     ).then(() => {
                         // this.doCommit();//TODO
@@ -507,6 +565,11 @@ export default {
             });
         },
         closeUserSelect() {
+
+            this.assignList = []; //取消或关闭窗口时，清空它
+            this.pageNo = 1;
+            this.totalCount = 0;
+            
             this.userSelectVisible = false;
             this.showOpinionPanel = true;
         },
@@ -515,45 +578,16 @@ export default {
             this.userSelectVisible = false;
             this.showOpinionPanel = false;
         },
-        getNextUserList(assignList){
-            return import('@/api/workstation/approval/my-approvals')
-            .then(({ default: api }) => {
-                return new Promise((resolve, reject) => {
-                    api.getNextUserList(
-                            {
-                                pageNo: this.pageNo,
-                                pageSize: this.pageSize,
-                                assignList: assignList
-                            },
-                            this.$config,
-                            response => {
-                                if (response.code == 0) {
-                                    resolve(response);
-                                } else {
-                                    reject('Unexpected API response or empty user list');
-                                }
-                            },
-                            error => {
-                                reject('API Error: ' + error);
-                            }
-                    );
-                });
-            })
-            .catch(err => {
-                    console.error('Failed to import API module: ', err);
-                    throw err;  // Propagate the error
-            });
-        },
         needOperated(task_id ,approveType){
             return import('@/api/workstation/approval/my-approvals')
                 .then(({ default: api }) => {
                     return new Promise((resolve, reject) => {
                         api.needOperated(
                             {
-                            taskId: task_id,
-                            approveType: approveType,
-                            targetNodeId: '',
-                            variables: JSON.stringify({})
+                                taskId: task_id,
+                                approveType: approveType,
+                                targetNodeId: '',
+                                variables: JSON.stringify({})
                             },
                             this.$config,
                             response => {
@@ -1441,11 +1475,25 @@ export default {
     padding: 0;
     z-index: 1002;
     overflow: hidden;
+
+    max-height: 50vh;    /* 限制面板的最大高度 */
+    overflow-y: auto;    /* 允许垂直滚动 */
+    scrollbar-width: none;  /* 对于 Firefox */
+    -ms-overflow-style: none;  /* 对于 IE 和 Edge */
+
 }
+.user-select-modal-panel::-webkit-scrollbar {  /* 对于 Chrome、Safari 和 Opera */
+    display: none;
+}
+
+/* 审批人选择 */
 .modal-content {
-    padding: 1rem;
-    max-height: 50vh; /* 设置内容部分的最大高度 */
-    overflow-y: auto;
+    max-height: 50vh;    /* 设置内容部分的最大高度 */
+    overflow-y: auto;    /* 允许垂直滚动 */
+}
+.el-table th, .el-table td {
+    width: 25%; /* 控制每列宽度为表格总宽度的25%，假设有4列 */
+    text-align: center; /* 可选：设置文字居中 */
 }
 
 
