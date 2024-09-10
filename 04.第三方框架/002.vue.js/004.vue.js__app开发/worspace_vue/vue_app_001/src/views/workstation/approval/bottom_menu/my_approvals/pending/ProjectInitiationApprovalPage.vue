@@ -304,41 +304,74 @@
                 v-for="(btn) in approveBtnList" 
                 :key="btn.id" 
                 class="opinion-button" 
-                @click="openPanel(btn.approveType)">
+                @click="openOpinionPanel(btn.approveType)">
                 {{ btn.approveIdea }}
             </div>          
         </div>
 
-
-        <!-- 遮罩层 -->
-        <div v-if="showPanel " class="opinion-overlay" @click="cancelApproval"></div>
-
         <!-- “同意”面板 -->
+        <div v-if="showOpinionPanel " class="modal-overlay" @click="cancelApproval"></div>
         <transition name="slide-up">
-            <div v-if="showPanel" class="opinion-form-section">
+            <div v-if="showOpinionPanel" class="modal-panel">
                 <!-- 意见标题 -->
-                <div class="opinion-form-row">
-                    <label for="approval-description" class="opinion-form-label">
+                <div class="modal-header">
+                    <label for="approval-description" class="modal-title">
                         <span v-if="approveType !== '1'" class="required">*</span>
                         审批意见
                     </label>
                 </div>
 
                 <!-- 输入意见 -->
-                <textarea id="approval-description" v-model="approvalDescription" rows="7" maxlength="500"></textarea>
+                <textarea id="approval-description" v-model="approvalDescription" class="opinion-textarea" rows="7" maxlength="500"></textarea>
 
                 <!-- “取消”和“确定”按钮 -->
-                <div class="opinion-form-buttons">
-                    <div class="spacer-div"></div>
-                    <div class="spacer-div"></div>
-                    <button class="cancel-button" @click="cancelApproval">取 消</button>
-                    <button class="confirm-button" @click="sendApproval">确 定</button>
+                <div class="modal-footer">
+                    <div class="modal-spacer-div"></div>
+                    <div class="modal-spacer-div"></div>
+                    <button class="modal-cancel-button" @click="cancelApproval">取 消</button>
+                    <button class="modal-confirm-button" @click="sendApproval">确 定</button>
                 </div>
 
             </div>
 
         </transition>
 
+        <!-- 审批人选择弹窗 -->
+        <div v-if="userSelectVisible" class="modal-overlay" @click="closeUserSelect"></div>
+        <transition name="slide-up">
+            <div v-if="userSelectVisible" class="user-select-modal-panel">
+                <!-- 弹窗头部 -->
+                <div class="modal-header">
+                    <div class="modal-title">
+                        选择审批人
+                    </div>
+                </div>
+
+                <!-- 审批人表格 -->
+                <div class="modal-content">
+                    <el-table :data="assignList" style="width: 100%">
+                        <el-table-column type="selection" width="30"></el-table-column>
+                        <el-table-column prop="opNo" label="审批人编号" width="95"></el-table-column>
+                        <el-table-column prop="opName" label="审批人名称" width="95"></el-table-column>
+                        <el-table-column prop="brName" label="机构名称" width="95"></el-table-column>
+                    </el-table>
+                </div>
+
+                <!-- 弹窗底部按钮 -->
+                <div class="modal-footer">
+                    <div class="modal-spacer-div"></div>
+                    <div class="modal-spacer-div"></div>
+                    <button class="modal-cancel-button" @click="closeUserSelect">取消</button>
+                    <button class="modal-confirm-button" @click="approveBySelectedUsers">确定</button>
+                </div>
+
+            </div>
+        </transition>
+
+
+
+
+    
     </div>
 </template>
 
@@ -354,7 +387,6 @@ export default {
         return {
             activeTab: 'details',
             approvalDescription: '',
-            showPanel: false, // 控制面板显示状态
             documents: {},    // 文件数据
             timeLineData: [], // 审批历史数据
             applyDetail: {},  // 立项详情数据
@@ -375,7 +407,14 @@ export default {
 
 
 
+            assignList: [],            // 存储审批人列表
+            selectedUsers: [],         // 存储已选择的审批人
 
+            showOpinionPanel: false,  // 评论面板
+            userSelectVisible: false,  // 审批人面板
+
+            pageNo: 1,//审批人列表分页——第几页
+            pageSize: 1,//审批人列表分页——每页多少条
         };
     },
     methods: {
@@ -390,14 +429,14 @@ export default {
             console.log("xxxx");
             // 你可以在这里执行任何你想要的操作，例如打开一个表单或弹出一个模态框
         },
-        openPanel(type) {            
+        openOpinionPanel(type) {            
             this.approveType = type; // 设置选中的操作类型
             this.approvalDescription = ''; // 清空意见输入框的值
-            this.showPanel = !this.showPanel; // 切换面板显示状态
-        },        
+            this.showOpinionPanel = true;
+        },
         cancelApproval() {
             // 关闭面板
-            this.showPanel = false;
+            this.showOpinionPanel = false;
             // 清除输入内容
             this.approvalDescription = '';
         },
@@ -408,74 +447,73 @@ export default {
                     '提示',
                     {
                             confirmButtonText: '确定',
-                            type: 'warning',
+                            type: 'info',
                     }                    
                 );
                 return;
             }
 
-            this.loading = true;
-
-            //（1）获取下一节点的处理人
+            //（1）调用needOperated接口
             this.needOperated(this.task_id, this.approveType)
             .then(res => {
 
-                    //（2）判断是否需要设置处理人
-                    if (res.hasComplete === 0) {//需要指定人员
+                //（2）判断是否需要设置处理人
+                if (res.hasComplete === 0) {//需要指定人员
 
-                    //=============
-                    // this.node = {
-                    // 		id: res.result.targetFlowId,
-                    // 		seqList: res.result.seqList[0]
-                    // };
                     console.log(res.result.targetFlowId);
                     console.log(res.result.seqList[0]);
 
                     //========= 查询下一步的用户列表
                     if(res.result.assignList){
                         this.getNextUserList(res.result.assignList)
-                        .then(res => {
-
-                            console.log("________" + res);
+                        .then(response => {
+                            if (response.code === 0) {
+                                this.assignList = response.list.records || [];
+                                this.userSelectVisible = true;
+                                this.showOpinionPanel = false;
+                            } else {
+                                this.$alert(response.msg, "提示", {
+                                    type: "error",
+                                    dangerouslyUseHTMLString: true
+                                });
+                            }
                         }).catch(error => {
                             console.error('Error in API chain:', error);
                         });
-
                     }
 
-                    // 从这里开始，//TODO
-
-                    // 提交后关闭面板 
-                    this.showPanel = false;
-
                 }else{//不需要指定人员
+
                     this.$confirm(
                         '此操作将提交该笔业务，是否继续？',
                         '提示',
                         {
                             confirmButtonText: '确定',
                             cancelButtonText: '取消',
-                            type: 'warning',
+                            type: 'info',
                         }
                     ).then(() => {
-
                         // this.doCommit();//TODO
                         console.log("--点击ok--");
 
-                        // 提交后关闭面板 
-                        this.showPanel = false;
-
+                        this.showOpinionPanel = false;
                     }).catch(() => {
-                        console.log("--点击取消--");                        
+                        console.log("--点击取消--");                
                     });                 
                 }
-
-                //（3）设置 loading 为 false
-                this.loading = false;
 
             }).catch(error => {
                 console.error('Error in API chain:', error);
             });
+        },
+        closeUserSelect() {
+            this.userSelectVisible = false;
+            this.showOpinionPanel = true;
+        },
+        approveBySelectedUsers() {
+            console.log("Selected users: ", this.selectedUsers);
+            this.userSelectVisible = false;
+            this.showOpinionPanel = false;
         },
         getNextUserList(assignList){
             return import('@/api/workstation/approval/my-approvals')
@@ -483,8 +521,8 @@ export default {
                 return new Promise((resolve, reject) => {
                     api.getNextUserList(
                             {
-                                pageNo: 1, //TODO
-                                pageSize: 20,//TODO
+                                pageNo: this.pageNo,
+                                pageSize: this.pageSize,
                                 assignList: assignList
                             },
                             this.$config,
@@ -1254,7 +1292,7 @@ export default {
 
 
 /* 遮罩层 ************************ */
-.opinion-overlay {
+.modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -1264,9 +1302,8 @@ export default {
     z-index: 1001; /* 确保遮罩在所有内容之上 */
 }
 
-
-/* 意见填写 面板 ************************ */
-.opinion-form-section {
+/* 弹窗面板 ************************ */
+.modal-panel {
     border-top: 1px solid #ddd;
     position: fixed;
     box-sizing: border-box;
@@ -1287,7 +1324,7 @@ export default {
     overflow: visible; /* 允许内容溢出 */
     
 }
-.opinion-form-section::after {
+.modal-panel::after {
     content: '';
     position: absolute;
     bottom: -0.5rem; /* 使箭头更靠近面板 */
@@ -1301,35 +1338,8 @@ export default {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1001;
 }
-.opinion-form-section label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-    text-align: center; /* 标签文本居左对齐 */
-    font-size: 0.9rem;
-    padding: 0.5rem 0;
-}
-.opinion-form-section textarea {
-    width: 90%;
-    max-width: 90%;
-    height: 100px;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem; /* 调整此处的间距以减少文本框下方的距离 */
-    border: 1px solid #ddd;
-    border-radius: 0.25rem;
-    transition: border-color 0.3s ease;
-    box-sizing: border-box;
-    appearance: none;
-}
-.opinion-form-section textarea:focus {
-    border-color: #007BFF;
-    outline: none;
-}
-
-
-
-/* 意见填写-顶部 */
-.opinion-form-row {
+/** 弹窗头部 */
+.modal-header {
     display: flex;
     justify-content: center; /* 水平居中对齐 */
     align-items: center; /* 垂直居中对齐 */
@@ -1346,16 +1356,17 @@ export default {
     position: relative;
     top: 2px; /* 细微调整符号的位置 */    
 }
-.opinion-form-label {
+.modal-title {
+    display: block;
     position: relative;
     text-align: center; /* 确保文本在自身容器中居中 */
     font-size: 0.9rem; /* 根据需要调整字体大小 */
     font-weight: bold; /* 加粗字体 */
     color: #666666; /* 设置文本颜色 */
     width: 100%; /* 使其占满行宽以便可以使用flex */
-    padding-bottom: 0.5rem; /* 添加一些底部间距以留出下划线空间 */
+    padding: 0.5rem 0;
 }
-.opinion-form-label::after {
+.modal-title::after {
     content: '';
     display: block;
     width: 100%; /* 下划线的宽度 */
@@ -1366,16 +1377,16 @@ export default {
     left: 0; /* 左侧对齐 */
 }
 /* 意见填写面板-底部 */
-.opinion-form-buttons {
+.modal-footer {
     display: flex;
     justify-content: flex-end;
     padding: 0;
     width: 100%; /* 确保按钮占据整行 */
 }
-.spacer-div {
+.modal-spacer-div {
     flex: 1; /* 每个空白 div 占据 25% 的宽度 */
 }
-.cancel-button, .confirm-button {
+.modal-cancel-button, .modal-confirm-button {
     flex: 1;
     padding: 0.5rem 0rem;
     margin: 0 0.5rem;
@@ -1388,14 +1399,57 @@ export default {
     margin-bottom: 1rem;
     margin-top: 0.5rem; /* 减少按钮上方的间距 */
 }
-.cancel-button {
+.modal-cancel-button {
     background-color: #f0f0f0;
     color: #333;
     margin-right: 0.5rem; /* 给取消按钮一些右边距 */
 }
-.confirm-button {
+.modal-confirm-button {
     background-color: #268FFF;
     color: #fff;
 }
+
+/* 审批内容面板——中的文本输入 */
+.opinion-textarea {
+    width: 90%;
+    max-width: 90%;
+    height: 100px;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem; /* 调整此处的间距以减少文本框下方的距离 */
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+    appearance: none;
+}
+.opinion-textarea:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+/* 审批人选择弹窗样式 */
+.user-select-modal-panel {
+    position: fixed;
+    bottom: 20%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 90%;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 0;
+    z-index: 1002;
+    overflow: hidden;
+}
+.modal-content {
+    padding: 1rem;
+    max-height: 50vh; /* 设置内容部分的最大高度 */
+    overflow-y: auto;
+}
+
+
+
+
 
 </style>
