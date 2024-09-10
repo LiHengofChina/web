@@ -77,3 +77,5 @@ import axios from 'axios';
 window.axios = axios;
 
 window.$$$store = store
+
+document.body.style.overflow = 'hidden';

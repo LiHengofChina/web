@@ -5,8 +5,14 @@ html, body {
     width: 100%;
     height: 100%;
 
-    /* overflow: hidden;  禁止上下、左右滚动 */
+    overflow: hidden;  /* 禁止上下、左右滚动 */
+    scrollbar-width: none;  /* 对于 Firefox：隐藏滚动条*/
+    -ms-overflow-style: none;  /* 对于 IE 和 Edge：隐藏滚动条 */  
 }
+body::-webkit-scrollbar {  /* 对于 Chrome、Safari 和 Opera ：隐藏滚动条*/
+    display: none;
+}
+
 
 button {
     appearance: none;

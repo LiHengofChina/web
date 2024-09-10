@@ -875,6 +875,19 @@ export default {
 
 <style lang="less" scoped>
 
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;  /*禁止上下、左右滚动 */
+    scrollbar-width: none;  /* 对于 Firefox：隐藏滚动条*/
+    -ms-overflow-style: none;  /* 对于 IE 和 Edge：隐藏滚动条 */    
+}
+html::-webkit-scrollbar,body::-webkit-scrollbar {  /* 对于 Chrome、Safari 和 Opera ：隐藏滚动条*/
+    display: none;
+}
+
 .page-layout {
     display: flex;
     flex-direction: column;
@@ -883,7 +896,14 @@ export default {
     height: 100vh;
     overflow: hidden;
     box-sizing: border-box; /* 确保内边距和边框不会导致布局超出 */
+    scrollbar-width: none;  /* 对于 Firefox：隐藏滚动条*/
+    -ms-overflow-style: none;  /* 对于 IE 和 Edge：隐藏滚动条 */  
 }
+.page-layout::-webkit-scrollbar {  /* 对于 Chrome、Safari 和 Opera ：隐藏滚动条*/
+    display: none;
+}
+
+
 
 /* 加载中 ************************ */
 
@@ -1020,9 +1040,14 @@ export default {
     padding: 0;
     margin-top: 3.8rem;
     padding-bottom: 3.8rem; /* 为底部留出空间，防止内容被覆盖 */
-    overflow-y: auto;
-    overflow-x: hidden;
     box-sizing: border-box;
+    overflow: hidden;
+    overflow-y: auto;  /* 允许垂直滚动 */
+    scrollbar-width: none;  /* 对于 Firefox：隐藏滚动条*/
+    -ms-overflow-style: none;  /* 对于 IE 和 Edge：隐藏滚动条 */       
+}
+.content-area::-webkit-scrollbar {  /* 对于 Chrome、Safari 和 Opera ：隐藏滚动条*/
+    display: none;
 }
 
 

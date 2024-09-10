@@ -136,7 +136,13 @@ export default {
   padding-top: 2.5rem; /* 确保不被 header 覆盖 */
   padding-bottom: 5rem; /* 确保不被 navbar 覆盖 */
   overflow-y: auto; /* 允许滚动 */
+  scrollbar-width: none;  /* 对于 Firefox：隐藏滚动条*/
+  -ms-overflow-style: none;  /* 对于 IE 和 Edge：隐藏滚动条 */    
 }
+.content::-webkit-scrollbar {  /* 对于 Chrome、Safari 和 Opera ：隐藏滚动条*/
+  display: none;
+}
+
 
 .navbar {
   display: flex;
