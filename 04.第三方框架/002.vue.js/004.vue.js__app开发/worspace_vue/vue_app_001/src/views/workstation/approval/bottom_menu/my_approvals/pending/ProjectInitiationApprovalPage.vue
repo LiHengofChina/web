@@ -372,6 +372,10 @@ export default {
             approveType: '', // 当前点击的 “按钮的类型”
 
             task_id: null,
+
+
+
+
         };
     },
     methods: {
@@ -416,9 +420,28 @@ export default {
             this.needOperated(this.task_id, this.approveType)
             .then(res => {
 
-                //（2）判断是否需要设置处理人
-                if (res.hasComplete === 0) {//需要指定人员
-                    console.log("1");
+                    //（2）判断是否需要设置处理人
+                    if (res.hasComplete === 0) {//需要指定人员
+
+                    //=============
+                    // this.node = {
+                    // 		id: res.result.targetFlowId,
+                    // 		seqList: res.result.seqList[0]
+                    // };
+                    console.log(res.result.targetFlowId);
+                    console.log(res.result.seqList[0]);
+
+                    //========= 查询下一步的用户列表
+                    if(res.result.assignList){
+                        this.getNextUserList(res.result.assignList)
+                        .then(res => {
+
+                            console.log("________" + res);
+                        }).catch(error => {
+                            console.error('Error in API chain:', error);
+                        });
+
+                    }
 
                     // 从这里开始，//TODO
 
@@ -453,9 +476,35 @@ export default {
             }).catch(error => {
                 console.error('Error in API chain:', error);
             });
-
-
-
+        },
+        getNextUserList(assignList){
+            return import('@/api/workstation/approval/my-approvals')
+            .then(({ default: api }) => {
+                return new Promise((resolve, reject) => {
+                    api.getNextUserList(
+                            {
+                                pageNo: 1, //TODO
+                                pageSize: 20,//TODO
+                                assignList: assignList
+                            },
+                            this.$config,
+                            response => {
+                                if (response.code == 0) {
+                                    resolve(response);
+                                } else {
+                                    reject('Unexpected API response or empty user list');
+                                }
+                            },
+                            error => {
+                                reject('API Error: ' + error);
+                            }
+                    );
+                });
+            })
+            .catch(err => {
+                    console.error('Failed to import API module: ', err);
+                    throw err;  // Propagate the error
+            });
         },
         needOperated(task_id ,approveType){
             return import('@/api/workstation/approval/my-approvals')
@@ -481,7 +530,6 @@ export default {
                                 reject('API Error: ' + error);
                             }
                         );
-
                     });
                 })
                 .catch(err => {

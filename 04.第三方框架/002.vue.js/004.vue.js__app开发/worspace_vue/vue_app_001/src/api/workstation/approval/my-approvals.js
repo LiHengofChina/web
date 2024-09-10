@@ -2,6 +2,24 @@
 
 const api = {
 
+
+
+    
+    /***
+     * 获取用户列表
+     */
+    getNextUserList: async(data, config, success, error) => {
+        const {  postJson } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
+        const url = `/${config.servers.flowable}/user/pageByUserId`;
+        postJson(
+            url, 
+            data, 
+            true, 
+            success,
+            error
+        );
+    },
+
     /***
      * POST 获取文件资料
      */
