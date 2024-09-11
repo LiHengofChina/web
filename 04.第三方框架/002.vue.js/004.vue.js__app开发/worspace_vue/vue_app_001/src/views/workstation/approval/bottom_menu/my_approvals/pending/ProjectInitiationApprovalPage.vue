@@ -396,8 +396,11 @@ export default {
             biz_id: null, 
             op_no: null,
             task_def_id: null,
+
             apply_id: null,
             main_id: null,
+            cus_id: null,
+
             approve_title: null,//标题
 
             approveBtnList: [],//审批按钮
@@ -548,9 +551,15 @@ export default {
                 targetNodeId: targetNodeId,
                 listStr: listStr,
                 nextUserId: nextUserId,
-                // seqList: seqList,
+                seqList: seqList,
                 bizMark: this.biz_id,
-                // variables: this.variables,
+                variables: {},
+                methodParam:{
+                    applyId: this.apply_id,
+                    cusId: this.cus_id,
+                    mainId: this.main_id,
+                    traceNo: this.trace_no
+                }
                 // methodParam: this.methodParam
             };
             console.log("----------" + JSON.stringify(data));
@@ -572,7 +581,7 @@ export default {
                 return;
             }
 
-            //（1）调用needOperated接口
+            //（1）调用工作流接口，获取下一节点相关信息
             this.needOperated(this.clickButtonApproveType)
             .then(res => {
                 if (res.code == 0) {
@@ -844,8 +853,12 @@ export default {
 
                                     const applyId = response.data.methodParam.applyId;
                                     const mainId = response.data.methodParam.mainId;
+                                    const cusId = response.data.methodParam.cusId;
+                                    
                                     this.apply_id = applyId;
                                     this.main_id = mainId;
+                                    this.cus_id = cusId;
+
                                     resolve(applyId);
 
                                 } else {
