@@ -346,26 +346,29 @@
                         选择审批人
                     </div>
                 </div>
-
+    
                 <!-- 审批人表格 -->
-                <div class="modal-content" >
-                    <el-table :data="assignList" style="width: 100%" height="50vh"> <!-- height 固定table的高度，这样才能固定表头 -->
-                        <el-table-column type="selection" ></el-table-column>
-                        <el-table-column prop="opNo" label="编号" ></el-table-column>
-                        <el-table-column prop="opName" label="姓名" ></el-table-column>
-                        <el-table-column prop="brName" label="机构" ></el-table-column>
+                <div class="modal-content">
+                    <el-table 
+                        :data="assignList" 
+                        style="width: 100%" 
+                        height="50vh"
+                        @selection-change="handleSelectionChange">
+                        <el-table-column type="selection"></el-table-column>
+                        <el-table-column prop="opNo" label="编号"></el-table-column>
+                        <el-table-column prop="opName" label="姓名"></el-table-column>
+                        <el-table-column prop="brName" label="机构"></el-table-column>
                     </el-table>
                 </div>
-
-
+    
                 <!-- 弹窗底部按钮 -->
                 <div class="modal-footer">
                     <div class="modal-spacer-div"></div>
                     <div class="modal-spacer-div"></div>
-                    <button class="modal-cancel-button" @click="closeUserSelect">取消</button>
-                    <button class="modal-confirm-button" @click="approveBySelectedUsers">确定</button>
+                    <button class="modal-cancel-button" @click="closeUserSelect">取 消</button>
+                    <button class="modal-confirm-button" @click="approveByUser">确 定</button>
                 </div>
-
+    
             </div>
         </transition>
 
@@ -406,7 +409,6 @@ export default {
 
             task_id: null,
 
-            selectedUsers: [],         // 存储已选择的审批人
 
             showOpinionPanel: false,  // 评论面板
             userSelectVisible: false,  // 审批人面板
@@ -417,6 +419,8 @@ export default {
             pageNo: 1,//审批人列表分页——第几页
             pageSize: 10,//审批人列表分页——每页多少条
             totalCount: 0,// 数据总条数，用于判断是否还有更多数据
+
+            activeUserList: [],//选择的用户
         };
     },
     methods: {
@@ -444,6 +448,10 @@ export default {
         },
 
         //=================================================================== "选择人员列表，滑动分页"——开始
+        handleSelectionChange(selectedRows) {
+            // selectedRows 是当前选中的所有行
+            this.activeUserList = selectedRows.map(row => row.opNo);
+        },
         handleTouchStart(event) {
             this.touchStartY = event.touches[0].clientY;
         },
@@ -495,6 +503,7 @@ export default {
                                 } else {
                                     this.$alert(response.msg, "提示", {
                                         type: "error",
+                                        confirmButtonText: '确定',
                                         dangerouslyUseHTMLString: true
                                     });
                                 }
@@ -511,6 +520,28 @@ export default {
             });
         },
         //=================================================================== "选择人员列表，滑动分页"——结束
+        doCommit(targetNodeId, seqList, nextUserId, listStr) {
+            
+            console.log("--------xx");
+            // this.$confirm(
+            //     '此操作将提交该笔业务，是否继续？',
+            //     '提示',
+            //     {
+            //         confirmButtonText: '确定',
+            //         cancelButtonText: '取消',
+            //         type: 'warning',
+            //     }
+            // ).then(() => {
+
+            //     console.log("--点击ok--");
+
+            // }).catch(() => {
+            //     console.log("--点击取消--");                
+            // });
+
+            this.userSelectVisible = false;
+            this.showOpinionPanel = false;
+        },
         sendApproval() {
 
             if (this.approveType !== '1' && this.approvalDescription.trim() === '') {
@@ -541,23 +572,7 @@ export default {
                     }
 
                 }else{//不需要指定人员
-
-                    this.$confirm(
-                        '此操作将提交该笔业务，是否继续？',
-                        '提示',
-                        {
-                            confirmButtonText: '确定',
-                            cancelButtonText: '取消',
-                            type: 'warning',
-                        }
-                    ).then(() => {
-                        // this.doCommit();//TODO
-                        console.log("--点击ok--");
-
-                        this.showOpinionPanel = false;
-                    }).catch(() => {
-                        console.log("--点击取消--");                
-                    });                 
+                    this.doCommit();//“回退”提交
                 }
 
             }).catch(error => {
@@ -573,10 +588,24 @@ export default {
             this.userSelectVisible = false;
             this.showOpinionPanel = true;
         },
-        approveBySelectedUsers() {
-            console.log("Selected users: ", this.selectedUsers);
-            this.userSelectVisible = false;
-            this.showOpinionPanel = false;
+        approveByUser() {
+
+            if(this.activeUserList.length > 0){
+
+                let opNo = this.activeUserList.join(",");
+                this.doCommit(this.node.id, this.node.seqList, opNo, ""); //“同意”提交
+
+                this.assignList = []; //取消或关闭窗口时，清空它
+                this.pageNo = 1;
+                this.totalCount = 0;
+
+            }else{
+                this.$alert("请选择审批人员", "提示", {
+                    type: "error",
+                    confirmButtonText: '确定',
+                    dangerouslyUseHTMLString: true
+                });
+            }
         },
         needOperated(task_id ,approveType){
             return import('@/api/workstation/approval/my-approvals')
