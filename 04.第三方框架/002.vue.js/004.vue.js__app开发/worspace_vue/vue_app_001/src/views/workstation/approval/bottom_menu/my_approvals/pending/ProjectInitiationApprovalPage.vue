@@ -507,7 +507,7 @@ export default {
                                 } else {
                                     this.$alert(response.msg, "提示", {
                                         type: "error",
-                                        confirmButtonText: '确定',
+                                        confirmButtonText: '确 定',
                                         dangerouslyUseHTMLString: true
                                     });
                                 }
@@ -524,27 +524,27 @@ export default {
             });
         },
         //=================================================================== "选择人员列表，滑动分页"——结束
+
+        /**
+         * 最终提交
+         */ 
         doCommit(targetNodeId, seqList, nextUserId, listStr) {
-            
-            console.log("--------xx");
-            // this.$confirm(
-            //     '此操作将提交该笔业务，是否继续？',
-            //     '提示',
-            //     {
-            //         confirmButtonText: '确定',
-            //         cancelButtonText: '取消',
-            //         type: 'warning',
-            //     }
-            // ).then(() => {
 
-            //     console.log("--点击ok--");
+            let flowType = "";
+            if (seqList != null || nextUserId != null) {
+                flowType = '11';//“同意”
+            } else {
+                flowType = '4';//“否定”
+            }
 
-            // }).catch(() => {
-            //     console.log("--点击取消--");                
-            // });
+
+            console.log("----------" + flowType);
+            console.log("--------xx" + listStr);
+            console.log("--------xx" + targetNodeId);
 
             this.userSelectVisible = false;
             this.showOpinionPanel = false;
+
         },
         sendApproval() {
 
@@ -552,7 +552,7 @@ export default {
                 this.$alert('请填写审批说明',
                     '提示',
                     {
-                            confirmButtonText: '确定',
+                            confirmButtonText: '确 定',
                             type: 'warning',
                     }                    
                 );
@@ -562,22 +562,40 @@ export default {
             //（1）调用needOperated接口
             this.needOperated(this.task_id, this.approveType)
             .then(res => {
-
-                //（2）判断是否需要设置处理人
-                if (res.hasComplete === 0) {//需要指定人员
-                    //存储node信息
-                    this.node = {
-                        id: res.result.targetFlowId,
-                        seqList: res.result.seqList[0]
-                    };
-                    //========= 查询下一步的用户列表
-                    if(res.result.assignList){
-                        this.assignListQueryParam = res.result.assignList;
-                        this.getNextUserList();
+                if (res.code == 0) {
+                    if (res.hasComplete === 0) {//需要指定人员
+                        //存储node信息
+                        this.node = {
+                            id: res.result.targetFlowId,
+                            seqList: res.result.seqList[0]
+                        };
+                        //========= 查询下一步的用户列表
+                        if(res.result.assignList){
+                            this.assignListQueryParam = res.result.assignList;
+                            this.getNextUserList();
+                        }
+                    }else{//不需要指定人员
+                        this.$confirm(
+                            '此操作将提交该笔业务, 是否继续?',
+                            '提示',
+                            {
+                                confirmButtonText: '确定',
+                                cancelButtonText: '取消',
+                                type: 'warning',
+                            }
+                        ).then(() => {
+                            this.doCommit();// "退回" 提交
+                            console.log("--点击ok--");
+                            this.showOpinionPanel = false;
+                        }).catch(() => {
+                            console.log("--点击取消--");                
+                        });
                     }
-
-                }else{//不需要指定人员
-                    this.doCommit();//“回退”提交
+                } else {
+                    this.$alert(res.msg, "提示", {
+                        type: "error",
+                        dangerouslyUseHTMLString: true
+                    });
                 }
 
             }).catch(error => {
@@ -607,7 +625,7 @@ export default {
             }else{
                 this.$alert("请选择审批人员", "提示", {
                     type: "error",
-                    confirmButtonText: '确定',
+                    confirmButtonText: '确 定',
                     dangerouslyUseHTMLString: true
                 });
             }
