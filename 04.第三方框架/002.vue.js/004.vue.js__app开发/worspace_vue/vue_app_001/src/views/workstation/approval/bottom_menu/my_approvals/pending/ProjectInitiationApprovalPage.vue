@@ -304,7 +304,7 @@
                 v-for="(btn) in approveBtnList" 
                 :key="btn.id" 
                 class="opinion-button" 
-                @click="openOpinionPanel(btn.approveType)">
+                @click="openOpinionPanel(btn.id, btn.approveIdea, btn.approveType)">
                 {{ btn.approveIdea }}
             </div>          
         </div>
@@ -316,7 +316,7 @@
                 <!-- 意见标题 -->
                 <div class="modal-header">
                     <label for="approval-description" class="modal-title">
-                        <span v-if="approveType !== '1'" class="required">*</span>
+                        <span v-if="clickButtonApproveType !== '1'" class="required">*</span>
                         审批意见
                     </label>
                 </div>
@@ -372,10 +372,6 @@
             </div>
         </transition>
 
-
-
-
-    
     </div>
 </template>
 
@@ -405,14 +401,14 @@ export default {
             approve_title: null,//标题
 
             approveBtnList: [],//审批按钮
-            approveType: '', // 当前点击的 “按钮的类型”
+            clickButtonApproveType: '', // 当前点击的 “按钮的类型”
+            clickButtonApproveIdea: '', // 当前点击按钮的“idea”
+            clickButtonId: '',   // 当前点击按钮的“id”
 
             task_id: null,
 
-
             showOpinionPanel: false,  // 评论面板
             userSelectVisible: false,  // 审批人面板
-            
 
             assignListQueryParam: '',
             assignList: [],            // 存储审批人列表
@@ -439,8 +435,11 @@ export default {
             console.log("xxxx");
             // 你可以在这里执行任何你想要的操作，例如打开一个表单或弹出一个模态框
         },
-        openOpinionPanel(type) {            
-            this.approveType = type; // 设置选中的操作类型
+        openOpinionPanel(id, idea, type) {
+            this.clickButtonApproveIdea = idea;
+            this.clickButtonId = id;
+            this.clickButtonApproveType = type; 
+
             this.approvalDescription = ''; // 清空意见输入框的值
             this.showOpinionPanel = true;
         },
@@ -536,11 +535,25 @@ export default {
             } else {
                 flowType = '4';//“否定”
             }
+            
 
-
-            console.log("----------" + flowType);
-            console.log("--------xx" + listStr);
-            console.log("--------xx" + targetNodeId);
+            //=========================（1）数据准备
+            //=========================（1）数据准备
+            let data = {
+                taskId: this.task_id,
+                flowType: flowType,
+                approvalContents: this.approvalDescription,
+                approveBtnId: this.clickButtonId,
+                approveBtnName: this.clickButtonApproveIdea,
+                targetNodeId: targetNodeId,
+                listStr: listStr,
+                nextUserId: nextUserId,
+                // seqList: seqList,
+                bizMark: this.biz_id,
+                // variables: this.variables,
+                // methodParam: this.methodParam
+            };
+            console.log("----------" + JSON.stringify(data));
 
             this.userSelectVisible = false;
             this.showOpinionPanel = false;
@@ -548,7 +561,7 @@ export default {
         },
         sendApproval() {
 
-            if (this.approveType !== '1' && this.approvalDescription.trim() === '') {
+            if (this.clickButtonApproveType !== '1' && this.approvalDescription.trim() === '') {
                 this.$alert('请填写审批说明',
                     '提示',
                     {
@@ -560,7 +573,7 @@ export default {
             }
 
             //（1）调用needOperated接口
-            this.needOperated(this.task_id, this.approveType)
+            this.needOperated(this.clickButtonApproveType)
             .then(res => {
                 if (res.code == 0) {
                     if (res.hasComplete === 0) {//需要指定人员
@@ -630,14 +643,14 @@ export default {
                 });
             }
         },
-        needOperated(task_id ,approveType){
+        needOperated(clickButtonApproveType){
             return import('@/api/workstation/approval/my-approvals')
                 .then(({ default: api }) => {
                     return new Promise((resolve, reject) => {
                         api.needOperated(
                             {
-                                taskId: task_id,
-                                approveType: approveType,
+                                taskId: this.task_id,
+                                approveType: clickButtonApproveType,
                                 targetNodeId: '',
                                 variables: JSON.stringify({})
                             },
