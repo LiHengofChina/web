@@ -421,6 +421,10 @@ export default {
             totalCount: 0,// 数据总条数，用于判断是否还有更多数据
 
             activeUserList: [],//选择的用户
+            node: {//审批节点信息
+                id: '',
+                seqList: []
+            }
         };
     },
     methods: {
@@ -561,10 +565,11 @@ export default {
 
                 //（2）判断是否需要设置处理人
                 if (res.hasComplete === 0) {//需要指定人员
-
-                    console.log(res.result.targetFlowId);
-                    console.log(res.result.seqList[0]);
-
+                    //存储node信息
+                    this.node = {
+                        id: res.result.targetFlowId,
+                        seqList: res.result.seqList[0]
+                    };
                     //========= 查询下一步的用户列表
                     if(res.result.assignList){
                         this.assignListQueryParam = res.result.assignList;
