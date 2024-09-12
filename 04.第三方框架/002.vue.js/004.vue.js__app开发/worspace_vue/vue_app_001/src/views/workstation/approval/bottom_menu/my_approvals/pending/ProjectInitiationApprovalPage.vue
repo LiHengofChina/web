@@ -595,27 +595,81 @@ export default {
             if (this.noValidateApproveType.length > 0) {
                 this.needValidate = !this.noValidateApproveType.some(type => type.optCode === this.clickButtonApproveType);
             }
-            //=========================（2）继续下一步
-            //=========================（2）继续下一步
-            // this.callBackFormValue(
-            //     (res) => {
-            //         data.appPageData = res;
+            //=========================（3）表单校验以及最终提交
+            //=========================（3）表单校验以及最终提交
+            this.callBackFormValue(
+                (res) => {
 
-            //         // this.doCommit4Iframe(data);//TODO
+                    data.appPageData = res;
+                    // this.doCommit4Iframe(data);//TODO
 
-            //     },
-            //     this.needValidate //从这里开始
-            // );            
-            console.log("----------" + JSON.stringify(data));
+                    console.log("----------" + JSON.stringify(data));
 
+                    this.userSelectVisible = false;
+                    this.showOpinionPanel = false;
+                },
+                this.needValidate
+            );
 
-            // this.userSelectVisible = false;
-            // this.showOpinionPanel = false;
 
         },
-        // callBackFormValue(callback,needValidate){
+        //进行数据验证
+        callBackFormValue(callback ,needValidate){
+            if (needValidate){ 
 
-        // },
+                console.log("___________");
+
+            }else {
+
+                //================= 表单数据
+                let data = {
+                        cusName: this.applyDetail.cusName,
+                        productName: this.applyDetail.productName,
+                        applyName: this.applyDetail.applyName,
+                        applyAmt: this.applyDetail.applyAmt,
+                        term: this.applyDetail.term,
+                        termType: this.applyDetail.termType,
+                        leaseRepayType: this.applyDetail.leaseRepayType,
+                        repayNumType:this.applyDetail.repayNumType,
+                        rate: this.applyDetail.rate,
+                        rateType: this.applyDetail.rateType,
+                        overRate: this.applyDetail.overRate,
+                        fieldNameRate: '%',
+                        baseRate: this.applyDetail.baseRate,
+                        capitalSource: this.applyDetail.capitalSource,
+                        leaseBusType: this.applyDetail.leaseBusType,
+                        applyBeginDate: this.applyDetail.applyBeginDate,
+                        vouType: this.applyDetail.vouType,
+                        ifBuyInsurance: this.applyDetail.ifBuyInsurance,
+                        overQuota: this.applyDetail.overQuota,
+                        insuranceRemark: this.applyDetail.insuranceRemark,
+                        irrTax: this.applyDetail.irrTax,
+                        xirrTax: this.applyDetail.xirrTax,
+                        projectSource: this.applyDetail.projectSource,
+                        applyRemark: this.applyDetail.applyRemark,
+                        subjectMatterOfLease: this.applyDetail.subjectMatterOfLease,
+                        useOfFunds: this.applyDetail.useOfFunds,
+                        repaymentSource: this.applyDetail.repaymentSource,
+                        guaranteeMeasures: this.applyDetail.guaranteeMeasures,
+                        "标题": "",
+                        mainProjects: this.applyDetail.mainProjects,
+                        industryAffiliation: this.applyDetail.industryAffiliation,
+                        customerSituation: this.applyDetail.customerSituation,
+                        remark: this.applyDetail.remark,
+                        mngOpName: this.applyDetail.mngOpName,
+                        busUserName: this.applyDetail.busUserName,
+                        modelId: this.applyDetail.modelId,
+                        modelName: this.applyDetail.modelName,
+                        baseRateType: this.applyDetail.baseRateType,
+                        repayType: this.applyDetail.repayType
+                };
+
+                data.applyId = this.apply_id;
+                data.mainId = this.main_id;
+                return callback(data);    
+            }
+        },
+
         sendApproval() {
 
             if (this.clickButtonApproveType !== '1' && this.approvalDescription.trim() === '') {
