@@ -33,6 +33,7 @@ app.use(VueLazyload, {
 import ElementPlus from 'element-plus';
 
 import 'element-plus/dist/index.css';
+import '@/assets/styles/msg.css'
 app.use(ElementPlus);
 // 挂载全局对象
 window.ELEMENT = ElementPlus;

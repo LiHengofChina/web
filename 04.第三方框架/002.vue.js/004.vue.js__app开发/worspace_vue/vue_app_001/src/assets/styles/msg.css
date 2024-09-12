@@ -1,0 +1,7 @@
+.custom-message-class {
+    max-width: none !important; /* 取消默认最大宽度限制 */
+    width: 90vw !important; /* 设置宽度为视口宽度的 90% */
+    background-color: #f0f9eb;
+    color: #67c23a;
+    border-radius: 8px;
+}

@@ -4,6 +4,22 @@ const api = {
 
 
     /***
+     * 审批的“最终提交”
+     */
+    submitApprove: async(data, config, success, error) => {
+        const {  postJson } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
+        const url = `/${config.servers.lease}/approve/apply/leaseApplyHis/submitApprove`;
+        postJson(
+            url,
+            data,
+            true,
+            success,
+            error
+        );
+    },
+    
+
+    /***
      * 获取系统参数
      */
     getParmDic: async(data, config, success, error) => {

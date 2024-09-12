@@ -498,16 +498,12 @@ export default {
                             this.$config,
                             response => {
                                 if (response.code == 0) {
-                                    
-
                                     //数据拼接
                                     this.assignList = [...this.assignList, ...response.list.records] || []; // 拼接新数据
                                     this.totalCount = response.list.total;  // 保存总记录数
-
                                     //面板显示
                                     this.userSelectVisible = true;
                                     this.showOpinionPanel = false;
-
                                 } else {
                                     this.$alert(response.msg, "提示", {
                                         type: "error",
@@ -557,18 +553,69 @@ export default {
                     throw err;  // Propagate the error
             });
         },
+        submitApprove(params, callback){
+            return import('@/api/workstation/approval/my-approvals')
+            .then(({ default: api }) => {
+                return new Promise((resolve, reject) => {
+                    let data = {params: params};
+                    api.submitApprove(
+                        data,
+                            this.$config,
+                            response => {
+                                if (response.code == 0) {
+                                    response.msg = response.data.msg;
+                                    callback(response);                                    
+                                } else {
+                                    this.$alert(response.msg, "提示", {
+                                        type: "error",
+                                        confirmButtonText: '确 定',
+                                        dangerouslyUseHTMLString: true
+                                    });
+                                }
+                            },
+                            error => {
+                                reject('API Error: ' + error);
+                            }
+                    );
+                });
+            })
+            .catch(err => {
+                    console.error('Failed to import API module: ', err);
+                    throw err;  // Propagate the error
+            });
+        },
+        doCommit4Iframe (data) {
+                this.submitApprove(JSON.stringify(data), res => {
+                        if (res.code == 0) {
+
+                            this.userSelectVisible = false;
+                            this.showOpinionPanel = false;
+                        
+                            this.$message({
+                                message: res.msg,
+                                type: 'success',
+                                customClass: 'custom-message-class',
+                                duration: 3000
+                            });
+                            this.goBack();
+                        } else {
+                            this.$alert(res.msg, "提示", {
+                                type: "error",
+                                dangerouslyUseHTMLString: true
+                            });
+                        }
+                });
+        },
         /**
          * 最终提交
          */ 
         doCommit(targetNodeId, seqList, nextUserId, listStr) {
-
             let flowType = "";
-            if (seqList != null || nextUserId != null) {
-                flowType = '11';//“同意”
+            if (this.clickButtonApproveType === '1' && nextUserId != null) {
+                flowType = '11';// "同意"
             } else {
-                flowType = '4';//“否定”
+                flowType = this.clickButtonApproveType;// "退回"  "否决"
             }
-
             //=========================（1）数据准备
             //=========================（1）数据准备
             let data = {
@@ -577,7 +624,7 @@ export default {
                 approvalContents: this.approvalDescription,
                 approveBtnId: this.clickButtonId,
                 approveBtnName: this.clickButtonApproveIdea,
-                targetNodeId: targetNodeId,
+                targetNodeId: targetNodeId ? targetNodeId : "", 
                 listStr: listStr,
                 nextUserId: nextUserId,
                 seqList: seqList,
@@ -599,28 +646,17 @@ export default {
             //=========================（3）表单校验以及最终提交
             this.callBackFormValue(
                 (res) => {
-
                     data.appPageData = res;
-                    // this.doCommit4Iframe(data);//TODO
-
-                    console.log("----------" + JSON.stringify(data));
-
-                    this.userSelectVisible = false;
-                    this.showOpinionPanel = false;
+                    this.doCommit4Iframe(data);
                 },
                 this.needValidate
             );
-
-
         },
         //进行数据验证
         callBackFormValue(callback ,needValidate){
             if (needValidate){ 
-
                 console.log("___________");
-
             }else {
-
                 //================= 表单数据
                 let data = {
                         cusName: this.applyDetail.cusName,
@@ -663,7 +699,6 @@ export default {
                         baseRateType: this.applyDetail.baseRateType,
                         repayType: this.applyDetail.repayType
                 };
-
                 data.applyId = this.apply_id;
                 data.mainId = this.main_id;
                 return callback(data);    
@@ -1702,6 +1737,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar {  /* 对于 Chrome、Safari 和
     width: 25%; /* 控制每列宽度为表格总宽度的25%，假设有4列 */
     text-align: center; /* 可选：设置文字居中 */
 }
+
 
 
 </style>
