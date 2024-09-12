@@ -423,7 +423,9 @@ export default {
             node: {//审批节点信息
                 id: '',
                 seqList: []
-            }
+            },
+    
+            needValidate: true,// 是否需要校验参数。同意——需要校验，退回——不需要校验
         };
     },
     methods: {
@@ -526,7 +528,35 @@ export default {
             });
         },
         //=================================================================== "选择人员列表，滑动分页"——结束
-
+        getParmDic(obj){
+            return import('@/api/workstation/approval/my-approvals')
+            .then(({ default: api }) => {
+                return new Promise((resolve, reject) => {
+                    api.getParmDic(
+                            obj,
+                            this.$config,
+                            response => {
+                                if (response.code == 0) {
+                                    resolve(response);
+                                } else {
+                                    this.$alert(response.msg, "提示", {
+                                        type: "error",
+                                        confirmButtonText: '确 定',
+                                        dangerouslyUseHTMLString: true
+                                    });
+                                }
+                            },
+                            error => {
+                                reject('API Error: ' + error);
+                            }
+                    );
+                });
+            })
+            .catch(err => {
+                    console.error('Failed to import API module: ', err);
+                    throw err;  // Propagate the error
+            });
+        },
         /**
          * 最终提交
          */ 
@@ -538,7 +568,6 @@ export default {
             } else {
                 flowType = '4';//“否定”
             }
-            
 
             //=========================（1）数据准备
             //=========================（1）数据准备
@@ -560,14 +589,33 @@ export default {
                     mainId: this.main_id,
                     traceNo: this.trace_no
                 }
-                // methodParam: this.methodParam
             };
+            //=========================（2）判断是否需要校验表单
+            //=========================（2）判断是否需要校验表单
+            if (this.noValidateApproveType.length > 0) {
+                this.needValidate = !this.noValidateApproveType.some(type => type.optCode === this.clickButtonApproveType);
+            }
+            //=========================（2）继续下一步
+            //=========================（2）继续下一步
+            // this.callBackFormValue(
+            //     (res) => {
+            //         data.appPageData = res;
+
+            //         // this.doCommit4Iframe(data);//TODO
+
+            //     },
+            //     this.needValidate //从这里开始
+            // );            
             console.log("----------" + JSON.stringify(data));
 
-            this.userSelectVisible = false;
-            this.showOpinionPanel = false;
+
+            // this.userSelectVisible = false;
+            // this.showOpinionPanel = false;
 
         },
+        // callBackFormValue(callback,needValidate){
+
+        // },
         sendApproval() {
 
             if (this.clickButtonApproveType !== '1' && this.approvalDescription.trim() === '') {
@@ -581,8 +629,14 @@ export default {
                 return;
             }
 
-            //（1）调用工作流接口，获取下一节点相关信息
-            this.needOperated(this.clickButtonApproveType)
+            //（1）获取系统参数：哪些审批需要校验表单
+            this.getParmDic({parmKeys:["PLT_NO_VALIDATE_APPROVE_TYPE"]})
+            .then(res => {
+                this.noValidateApproveType = res.data.PLT_NO_VALIDATE_APPROVE_TYPE;
+
+                //（1）调用工作流接口，获取下一节点相关信息
+                return this.needOperated(this.clickButtonApproveType);
+            })
             .then(res => {
                 if (res.code == 0) {
                     if (res.hasComplete === 0) {//需要指定人员
