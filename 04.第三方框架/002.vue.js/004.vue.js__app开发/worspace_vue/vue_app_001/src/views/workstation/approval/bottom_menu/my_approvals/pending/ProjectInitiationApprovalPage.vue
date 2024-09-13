@@ -426,6 +426,12 @@ export default {
             },
     
             needValidate: true,// 是否需要校验参数。同意——需要校验，退回——不需要校验
+
+
+            prdUniqueVal: '', //产品的唯一标识
+            flowNo: '',//
+            wkfNodeNo: ''//流程中的节点标识
+
         };
     },
     methods: {
@@ -501,6 +507,7 @@ export default {
                                     //数据拼接
                                     this.assignList = [...this.assignList, ...response.list.records] || []; // 拼接新数据
                                     this.totalCount = response.list.total;  // 保存总记录数
+                                    
                                     //面板显示
                                     this.userSelectVisible = true;
                                     this.showOpinionPanel = false;
@@ -587,17 +594,15 @@ export default {
         doCommit4Iframe (data) {
                 this.submitApprove(JSON.stringify(data), res => {
                         if (res.code == 0) {
-
-                            this.userSelectVisible = false;
-                            this.showOpinionPanel = false;
-                        
                             this.$message({
                                 message: res.msg,
                                 type: 'success',
-                                customClass: 'custom-message-class',
-                                duration: 3000
+                                customClass: 'custom-el-message-class',
+                                duration: 3000,
+                                onClose: () => {
+                                    this.goBack();
+                                }
                             });
-                            this.goBack();
                         } else {
                             this.$alert(res.msg, "提示", {
                                 type: "error",
@@ -654,8 +659,12 @@ export default {
         },
         //进行数据验证
         callBackFormValue(callback ,needValidate){
-            if (needValidate){ 
-                console.log("___________");
+
+            if (needValidate){
+
+                let reqData = { prdUniqueVal: this.prdUniqueVal, flowNo: this.flowNo, nodeNo: this.wkfNodeNo, bizNo: this.apply_id };
+                console.log("___________" + JSON.stringify(reqData));
+
             }else {
                 //================= 表单数据
                 let data = {
@@ -740,6 +749,9 @@ export default {
                             this.getNextUserList();
                         }
                     }else{//不需要指定人员
+
+                        this.showOpinionPanel = false;//确认框弹出之前：关闭"评审内容" 面板
+
                         this.$confirm(
                             '此操作将提交该笔业务, 是否继续?',
                             '提示',
@@ -751,9 +763,8 @@ export default {
                         ).then(() => {
                             this.doCommit();// "退回" 提交
                             console.log("--点击ok--");
-                            this.showOpinionPanel = false;
                         }).catch(() => {
-                            console.log("--点击取消--");                
+                            console.log("--点击取消--");
                         });
                     }
                 } else {
@@ -780,12 +791,29 @@ export default {
 
             if(this.activeUserList.length > 0){
 
-                let opNo = this.activeUserList.join(",");
-                this.doCommit(this.node.id, this.node.seqList, opNo, ""); //“同意”提交
-
+                //确认并清空数据
+                this.userSelectVisible = false;//确认框弹出之前：关闭"评审内容" 面板
                 this.assignList = []; //取消或关闭窗口时，清空它
                 this.pageNo = 1;
                 this.totalCount = 0;
+    
+                this.$confirm(
+                    '此操作将提交该笔业务, 是否继续?',
+                    '提示',
+                    {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning',
+                    }
+                ).then(() => {
+                    let opNo = this.activeUserList.join(",");
+                    this.doCommit(this.node.id, this.node.seqList, opNo, ""); //“同意”提交
+                    console.log("--点击ok--");
+                }).catch(() => {
+                    console.log("--点击取消--");
+                });
+
+
 
             }else{
                 this.$alert("请选择审批人员", "提示", {
@@ -856,6 +884,11 @@ export default {
                 //（5）设置详情数据
                 if (response && response.code === 0 && response.data) {
                     this.applyDetail = response.data.leaseApply;
+
+                    this.prdUniqueVal = response.data.productNo + response.data.productVersionNo;
+                    this.flowNo = response.data.flowNo;
+                    this.wkfNodeNo = response.data.wkfNodeNo;
+    
                 } else {
                     console.error('Unexpected API response:', response);
                 }
