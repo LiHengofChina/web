@@ -82,8 +82,10 @@ export default {
                     console.error('Token or Refresh Token is missing');
                     return;
                 }
+                
 
-                this.op_no = "yuepeng";
+
+                this.op_no = this.$store.getters['auth/user'].opNo;
 
                 await api.getSysTaskInfo(
                     {"dynamicQuery":"",
@@ -94,7 +96,7 @@ export default {
                     "pageSize":10,
                     "sort":"[]",
                     "tableId":"flowable/taskList",
-                    "initQuery":"{\"dynamicQuery\":\"\",\"bizMark\":\"lease_approve_flow\",\"queryType\":\"task\",\"opNo\":\"yuepeng\"}"
+                    "initQuery":"{'dynamicQuery': '', 'bizMark': 'lease_approve_flow', 'queryType': 'task','opNo': '" + this.op_no + "'}"
                     },
                     this.$config,
                     (response) => {

@@ -1,4 +1,4 @@
-// src/store/index/auth.js
+// src/store/index/authStore.js
 const state = {
     user: null,
     token: '',

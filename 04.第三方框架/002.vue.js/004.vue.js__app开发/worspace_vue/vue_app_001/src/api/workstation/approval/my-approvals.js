@@ -4,6 +4,21 @@ const api = {
 
 
     /***
+     * 校验文件上传
+     */
+    checkFileUpload: async(data, config, success, error) => {
+        const {  postJson } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
+        const url = `/${config.servers.lease}/main/leaseMain/checkFileUpload`;
+        postJson(
+            url,
+            data,
+            true,
+            success,
+            error
+        );
+    },
+
+    /***
      * 审批的“最终提交”
      */
     submitApprove: async(data, config, success, error) => {

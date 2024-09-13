@@ -292,7 +292,7 @@
                 <div class="fab" @click="handleFabClick">
                     <i class="fas fa-plus"></i>
                 </div>
-
+                
 
             </div>
 
@@ -420,18 +420,20 @@ export default {
             totalCount: 0,// 数据总条数，用于判断是否还有更多数据
 
             activeUserList: [],//选择的用户
-            node: {//审批节点信息
-                id: '',
-                seqList: []
-            },
+
     
             needValidate: true,// 是否需要校验参数。同意——需要校验，退回——不需要校验
 
 
             prdUniqueVal: '', //产品的唯一标识
-            flowNo: '',//
-            wkfNodeNo: ''//流程中的节点标识
+            flowNo: '', //
+            wkfNodeNo: '',//流程中的节点标识
 
+            nextUserId: '',
+            node: {//审批节点信息
+                id: '',
+                seqList: []
+            },
         };
     },
     methods: {
@@ -630,7 +632,7 @@ export default {
                 approveBtnId: this.clickButtonId,
                 approveBtnName: this.clickButtonApproveIdea,
                 targetNodeId: targetNodeId ? targetNodeId : "", 
-                listStr: listStr,
+                listStr: listStr ? listStr : "",
                 nextUserId: nextUserId,
                 seqList: seqList,
                 bizMark: this.biz_id,
@@ -657,57 +659,120 @@ export default {
                 this.needValidate
             );
         },
+        checkUpload (data) {
+            return import('@/api/workstation/approval/my-approvals')
+            .then(({ default: api }) => {
+                return new Promise((resolve, reject) => {
+                    if(data.ifSkip == '1'){
+                        resolve(true);
+                    }else{
+                        api.checkFileUpload(
+                            data,
+                            this.$config,
+                            response => {
+                                if (response.code == 0) {
+                                        resolve(true);                               
+                                } else {
+                                    this.$alert(response.msg, "提示", {
+                                        type: response.msgType,
+                                        confirmButtonText: '确 定',
+                                        dangerouslyUseHTMLString: true,
+                                        callback: action =>{
+                                            resolve(false);
+                                            console.log(action);
+                                        }
+                                    });
+                                }
+                            },
+                            error => {
+                                reject('API Error: ' + error);
+                            }
+                        );
+                    }
+                });
+            })
+            .catch(err => {
+                    console.error('Failed to import API module: ', err);
+                    throw err;  // Propagate the error
+            });
+        },
+        getData(){
+            let data = {
+                cusName: this.applyDetail.cusName,
+                productName: this.applyDetail.productName,
+                applyName: this.applyDetail.applyName,
+                applyAmt: this.applyDetail.applyAmt,
+                term: this.applyDetail.term,
+                termType: this.applyDetail.termType,
+                leaseRepayType: this.applyDetail.leaseRepayType,
+                repayNumType:this.applyDetail.repayNumType,
+                rate: this.applyDetail.rate,
+                rateType: this.applyDetail.rateType,
+                overRate: this.applyDetail.overRate,
+                fieldNameRate: '%',
+                baseRate: this.applyDetail.baseRate,
+                capitalSource: this.applyDetail.capitalSource,
+                leaseBusType: this.applyDetail.leaseBusType,
+                applyBeginDate: this.applyDetail.applyBeginDate,
+                vouType: this.applyDetail.vouType,
+                ifBuyInsurance: this.applyDetail.ifBuyInsurance,
+                overQuota: this.applyDetail.overQuota,
+                insuranceRemark: this.applyDetail.insuranceRemark,
+                irrTax: this.applyDetail.irrTax,
+                xirrTax: this.applyDetail.xirrTax,
+                projectSource: this.applyDetail.projectSource,
+                applyRemark: this.applyDetail.applyRemark,
+                subjectMatterOfLease: this.applyDetail.subjectMatterOfLease,
+                useOfFunds: this.applyDetail.useOfFunds,
+                repaymentSource: this.applyDetail.repaymentSource,
+                guaranteeMeasures: this.applyDetail.guaranteeMeasures,
+                "标题": "",
+                mainProjects: this.applyDetail.mainProjects,
+                industryAffiliation: this.applyDetail.industryAffiliation,
+                customerSituation: this.applyDetail.customerSituation,
+                remark: this.applyDetail.remark,
+                mngOpName: this.applyDetail.mngOpName,
+                busUserName: this.applyDetail.busUserName,
+                modelId: this.applyDetail.modelId,
+                modelName: this.applyDetail.modelName,
+                baseRateType: this.applyDetail.baseRateType,
+                repayType: this.applyDetail.repayType
+            };
+            return data;
+        },
         //进行数据验证
         callBackFormValue(callback ,needValidate){
 
             if (needValidate){
 
+                //调用文件校验接口
                 let reqData = { prdUniqueVal: this.prdUniqueVal, flowNo: this.flowNo, nodeNo: this.wkfNodeNo, bizNo: this.apply_id };
-                console.log("___________" + JSON.stringify(reqData));
+                this.checkUpload(reqData).then(val =>{
+                    if(val){
+
+                        //（1）表单数据检查 // TODO
+
+                        //（2）项目经理提交时：需要有还款计划的数据 // TODO
+
+                        //（3）自定义款计划，需要导入 "请先导入租金计划" // TODO
+
+                        //（4）获取数据，表单数据
+                        let data = this.getData();
+                        data.applyId = this.apply_id;
+                        data.mainId = this.main_id;
+                        data.nextUserId = this.nextUserId;
+                        data.seqList = this.node.seqList;
+
+                        //（5）项目经理提交时有：费用 数据 //TODO
+
+                        //（5） data.repayPlanEntityList  //数据
+                        return callback(data);
+                    }
+                });
 
             }else {
                 //================= 表单数据
-                let data = {
-                        cusName: this.applyDetail.cusName,
-                        productName: this.applyDetail.productName,
-                        applyName: this.applyDetail.applyName,
-                        applyAmt: this.applyDetail.applyAmt,
-                        term: this.applyDetail.term,
-                        termType: this.applyDetail.termType,
-                        leaseRepayType: this.applyDetail.leaseRepayType,
-                        repayNumType:this.applyDetail.repayNumType,
-                        rate: this.applyDetail.rate,
-                        rateType: this.applyDetail.rateType,
-                        overRate: this.applyDetail.overRate,
-                        fieldNameRate: '%',
-                        baseRate: this.applyDetail.baseRate,
-                        capitalSource: this.applyDetail.capitalSource,
-                        leaseBusType: this.applyDetail.leaseBusType,
-                        applyBeginDate: this.applyDetail.applyBeginDate,
-                        vouType: this.applyDetail.vouType,
-                        ifBuyInsurance: this.applyDetail.ifBuyInsurance,
-                        overQuota: this.applyDetail.overQuota,
-                        insuranceRemark: this.applyDetail.insuranceRemark,
-                        irrTax: this.applyDetail.irrTax,
-                        xirrTax: this.applyDetail.xirrTax,
-                        projectSource: this.applyDetail.projectSource,
-                        applyRemark: this.applyDetail.applyRemark,
-                        subjectMatterOfLease: this.applyDetail.subjectMatterOfLease,
-                        useOfFunds: this.applyDetail.useOfFunds,
-                        repaymentSource: this.applyDetail.repaymentSource,
-                        guaranteeMeasures: this.applyDetail.guaranteeMeasures,
-                        "标题": "",
-                        mainProjects: this.applyDetail.mainProjects,
-                        industryAffiliation: this.applyDetail.industryAffiliation,
-                        customerSituation: this.applyDetail.customerSituation,
-                        remark: this.applyDetail.remark,
-                        mngOpName: this.applyDetail.mngOpName,
-                        busUserName: this.applyDetail.busUserName,
-                        modelId: this.applyDetail.modelId,
-                        modelName: this.applyDetail.modelName,
-                        baseRateType: this.applyDetail.baseRateType,
-                        repayType: this.applyDetail.repayType
-                };
+                let data = this.getData();
                 data.applyId = this.apply_id;
                 data.mainId = this.main_id;
                 return callback(data);    
@@ -807,6 +872,7 @@ export default {
                     }
                 ).then(() => {
                     let opNo = this.activeUserList.join(",");
+                    this.nextUserId = opNo;
                     this.doCommit(this.node.id, this.node.seqList, opNo, ""); //“同意”提交
                     console.log("--点击ok--");
                 }).catch(() => {
