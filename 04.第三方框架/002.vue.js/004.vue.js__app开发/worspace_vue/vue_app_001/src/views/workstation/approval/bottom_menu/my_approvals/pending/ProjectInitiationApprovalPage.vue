@@ -596,11 +596,15 @@ export default {
         doCommit4Iframe (data) {
                 this.submitApprove(JSON.stringify(data), res => {
                         if (res.code == 0) {
+                            
+                            //关闭加载中的效果
+                            this.loading = false;
+
                             this.$message({
                                 message: res.msg,
                                 type: 'success',
                                 customClass: 'custom-el-message-class',
-                                duration: 3000,
+                                duration: 2000,
                                 onClose: () => {
                                     this.goBack();
                                 }
@@ -613,10 +617,7 @@ export default {
                         }
                 });
         },
-        /**
-         * 最终提交
-         */ 
-        doCommit(targetNodeId, seqList, nextUserId, listStr) {
+        async doCommit(targetNodeId, seqList, nextUserId, listStr) {
 
             //========================（1）把按钮上面的 "approveType" 类型，转换成工作流里面的 "flowType" 类型。
             //========================（1）把按钮上面的 "approveType" 类型，转换成工作流里面的 "flowType" 类型。
@@ -828,19 +829,12 @@ export default {
                                 cancelButtonText: '取消',
                                 type: 'warning',
                             }
-                        ).then(() => {
+                        ).then(async () => {
                             // 开启 loading
                             this.loading = true;
-                            try {
-                                // 执行提交操作
-                                this.doCommit(); // "不选人" 提交
-                                console.log("--点击ok--");
-                            } catch (error) {
-                                console.error("提交时发生错误：", error);
-                            } finally {
-                                // 确保无论是否出错，最终关闭 loading
-                                this.loading = false;
-                            }
+                            // 执行提交操作
+                            await this.doCommit(); // "不选人" 提交
+                            console.log("--点击ok--");
                         }).catch(() => {
                             console.log("--点击取消--");
                         });
@@ -883,27 +877,17 @@ export default {
                         cancelButtonText: '取消',
                         type: 'warning',
                     }
-                ).then(() => {
+                ).then(async () => {
                         // 开启 loading
                         this.loading = true;
-                        try {
-                            // 执行提交操作
-                            let opNo = this.activeUserList.join(",");
-                            this.nextUserId = opNo;
-                            this.doCommit(this.node.id, this.node.seqList, opNo, ""); // “选人后” 提交
-                            console.log("--点击ok--");
-                        } catch (error) {
-                            console.error("提交时发生错误：", error);
-                        } finally {
-                            // 确保无论是否出错，最终关闭 loading
-                            this.loading = false;
-                        }
+                        // 执行提交操作
+                        let opNo = this.activeUserList.join(",");
+                        this.nextUserId = opNo;
+                        await this.doCommit(this.node.id, this.node.seqList, opNo, ""); // “选人后” 提交
+                        console.log("--点击ok--");
                 }).catch(() => {
                     console.log("--点击取消--");
                 });
-
-
-
             }else{
                 this.$alert("请选择审批人员", "提示", {
                     type: "error",
