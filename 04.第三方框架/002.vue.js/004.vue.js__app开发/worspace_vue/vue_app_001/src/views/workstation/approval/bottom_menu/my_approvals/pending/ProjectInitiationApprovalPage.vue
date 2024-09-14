@@ -617,14 +617,17 @@ export default {
          * 最终提交
          */ 
         doCommit(targetNodeId, seqList, nextUserId, listStr) {
+
+            //========================（1）把按钮上面的 "approveType" 类型，转换成工作流里面的 "flowType" 类型。
+            //========================（1）把按钮上面的 "approveType" 类型，转换成工作流里面的 "flowType" 类型。
             let flowType = "";
             if (this.clickButtonApproveType === '1' && nextUserId != null) {
                 flowType = '11';// "同意"
             } else {
                 flowType = this.clickButtonApproveType;// "退回"  "否决"
             }
-            //=========================（1）数据准备
-            //=========================（1）数据准备
+            //=========================（2）数据准备
+            //=========================（2）数据准备
             let data = {
                 taskId: this.task_id,
                 flowType: flowType,
@@ -813,10 +816,10 @@ export default {
                             this.assignListQueryParam = res.result.assignList;
                             this.getNextUserList();
                         }
+
                     }else{//不需要指定人员
 
                         this.showOpinionPanel = false;//确认框弹出之前：关闭"评审内容" 面板
-
                         this.$confirm(
                             '此操作将提交该笔业务, 是否继续?',
                             '提示',
@@ -826,8 +829,18 @@ export default {
                                 type: 'warning',
                             }
                         ).then(() => {
-                            this.doCommit();// "退回" 提交
-                            console.log("--点击ok--");
+                            // 开启 loading
+                            this.loading = true;
+                            try {
+                                // 执行提交操作
+                                this.doCommit(); // "不选人" 提交
+                                console.log("--点击ok--");
+                            } catch (error) {
+                                console.error("提交时发生错误：", error);
+                            } finally {
+                                // 确保无论是否出错，最终关闭 loading
+                                this.loading = false;
+                            }
                         }).catch(() => {
                             console.log("--点击取消--");
                         });
@@ -857,7 +870,7 @@ export default {
             if(this.activeUserList.length > 0){
 
                 //确认并清空数据
-                this.userSelectVisible = false;//确认框弹出之前：关闭"评审内容" 面板
+                this.userSelectVisible = false;//确认框弹出之前：关闭"用户选择" 面板
                 this.assignList = []; //取消或关闭窗口时，清空它
                 this.pageNo = 1;
                 this.totalCount = 0;
@@ -871,10 +884,20 @@ export default {
                         type: 'warning',
                     }
                 ).then(() => {
-                    let opNo = this.activeUserList.join(",");
-                    this.nextUserId = opNo;
-                    this.doCommit(this.node.id, this.node.seqList, opNo, ""); //“同意”提交
-                    console.log("--点击ok--");
+                        // 开启 loading
+                        this.loading = true;
+                        try {
+                            // 执行提交操作
+                            let opNo = this.activeUserList.join(",");
+                            this.nextUserId = opNo;
+                            this.doCommit(this.node.id, this.node.seqList, opNo, ""); // “选人后” 提交
+                            console.log("--点击ok--");
+                        } catch (error) {
+                            console.error("提交时发生错误：", error);
+                        } finally {
+                            // 确保无论是否出错，最终关闭 loading
+                            this.loading = false;
+                        }
                 }).catch(() => {
                     console.log("--点击取消--");
                 });
@@ -1224,45 +1247,6 @@ html::-webkit-scrollbar,body::-webkit-scrollbar {  /* 对于 Chrome、Safari 和
 }
 
 
-
-/* 加载中 ************************ */
-
-.loading-indicator {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* 让加载提示占据全屏 */
-    font-size: 1.5rem; /* 调整字体大小 */
-    color: #555; /* 设置文字颜色 */
-}
-.loading-indicator {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.dot {
-    width: 1rem;
-    height: 1rem;
-    margin: 0 5px;
-    background-color: #ddd;
-    border-radius: 50%;
-    animation: bounce 0.6s infinite alternate;
-}
-
-.dot:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.dot:nth-child(3) {
-    animation-delay: 0.4s;
-}
-
-@keyframes bounce {
-    to {
-        transform: translateY(-15px);
-    }
-}
 
 
 /* 标题部分 ************************ */
