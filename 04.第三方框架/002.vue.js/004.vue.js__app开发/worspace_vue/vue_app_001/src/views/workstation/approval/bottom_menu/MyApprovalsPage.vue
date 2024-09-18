@@ -76,14 +76,12 @@ export default {
             try {
                 const { default: api } = await import('@/api/workstation/approval/my-approvals');
 
-                const token = this.$store.getters['auth/token'];
-                const refreshToken = this.$store.getters['auth/refreshToken'];
-                if (!token || !refreshToken) {
-                    console.error('Token or Refresh Token is missing');
-                    return;
-                }
-                
-
+                // const token = this.$store.getters['auth/token'];
+                // const refreshToken = this.$store.getters['auth/refreshToken'];
+                // if (!token || !refreshToken) {
+                //     console.error('Token or Refresh Token is missing');
+                //     return;
+                // }
 
                 this.op_no = this.$store.getters['auth/user'].opNo;
 

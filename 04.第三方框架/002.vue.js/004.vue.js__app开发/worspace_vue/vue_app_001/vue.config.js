@@ -30,7 +30,7 @@ module.exports = defineConfig({
     },    
     resolve: {
       fallback: {
-        "path": require.resolve("path-browserify")
+        "path": require.resolve("path-browserify"),
       },      
       alias: {
         '@': path.resolve(__dirname, 'src'),

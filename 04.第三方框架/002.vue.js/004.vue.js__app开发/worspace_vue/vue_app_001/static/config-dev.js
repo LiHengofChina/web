@@ -1,7 +1,9 @@
 
 const config = {
     host: {
-        gateway_path: "http://192.168.100.11:7019"
+        // gateway_path: "http://192.168.100.11:7019"
+        
+        gateway_path: "http://192.168.100.10:7019" //自己的网关
     },
 
     router_white_list: ["/login"],

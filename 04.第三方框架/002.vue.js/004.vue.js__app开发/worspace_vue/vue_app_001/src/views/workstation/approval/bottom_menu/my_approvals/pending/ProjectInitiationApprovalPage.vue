@@ -934,14 +934,16 @@ export default {
             return idea || '无审批意见';
         },
         fetchApplyDetail(task_id, trace_no, biz_id, op_no, task_def_id) {
+
             this.loading = true;
             //（1）获取token
-            const token = this.$store.getters['auth/token'];
-            const refreshToken = this.$store.getters['auth/refreshToken'];
-            if (!token || !refreshToken) {
-                console.error('Token or Refresh Token is missing');
-                return;
-            }
+            // const token = this.$store.getters['auth/token'];
+            // const refreshToken = this.$store.getters['auth/refreshToken'];
+            // if (!token || !refreshToken) {
+            //     console.error('Token or Refresh Token is missing');
+            //     return;
+            // }
+
             //（2）获取申请ID
             this.getApprovalDetail(task_id, biz_id)
             .then(applyId => {
