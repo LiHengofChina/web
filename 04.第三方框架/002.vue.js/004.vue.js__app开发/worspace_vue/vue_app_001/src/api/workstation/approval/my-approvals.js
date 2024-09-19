@@ -130,6 +130,9 @@ const api = {
     getApprovalDetail: async( data, config, success, error) => {
         const {  postJson } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
 
+        const publicKey = store.getters['auth/publicKey'];  // 获取公钥
+        console.log(publicKey);
+
         const exemptionfromlogin = store.getters['auth/isExemptionfromlogin'];
         let url = '';
         if(exemptionfromlogin){//免登陆
@@ -140,6 +143,7 @@ const api = {
         }else{
             url = `/${config.servers.flowable}/appcenter/getApprovalDetail`;
         }
+
         console.log("xxx:"+url);
         postJson(
 			url,

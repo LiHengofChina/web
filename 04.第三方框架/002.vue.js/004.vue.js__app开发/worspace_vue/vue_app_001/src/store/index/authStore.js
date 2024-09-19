@@ -4,6 +4,9 @@ const state = {
     token: '',
     refreshToken: '',
     isExemptionfromlogin: false, //免登陆标记
+    publicKey: `-----BEGIN PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAExjUb1+aTNZRCEqZcDCw8wbwgKCOyXUaHk0ORGEhQCjKil1HdYPs4KzwIvDwpDffuXd10c668JOXi/XkXcr4vEQ==
+-----END PUBLIC KEY-----`,
 };
 
 const getters = {
@@ -11,6 +14,7 @@ const getters = {
     token: (state) => state.token,
     refreshToken: (state) => state.refreshToken,
     isExemptionfromlogin: (state) => state.isExemptionfromlogin,
+    publicKey: (state) => state.publicKey,
 };
 
 const mutations = {

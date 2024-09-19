@@ -25,14 +25,12 @@ const router = createRouter({
 //==================================================================== 免登陆 start
 import { KJUR } from 'jsrsasign';  // 从 jsrsasign 库导入所需的模块
 
-// 公钥 PEM 格式的字符串
-const publicKey = `-----BEGIN PUBLIC KEY-----
-MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAExjUb1+aTNZRCEqZcDCw8wbwgKCOyXUaHk0ORGEhQCjKil1HdYPs4KzwIvDwpDffuXd10c668JOXi/XkXcr4vEQ==
------END PUBLIC KEY-----`;
 
 // JWT 验证函数
 function verifyJWT(token) {
     try {
+
+        const publicKey = store.getters['auth/publicKey'];  // 获取公钥
         // 使用 jsrsasign 的 verifyJWT 来验证 JWT 的有效性
         const isValid = KJUR.jws.JWS.verifyJWT(token, publicKey, {
             alg: ['ES256'], 
