@@ -30,12 +30,12 @@ import { KJUR } from 'jsrsasign';  // 从 jsrsasign 库导入所需的模块
 function verifyJWT(token) {
     try {
 
-        const publicKey = store.getters['auth/publicKey'];  // 获取公钥
+        const pemPublicKey = store.getters['auth/pemPublicKey'];  // 获取公钥
         // 使用 jsrsasign 的 verifyJWT 来验证 JWT 的有效性
-        const isValid = KJUR.jws.JWS.verifyJWT(token, publicKey, {
+        const isValid = KJUR.jws.JWS.verifyJWT(token, pemPublicKey, {
             alg: ['ES256'], 
         });
-        
+
         if (isValid) {
             const decoded = KJUR.jws.JWS.parse(token);  // 解析 JWT 获取其内容
             // console.log('Decoded payload:', decoded.payloadObj);  // 打印解析后的内容

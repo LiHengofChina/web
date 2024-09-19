@@ -127,32 +127,53 @@ const api = {
     /***
      * POST 获取申请ID、按钮列表等等
      */
-    getApprovalDetail: async( data, config, success, error) => {
-        const {  postJson } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
-
-        const publicKey = store.getters['auth/publicKey'];  // 获取公钥
-        console.log(publicKey);
+    getApprovalDetail: async (data, config, success, error) => {
+        const { postJson } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
 
         const exemptionfromlogin = store.getters['auth/isExemptionfromlogin'];
         let url = '';
-        if(exemptionfromlogin){//免登陆
+
+        if (exemptionfromlogin) { // 免登陆
             url = `/${config.servers.flowable}/appcenter/getApprovalDetail////`;
 
-            // data = data;
+            try {
+                //（1）动态导入公钥加密模块
+                const { encryptWithPublicKey } = await import(/* webpackChunkName: "cryptoutils-module" */ "@/utils/cryptoUtils");
 
-        }else{
+                //（2）获取公钥
+                const pgpPublicKey = store.getters['auth/pgpPublicKey'];  // 获取公钥
+
+                //（3）加密数据
+                const encryptedData = await encryptWithPublicKey(JSON.stringify(data), pgpPublicKey);  // 注意：加密前将数据序列化为字符串
+                console.log("加密后的数据: ", encryptedData);
+
+                // 将加密后的数据作为 POST 请求体
+                data = {
+                    encryptedData: btoa(encryptedData) // 将加密后的数据转换为 Base64 格式
+                };
+
+            } catch (encryptionError) {
+                console.error("加密数据失败: ", encryptionError);
+                error && error(encryptionError);
+                return;
+            }
+
+        } else {
             url = `/${config.servers.flowable}/appcenter/getApprovalDetail`;
         }
 
-        console.log("xxx:"+url);
+        console.log("请求URL: " + url);
+        
+        // 发送 POST 请求
         postJson(
-			url,
+            url,
             data,
             true,
             success,
             error
         );
-    },    
+    },
+
     /***
      * POST 根据ID 查看 “申请项目” 的详细信息
      */
