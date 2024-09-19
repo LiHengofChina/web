@@ -3,12 +3,14 @@ const state = {
     user: null,
     token: '',
     refreshToken: '',
+    isExemptionfromlogin: false, //免登陆标记
 };
 
 const getters = {
     user: (state) => state.user,
     token: (state) => state.token,
-    refreshToken: (state) => state.refreshToken
+    refreshToken: (state) => state.refreshToken,
+    isExemptionfromlogin: (state) => state.isExemptionfromlogin,
 };
 
 const mutations = {
@@ -16,11 +18,16 @@ const mutations = {
         state.user = payload.user;
         state.token = payload.token;
         state.refreshToken = payload.refreshToken;
+    },
+    setExemptionfromlogin(state, status) {
+        state.isExemptionfromlogin = status;
     }
 };
 
 const actions = {
-
+    updateExemptionfromlogin({ commit }, status) {
+        commit('setExemptionfromlogin', status);
+    }
 };
 
 export default {
@@ -30,3 +37,4 @@ export default {
     mutations,
     actions,
 };
+
