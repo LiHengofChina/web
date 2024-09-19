@@ -67,17 +67,8 @@ router.beforeEach((to, from, next) => {
             const decoded = verifyJWT(token);
             if (decoded) { // JWT 验证通过，继续导航到解析出来的路径
 
-                //修改之前打印 TODO
-                let originalValue = store.getters['auth/isExemptionfromlogin'];
-                console.log('修改之前 isExemptionfromlogin 值:', originalValue);
-
                 //修改
                 store.dispatch('auth/updateExemptionfromlogin', true);
-
-                //修改之后打印 TODO
-                originalValue = store.getters['auth/isExemptionfromlogin'];
-                console.log('修改之后 isExemptionfromlogin 值:', originalValue);
-
                 next(decoded.sub);  // `sub` 字段包含原始请求的路径
             } else {
                 console.error('Invalid or missing JWT. Redirecting to login.');

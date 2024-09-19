@@ -1,5 +1,8 @@
 // workstation/approval/my-approvals.js
 
+import store from '@/store';  // 导入 Vuex store 实例
+
+
 const api = {
 
 
@@ -120,12 +123,24 @@ const api = {
             success
         );
     },
+
     /***
      * POST 获取申请ID、按钮列表等等
      */
     getApprovalDetail: async( data, config, success, error) => {
         const {  postJson } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
-        const url = `/${config.servers.flowable}/appcenter/getApprovalDetail`;
+
+        const exemptionfromlogin = store.getters['auth/isExemptionfromlogin'];
+        let url = '';
+        if(exemptionfromlogin){//免登陆
+            url = `/${config.servers.flowable}/appcenter/getApprovalDetail////`;
+
+            // data = data;
+
+        }else{
+            url = `/${config.servers.flowable}/appcenter/getApprovalDetail`;
+        }
+        console.log("xxx:"+url);
         postJson(
 			url,
             data,
