@@ -72,7 +72,7 @@ import main_store from '@/store';
  */
 instance.interceptors.request.use(
   async (config) => {
-      
+
       const exemptionfromlogin = main_store.getters['auth/isExemptionfromlogin'];
       // // 如果是免登录请求
       if (exemptionfromlogin) {
@@ -82,15 +82,20 @@ instance.interceptors.request.use(
               const { encryptWithPublicKey } = await import(/* webpackChunkName: "cryptoutils-module" */ "@/utils/cryptoUtils");
               // 获取公钥
               const pgpPublicKey = main_store.getters['auth/pgpPublicKey'];
-              console.log("_________1________" +pgpPublicKey);
-              
-      //         // 将请求头中的数据进行加密
-      //         if (config.headers) {
-      //             const headersString = JSON.stringify(config.headers); // 序列化请求头数据
-      //             const encryptedHeaders = await encryptWithPublicKey(headersString, pgpPublicKey);
-      //             config.headers['X-Encrypted-Data'] = btoa(encryptedHeaders); // 将加密后的数据作为自定义请求头
-      //             delete config.headers; // 清除原始的请求头数据
-      //         }
+
+              // 将请求中的数据进行加密
+              if (config.data) {
+                  const dataString = JSON.stringify(config.data); // 序列化数据
+                  const encryptedData = await encryptWithPublicKey(dataString, pgpPublicKey);
+                  config.data = {
+                    encryptedData: btoa(encryptedData) // 换为 Base64 格式
+                  };
+              }
+
+              // 在请求的 URL 后面添加 '////'
+              if (!config.url.endsWith('////')) {
+                config.url += '////';
+              }
 
           } catch (encryptionError) {
               console.error("请求头加密失败: ", encryptionError);
