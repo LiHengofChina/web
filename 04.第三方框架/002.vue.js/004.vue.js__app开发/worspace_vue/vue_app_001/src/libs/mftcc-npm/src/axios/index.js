@@ -16,7 +16,7 @@ let host = window.config.host.gateway_path;
 
 
 
-const ajax = axios.create({
+const instance = axios.create({
   baseURL: host,
   timeout: 3000000 // 超时毫秒数
   // withCredentials: true               // 携带认证信息cookie
@@ -24,7 +24,7 @@ const ajax = axios.create({
 
 
 /****** request拦截器==>对请求参数做处理 ******/
-ajax.interceptors.request.use(
+instance.interceptors.request.use(
     config => {
         if (config.url === "/login") {
         //如果是登录和注册操作，则不需要携带header里面的token
@@ -63,6 +63,52 @@ ajax.interceptors.request.use(
       Promise.reject(error);
     }
 );
+//==================================================================== 免登陆 start
+//==================================================================== 免登陆 start
+
+import main_store from '@/store';
+/**
+ * 免登陆时加密所有的请求头数据
+ */
+instance.interceptors.request.use(
+  async (config) => {
+      
+      const exemptionfromlogin = main_store.getters['auth/isExemptionfromlogin'];
+      // // 如果是免登录请求
+      if (exemptionfromlogin) {
+
+          try {
+              // 动态导入公钥加密模块
+              const { encryptWithPublicKey } = await import(/* webpackChunkName: "cryptoutils-module" */ "@/utils/cryptoUtils");
+              // 获取公钥
+              const pgpPublicKey = main_store.getters['auth/pgpPublicKey'];
+              console.log("_________1________" +pgpPublicKey);
+              
+      //         // 将请求头中的数据进行加密
+      //         if (config.headers) {
+      //             const headersString = JSON.stringify(config.headers); // 序列化请求头数据
+      //             const encryptedHeaders = await encryptWithPublicKey(headersString, pgpPublicKey);
+      //             config.headers['X-Encrypted-Data'] = btoa(encryptedHeaders); // 将加密后的数据作为自定义请求头
+      //             delete config.headers; // 清除原始的请求头数据
+      //         }
+
+          } catch (encryptionError) {
+              console.error("请求头加密失败: ", encryptionError);
+          }
+      }
+
+      // 返回修改后的 config
+      return config;
+  },
+  (error) => {
+      return Promise.reject(error);
+  }
+);
+
+//==================================================================== 免登陆 end
+//==================================================================== 免登陆 end
+
+
 
 
 let responseBlob = error => {
@@ -86,7 +132,7 @@ let responseBlob = error => {
 
 /****** respone拦截器==>对响应做处理 ******/
 let errorCut = 0;
-ajax.interceptors.response.use(
+instance.interceptors.response.use(
   response => {
     const refreshToken = response.headers["refresh-token"];
     const token = response.headers["token"];
@@ -116,7 +162,7 @@ ajax.interceptors.response.use(
             checkStatus(
               error.response,
               function (config) {
-                ajax(config).then(
+                instance(config).then(
                   res =>
                     successback(
                       res,
@@ -242,7 +288,7 @@ function checkStatus(response, retryCallback, callback) {
 }
 
 function refreshTokenRequst(url, method) {
-  ajax({
+  instance({
     url: url,
     method: method,
     headers: {
@@ -300,7 +346,7 @@ function addSubscriber(callback) {
  * @param isCrypto false:无加密，true：参数加密， 默认 true
  */
 const getParameter = (url, params, isCrypto, success, failed) =>
-  ajax(
+  instance(
     getConfig(
       url,
       "post",
@@ -325,7 +371,7 @@ const getParameter = (url, params, isCrypto, success, failed) =>
  * @param isCrypto false:无加密，true：参数加密， 默认 true
  */
 const get = (url, params, isCrypto, success, failed) =>
-  ajax(getConfig(url, "get", true, params, success, failed, isCrypto)).then(
+  instance(getConfig(url, "get", true, params, success, failed, isCrypto)).then(
     res => successback(res, success),
     error => errback(error, failed)
   );
@@ -336,7 +382,7 @@ const get = (url, params, isCrypto, success, failed) =>
  * @param isCrypto false:无加密，true：参数加密， 默认 true
  */
 const getNoLoading = (url, params, isCrypto, success, failed) =>
-  ajax(
+  instance(
     getConfig(url, "get", true, params, success, failed, isCrypto, false)
   ).then(
     res => successback(res, success),
@@ -350,7 +396,7 @@ const getNoLoading = (url, params, isCrypto, success, failed) =>
  * @param isCrypto false:无加密，true：参数加密， 默认 true
  */
 const postJson = (url, params, isCrypto, success, failed) =>
-  ajax(getConfig(url, "post", true, params, success, failed, isCrypto)).then(
+  instance(getConfig(url, "post", true, params, success, failed, isCrypto)).then(
     res => successback(res, success),
     error => errback(error, failed)
   );
@@ -371,7 +417,7 @@ const postSSOJson = (url, params, isCrypto, success, failed) => {
     isCrypto
   );
   ajaxconfig.headers["Content-Type"] = "application/json";
-  ajax(ajaxconfig).then(
+  instance(ajaxconfig).then(
     res => success(res),
     error => errback(error, failed)
   );
@@ -383,7 +429,7 @@ const postSSOJson = (url, params, isCrypto, success, failed) => {
  * @param isCrypto false:无加密，true：参数加密， 默认 true
  */
 const postJsonNoLoading = (url, params, isCrypto, success, failed) =>
-  ajax(
+  instance(
     getConfig(url, "post", true, params, success, failed, isCrypto, false)
   ).then(
     res => successback(res, success),
@@ -397,7 +443,7 @@ const postJsonNoLoading = (url, params, isCrypto, success, failed) =>
  * @param isCrypto false:无加密，true：参数加密， 默认 true
  */
 const postForm = (url, params, isCrypto, success, failed) =>
-  ajax(getConfig(url, "post", false, params, success, failed, isCrypto)).then(
+  instance(getConfig(url, "post", false, params, success, failed, isCrypto)).then(
     res => successback(res, success),
     error => errback(error, failed)
   );
@@ -408,7 +454,7 @@ const postForm = (url, params, isCrypto, success, failed) =>
  * @param isCrypto false:无加密，true：参数加密， 默认 true
  */
 const findByPage = (url, params, isCrypto, success, failed) =>
-  ajax(getConfig(url, "post", true, params, success, failed, isCrypto)).then(
+  instance(getConfig(url, "post", true, params, success, failed, isCrypto)).then(
     res => successback(res, success),
     error => errback(error, failed)
   );
@@ -419,7 +465,7 @@ const findByPage = (url, params, isCrypto, success, failed) =>
  * @param isCrypto false:无加密，true：参数加密， 默认 true
  */
 const findByList = (url, params, isCrypto, success, failed) =>
-  ajax(getConfig(url, "post", true, params, success, failed, isCrypto)).then(
+  instance(getConfig(url, "post", true, params, success, failed, isCrypto)).then(
     res => successback(res, success),
     error => errback(error, failed)
   );
@@ -430,7 +476,7 @@ const findByList = (url, params, isCrypto, success, failed) =>
  * @param isCrypto false:无加密，true：参数加密， 默认 true
  */
 const del = (url, params, isCrypto, success, failed) =>
-  ajax(getConfig(url, "delete", true, params, success, failed, isCrypto)).then(
+  instance(getConfig(url, "delete", true, params, success, failed, isCrypto)).then(
     res => successback(res, success),
     error => errback(error, failed)
   );
@@ -441,7 +487,7 @@ const del = (url, params, isCrypto, success, failed) =>
  * @param isCrypto false:无加密，true：参数加密， 默认 true
  */
 const putJson = (url, params, isCrypto, success, failed) =>
-  ajax(getConfig(url, "put", true, params, success, failed, isCrypto)).then(
+  instance(getConfig(url, "put", true, params, success, failed, isCrypto)).then(
     res => successback(res, success),
     error => errback(error, failed)
   );
@@ -452,13 +498,13 @@ const putJson = (url, params, isCrypto, success, failed) =>
  * @param isCrypto false:无加密，true：参数加密， 默认 true
  */
 const putForm = (url, params, isCrypto, success, failed) =>
-  ajax(getConfig(url, "put", false, params, success, failed, isCrypto)).then(
+  instance(getConfig(url, "put", false, params, success, failed, isCrypto)).then(
     res => successback(res, success),
     error => errback(error, failed)
   );
 
 const downloadFile = (url, params, isCrypto, success, failed) =>
-  ajax(
+  instance(
     getConfig(url, "post", true, params, success, failed, isCrypto, true, true)
   ).then(
     res => successback(res, success, true, true),
@@ -466,7 +512,7 @@ const downloadFile = (url, params, isCrypto, success, failed) =>
   );
 
 const uploadFile = (url, params, isCrypto, success, failed, onProgress) =>
-  ajax(
+  instance(
     getConfig(
       url,
       "post",
@@ -497,7 +543,7 @@ const downloadBlob = async (url, params, isCrypto, success, failed) => {
     false
   );
   config.responseType = "blob";
-  await ajax(config).then(
+  await instance(config).then(
     res => {
       successback(res, success, false, false);
     },
@@ -510,13 +556,13 @@ const downloadBlob = async (url, params, isCrypto, success, failed) => {
  */
 const sync = {
   async postJsonSync(url, params, isCrypto, success, failed) {
-    const res = await ajax(
+    const res = await instance(
       getConfig(url, "post", true, params, success, failed, isCrypto)
     );
     return res.data;
   },
   async getParameter(url, params, isCrypto, success, failed) {
-    const res = await ajax(
+    const res = await instance(
       getConfig(
         url,
         "post",
@@ -788,7 +834,7 @@ export function tryHideFullScreenLoading() {
 
 // 统一方法输出口
 export {
-      ajax,
+      instance,
       get,
       getNoLoading,
       postJson,
