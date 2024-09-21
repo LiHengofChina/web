@@ -1,0 +1,91 @@
+
+
+要在 Vue.js 应用中实现类似路由守卫的方式，
+统一对 API 层所有请求的请求头数据进行加密，
+
+可以使用 Axios 的请求拦截器。
+这样可以拦截所有通过 Axios 发送的请求，在拦截器中统一处理请求头加密逻辑，
+从而避免在每个 API 调用中重复修改代码。
+
+//=========================================== 使用 Axios 请求拦截器
+//=========================================== 使用 Axios 请求拦截器
+
+
+（1）在 API 层中，设置 Axios 的请求拦截器，统一对请求头进行加密处理。
+
+import axios from 'axios';
+import store from '@/store';
+
+// 设置 Axios 请求拦截器
+axios.interceptors.request.use(
+    async (config) => {
+        const exemptionfromlogin = store.getters['auth/isExemptionfromlogin'];
+
+        // 如果是免登录请求
+        if (exemptionfromlogin) {
+            try {
+                // 动态导入公钥加密模块
+                const { encryptWithPublicKey } = await import(/* webpackChunkName: "cryptoutils-module" */ "@/utils/cryptoUtils");
+
+                // 获取公钥
+                const pgpPublicKey = store.getters['auth/pgpPublicKey'];
+
+                // 将请求头中的数据进行加密
+                if (config.headers) {
+                    const headersString = JSON.stringify(config.headers); // 序列化请求头数据
+                    const encryptedHeaders = await encryptWithPublicKey(headersString, pgpPublicKey);
+                    config.headers['X-Encrypted-Data'] = btoa(encryptedHeaders); // 将加密后的数据作为自定义请求头
+                    delete config.headers; // 清除原始的请求头数据
+                }
+
+            } catch (encryptionError) {
+                console.error("请求头加密失败: ", encryptionError);
+            }
+        }
+
+        // 返回修改后的 config
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
+export default axios;
+
+//=========================================== 在 API 层中使用 Axios
+//=========================================== 在 API 层中使用 Axios
+
+（2）在 API 层中使用 Axios
+
+这样一来，所有通过 Axios 发送的请求，都会先经过这个拦截器，在免登录状态下自动对请求头进行加密处理，避免逐个修改 API。
+
+const api = {
+    /***
+     * POST 获取申请ID、按钮列表等等
+     */
+    getApprovalDetail: async (data, config, success, error) => {
+        const { postJson } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
+        let url = `/${config.servers.flowable}/appcenter/getApprovalDetail`;
+
+        // 发送 POST 请求，数据请求头已经在拦截器中加密
+        postJson(
+            url,
+            data,
+            true,
+            success,
+            error
+        );
+    },
+
+    // 其他 API 方法...
+};
+
+export default api;
+
+
+
+
+//=========================================== 拦截器优势
+//=========================================== 拦截器优势
+

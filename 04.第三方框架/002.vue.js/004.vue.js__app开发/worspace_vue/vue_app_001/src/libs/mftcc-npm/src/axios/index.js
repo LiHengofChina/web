@@ -86,7 +86,7 @@ instance.interceptors.request.use(
               // 将请求中的数据进行加密
               if (config.data) {
                   const dataString = JSON.stringify(config.data); // 序列化数据
-                  const encryptedData = await encryptWithPublicKey(dataString, pgpPublicKey);
+                  const encryptedData = await encryptWithPublicKey("X1dF_7A9bS" + dataString, pgpPublicKey);
                   config.data = {
                     encryptedData: btoa(encryptedData) // 换为 Base64 格式
                   };

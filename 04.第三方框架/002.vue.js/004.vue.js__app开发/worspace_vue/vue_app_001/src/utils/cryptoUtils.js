@@ -4,6 +4,9 @@ import * as openpgp from 'openpgp';
 export async function encryptWithPublicKey(data, pgpPublicKey) {
     try {
 
+        // console.log(openpgp.config.preferredSymmetricAlgorithm); // 输出当前默认加密算法
+        openpgp.config.preferredSymmetricAlgorithm = openpgp.enums.symmetric.aes128;
+
         // 读取公钥
         const publicKey = await openpgp.readKey({ armoredKey: pgpPublicKey }); //cv25519
 
