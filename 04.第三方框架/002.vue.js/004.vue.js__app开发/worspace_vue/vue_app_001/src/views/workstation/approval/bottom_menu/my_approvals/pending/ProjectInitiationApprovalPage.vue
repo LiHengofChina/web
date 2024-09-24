@@ -10,7 +10,8 @@
 
         <!-- Header Section  -->
         <div class="header">
-            <i class="fas fa-chevron-left back-icon" @click="goBack"></i>
+            
+            <i  v-if="!isExemptionfromlogin" class="fas fa-chevron-left back-icon" @click="goBack"></i>
             <h1 class="title">{{ approve_title }}</h1>
             <div class="spacer"></div>
         </div>
@@ -380,6 +381,7 @@
 
 <script>
 
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'ProjectInitiationApprovalPage',
@@ -606,7 +608,11 @@ export default {
                                 customClass: 'custom-el-message-class',
                                 duration: 2000,
                                 onClose: () => {
-                                    this.goBack();
+                                    if (!this.isExemptionfromlogin) {
+                                        this.goBack();
+                                    } else {
+                                        this.$router.push('/');//TODO根据第三方的跳转
+                                    }
                                 }
                             });
                         } else {
@@ -1179,6 +1185,7 @@ export default {
         },
     },
     computed: {
+        ...mapGetters('auth', ['isExemptionfromlogin']),
         formattedApplyBeginDate() {
             if (!this.applyDetail.applyBeginDate) {
                 return '未知日期'; // 处理未定义的日期
