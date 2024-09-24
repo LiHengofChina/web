@@ -3,7 +3,6 @@ const { defineConfig } = require('@vue/cli-service');
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
-const FontminPlugin = require('fontmin-webpack');
 
 //日志输出：vue-cli 自动设置的环境变量
 if (process.env.NODE_ENV === 'development') {
