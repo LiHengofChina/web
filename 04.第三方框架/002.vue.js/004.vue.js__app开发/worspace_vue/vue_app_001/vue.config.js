@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'development') {
 
 module.exports = defineConfig({
 
-  publicPath: process.env.NODE_ENV === 'production' ? '/my-app/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/mftcc-app/' : '/mftcc-app/',//都使用一样的
   
   transpileDependencies: true,
 

@@ -1,4 +1,4 @@
-# vue_app_001
+# mftcc-app
 
 ## Project setup
 ```
