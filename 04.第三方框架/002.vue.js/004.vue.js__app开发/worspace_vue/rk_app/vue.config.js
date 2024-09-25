@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'development') {
 
 module.exports = defineConfig({
 
-  publicPath: process.env.NODE_ENV === 'production' ? '/mftcc-app/' : '/mftcc-app/',//都使用一样的
+  publicPath: process.env.NODE_ENV === 'production' ? '/rk_app/' : '/rk_app/',//都使用一样的
   
   transpileDependencies: true,
 

@@ -1,4 +1,4 @@
-# mftcc-app
+# rk_app
 
 ## Project setup
 ```
