@@ -1,24 +1,19 @@
-# rk_app
-
-## Project setup
+### （1）首次安装依赖
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### （2）开发启动使用这个命令：
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### （3）打包编译使用这个命令
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### 技术咨询
 ```
-npm run lint
+李恒：13688007165
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
