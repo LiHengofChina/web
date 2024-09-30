@@ -153,9 +153,9 @@ module.exports = defineConfig({
 
     config.plugin('html').tap(args => {
       if (process.env.NODE_ENV === 'production') {
-        args[0].title = 'My App - Production';
+        args[0].title = '金控移动审批';
       } else {
-        args[0].title = 'My App - Development';
+        args[0].title = '金控移动审批';
       }
       return args;
     });

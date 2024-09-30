@@ -1332,13 +1332,13 @@ html::-webkit-scrollbar,body::-webkit-scrollbar {  /* 对于 Chrome、Safari 和
     width: 100%; /* 确保表单占据整行 */
     max-width: 100%;
     position: fixed;
-    height: calc(100vh - 7.5rem);
+    height: calc(100vh - 4.5rem);
     left: 0;
     right: 0;
     flex: 1;
     padding: 0;
     margin-top: 3.8rem;
-    padding-bottom: 3.8rem; /* 为底部留出空间，防止内容被覆盖 */
+    /* padding-bottom: 3.8rem;  为底部留出空间，防止内容被覆盖 */
     box-sizing: border-box;
     overflow: hidden;
     overflow-y: auto;  /* 允许垂直滚动 */
@@ -1591,6 +1591,22 @@ html::-webkit-scrollbar,body::-webkit-scrollbar {  /* 对于 Chrome、Safari 和
 }
 .fab i {
     font-size: 1.4rem; /* 图标的大小 */
+}
+
+.header,
+.tabs {
+    margin: 0;
+    padding: 0 1rem; /* 如果需要内边距，确保与 .content-area 保持一致 */
+}
+
+/** 控制  header tabs content-area 的最大宽度*/
+.header,
+.tabs,
+.content-area {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
 
