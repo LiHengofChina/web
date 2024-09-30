@@ -10,6 +10,11 @@ const SubmittedPage = () => import(/* webpackChunkName: "submitted-page" */ '@/v
 const ProjectInitiationApprovalPage = () => import(/* webpackChunkName: "project-initiation-approval-page" */ '@/views/workstation/approval/bottom_menu/my_approvals/pending/ProjectInitiationApprovalPage.vue');
 const TransferPage = () => import(/* webpackChunkName: "transfer-page" */ '@/views/workstation/approval/bottom_menu/my_approvals/pending/TransferPage.vue');
 
+
+// 错误提示页面
+const ErrorPage = () => import(/* webpackChunkName: "error-page" */ '@/views/common/ErrorPage.vue');
+
+
 export default [
     {
         path: '/approval',
@@ -33,8 +38,6 @@ export default [
         ]
     },
 
-    
-
     {
         path: '/workstation/approval/my-approvals/pending/project-initiation-approval/:task_id/:trace_no/:biz_id/:op_no/:task_def_id/:approve_title',
         name: 'workstation_approval_my-approvals_pending_project-initiation-approval',
@@ -45,5 +48,12 @@ export default [
         path: '/workstation/approval/my-approvals/pending/transfer/:id',
         name: 'workstation_approval_my-approvals_pending_transfer',
         component: TransferPage
+    },
+
+    //错误页面
+    {
+        path: '/error',
+        name: 'ErrorPage',
+        component: ErrorPage
     }
 ];

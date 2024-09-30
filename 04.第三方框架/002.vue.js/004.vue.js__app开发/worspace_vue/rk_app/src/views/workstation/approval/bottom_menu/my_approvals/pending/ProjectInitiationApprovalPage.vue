@@ -1122,17 +1122,19 @@ export default {
                                     reject('Unexpected API response or empty task list');
                                 }
                             },
-                            error => {
-                                reject('API Error: ' + error);
+                            () => {
+                                reject('Approved or other errors!');
                             }
                         );
                     });
-                })
-                .catch(err => {
-                    console.error('Failed to import API module: ', err);
-                    throw err;  // Propagate the error
+                }).catch(() => {
+                    this.loading = false;
+                    this.$router.push({
+                        name: 'ErrorPage',
+                        query: { message: '已处理！' } 
+                    });
                 });
-        },        
+        },
         findApplyApproveInit(applyId) {
             return import('@/api/workstation/approval/my-approvals')
                 .then(({ default: api }) => {
