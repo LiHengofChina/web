@@ -1593,23 +1593,6 @@ html::-webkit-scrollbar,body::-webkit-scrollbar {  /* 对于 Chrome、Safari 和
     font-size: 1.4rem; /* 图标的大小 */
 }
 
-.header,
-.tabs {
-    margin: 0;
-    padding: 0 1rem; /* 如果需要内边距，确保与 .content-area 保持一致 */
-}
-
-/** 控制  header tabs content-area 的最大宽度*/
-.header,
-.tabs,
-.content-area {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    box-sizing: border-box;
-}
-
-
 /* “意见” 操作栏 ************************ */
 .opinion-panel-toggle {
     display: flex;
@@ -1833,5 +1816,38 @@ html::-webkit-scrollbar,body::-webkit-scrollbar {  /* 对于 Chrome、Safari 和
 }
 
 
+/** (宽屏（桌面版）时) 控制宽度  start */
+.header,
+.tabs {
+    margin: 0;
+    padding: 0 1rem;
+}
 
+
+.header,
+.tabs,
+.content-area {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+.user-select-modal-panel,
+.modal-panel {
+    width: 90% ;
+    max-width: 500px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+.tabs,
+.content-area
+{
+    border-left: 1px solid #ccc;  /* 左侧边框为灰色 */
+    border-right: 1px solid #ccc; /* 右侧边框为灰色 */
+    border-top: none;  /* 移除顶部边框 */
+    border-bottom: none; /* 移除底部边框 */
+}
+
+
+/** (宽屏（桌面版）时) 控制宽度  end */
 </style>
