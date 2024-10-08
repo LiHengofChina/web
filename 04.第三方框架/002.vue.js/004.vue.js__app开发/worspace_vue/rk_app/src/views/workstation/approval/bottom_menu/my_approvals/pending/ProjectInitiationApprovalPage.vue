@@ -611,7 +611,15 @@ export default {
                                     if (!this.isExemptionfromlogin) {
                                         this.goBack();
                                     } else {
-                                        this.$router.push('/');//TODO根据第三方的跳转
+                                        
+                                        // window.ksoxz_sdk.closeApp();
+                                        //（2）关闭窗口
+                                        if (window.ksoxz_sdk && typeof window.ksoxz_sdk.closeApp === 'function') {
+                                            window.ksoxz_sdk.closeApp();
+                                        } else {
+                                            this.$router.push('/');
+                                        }
+
                                     }
                                 }
                             });
@@ -1337,8 +1345,12 @@ html::-webkit-scrollbar,body::-webkit-scrollbar {  /* 对于 Chrome、Safari 和
     right: 0;
     flex: 1;
     padding: 0;
-    margin-top: 3.8rem;
-    /* padding-bottom: 3.8rem;  为底部留出空间，防止内容被覆盖 */
+
+    margin-top: 2.8rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 3.8rem; /* 为底部留出空间，防止内容被覆盖 */
+
     box-sizing: border-box;
     overflow: hidden;
     overflow-y: auto;  /* 允许垂直滚动 */
@@ -1817,11 +1829,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar {  /* 对于 Chrome、Safari 和
 
 
 /** (宽屏（桌面版）时) 控制宽度  start */
-.header,
-.tabs {
-    margin: 0;
-    padding: 0 1rem;
-}
+
 
 
 .header,
@@ -1829,15 +1837,15 @@ html::-webkit-scrollbar,body::-webkit-scrollbar {  /* 对于 Chrome、Safari 和
 .content-area {
     width: 100%;
     max-width: 600px;
-    margin: 0 auto;
-    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
 }
 .user-select-modal-panel,
 .modal-panel {
     width: 90% ;
     max-width: 500px;
-    margin: 0 auto;
-    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
 }
 .tabs,
 .content-area
