@@ -106,7 +106,11 @@ instance.interceptors.request.use(
                   // 将 opNo 添加到请求头中
                   config.headers['opNo'] = opNo;
               }
-
+              const ctx_id = urlParams.get('ctx_id'); // 获取 'ctx_id' 参数
+              if (ctx_id) {
+                  // 将 ctx_id 添加到请求头中
+                  config.headers['ctx_id'] = ctx_id;
+              }
           } catch (encryptionError) {
               console.error("请求头加密失败: ", encryptionError);
           }
