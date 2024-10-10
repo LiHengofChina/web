@@ -611,9 +611,8 @@ export default {
                                     if (!this.isExemptionfromlogin) {
                                         this.goBack();
                                     } else {
-                                        
-                                        // window.ksoxz_sdk.closeApp();
-                                        //（2）关闭窗口
+
+                                        // 关闭窗口 //TODO，需要wsp协作的sdk支持
                                         if (window.ksoxz_sdk && typeof window.ksoxz_sdk.closeApp === 'function') {
                                             window.ksoxz_sdk.closeApp();
                                         } else {
