@@ -56,10 +56,12 @@ export default {
     },
     methods: {
         ...mapMutations('approval_my_approvals', ['setActiveTab']),
+        ...mapMutations('approval_project_initiation_approval_page', ['setActiveTabProjectInitiation']),
         approve(task_id, trace_no, biz_id, lease_approve_type, op_no, task_def_id, approve_title) {
 
             // 根据 lease_approve_type 的值来判断要跳转的路由
             if (lease_approve_type === '立项审批') {
+                this.setActiveTabProjectInitiation('details'); 
                 this.$router.push({ name: 'workstation_approval_my-approvals_pending_project-initiation-approval', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
             } else if (lease_approve_type === '项目变更审批') {
                 console.log("项目变更审批TODO");

@@ -18,16 +18,16 @@
 
         <!-- 标签部分 -->
         <div class="tabs">
-            <div class="tab" :class="{ active: activeTab === 'details' }" @click="setActiveTab('details')">审批详情</div>
-            <div class="tab" :class="{ active: activeTab === 'history' }" @click="setActiveTab('history')">审批历史</div>
-            <div class="tab" :class="{ active: activeTab === 'document' }" @click="setActiveTab('document')">文档</div>
+            <div class="tab" :class="{ active: activeTabProjectInitiation === 'details' }" @click="setActiveTabProjectInitiation('details')">审批详情</div>
+            <div class="tab" :class="{ active: activeTabProjectInitiation === 'history' }" @click="setActiveTabProjectInitiation('history')">审批历史</div>
+            <div class="tab" :class="{ active: activeTabProjectInitiation === 'document' }" @click="setActiveTabProjectInitiation('document')">文档</div>
         </div>
 
         <!-- 可滚动的内容区域 -->
         <div class="content-area">
 
             <!-- 详情区域 -->
-            <div v-if="activeTab === 'details'">
+            <div v-if="activeTabProjectInitiation === 'details'">
                 <div class="details-form-title">合同信息</div>
                 <div class="details-form">
                     <div class="details-form-row">
@@ -226,7 +226,7 @@
             </div>
 
             <!-- 审批历史 -->
-            <div v-else-if="activeTab === 'history'">
+            <div v-else-if="activeTabProjectInitiation === 'history'">
 
                 <div class="history-timeline">
 
@@ -254,7 +254,7 @@
             </div>
 
             <!-- 文档 -->
-            <div v-else-if="activeTab === 'document'">
+            <div v-else-if="activeTabProjectInitiation === 'document'">
 
                 <div v-for="(group, groupIndex) in documents.groupList" :key="groupIndex">
 
@@ -381,13 +381,12 @@
 
 <script>
 
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState, mapMutations} from 'vuex';
 
 export default {
     name: 'ProjectInitiationApprovalPage',
     data() {
         return {
-            activeTab: 'details',
             approvalDescription: '',
             documents: {},    // 文件数据
             timeLineData: [], // 审批历史数据
@@ -439,11 +438,9 @@ export default {
         };
     },
     methods: {
+        ...mapMutations('approval_project_initiation_approval_page', ['setActiveTabProjectInitiation']),
         goBack() {
             this.$router.go(-1);
-        },
-        setActiveTab(tab) {
-            this.activeTab = tab;
         },
         handleFabClick() {
             // 处理按钮点击事件的逻辑
@@ -1196,7 +1193,15 @@ export default {
             this.getOfficeFileObj(subFile.fileId)
             .then(response => {
                 const linkValue = response.data.link;
-                this.$router.push({ path: '/file-viewer-page', query: { link: linkValue } });
+
+                const filePath = subFile.filePath;
+                const fileExtension = filePath.substring(filePath.lastIndexOf('.') + 1);
+
+                this.$router.push({ path: '/file-viewer-page', query: { 
+                    link: linkValue,
+                    name: subFile.fileName,
+                    extension: fileExtension
+                } });
             })
             .catch(error => {
                 console.error('Error in API chain:', error);
@@ -1230,6 +1235,7 @@ export default {
     },
     computed: {
         ...mapGetters('auth', ['isExemptionfromlogin']),
+        ...mapState('approval_project_initiation_approval_page', ['activeTabProjectInitiation']),
         formattedApplyBeginDate() {
             if (!this.applyDetail.applyBeginDate) {
                 return '未知日期'; // 处理未定义的日期

@@ -9,12 +9,12 @@ const SubmittedPage = () => import(/* webpackChunkName: "submitted-page" */ '@/v
 // 立项审批页
 const ProjectInitiationApprovalPage = () => import(/* webpackChunkName: "project-initiation-approval-page" */ '@/views/workstation/approval/bottom_menu/my_approvals/pending/ProjectInitiationApprovalPage.vue');
 const TransferPage = () => import(/* webpackChunkName: "transfer-page" */ '@/views/workstation/approval/bottom_menu/my_approvals/pending/TransferPage.vue');
+// 立项审批页-文件预览页
+const FileViewerPage = () => import(/* webpackChunkName: "file-viewer-page" */ '@/views/workstation/approval/bottom_menu/my_approvals/pending/FileViewerPage.vue');
 
 
 // 错误提示页面
 const ErrorPage = () => import(/* webpackChunkName: "error-page" */ '@/views/common/ErrorPage.vue');
-// 文件预览页
-const FileViewerPage = () => import(/* webpackChunkName: "file-viewer-page" */ '@/views/common/FileViewerPage.vue');
 
 
 
