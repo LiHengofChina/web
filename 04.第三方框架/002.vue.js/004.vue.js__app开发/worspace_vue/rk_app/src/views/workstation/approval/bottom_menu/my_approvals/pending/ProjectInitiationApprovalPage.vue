@@ -279,7 +279,7 @@
                             <!-- 文件列表 -->
                             <div v-for="(subFile, subIndex) in fileGroup.fileList" :key="subIndex">
                                 <div class="document-form-row">
-                                    <div class="document-form-label-doc">{{ subFile.fileName }}</div>
+                                    <div class="document-form-label-doc" @click="handleFileClick(subFile)" >{{ subFile.fileName }}</div>
                                 </div>
                             </div>
 
@@ -1166,7 +1166,7 @@ export default {
                     console.error('Failed to import API module: ', err);
                     throw err;  // Propagate the error
                 });
-        },        
+        },
         getTimeLine(trace_no, biz_id, op_no, task_def_id) {
             return import('@/api/workstation/approval/my-approvals')
                 .then(({ default: api }) => {
@@ -1190,6 +1190,41 @@ export default {
                 .catch(err => {
                     console.error('Failed to import API module: ', err);
                     throw err;  // Propagate the error
+                });
+        },
+        handleFileClick(subFile) {
+            this.getOfficeFileObj(subFile.fileId)
+            .then(response => {
+                const linkValue = response.data.link;
+                this.$router.push({ path: '/file-viewer-page', query: { link: linkValue } });
+            })
+            .catch(error => {
+                console.error('Error in API chain:', error);
+            });
+        },
+        getOfficeFileObj(fileId){
+            return import('@/api/workstation/approval/my-approvals')
+                .then(({ default: api }) => {
+                    return new Promise((resolve, reject) => {
+                        api.getOfficeFileObj(
+                            fileId,
+                            this.$config,
+                            response => {
+                                if (response && response.code === 0 && response.data) {
+                                    resolve(response);
+                                } else {
+                                    reject('Unexpected API response');
+                                }
+                            },
+                            error => {
+                                reject('API Error: ' + error);
+                            }
+                        );
+                    });
+                })
+                .catch(err => {
+                    console.error('Failed to import API module: ', err);
+                    throw err;
                 });
         },
     },
@@ -1828,9 +1863,6 @@ html::-webkit-scrollbar,body::-webkit-scrollbar {  /* 对于 Chrome、Safari 和
 
 
 /** (宽屏（桌面版）时) 控制宽度  start */
-
-
-
 .header,
 .tabs,
 .content-area {
@@ -1854,7 +1886,5 @@ html::-webkit-scrollbar,body::-webkit-scrollbar {  /* 对于 Chrome、Safari 和
     border-top: none;  /* 移除顶部边框 */
     border-bottom: none; /* 移除底部边框 */
 }
-
-
 /** (宽屏（桌面版）时) 控制宽度  end */
 </style>

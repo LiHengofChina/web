@@ -163,6 +163,22 @@ const api = {
             error
         );
     },
+    /**
+     * 获取office文件对象
+     */
+    getOfficeFileObj: async(fileId, config, success, error) => {
+        const { get } = await import(/* webpackChunkName: "axios-module" */ "@/libs/mftcc-npm/src/axios/index");
+        const url = `/${config.servers.doc}/file/docFileInf/getOfficeFileObj/` + fileId;
+        get(
+            url,
+            null,
+            true,
+            success,
+            error
+        );
+    },
+
+
 };
 
 export default api;

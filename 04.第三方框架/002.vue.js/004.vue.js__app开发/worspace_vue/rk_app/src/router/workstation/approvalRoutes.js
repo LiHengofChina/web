@@ -6,13 +6,16 @@ const ApplyPage = () => import(/* webpackChunkName: "apply-page" */ '@/views/wor
 const MyApprovalsPage = () => import(/* webpackChunkName: "my-approvals-page" */ '@/views/workstation/approval/bottom_menu/MyApprovalsPage.vue');
 const SubmittedPage = () => import(/* webpackChunkName: "submitted-page" */ '@/views/workstation/approval/bottom_menu/SubmittedPage.vue');
 
-//立项审批页
+// 立项审批页
 const ProjectInitiationApprovalPage = () => import(/* webpackChunkName: "project-initiation-approval-page" */ '@/views/workstation/approval/bottom_menu/my_approvals/pending/ProjectInitiationApprovalPage.vue');
 const TransferPage = () => import(/* webpackChunkName: "transfer-page" */ '@/views/workstation/approval/bottom_menu/my_approvals/pending/TransferPage.vue');
 
 
 // 错误提示页面
 const ErrorPage = () => import(/* webpackChunkName: "error-page" */ '@/views/common/ErrorPage.vue');
+// 文件预览页
+const FileViewerPage = () => import(/* webpackChunkName: "file-viewer-page" */ '@/views/common/FileViewerPage.vue');
+
 
 
 export default [
@@ -55,5 +58,14 @@ export default [
         path: '/error',
         name: 'ErrorPage',
         component: ErrorPage
+    },
+
+    // 文件预览
+    {
+        path: '/file-viewer-page',
+        name: 'FileViewerPage',
+        component: FileViewerPage
     }
+
+
 ];

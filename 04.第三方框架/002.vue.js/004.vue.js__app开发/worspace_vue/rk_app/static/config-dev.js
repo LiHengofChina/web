@@ -11,7 +11,7 @@ const config = {
     servers: {
         flowable: "mftcc-flowable-server", //流程后台
 
-        doc: "mftcc-doc-server", //文档
+        doc: "mftcc-doc-server-liheng-remote", //文档
 
         lease: "mftcc-lease-server-liheng-remote", //租赁
 
