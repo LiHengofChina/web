@@ -1,14 +1,16 @@
 <template>
 
-    <!-- Header Section  -->
-    <div class="header">
-        <i  class="fas fa-chevron-left back-icon" @click="goBack"></i>
-        <h1 class="title">{{ fileName }}.{{ fileExtension }}</h1>
-        <div class="spacer"></div>
-    </div>
+    <div class="public-page-layout">
+        <!-- Header Section  -->
+        <div class="public-header">
+            <i  v-if="!isExemptionfromlogin" class="fas fa-chevron-left public-back-icon-left" @click="goBack"></i>
+            <h1 class="public-title">{{ fileName }}.{{ fileExtension }}</h1>
+            <i  v-if="!isExemptionfromlogin" class="fas fa-chevron-right public-back-icon-right" ></i>
+        </div>
 
-    <div class="file-viewer">
-        <iframe :src="fileLink" frameborder="0" class="file-frame"></iframe>
+        <div class="file-viewer">
+            <iframe :src="fileLink" frameborder="0" class="file-frame"></iframe>
+        </div>
     </div>
 
 </template>
@@ -17,6 +19,7 @@
 
 import { mapMutations } from 'vuex';
 
+import '@/assets/styles/public.css';
 
 export default {
     name: 'FileViewerPage',
@@ -43,43 +46,6 @@ export default {
 </script>
 
 <style scoped>
-
-/* 标题部分 ************************ */
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 2.5rem;
-    background-color: #00ADEF;
-    border-bottom: 1px solid #ddd;
-    z-index: 1000;
-    padding: 0 1rem;
-    box-sizing: border-box;
-}
-
-.back-icon {
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: #FFFFFF;
-}
-
-.title {
-    height: 1.5rem;    
-    flex: 1;
-    text-align: center;
-    font-size: 1.2rem;
-    color: #FFFFFF;
-    margin: 0;
-}
-
-.spacer {
-    width: 2.8rem;
-}
 
 /* 文件预览部分 ************************ */
 

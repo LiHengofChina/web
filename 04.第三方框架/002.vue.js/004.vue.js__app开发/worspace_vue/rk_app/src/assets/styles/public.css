@@ -1,0 +1,55 @@
+/* src/assets/styles/public.css */
+
+
+.public-page-layout {
+    display: flex;
+    flex-direction: column;
+    width: 100vw; /* 确保页面宽度填满视口 */
+    max-width: 100%; /* 限制最大宽度，防止超出视口 */
+    height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box; /* 确保内边距和边框不会导致布局超出 */
+    scrollbar-width: none;  /* 对于 Firefox：隐藏滚动条*/
+    -ms-overflow-style: none;  /* 对于 IE 和 Edge：隐藏滚动条 */  
+}
+.public-page-layout::-webkit-scrollbar {  /* 对于 Chrome、Safari 和 Opera ：隐藏滚动条*/
+    display: none;
+}
+
+
+
+/* 标题部分 ************************ */
+.public-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 2.5rem;
+    background-color: #00ADEF;
+    border-bottom: 1px solid #ddd;
+    z-index: 1000;
+    padding: 0 1rem;
+    box-sizing: border-box;
+}
+.public-back-icon-left {
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #FFFFFF;
+}
+.public-title {
+    flex: 1;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #FFFFFF;
+    margin: 0;
+    text-align: center;
+    border-bottom: 0.25rem solid #00ADEF;
+}
+.public-back-icon-right {
+    font-size: 1.2rem;
+    color: #00ADEF;
+}

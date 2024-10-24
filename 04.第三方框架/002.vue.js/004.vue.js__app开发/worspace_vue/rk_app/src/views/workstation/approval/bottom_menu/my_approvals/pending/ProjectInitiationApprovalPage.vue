@@ -6,14 +6,13 @@
         <div class="dot"></div>
     </div>
 
-    <div class="page-layout">
+    <div class="public-page-layout">
 
         <!-- Header Section  -->
-        <div class="header">
-            
-            <i  v-if="!isExemptionfromlogin" class="fas fa-chevron-left back-icon" @click="goBack"></i>
-            <h1 class="title">{{ approve_title }}</h1>
-            <div class="spacer"></div>
+        <div class="public-header">
+            <i  v-if="!isExemptionfromlogin" class="fas fa-chevron-left public-back-icon-left" @click="goBack"></i>
+            <h1 class="public-title">{{ approve_title }}</h1>
+            <i  v-if="!isExemptionfromlogin" class="fas fa-chevron-right public-back-icon-right" ></i>
         </div>
 
         <!-- 标签部分 -->
@@ -382,6 +381,8 @@
 <script>
 
 import { mapGetters, mapState, mapMutations} from 'vuex';
+
+import '@/assets/styles/public.css';
 
 export default {
     name: 'ProjectInitiationApprovalPage',
@@ -1274,60 +1275,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar {  /* 对于 Chrome、Safari 和
     display: none;
 }
 
-.page-layout {
-    display: flex;
-    flex-direction: column;
-    width: 100vw; /* 确保页面宽度填满视口 */
-    max-width: 100%; /* 限制最大宽度，防止超出视口 */
-    height: 100vh;
-    overflow: hidden;
-    box-sizing: border-box; /* 确保内边距和边框不会导致布局超出 */
-    scrollbar-width: none;  /* 对于 Firefox：隐藏滚动条*/
-    -ms-overflow-style: none;  /* 对于 IE 和 Edge：隐藏滚动条 */  
-}
-.page-layout::-webkit-scrollbar {  /* 对于 Chrome、Safari 和 Opera ：隐藏滚动条*/
-    display: none;
-}
 
-
-
-
-/* 标题部分 ************************ */
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 2.5rem;
-    background-color: #00ADEF;
-    border-bottom: 1px solid #ddd;
-    z-index: 1000;
-    padding: 0 1rem;
-    box-sizing: border-box;
-}
-
-.back-icon {
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: #FFFFFF;
-}
-
-.title {
-    height: 1.5rem;    
-    flex: 1;
-    text-align: center;
-    font-size: 1.2rem;
-    color: #FFFFFF;
-    margin: 0;
-}
-
-.spacer {
-    width: 2.8rem;
-}
 
 /* Tab 顶部切换卡 ************************ */
 .tabs {
@@ -1869,7 +1817,7 @@ html::-webkit-scrollbar,body::-webkit-scrollbar {  /* 对于 Chrome、Safari 和
 
 
 /** (宽屏（桌面版）时) 控制宽度  start */
-.header,
+.public-header,
 .tabs,
 .content-area {
     width: 100%;

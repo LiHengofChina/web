@@ -1,0 +1,44 @@
+
+//============================================================================= 配置
+//============================================================================= 配置
+
+
+//======方式一：.eslintrc.js 文件配置
+//======方式一：.eslintrc.js 文件配置
+
+module.exports = {
+  globals: {	//添加需要的全局变量配置
+    requirejs: 'readonly',
+  },
+};
+
+
+  
+//======方式二：使用 package.json 进行 ESLint 配置
+//======方式二：使用 package.json 进行 ESLint 配置
+
+{
+  "eslintConfig": {
+    "globals": {
+      "requirejs": "readonly"
+    }
+  }
+}
+
+//======方式三：使用 vue.config.js 配置 ESLint
+//======方式三：使用 vue.config.js 配置 ESLint
+
+ 
+如果你使用 Vue CLI 项目，且 ESLint 是集成到项目中的，你也可以在 vue.config.js 中配置 ESLint 的全局变量：
+module.exports = {
+  lintOnSave: true, // 确保 ESLint 在保存时运行
+  chainWebpack: config => {
+    config.plugin('eslint')
+      .tap(args => {
+        args[0].globals = {
+          requirejs: 'readonly'
+        };
+        return args;
+      });
+  }
+};

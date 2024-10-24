@@ -1,0 +1,18 @@
+
+
+查看配置
+
+npm set registry https://registry.npmjs.org/
+
+npm set registry https://registry.npmjs.org/
+
+
+
+
+
+
+（1）设置库：npm set registry https://registry.npmjs.org/
+（2）安装依赖：npm run install
+ 
+
+
