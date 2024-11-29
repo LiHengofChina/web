@@ -1,0 +1,43 @@
+//================================ 第一步
+//================================ 第一步
+<!--  vant 日期组件 -->
+<van-field
+    v-model="planUseDate" label="计划用款时间" placeholder="请选择" readonly @click="showDatePicker = true" >
+    <template #label>
+        <span class="extra-fields-label-pre">
+            <span class="extra-fields-required">*</span>计划用款时间
+        </span>
+    </template>
+</van-field>
+<van-popup v-model:show="showDatePicker" position="bottom">
+    <van-date-picker 
+        v-model="planUseDate" 
+        type="date" 
+        title="选择日期" 
+        confirm-button-text="确认" 
+        cancel-button-text="取消"
+        @confirm="onConfirmDate" 
+        formatter="formatDate" 
+    />
+</van-popup>
+
+//================================ 第二步
+//================================ 第二步
+showDatePicker: false,
+planUseDate: '',
+
+
+//================================ 第三步
+//================================ 第三步
+
+	onConfirmDate(value) {
+		this.planUseDate = this.formatDate(value); // 格式化后赋值
+		this.showDatePicker = false; // 关闭弹窗
+	},
+	formatDate(value) {
+		const date = new Date(value);
+		const year = date.getFullYear();
+		const month = (date.getMonth() + 1).toString().padStart(2, '0');
+		const day = date.getDate().toString().padStart(2, '0');
+		return `${year}-${month}-${day}`;
+	},

@@ -1,0 +1,20 @@
+
+https://www.jb51.net/javascript/32559638r.htm
+
+//================= 导入vant
+//================= 导入vant
+import {List, Uploader, Toast, Popup, DatetimePicker} from 'vant'
+const uses = [List, Uploader, Toast, Popup, DatetimePicker]
+uses.forEach(x => {
+    app.use(x)
+})
+
+
+（1）用弹出层将日期选择器包起来。
+
+首先在src文件下新建plugins文件，里面新建vant.js
+
+
+
+
+
