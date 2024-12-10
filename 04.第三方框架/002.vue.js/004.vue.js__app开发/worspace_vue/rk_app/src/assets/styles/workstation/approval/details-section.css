@@ -1,0 +1,124 @@
+
+/* src/assets/styles/workstation/approval/details_section.css */
+
+/* 详情 ************************ */
+.details-form {
+    width: 100%; /* 确保表单占据整行 */
+    padding: 0; /* 移除内边距 */    
+    background-color: #fff;
+    box-sizing: border-box; /* 包含内边距和边框 */
+}
+
+/** 标题 和 一级标题*/
+.details-form-title { 
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.5rem 0; /* 添加一些内边距 */
+    margin-top: 0.3rem;
+    padding-left: 0.7rem;
+    border-bottom: 1px solid #ddd; /* 添加下边框与其他内容区分 */
+    color: #666666; /* 字体颜色 */
+    background-color: #f0f0f0;  /**#f0f0f0 */    
+    text-align: left; /* 左对齐 */
+    font-family: 'STZhongsong', '华文中宋', serif;
+    box-sizing: border-box;
+}
+
+.details-form-row {
+    display: flex;
+    width: 100%; /* 确保每一行占据整行 */
+    border-bottom: 1px solid #ddd;
+    padding: 0.5rem 0;
+    box-sizing: border-box; /* 包含内边距和边框 */
+    justify-content: space-between;
+    align-items: flex-start; /* 顶部对齐，确保多行文本对齐 */
+    flex-wrap: wrap;  /* 允许换行以适应内容 */
+}
+.details-form-label {
+    color: #666666; /* 灰色 */
+    font-size: 0.9rem;
+    text-align: right; /* 右对齐 */
+    flex: 4; /* 调整为3:7的比例 */
+    margin-right: 1.5%;  /*为值留出一些间距 */
+    font-family: 'STZhongsong', '华文中宋', serif;
+    box-sizing: border-box; /* 包含内边距和边框 */
+    word-break: break-word; /* 允许长单词在字符间换行 */
+    white-space: normal; /* 允许换行 */
+}
+
+.details-form-label::after {
+    font-size: 0.9rem; 
+    content: "：";
+    color: #666666;
+    margin-left: 0.1rem;
+}
+.details-form-value {
+    color: #666666;
+    font-size: 0.9rem;
+    text-align: left; /* 左对齐 */
+    flex: 7; /* 调整为3:7的比例 */
+    font-family: 'STZhongsong', '华文中宋', serif;
+    box-sizing: border-box; /* 包含内边距和边框 */
+    padding-right: 0.7rem;
+    white-space: normal; /* 允许换行 */
+}
+
+
+/**     表格样式      */
+.details-form-list {
+    width: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 1rem;
+    border: 1px solid #ddd;
+    font-family: 'STZhongsong', '华文中宋', serif;
+    box-sizing: border-box;
+    display: table; /* 设置为表格布局 */
+}
+
+.details-form-list-title {
+    display: table-row; /* 表头为表格行 */
+    background-color: #f8f8f8;
+    font-weight: bold;
+    color: #666666;
+    border-bottom: 1px solid #ddd;
+}
+
+.details-form-list-cell {
+    display: table-cell;
+    padding: 0.6rem 0.4rem;
+    text-align: center;
+    font-size: 0.9rem;
+    border-right: 1px solid #ddd;
+    box-sizing: border-box;
+    word-break: break-all; /* 强制单词换行 */
+    white-space: normal;   /* 允许内容换行 */
+    min-width: 7rem; /* 设置最小宽度 */
+}
+
+
+.details-form-list-cell:last-child {
+    border-right: none;
+}
+
+.details-form-list-row {
+    display: table-row; /* 每行数据为表格行 */
+    color: #666666;
+    border-bottom: 1px solid #ddd;
+}
+
+.details-form-list-row:last-child {
+    border-bottom: none;
+}
+
+
+
+/** scroll-container 可以左右滚动区域的样式*/
+.scroll-container {
+    overflow-x: auto; /* Enables horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling for mobile */
+}
+.scroll-container::-webkit-scrollbar {
+    display: none; /* Hides the scrollbar */
+}

@@ -1,0 +1,242 @@
+/* src/assets/styles/workstation/approval/common/approval-public.css */
+
+
+.public-page-layout {
+    display: flex;
+    flex-direction: column;
+    width: 100vw; /* 确保页面宽度填满视口 */
+    max-width: 100%; /* 限制最大宽度，防止超出视口 */
+    height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box; /* 确保内边距和边框不会导致布局超出 */
+    scrollbar-width: none;  /* 对于 Firefox：隐藏滚动条*/
+    -ms-overflow-style: none;  /* 对于 IE 和 Edge：隐藏滚动条 */  
+}
+.public-page-layout::-webkit-scrollbar {  /* 对于 Chrome、Safari 和 Opera ：隐藏滚动条*/
+    display: none;
+}
+
+
+
+/* 标题部分 ************************ */
+.public-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 2.5rem;
+    background-color: #00ADEF;
+    border-bottom: 1px solid #ddd;
+    z-index: 1000;
+    padding: 0 1rem;
+    box-sizing: border-box;
+}
+.public-back-icon-left {
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #FFFFFF;
+}
+.public-title {
+    flex: 1;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #FFFFFF;
+    margin: 0;
+    text-align: center;
+    border-bottom: 0.25rem solid #00ADEF;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.public-back-icon-right {
+    font-size: 1.2rem;
+    color: #00ADEF;
+}
+
+
+
+/* 公共部分 ************************ */
+
+/* 遮罩层 ************************ */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+	right: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(112, 138, 140, 0.5); /* 半透明的灰蓝色 */
+     z-index: 1001; /* 确保遮罩在所有内容之上 */
+}
+
+
+
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;  /*禁止上下、左右滚动 */
+    scrollbar-width: none;  /* 对于 Firefox：隐藏滚动条*/
+    -ms-overflow-style: none;  /* 对于 IE 和 Edge：隐藏滚动条 */    
+}
+html::-webkit-scrollbar,body::-webkit-scrollbar {  /* 对于 Chrome、Safari 和 Opera ：隐藏滚动条*/
+    display: none;
+}
+
+
+
+/* Tab 顶部切换卡 ************************ */
+.tabs {
+    display: flex;
+    height: 2.5rem;
+    width: 100%;
+    max-width: 100%;
+    background-color: #FFFFFF;  /**#f0f0f0 */
+    border-bottom: 1px solid #ddd;
+    top: 2.5rem;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    color: #808080;
+    font-size: 1rem;
+    /**  border-right: 1px solid #ddd; */
+    box-sizing: border-box;
+}
+
+.tab.active {
+    /** background-color: #d9d9d9; */
+    /** font-weight: bold; */
+    color: #007BFF;
+    /** border-bottom: 0.1rem solid #007BFF;*/
+    position: relative; 
+}
+
+.tab.active::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -2px; /* 根据需要调整位置 */
+    transform: translateX(-50%);
+    width: 80%; /* 调整下划线的宽度 */
+    height: 0.15rem; /* 下划线的高度 */
+    background-color: #007BFF; /* 下划线的颜色 */
+}
+
+/* 内容区域 ************************ */
+.content-area {
+    width: 100%; /* 确保表单占据整行 */
+    max-width: 100%;
+    position: fixed;
+    height: calc(100vh - 4.5rem);
+    left: 0;
+    right: 0;
+    flex: 1;
+    padding: 0;
+
+    margin-top: 2.8rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 3.8rem; /* 为底部留出空间，防止内容被覆盖 */
+
+    box-sizing: border-box;
+    overflow: hidden;
+    overflow-y: auto;  /* 允许垂直滚动 */
+    scrollbar-width: none;  /* 对于 Firefox：隐藏滚动条*/
+    -ms-overflow-style: none;  /* 对于 IE 和 Edge：隐藏滚动条 */       
+}
+.content-area::-webkit-scrollbar {  /* 对于 Chrome、Safari 和 Opera ：隐藏滚动条*/
+    display: none;
+}
+
+
+/**  *********************** “意见” 面板，额外字段的样式  */
+
+.extra-fields-container {
+    position: relative;
+    width: 90%;
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 0.2rem 0;
+}
+/* 输入文字和提示语右对齐 */
+.extra-fields-container .el-input__inner {
+    padding: 0.2rem 0;
+    text-align: right; /* 设置文字右对齐 */
+}
+
+.el-input{
+    padding: 0.2rem 0;
+}
+/** 后缀 */
+
+.extra-fields-suffix {
+    color: #c0c4cc; /*   Element UI 默认 placeholder 的灰色 */
+    font-size: 0.9rem;
+    margin-left: 0.3rem;
+}
+
+.extra-fields-input-wrapper {
+    margin-bottom: 1rem; /* 可根据需求调整间距 */
+}
+
+.extra-fields-label {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem; /* 字段标签字体大小 */
+    color: #333; /* 字段标签字体颜色 */
+    margin-bottom: 0.3rem;
+}
+
+.extra-fields-required-marker {
+    color: red;
+    top: 2px;
+    margin-right: 0.2rem; /* *号与文本之间的间距 */
+    font-weight: bold;
+}
+
+
+
+
+/** (宽屏（桌面版）时) 控制宽度  start */
+.public-header,
+.tabs,
+.content-area
+, .loading-indicator    /** 加载中的效果 */
+
+{
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.user-select-modal-panel,
+.modal-panel {
+    width: 90% ;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.tabs,
+.content-area
+{
+    border-left: 1px solid #ccc;  /* 左侧边框为灰色 */
+    border-right: 1px solid #ccc; /* 右侧边框为灰色 */
+    border-top: none;  /* 移除顶部边框 */
+    border-bottom: none; /* 移除底部边框 */
+}
+/** (宽屏（桌面版）时) 控制宽度  end */

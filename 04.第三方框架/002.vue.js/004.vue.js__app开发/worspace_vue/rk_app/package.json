@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
+    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -21,7 +21,8 @@
     "vue": "^3.2.13",
     "vue-lazyload": "^3.0.0",
     "vue-router": "^4.4.0",
-    "vuex": "^4.0.0"
+    "vuex": "^4.0.0",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -57,7 +58,8 @@
       "eslint:recommended"
     ],
     "parserOptions": {
-      "parser": "@babel/eslint-parser"
+      "parser": "@babel/eslint-parser",
+      "requireConfigFile": false
     },
     "rules": {}
   },

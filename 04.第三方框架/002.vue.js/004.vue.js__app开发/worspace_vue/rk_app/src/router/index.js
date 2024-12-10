@@ -29,10 +29,8 @@ import { KJUR } from 'jsrsasign';  // 从 jsrsasign 库导入所需的模块
 // JWT 验证函数
 function verifyJWT(token) {
     try {
-
-        const pemPublicKey = store.getters['auth/pemPublicKey'];  // 获取公钥
         // 使用 jsrsasign 的 verifyJWT 来验证 JWT 的有效性
-        const isValid = KJUR.jws.JWS.verifyJWT(token, pemPublicKey, {
+        const isValid = KJUR.jws.JWS.verifyJWT(token, window.config.certificate.pemPublicKey, {
             alg: ['ES256'], 
         });
 
@@ -64,6 +62,13 @@ router.beforeEach((to, from, next) => {
         if (token) {
             const decoded = verifyJWT(token);
             if (decoded) { // JWT 验证通过，继续导航到解析出来的路径
+                const parsedURL = new URL(decoded.sub, window.location.origin);
+                const queryTaskType = parsedURL.searchParams.get('queryTaskType');
+                if (queryTaskType === '1') {
+                    store.dispatch('approval_common_store/updateQueryTaskType', 1);
+                } else {
+                    store.dispatch('approval_common_store/updateQueryTaskType', 0);
+                }
 
                 //修改
                 store.dispatch('auth/updateExemptionfromlogin', true);

@@ -13,8 +13,8 @@ import approval from './workstation/approvalStore.js';
 //工作台-审批-我的审批
 import approval_my_approvals from './workstation/approval/my-approvalsStore.js';
 
-//工作台-审批-我的审批-立项审批
-import approval_project_initiation_approval_page from './workstation/approval/pending/project-initiation-approval-page.js';
+//工作台-审批-我的审批-通用store
+import approval_common_store from './workstation/approval/common/approval-common-store.js';
 
 export default createStore({
   modules: {
@@ -22,6 +22,6 @@ export default createStore({
     index,
     approval,
     approval_my_approvals,
-    approval_project_initiation_approval_page,
+    approval_common_store,
   },
 });

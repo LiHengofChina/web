@@ -27,6 +27,7 @@ app.use(VueLazyload, {
     attempt: 1
 });
 
+window.$$$router = router;
 
 
 //======== 暴露：ElementPlus
@@ -34,14 +35,25 @@ import ElementPlus from 'element-plus';
 
 import 'element-plus/dist/index.css';
 import '@/assets/styles/msg.css'
-app.use(ElementPlus);
+
+import zhCn from 'element-plus/es/locale/lang/zh-cn';
+
+app.use(ElementPlus,
+    { locale: zhCn, }
+);
+
 // 挂载全局对象
 window.ELEMENT = ElementPlus;
 
-import { ElMessageBox } from 'element-plus';
+import { ElMessageBox ,ElMessage  } from 'element-plus';
 // 全局挂载 ElMessageBox
 app.config.globalProperties.$confirm = ElMessageBox.confirm;
 app.config.globalProperties.$alert = ElMessageBox.alert;
+app.config.globalProperties.$message = ElMessage;
+
+window.$confirm = ElMessageBox.confirm;
+window.$alert = ElMessageBox.alert;
+window.$message = ElMessage;
 
 
 // 动态导入配置插件

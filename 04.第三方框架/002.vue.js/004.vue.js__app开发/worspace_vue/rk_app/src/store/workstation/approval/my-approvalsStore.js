@@ -1,5 +1,5 @@
 
-// src/store/workstation/approval/my-approvals.js
+
 const state = {
     activeTab: 'pending',
 };

@@ -6,6 +6,9 @@
         </div>
 
         <div class="content">
+
+
+            <!-- 未处理 -->
             <div v-if="activeTab === 'pending'">
                 <div v-for="item in pendingItems" :key="item.id" class="card">
                     <div class="card-content">
@@ -17,7 +20,7 @@
                         <div class="card-actions">
 
                             <button @click="approve(item.task_id, item.trace_no, item.biz_id,   
-                                                    item.lease_approve_type, op_no, item.task_def_id, item.approve_title)">审批</button>
+                                                    op_no, item.task_def_id, item.approve_title)">审批</button>
                             <button @click="transfer(item.id)">转办</button>
 
                         </div>
@@ -25,10 +28,22 @@
                 </div>
             </div>
 
+            <!-- 已处理 -->
             <div v-else-if="activeTab === 'completed'">
-                <div v-for="item in completedItems" :key="item.id" class="list-item">
-                    <div class="item-title">{{ item.title }}</div>
-                    <div class="item-date">{{ item.date }}</div>
+                <div v-for="item in completedItems" :key="item.id" class="card">
+                    <div class="card-content">
+                        <div class="card-header">{{ item.approve_title }} - {{ item.position }}</div>
+                        <div class="card-body">
+                            <p>客户: {{ item.customerName }}</p>
+                            <p>审批人: {{ item.approver }}</p>
+                        </div>
+                        <div class="card-actions">
+
+                            <button @click="query(item.task_id, item.trace_no, item.biz_id,   
+                                                    op_no, item.task_def_id, item.approve_title)">详情</button>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -37,7 +52,9 @@
 
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
+
+
 
 export default {
     name: 'MyApprovalsPage',
@@ -46,68 +63,193 @@ export default {
     },
     data() {
         return {
+
+            //未处理
             pendingItems: [],
-            completedItems: [
-                { id: 1, title: '已处理项目1', date: '2024-08-01' },
-                { id: 2, title: '已处理项目2', date: '2024-08-02' }
-            ],
+            taskType:'lease_approve_flow',
+
+            //已经处理
+            completedItems: [],
             op_no: null,
         };
     },
     methods: {
         ...mapMutations('approval_my_approvals', ['setActiveTab']),
-        ...mapMutations('approval_project_initiation_approval_page', ['setActiveTabProjectInitiation']),
-        approve(task_id, trace_no, biz_id, lease_approve_type, op_no, task_def_id, approve_title) {
+        ...mapMutations('approval_common_store', ['setCommonActiveTab']),
+        ...mapActions('approval_common_store', [
+            'updateQueryTaskType'
+        ]),
 
-            // 根据 lease_approve_type 的值来判断要跳转的路由
-            if (lease_approve_type === '立项审批') {
-                this.setActiveTabProjectInitiation('details'); 
-                this.$router.push({ name: 'workstation_approval_my-approvals_pending_project-initiation-approval', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
-            } else if (lease_approve_type === '项目变更审批') {
-                console.log("项目变更审批TODO");
-            } else if (lease_approve_type === '项目尽调') {
-                console.log("项目尽调TODO");
-            } else {
-                console.log("TODO");
+        /**
+         * 点击“审批”
+         */
+        approve(task_id, trace_no, biz_id, op_no, task_def_id, approve_title) {
+
+            this.updateQueryTaskType(0);
+            //======================================== 租赁
+            if (approve_title === '立项审批') {
+                this.setCommonActiveTab('details'); 
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_lease_beforehand_approval', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+
+            } else if (approve_title === '项目尽调') {
+                this.setCommonActiveTab('details'); 
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_lease_project_investigation_approve', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+
+            } else if(approve_title === '合同申请审批'){
+                this.setCommonActiveTab('details'); 
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_lease_contract-approval-page', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+
+            }else if (this.taskType==='lease_approve_flow'&&approve_title === '放款审批') {
+                this.setCommonActiveTab('details'); 
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_lease_putout_approval-page', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+
+
+            //======================================== 委贷
+            } else if (approve_title === '业务审批') {
+                this.setCommonActiveTab('details'); 
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_loan_apply_approval', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+
+            } else if (approve_title === '合同审批') {
+                this.setCommonActiveTab('details'); 
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_loan_contract_sign_approval', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+
+            } else if (approve_title === '项目支付审批') {
+
+                this.setCommonActiveTab('details'); 
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_loan_putoutConfirm', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+
+            }else if (this.taskType==='loan_approve_flow'&&approve_title === '放款审批') {
+                this.setCommonActiveTab('details'); 
+                console.log('放款审批-------------------');
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_loan_putoutAppoval', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+
+            } else if (approve_title === '提前还款审批') {
+
+                this.setCommonActiveTab('details'); 
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_loan_loanAfter', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+
+            }else {
+                console.log(approve_title);
             }
         },
+
+
+        /**
+         * 点击“查询”
+         */
+        query(task_id, trace_no, biz_id, op_no, task_def_id, approve_title) {
+
+            this.updateQueryTaskType(1);
+
+            //======================================== 租赁
+            if (approve_title === '立项审批') {
+                this.setCommonActiveTab('details'); 
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_lease_beforehand_approval', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+
+            } else if (approve_title === '项目尽调') {
+                this.setCommonActiveTab('details'); 
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_lease_project_investigation_approve', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+
+            } else if(approve_title === '合同申请审批'){
+                this.setCommonActiveTab('details'); 
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_lease_contract-approval-page', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+
+            }else if (this.taskType==='lease_approve_flow'&&approve_title === '放款审批') {
+                this.setCommonActiveTab('details'); 
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_lease_putout_approval-page', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+
+
+            //======================================== 委贷
+            } else if (approve_title === '业务审批') {
+                this.setCommonActiveTab('details'); 
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_loan_apply_approval', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+
+            } else if (approve_title === '合同审批') {
+                this.setCommonActiveTab('details'); 
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_loan_contract_sign_approval', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+
+            } else if (approve_title === '项目支付审批') {
+
+                this.setCommonActiveTab('details'); 
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_loan_putoutConfirm', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+
+            }else if (this.taskType==='loan_approve_flow'&&approve_title === '放款审批') {
+                this.setCommonActiveTab('details'); 
+                console.log('放款审批-------------------');
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_loan_putoutAppoval', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+
+            } else if (approve_title === '提前还款审批') {
+
+                this.setCommonActiveTab('details'); 
+                this.$router.push({ name: 'workstation_approval_my-approvals_pending_loan_loanAfter', params: { task_id, trace_no, biz_id, op_no ,task_def_id, approve_title} });
+            }else {
+                console.log(approve_title);
+            }
+
+        },
+        
         transfer(id) {
             this.$router.push({ name: 'workstation_approval_my-approvals_pending_transfer', params: { id } });
         },
-        async fetchPendingItems() {
+        getBizList(){
+            console.log('当前标签页'+this.activeTab);
+            return import('@/api/workstation/approval/flowable/flowable_api')
+                .then(({ default: api }) => {
+                    return new Promise((resolve, reject) => {
+                        api.getBizList(
+                            {
+                                opNo:this.$store.getters['auth/user'].opNo,
+                                type:this.activeTab === 'pending'?'unfinished':'finished'
+                            },
+                            this.$config,
+                            response => {
+                                if (response && response.code === 0 && response.countList) {
+                                    //处理当前租赁还是审批
+                                    this.taskType=response.countList.lease_approve_flow==='0'?'loan_approve_flow':'lease_approve_flow';
+                                    resolve(this.taskType);
+                                } else {
+                                    reject('Unexpected API response or empty task list');
+                                }
+                            },
+                            () => {
+                                reject('Approved or other errors!');
+                            }
+                        );
+                    });
+                }).catch(() => {
+                    console.error('Failed to fetch pending items:');
+                });
+
+        },
+
+        /***
+         * 查询：处理的审批
+         */
+        async fetchCompletedItems() {
             try {
-                const { default: api } = await import('@/api/workstation/approval/my-approvals');
-
-                // const token = this.$store.getters['auth/token'];
-                // const refreshToken = this.$store.getters['auth/refreshToken'];
-                // if (!token || !refreshToken) {
-                //     console.error('Token or Refresh Token is missing');
-                //     return;
-                // }
-
+                const { default: api } = await import('@/api/workstation/approval/flowable/flowable_api');
                 this.op_no = this.$store.getters['auth/user'].opNo;
-
-                await api.getSysTaskInfo(
+                this.getBizList().then(taskType=>{
+                    api.getSysTaskInfo(
                     {"dynamicQuery":"",
-                    "bizMark":"lease_approve_flow",
-                    "queryType":"task",
+                    "bizMark":taskType,
+                    "queryType":"hisTask",
                     "opNo": this.op_no,
                     "pageNo":1,
                     "pageSize":10,
                     "sort":"[]",
                     "tableId":"flowable/taskList",
-                    "initQuery":"{'dynamicQuery': '', 'bizMark': 'lease_approve_flow', 'queryType': 'task','opNo': '" + this.op_no + "'}"
+                    "initQuery":"{'dynamicQuery': '', 'bizMark': '"+taskType+"', 'queryType': 'hisTask','opNo': '" + this.op_no + "'}"
                     },
                     this.$config,
                     (response) => {
                         if (response && response.code === 0 && response.list && Array.isArray(response.list.records)) {
-                            this.pendingItems = response.list.records.map(record => ({
+                            this.completedItems = response.list.records.map(record => ({
                                 id: record.ID,
                                 trace_no: record.TRACE_NO,
                                 biz_id: record.BIZ_ID,
                                 task_def_id: record.TASK_DEF_ID,
                                 task_id: record.TASK_ID,
-                                lease_approve_type : record.LEASE_APPROVE_TYPE,
                                 approve_title: record.APPROVE_TITLE || '未知审批',
                                 position: record.TASK_NAME || '未知岗位',
                                 customerName: record.CUS_NAME || '未知客户',
@@ -122,6 +264,65 @@ export default {
                         console.error('API Error:', error);
                     }
                 );
+
+
+                }).catch(error=>{
+                    console.error('API Error:', error);
+                });
+                // loan_approve_flow  lease_approve_flow
+            } catch (error) {
+                console.error('Failed to fetch pending items:', error);
+            }
+        },
+
+        /**
+         * 查询：未处理的审批
+         */
+        async fetchPendingItems() {
+            try {
+                const { default: api } = await import('@/api/workstation/approval/flowable/flowable_api');
+                this.op_no = this.$store.getters['auth/user'].opNo;
+                this.getBizList().then(taskType=>{
+                    api.getSysTaskInfo(
+                    {"dynamicQuery":"",
+                    "bizMark":taskType,
+                    "queryType":"task",
+                    "opNo": this.op_no,
+                    "pageNo":1,
+                    "pageSize":10,
+                    "sort":"[]",
+                    "tableId":"flowable/taskList",
+                    "initQuery":"{'dynamicQuery': '', 'bizMark': '"+taskType+"', 'queryType': 'task','opNo': '" + this.op_no + "'}"
+                    },
+                    this.$config,
+                    (response) => {
+                        if (response && response.code === 0 && response.list && Array.isArray(response.list.records)) {
+                            this.pendingItems = response.list.records.map(record => ({
+                                id: record.ID,
+                                trace_no: record.TRACE_NO,
+                                biz_id: record.BIZ_ID,
+                                task_def_id: record.TASK_DEF_ID,
+                                task_id: record.TASK_ID,
+                                approve_title: record.APPROVE_TITLE || '未知审批',
+                                position: record.TASK_NAME || '未知岗位',
+                                customerName: record.CUS_NAME || '未知客户',
+                                approver: record.ASSIGNEE_NAME || '未知审批人',
+                                requestTime: record.CREATE_TIME || '未知时间'
+                            }));
+                        } else {
+                            console.error('Unexpected API response:', response);
+                        }
+                    },
+                    (error) => {
+                        console.error('API Error:', error);
+                    }
+                );
+
+
+                }).catch(error=>{
+                    console.error('API Error:', error);
+                });
+                // loan_approve_flow  lease_approve_flow
             } catch (error) {
                 console.error('Failed to fetch pending items:', error);
             }
@@ -129,11 +330,15 @@ export default {
     },
     created() {
         this.fetchPendingItems();
+
+        this.fetchCompletedItems();
     },
     watch: {
         activeTab(newTab) {
             if (newTab === 'pending') {
                 this.fetchPendingItems();
+            }else if(newTab === 'completed'){
+                this.fetchCompletedItems();
             }
         }
     },

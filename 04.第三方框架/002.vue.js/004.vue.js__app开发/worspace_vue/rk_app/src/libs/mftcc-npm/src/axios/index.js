@@ -80,24 +80,31 @@ instance.interceptors.request.use(
           try {
               // 动态导入公钥加密模块
               const { encryptWithPublicKey } = await import(/* webpackChunkName: "cryptoutils-module" */ "@/utils/cryptoUtils");
-              // 获取公钥
-              const pgpPublicKey = main_store.getters['auth/pgpPublicKey'];
 
+              const urlSuffixes = [
+                    'approve/apply/leaseApplyHis/submitApprove',  // 租赁-立项审批、租赁-尽调审批
+                    'approve/pact/leasePactHis/submitApprove',    // 租赁-合同审批
+                    'approve/due/leaseDueHis/submitApprove',      // 租赁-放款审批
+
+                    'approve/apply/loanApplyHis/submitApprove',   // 委贷-业务审批
+                    'approve/pact/loanPactHis/submitApprove',     // 委贷-合同审批
+                    'approve/due/loanDueHis/submitApproveChild',  // 委贷-放款审批
+                    'due/loanDuePayHis/submitApprove',            // 委贷-支付审批
+                    'prepay/loanPrepRepayApply/submitApprove'     // 委贷-提前还款审批
+              ];
               // 将请求中的数据进行加密
-              if(config.url.endsWith('approve/apply/leaseApplyHis/submitApprove')){//只对 “审批提交” 加密
+              if (urlSuffixes.some(suffix => config.url.endsWith(suffix))) {//只对 “审批提交” 加密
                 if (config.data) {
                     const dataString = JSON.stringify(config.data); // 序列化数据
-                    const encryptedData = await encryptWithPublicKey("X1dF_7A9bS" + dataString, pgpPublicKey);
+                    const encryptedData = await encryptWithPublicKey("X1dF_7A9bS" + dataString, window.config.certificate.pgpPublicKey);
                     config.data = {
                       encryptedData: btoa(encryptedData) // 换为 Base64 格式
                     };
                 }
               }
 
-              // 在请求的 URL 后面添加 '////'
-              if (!config.url.endsWith('////')) {
-                config.url += '////';
-              }
+              // 在请求的 URL 后面添加 ''
+              config.headers['RKAppExemptionFromLogin'] = true;
 
               // 获取 URL 中的查询参数
               const urlParams = new URLSearchParams(window.location.search);
