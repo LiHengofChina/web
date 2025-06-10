@@ -1,0 +1,42 @@
+
+
+//================================================ Vue 版本（基于 Vue 3）
+//================================================ Vue 版本（基于 Vue 3）
+
+
+<template>
+  <div>
+    <p>计数：{{ count }}</p>
+    <button @click="count++">增加</button>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const count = ref(0)
+</script>
+
+
+//================================================ React 版本（使用函数组件 + Hooks）
+//================================================ React 版本（使用函数组件 + Hooks）
+
+
+import React, { useState } from 'react'
+
+function Counter() {
+  const [count, setCount] = useState(0)
+
+  return (
+    <div>
+      <p>计数：{count}</p>
+      <button onClick={() => setCount(count + 1)}>增加</button>
+    </div>
+  )
+}
+
+export default Counter
+
+
+
+
