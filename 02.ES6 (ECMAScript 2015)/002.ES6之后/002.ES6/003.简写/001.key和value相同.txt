@@ -1,0 +1,24 @@
+{ dbType: ruleDbType, auditMode }
+
+等价于：
+
+{ dbType: ruleDbType, auditMode: auditMode }
+
+
+
+
+params={isDetailPage ? { templateId: Number(id) } : { dbType: ruleDbType, auditMode }}
+
+//=========================== 在新增页时（!isDetailPage）会传：
+//=========================== 在新增页时（!isDetailPage）会传：
+{
+  dbType: ruleDbType,
+  auditMode: auditMode
+}
+
+
+//=========================== 在详情页时传：
+//=========================== 在详情页时传：
+{
+  templateId: Number(id)
+}

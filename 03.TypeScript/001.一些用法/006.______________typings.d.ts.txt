@@ -1,0 +1,7 @@
+
+typings.d.ts 是全局声明文件，TypeScript 会自动加载并识别里面的声明。
+
+
+可以把 typings.d.ts 理解为专门用来告诉 TypeScript “有哪些全局变量或模块是存在的”的地方。
+只要放在 src 下或被 tsconfig.json 的 include 包含，它就会生效。
+

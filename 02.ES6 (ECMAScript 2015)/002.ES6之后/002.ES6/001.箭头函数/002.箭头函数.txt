@@ -1,0 +1,32 @@
+
+//==================================================== 箭头函数
+//==================================================== 箭头函数
+
+chainWebpack: (config: any, { webpack }: any) => {
+  // …
+}
+
+等价于用传统函数写法的：
+chainWebpack: function(config: any, { webpack }: any) {
+  // …
+}
+
+
+（1）config: any 和 { webpack }: any 里的 : any 就是 TypeScript 的类型标注，
+表示这两个参数的类型是 any。
+
+（2）any 在 TypeScript 里就像 Java 里的 Object，可以接收任何类型的值。
+	但比 Java 的 Object 更“随意”，因为赋给 any 的内容后，TS 会跳过后续的类型检查。
+
+
+（3） { webpack } 加上 {} ？
+
+	 （1）因为 Umi 在调用你这个函数时，传进来的第二个参数本身就是一个对象，
+	      里面包含了好几个工具，比如 { webpack, env, ... }。
+
+	 （2）写成 (config, { webpack }) 就是利用了 JS 的 参数解构（destructuring），
+		  直接把第二个参数对象里的 webpack 属性 "拿出来" 当成一个局部变量，而不用再写成：
+
+
+
+

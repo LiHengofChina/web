@@ -1,0 +1,28 @@
+
+
+import {  Modal } from 'antd';
+
+
+//========================================== 说明
+Modal：是一个 React 组件（通常来自 antd）
+里面的属性（如 title、open、onOk）是 组件的 props
+可以像写 HTML 一样嵌套 UI 结构，但背后其实是 React.createElement(...)
+
+
+//========================================== 示例
+//========================================== 示例
+<Modal
+  title="编辑基线标准"
+  open={editModalVisible}
+  onCancel={() => setEditModalVisible(false)}
+  onOk={handleEditSubmit}
+  destroyOnClose
+  confirmLoading={updateLoading}
+/>
+
+/**
+	说明：
+		（1）editModalVisible 为true时打开 这个Modal
+		（2）取消时调用 setEditModalVisible 设置 editModalVisible 为false。
+		（3）点击确认时，调用 handleEditSubmit发送请求
+*/

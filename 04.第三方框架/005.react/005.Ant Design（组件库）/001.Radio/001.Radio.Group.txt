@@ -1,0 +1,14 @@
+
+
+Radio.Group 是 React 组件用法，通常来自 UI 库，比如 Ant Design。
+
+
+import { Radio } from 'antd';
+
+
+你需要从 antd 中导入 Radio：
+ 
+import { Radio } from 'antd';
+这样就能正常使用 <Radio.Group> 和 <Radio>。
+
+

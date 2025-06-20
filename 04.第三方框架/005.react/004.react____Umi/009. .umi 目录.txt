@@ -1,0 +1,13 @@
+
+
+
+src/.umi 是 UmiJS 框架自动生成的临时目录，你无需手动修改它。
+
+
+它在项目编译或运行 (dev、build) 时生成，内容通常包括：
+
+文件/目录	作用
+.umi/ 或 .umi-production/	Umi 的运行时编译产物，包括路由配置、插件处理、model 汇总等
+core/, plugin-*, umi.ts 等	Umi 插件系统编译的结果文件
+d.ts 类型定义	TypeScript 支持的一部分
+路由结构	路由动态构建结果

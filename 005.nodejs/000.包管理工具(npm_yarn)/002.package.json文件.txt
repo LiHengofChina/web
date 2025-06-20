@@ -1,0 +1,19 @@
+
+
+
+package.json 是 无论使用 npm、Yarn、pnpm 都必须有的核心文件
+
+它的作用是：
+	记录项目的依赖列表、项目名称、版本、启动脚本等关键信息
+
+
+（1）package.json		//所有包管理器通用，必须存在
+
+（2）yarn.lock			//Yarn 专用，锁定依赖版本
+（3）package-lock.json	//npm 专用，锁定依赖版本
+
+
+package.json 是包管理的 "清单"，所有工具都共用；
+而 yarn.lock / package-lock.json 
+是不同工具生成的“锁定快照”。
+

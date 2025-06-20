@@ -1,0 +1,11 @@
+
+
+项目根目录下存在：
+	yarn.lock
+
+
+这是 yarn 的锁文件，用来锁定依赖的版本。
+	如果是使用 npm，则会出现的是：
+	package-lock.json
+
+
