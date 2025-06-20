@@ -5,3 +5,30 @@ typings.d.ts 是全局声明文件，TypeScript 会自动加载并识别里面�
 可以把 typings.d.ts 理解为专门用来告诉 TypeScript “有哪些全局变量或模块是存在的”的地方。
 只要放在 src 下或被 tsconfig.json 的 include 包含，它就会生效。
 
+
+
+//================================================== typings.d.ts 中的类型
+//================================================== typings.d.ts 中的类型
+
+typings.d.ts 中的类型，通常会放在 declare namespace API { ... } 里，
+这样你就可以在项目中通过 API.XxxType 的形式来使用它们。
+
+declare namespace API {
+  interface User {
+    id: string;
+    name: string;
+  }
+
+  type RuleAddRequest = { ruleName: string; ... };
+}
+
+
+const user: API.User = { id: '1', name: '张三' };
+
+const newRule: API.RuleAddRequest = {
+  ruleName: '示例规则',
+  ...
+};
+
+const [currentRecord, setCurrentRecord] = useState<API.RuleBaseLineDetailResponse>();
+
