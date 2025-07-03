@@ -1,0 +1,62 @@
+
+
+
+//================================================= 步骤 1：定义表单引用（formRef）
+//================================================= 步骤 1：定义表单引用（formRef）
+
+import { FormInstance } from '@ant-design/pro-components';
+
+const formRef = useRef<FormInstance>();
+
+
+//================================================= 步骤 2：在 <ProTable> 中传入 formRef
+//================================================= 步骤 2：在 <ProTable> 中传入 formRef
+
+<ProTable<API.RuleResponse>
+  ...
+  formRef={formRef} // ✅ 将 formRef 传入 ProTable
+/>
+
+//================================================= 步骤 3：在字段变化时调用 formRef.current?.submit()
+//================================================= 步骤 3：在字段变化时调用 formRef.current?.submit()
+
+比如在 dbType 的 fieldProps 中加：
+
+onChange: () => {
+  formRef.current?.submit();
+}
+
+
+
+//================================================================================================================= 背后原理
+//================================================================================================================= 背后原理
+
+//（1）<ProTable> 内部包含了一个 搜索表单
+//（1）<ProTable> 内部包含了一个 搜索表单
+
+就是配置项 search={{ ... }} 启用的这个区域：
+<ProTable
+  search={{
+    defaultCollapsed: false,
+    filterType: 'query',
+  }}
+  ...
+/>
+
+//（2）自动生成
+//（2）自动生成
+
+这个 "搜索区域" 其实就是一个 antd 的 <Form>，ProTable 帮你自动生成了：
+	输入框（如 ruleName）
+	下拉框（如 auditMode, dbType）
+	查询 & 重置按钮
+
+
+//（3）所以当你写：
+//（3）所以当你写：
+
+const formRef = useRef<FormInstance>();
+<ProTable formRef={formRef} />
+你实际上是在获取 ProTable 内部这块搜索表单的引用，然后你就可以对它做所有你熟悉的操作：
+
+

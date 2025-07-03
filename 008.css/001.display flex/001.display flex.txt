@@ -1,0 +1,24 @@
+
+
+style={{ display: 'flex', justifyContent: 'space-between', flex: 1 }}
+
+
+是典型的 CSS Flex 布局用法：
+
+（1）display: 'flex'
+	 启用 弹性布局（Flexbox）；
+	 子元素默认会横向排列（即 flex-direction: row）；
+	 可以使用 justify-content、align-items 等属性对其子元素进行布局控制。
+
+（2）justifyContent: 'space-between'
+	 注意在 React 的写法里属性是 camelCase，所以是 justifyContent 而不是 justify-content
+
+	含义：让子元素两端对齐，中间尽可能留空
+	示例：
+		子元素 A → 靠左；
+		子元素 B → 靠右；
+		中间自动撑开间距；
+
+	非常适合用于一行内左右分布的两个按钮区域。
+
+ 

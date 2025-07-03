@@ -1,0 +1,14 @@
+      <ProTable
+        columns={columns}
+        dataSource={data}
+        loading={loading}
+        search={false} // 取消查询条件
+        pagination={false} // 取消分页
+        rowKey="dbType"
+        toolBarRender={() => [
+          <Button key="export" type="primary" onClick={handleExport}>
+            导出
+          </Button>,
+        ]}
+      />
+

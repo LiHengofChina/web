@@ -6,18 +6,77 @@
 
   const {.... } = useRequest( 函数 );
 
+{.... }是一个对象
 
-//======================================================= {.... }是一个对象
-//======================================================= {.... }是一个对象
-常用属性一览：
+//======================================================= 示例
+//======================================================= 示例
+
+  const { data, loading } = useRequest(
+    () =>
+      summaryStatistics({
+        timeRange
+      }),
+    {
+      formatResult: (res) => res.data || [],
+      refreshDeps: [timeRange]
+    },
+  );
+//======================================================= 常用请求属性一览：
+//======================================================= 常用请求属性一览：
+
 
 data			请求返回的数据
 loading			是否正在加载中（布尔值）
 error			请求错误（如果有）
 run				手动触发请求的函数（适用于 manual: true）
+				//run() 是由 useRequest 钩子函数提供的一个方法，属于 @umijs/max（基于 ahooks）
+				//的 useRequest 返回结果的一部分。
 runAsync		类似 run，但返回一个 Promise
 cancel			取消当前请求
 refresh			使用相同参数重新请求一次
 mutate			手动修改 data 的值（不触发请求）
 
 
+//======================================================= 返回数据处理：
+//======================================================= 返回数据处理：
+
+formatResult: (res) => res.data || [],
+	//用于格式化接口返回结果。
+	//将后端接口返回的原始响应对象 res，
+	//提取出你想要的数据（通常是列表），作为最终 data 返回值传递给组件。/
+	/**
+		假设你的接口 summaryStatistics() 返回的数据结构如下：
+		{
+		  "code": 0,
+		  "msg": "success",
+		  "data": [
+			{
+			  "dbType": 1,
+			  "auditMode": "baseline",
+			  "sourceCount": 1,
+			  ...
+			},
+			...
+		  ]
+		}
+		res 就是整个对象 { code, msg, data }
+		res.data 是你真正需要的数组（给 ProTable 用的）
+		写 formatResult 的意义是为了：
+		避免手动从 .data 拿数据；
+		让 data 直接就是一个数组，省得你每次 data?.data；
+		避免 dataSource={undefined} 出现 warning，所以加了 || [] 兜底。		
+	*/
+
+refreshDeps: [timeRange]
+		//当 timeRange 发生变化时，useRequest 会自动重新执行请求函数
+	    //（即调用 summaryStatistics({ timeRange })），不需要你手动调用刷新函数。
+		//相当于 使用 timeRange 变化后会自动重新调用一次接口
+		//这是umi封装的更方便的用法
+		/**
+		等效于下面的逻辑：
+		useEffect(() => {
+		  // timeRange 变化时重新请求
+		  run(); // 或者 summaryStatistics({ timeRange })
+		}, [timeRange]);
+		*/	
+	
