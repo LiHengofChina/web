@@ -5,7 +5,7 @@
 //============================= useState
 
 useState 是 React 中的状态管理钩子，
-确实有点像 Vue 中的响应式数据（ref 或 reactive）：
+有点像 Vue 中的响应式数据（ref 或 reactive）：
 
 useState 是 React 中的 "本地状态管理工具"，
 

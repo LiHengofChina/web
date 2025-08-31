@@ -1,0 +1,42 @@
+
+Object.keys(toggles.finallyAuditType)
+  .map(Number)
+  .includes(item.value);
+
+
+这段代码是 标准的 JavaScript 语法，
+但在 TypeScript 中同样适用 —— 并不是 TypeScript 特有语法，但在 TS 项目中可以直接使用。
+
+
+//========================================================== 说明
+//========================================================== 说明
+
+（1） Object.keys(toggles.finallyAuditType)
+
+返回一个 string[]，即对象的所有 key（都是字符串）
+
+（2） .map(Number)
+
+将 key 从字符串转换为数字（因为你定义的是 Record<number, ...>）
+
+（3） .includes(item.value)
+
+判断一个值是否存在于数组中，返回 true 或 false
+
+//========================================================== 其它
+//========================================================== 其它
+
+TypeScript 中使用注意：
+由于 Object.keys() 总是返回 string[]，
+所以 .map(Number) 在 TS 中是一个显式的类型转换步骤， 用于从 string → number。你也可以更安全一点写：
+//(Object.keys(toggles.finallyAuditType) as string[]).map(key => Number(key))
+
+
+
+但大多数场景中：
+//Object.keys(...).map(Number)
+在 TS 中用是完全没问题的，类型推导也能正常工作。
+
+
+
+

@@ -1,0 +1,69 @@
+
+//========================================== 原函数
+//========================================== 原函数
+
+const generateColumns = (
+    sourceFileName: string = '',
+    targetFileName: string = '',
+    renderMode: RenderMode = 'default',
+  ): ColumnsType<CompareRow> => [
+    {
+      title: '序号',
+      dataIndex: 'lineNumber',
+      width: '6%',
+      align: 'center',
+      fixed: 'left',
+      className: 'row-index-cell',
+    },
+    {
+      title: `源文件 - ${sourceFileName || '-'}`,
+      dataIndex: 'sourceLine',
+      width: '47%',
+      render: (_, record) =>
+        renderMode === 'index' ? (
+          <IndexCell
+            self={record.sourceLine}
+            other={record.targetLine}
+            visible={indexFieldVisible}
+          />
+        ) : renderMode === 'table' ? (
+          <TableStructCell
+            self={record.sourceLine}
+            other={record.targetLine}
+            visibleHeaders={tableColVisible}
+          />
+        ) : (
+          <pre style={{ margin: 0, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+            {highlightDiff(record.sourceLine, record.targetLine)}
+          </pre>
+        ),
+    },
+    {
+      title: `目标文件 - ${targetFileName || '-'}`,
+      dataIndex: 'targetLine',
+      width: '47%',
+      render: (_, record) =>
+        renderMode === 'index' ? (
+          <IndexCell
+            self={record.targetLine}
+            other={record.sourceLine}
+            visible={indexFieldVisible}
+          />
+        ) : renderMode === 'table' ? (
+          <TableStructCell
+            self={record.targetLine}
+            other={record.sourceLine}
+            visibleHeaders={tableColVisible}
+          />
+        ) : (
+          <pre style={{ margin: 0, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+            {highlightDiff(record.targetLine, record.sourceLine)}
+          </pre>
+        ),
+    },
+  ];
+//========================================== 优化
+//========================================== 优化
+
+
+但是我改动太长，就不变了

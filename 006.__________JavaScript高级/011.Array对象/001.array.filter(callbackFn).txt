@@ -1,0 +1,8 @@
+
+
+ALL_AUDIT_TYPE.filter(...) 是 JavaScript 中数组（Array）的 filter 方法，
+不是 TypeScript 特有的，它属于标准的 ES5+ 语法。
+
+array.filter(callbackFn)
+
+

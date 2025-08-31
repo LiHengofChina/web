@@ -1,0 +1,15 @@
+
+//======================================== 区别
+//======================================== 区别
+
+
+yarn why minimatch
+
+如：
+@umijs/max-plugin-openapi → rimraf → glob → minimatch@8.0.4 
+
+@umijs/bundler-mako → rimraf → glob → minimatch@9.0.5 
+
+@types/glob → @types/minimatch@10.0.3 ❌
+
+

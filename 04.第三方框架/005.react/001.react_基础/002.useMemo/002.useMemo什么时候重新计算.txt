@@ -1,0 +1,21 @@
+
+
+//===================================================== 示例：
+//===================================================== 示例：
+
+// 复选框选中的项：
+const [selectedItems, setSelectedItems] 
+		= useState<Record<string, number[]>>({});
+
+// 勾选了哪些“索引”项 -> 对应的文件后缀集合
+const selectedIndexSuffixes = React.useMemo(() => {
+
+}, [selectedItems]);
+
+
+
+当每次 setSelectedItems 的时候就会引发重新计算
+当每次 setSelectedItems 的时候就会引发重新计算
+
+
+

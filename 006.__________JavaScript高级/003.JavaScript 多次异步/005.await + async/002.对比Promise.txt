@@ -1,0 +1,42 @@
+
+//====================================== 语法来自的版本
+//====================================== 语法来自的版本
+
+Promise					 ES6
+async/await				✅ ES2017 / ES8
+
+
+//====================================== 简单对比
+//====================================== 简单对比
+
+//============= （1）Promise 写法
+//============= （1）Promise 写法
+
+语法结构：	   .then().catch() 链式调用
+可读性：	   中等，嵌套多会混乱
+错误处理：	   .catch()
+调试方便程度： 一般
+示例：
+		getUser()
+		  .then(user => getPosts(user.id))
+		  .then(posts => console.log(posts))
+		  .catch(err => console.error(err));
+
+
+//============= （2）async/await 写法
+//============= （2）async/await 写法
+
+
+语法结构：	   像同步一样逐行写
+可读性：	   更清晰，结构更像同步代码
+错误处理：	   try { await } catch {}
+调试方便程度： 更方便调试、加断点
+
+示例：
+			try {
+			  const user = await getUser();
+			  const posts = await getPosts(user.id);
+			  console.log(posts);
+			} catch (err) {
+			  console.error(err);
+			}

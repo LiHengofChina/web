@@ -1,0 +1,10 @@
+
+（1）
+	引入虚拟表格依赖
+	确认你用的是 antd@5.7+（如果是 v4 需要额外装 virtual 库）。
+
+（2）给 Table 增加虚拟滚动配置
+
+                      scroll={{ y: window.innerHeight - 300 }}
+                      virtual
+	  

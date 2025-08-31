@@ -1,0 +1,113 @@
+
+
+//===================================================================== .filter 和 .some 比较
+//===================================================================== .filter 和 .some 比较
+
+ .filter 会循环每一项，进行判断， 为true保留，形成新数组，包含所有满足条件的项。
+ .some 会循环每一项，进行判断，只要有一项为 true，立即返回 true；
+
+//===================================================================== 示例说明 
+//===================================================================== 示例说明 
+
+
+/**
+ * @description 审核子类型
+ * @return 1-动态 2-静态 3-操作系统 4-基线
+ */
+export const ALL_AUDIT_SUB_TYPE = [
+  { label: '动态', value: 1 },
+  { label: '静态', value: 2 },
+  { label: '操作系统', value: 3 },
+  { label: '中间件', value: 4 },
+];
+//原逻辑：
+//export const CURRENT_SUPPORT_AUDIT_SUB_TYPE = ALL_AUDIT_SUB_TYPE.filter((item) => {
+//    if ((item.value === 1 || item.value === 2) 
+//                  && __FULL_FEATURE_TOGGLE__.supportedAuditType.includes(1)) {
+//      return true;
+//    }
+//    if ((item.value === 3 || item.value === 4) 
+//                  && __FULL_FEATURE_TOGGLE__.supportedAuditType.includes(2)) {
+//      return true;
+//    }
+//    return false;
+//});
+
+/**
+ * 通过 “审核类型” 算出 “审核子类型” 
+ */
+export const CURRENT_SUPPORT_AUDIT_SUB_TYPE = ALL_AUDIT_SUB_TYPE.filter((item) =>
+  Object.values(__FULL_FEATURE_TOGGLE__.finallyAuditType || {}).some((subTypeMap) =>
+    Object.keys(subTypeMap).map(Number).includes(item.value)
+  )
+);
+//====================================== 分析变形：
+//====================================== 分析变形：
+export const CURRENT_SUPPORT_AUDIT_SUB_TYPE = ALL_AUDIT_SUB_TYPE
+		.filter((item) =>{
+			return Object.values(__FULL_FEATURE_TOGGLE__.finallyAuditType || {}).some((subTypeMap) =>
+					{
+						return Object.keys(subTypeMap).map(Number).includes(item.value);
+					}
+			);	
+		}
+);
+
+
+
+//====================================== 分析
+//====================================== 分析
+（1）首先 filter 会处理 ALL_AUDIT_SUB_TYPE 的每一项，
+		 Object.values 拿到 __FULL_FEATURE_TOGGLE__.finallyAuditType 的值数组
+		 （不区分key，长这样：
+			 [ 
+				1: [1, 2, 3, 4, 5, 6],
+				2: [1, 2, 3, 4, 5, 6],
+				3: [301, 302],
+				4: [303, 304, 305, 306, 307, 308]
+			 ]  暂时称为 temp 数组，， 
+		 ）
+
+（2） 然后经过   Object.keys(subTypeMap).map(Number).includes(item.value)
+		Object.keys 拿到所有keys  ["1", "2", "3", "4"]
+		.map(Number) 映射成数字   [1, 2, 3, 4]
+		includes(item.value) 返回 包含在  "ALL_AUDIT_SUB_TYPE 的项值" 的temp 数组的key
+
+
+（3）.some(...) 的返回值它是被 filter(...) 用来决定是否保留当前项的。
+
+		 .some(...) 的返回值是由 Object.keys(subTypeMap).map(Number).includes(item.value); 决定的
+		而 .some(...) 的返回值又决定了 .filter(...) 是否保留当前项。
+
+
+
+
+（4）这里之所以用 some 是因为 我原逻辑是 if ((item.value === 1 || item.value === 2)  或条件
+
+
+
+
+/***
+
+但是这里好像有点不对啊， 原逻辑还有一个条件  __FULL_FEATURE_TOGGLE__.supportedAuditType.includes(1) 啊
+
+所以这里还是保留原来的逻辑，修改写法
+
+*/
+//====================================== 最终写法
+//====================================== 最终写法
+/**
+ * 通过 “审核类型” 算出 “审核子类型” 
+ */
+export const CURRENT_SUPPORT_AUDIT_SUB_TYPE = ALL_AUDIT_SUB_TYPE.filter((item) => {
+  if ((item.value === 1 || item.value === 2) 
+                && Object.keys(__FULL_FEATURE_TOGGLE__.finallyAuditType).map(Number).includes(1)) {
+    return true;
+  }
+  if ((item.value === 3 || item.value === 4) 
+                && Object.keys(__FULL_FEATURE_TOGGLE__.finallyAuditType).map(Number).includes(2)) {
+    return true;
+  }
+  return false;
+});
+

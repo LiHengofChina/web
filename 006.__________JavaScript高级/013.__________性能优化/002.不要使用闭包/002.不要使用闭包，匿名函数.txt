@@ -1,0 +1,17 @@
+
+rowClassName={(record) =>
+	record.sourceLine !== record.targetLine ? 'diff-row' : ''
+}
+
+
+//========================================================== 抽成常量函数 : 避免每次都新建闭包。			
+//========================================================== 抽成常量函数 : 避免每次都新建闭包。			
+
+const getRowClassName = (record: CompareRow) =>
+record.sourceLine !== record.targetLine ? 'diff-row' : '';
+
+<Table
+  ...
+  rowClassName={getRowClassName}
+/>
+

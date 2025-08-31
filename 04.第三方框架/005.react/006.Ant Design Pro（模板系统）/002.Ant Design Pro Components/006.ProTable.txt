@@ -1,0 +1,54 @@
+
+//========================================================================== ProTable
+//========================================================================== ProTable
+
+（1）第一步：引入状态和数据
+
+	import { ProTable } from '@ant-design/pro-components';
+
+
+	const [selectedStrategicIds, setSelectedStrategicIds] = useState<number[]>([]);
+	const { auditStrategicList, auditStrategicLoading } = useAuditStrategicList();
+
+
+（2）第二步：配置 ProTable 列定义
+
+	const columns: ProColumns<API.AuditStrategicResponse>[] = [
+	  {
+		title: '策略名称',
+		dataIndex: 'strategicName',
+	  },
+	  {
+		title: '策略说明',
+		dataIndex: 'description',
+	  },
+	];
+
+（3）第三步：在 ProForm 下方添加 ProTable
+
+	<ProTable<API.AuditStrategicResponse>
+	  rowKey="id"
+	  columns={columns}
+	  dataSource={auditStrategicList}
+	  loading={auditStrategicLoading}
+	  search={false}
+	  pagination={false}
+	  options={false}
+	  rowSelection={{
+		selectedRowKeys: selectedStrategicIds,
+		onChange: (selectedRowKeys) => {
+		  setSelectedStrategicIds(selectedRowKeys as number[]);
+		},
+	  }}
+	  bordered
+	/>
+
+（4）第四步：提交时组装 strategyList
+
+	onFinish={async (value) => {
+	  const strategyList = selectedStrategicIds.map((id) => ({ strategyId: id }));
+	  const msg = await add({ ...value, strategyList });
+	  const success = msg.code === 200;
+	  setBtnDisabled(true);
+	  return success;
+	}}
