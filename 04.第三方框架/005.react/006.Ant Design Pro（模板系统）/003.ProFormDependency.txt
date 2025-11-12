@@ -1,0 +1,38 @@
+
+
+ProFormDependency 
+是用于 "监听其他表单字段" 变化后，
+动态渲染新的 "表单项" 或 "字段配置" 的组件。
+
+可以把它理解为 “表单内的响应式联动区域”，用于实现动态表单项内容，比如：
+“选了 A，再展示对应的 B 选项”
+
+
+//===================================== ProFormDependency 它是怎么工作的？
+//===================================== ProFormDependency 它是怎么工作的？
+
+当你写：
+<ProFormDependency name={['auditType']}>
+  {({ auditType }) => {
+    // 依赖 auditType，当它变化时，内部重新渲染
+    return <ProFormSelect name="auditSubType" ... />
+  }}
+</ProFormDependency>
+
+当 auditType 变化，整个 { ... } 渲染块 会重新执行。
+
+//===================================== 它可能带来什么问题？
+//===================================== 它可能带来什么问题？
+你手动级联冲突的原因：
+
+当 你在 auditType 的 onChange 里手动设置了：
+
+formRef.current?.setFieldsValue({ auditSubType: defaultSubType });
+setAuditSubType(defaultSubType);
+
+然后又在 ProFormDependency 内部动态渲染了一个 auditSubType 组件，这相当于：
+
+
+（1）表单值被你设好了
+（2）但 ProFormDependency 的变化 重新构建了一个新的字段组件，可能把你设置的状态覆盖了（或触发另一次 onChange）
+

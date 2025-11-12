@@ -1,0 +1,31 @@
+
+expandable 是 ProTable（实际上来自 antd 的 Table） 的一个配置属性，
+用来控制每一行是否可以展开，以及展开后显示什么内容。
+
+
+
+
+<ProTable
+  columns={columns}
+  expandable={{
+    expandedRowRender: (record) => <div>展开的内容</div>,
+    rowExpandable: (record) => true,
+    defaultExpandAllRows: true,
+  }}
+/>
+
+
+xpandedRowRender			//✅ 决定展开后显示什么内容（可以是表格、文字、图片、表单、标签、任何 React 节点）
+rowExpandable				//控制哪一行允许展开（返回 false 的行不会显示「展开按钮」）
+defaultExpandAllRows		//是否默认展开所有可展开的行
+expandedRowKeys / onExpand	//手动控制展开行的 key（可用于联动或持久化）
+
+
+💡 你可以在里面放：
+
+	✅ 一个子表格（常用于主从结构）；
+	✅ 一段说明文字；
+	✅ 若干 Tag / Badge / Card；
+	✅ 甚至自定义组件（如详情表单、报错详情、图片预览等）。
+	
+	

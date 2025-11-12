@@ -1,0 +1,16 @@
+
+
+<ProTable<API.AuditResultViolationsResponse> ... />
+//这里的 <API.AuditResultViolationsResponse> 就是一个 显式泛型参数。
+
+
+<ProTable ... />
+//没有写泛型，就是 隐式的 any 类型（或从 columns 推断）。
+//TypeScript 不知道每行数据的结构，只能放宽检查。
+
+
+
+第一个写了 <T>，是“类型安全”的 ProTable；
+第二个没写，就是普通版本，类型自动推断或默认 any。
+
+

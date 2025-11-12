@@ -1,0 +1,63 @@
+{
+ 
+{
+  title: '对象组',
+  dataIndex: 'objectGroupName',
+  width: 100,
+  hideInSearch: true,
+},
+{
+  title: '对象组',
+  dataIndex: 'objectGroupName',
+  valueType: 'select',
+  fieldProps: {
+	options: resourceGroupList,
+	loading: resourceGroupLoading,
+	showSearch: true,
+	fieldNames: {
+	  label: 'objectGroupName',
+	  value: 'objectGroupId',
+	},
+  },
+  hideInTable: true,
+},  
+
+
+这段代码定义了两个 title: '对象组' 的字段，都是绑定 dataIndex: 'objectGroupName'，
+看起来像是重复了，但实际上这是在 ProTable 中一种常见的技巧，用于区分：
+
+
+
+表格列 和 搜索表单字段
+//================================================================
+
+表格列		显示在表格中的字段		hideInSearch: true
+搜索字段	出现在顶部搜索栏的字段	hideInTable: true
+
+//================================================================
+
+//======== 第一段：
+//======== 第一段：
+{
+  title: '对象组',
+  dataIndex: 'objectGroupName',
+  width: 100,
+  hideInSearch: true, // ✅ 不显示在搜索栏
+}
+表示这个“对象组”字段 只显示在表格中，不在搜索栏出现。
+
+//======== 第二段：
+//======== 第二段：
+{
+  title: '对象组',
+  dataIndex: 'objectGroupName',
+  valueType: 'select',
+  fieldProps: {
+    options: resourceGroupList,
+    ...
+  },
+  hideInTable: true, // ✅ 不显示在表格
+}
+表示这个“对象组”字段是 一个下拉框（用于搜索），只显示在搜索栏中，不显示在表格中。
+
+
