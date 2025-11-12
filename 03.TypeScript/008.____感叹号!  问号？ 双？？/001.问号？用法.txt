@@ -1,0 +1,14 @@
+?.（可选链）会先检查前面的值：
+
+如果是 null 或 undefined → 直接返回 undefined，不再往后执行，也不会抛错
+
+如果不是 → 继续访问后面的属性
+
+
+info?.file?.uid
+等价于 info && info.file && info.file.uid
+
+
+?. 是 可选链操作符（optional chaining），
+用来安全地访问对象的属性或方法，
+避免因中间对象为 null 或 undefined 而报错。

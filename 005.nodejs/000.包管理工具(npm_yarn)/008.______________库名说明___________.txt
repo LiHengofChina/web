@@ -1,0 +1,28 @@
+
+
+@monaco-editor/react 这个名字带@ /的，是不是都是封装库，而 monaco-editor 这种才是真正的库
+
+
+带有 @scope/ 前缀（例如 @monaco-editor/react）的包，一般是某个组织、
+团队或作者的「命名空间」下的封装库；
+而不带 @ 的（例如 monaco-editor），通常是官方核心库本身。
+
+//========================================== 举几个例子就很清楚：
+//========================================== 举几个例子就很清楚：
+
+
+monaco-editor 					核心库 微软官方 Monaco 编辑器核心代码（底层引擎）
+@monaco-editor/react			封装库 第三方（suren-atoyan）基于 React 封装的组件层，方便 React 项目直接使用 Monaco
+
+
+react							核心库
+@types/react					类型定义包	为 TypeScript 提供 React 的类型声明
+
+		
+antd							核心 UI 库	Ant Design 官方 UI 组件
+@ant-design/pro-components		封装 / 扩展库	Ant Design 团队做的 Pro 组件封装层
+	
+vue								核心库 Vue 框架本体
+@vueuse/core					工具封装库 Vue 社区编写的常用 hooks/工具合集
+
+

@@ -1,0 +1,59 @@
+
+
+
+//======================================================== 示例
+//======================================================== 示例
+
+const columns: ProColumns<API.AuditParameterResponse>[] = [
+    {
+      title: '规则',
+      dataIndex: 'violatedRuleName',
+      fixed: 'left',
+      ellipsis: true,
+      hideInSearch: true,
+    },
+    {
+      title: '说明',
+      dataIndex: 'errorMessage',
+      width: 300,
+      ellipsis: true,
+      hideInSearch: true,
+      render: RenderErrorMessage,
+    },
+];
+  
+//======================================================== 说明
+//======================================================== 说明
+
+（1）const columns = [...] 是 JavaScript/React 都支持的变量定义。
+
+（2）但 : ProColumns<API.AuditParameterResponse>[] 这一部分是 TypeScript 的类型标注，告诉编译器 columns 这个变量的类型。
+
+（3）ProColumns<T> 是一个泛型类型（由 Ant Design Pro 提供）。
+
+（4） 当你写成 ProColumns<API.AuditParameterResponse> 时，意思是：
+	  👉 "这是一个针对 API.AuditParameterResponse 类型数据的列定义。"
+
+（5）再具体一点：
+	每个 ProColumns 对象描述了一列怎么展示，比如 title、dataIndex、width 等。
+	泛型里的 API.AuditParameterResponse 告诉它——这一列的数据来自什么类型的对象。
+
+（6）再具体一点：
+	type AuditParameterResponse = {
+	  violatedRuleName: string;
+	  alertLevel: number;
+	};
+
+	const columns: ProColumns<AuditParameterResponse>[] = [
+	  { title: '规则', dataIndex: 'violatedRuleName' },
+	  { title: '告警等级', dataIndex: 'alertLevel' },
+	];
+	//这样 TypeScript 就能检查你写的列名是不是在 AuditParameterResponse 里存在，|
+	//写错就会提示。
+
+
+
+
+
+
+
