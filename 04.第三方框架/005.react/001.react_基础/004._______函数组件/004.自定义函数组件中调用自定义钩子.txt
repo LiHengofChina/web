@@ -1,0 +1,30 @@
+
+//================================================
+//================================================
+
+const StatisticsSummary: React.FC = () => {
+	
+   
+	const { data, loading } = useRequest(
+	  () => summaryStatistics({ timeRange }),
+	  {
+		formatResult: (res) => res.data || [],
+		refreshDeps: [timeRange],
+	  },
+	);
+  return <div>...</div>
+}
+
+//================================================
+//================================================
+
+useRequest 是个用于数据获取的 hook，
+
+这是在一个 React 函数组件中，使用 useRequest 获取异步数据的写法。
+
+在函数组件中调用了 useRequest 这个 React Hook。
+
+在渲染时就会直接调用这个钩子，
+React 会自动调用这个钩子（useRequest），执行里面的逻辑（比如发请求、设置状态等）。
+
+

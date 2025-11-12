@@ -1,0 +1,35 @@
+
+
+//==========================================（1）
+//==========================================（1）
+
+比如你在 config/routes.ts 里定义了一个路由：
+
+{
+  path: '/target-object/detail/:id',
+  component: '@/pages/TargetObjectDetail',
+}
+
+
+这里的 :id 就是动态参数。
+当你访问 /target-object/detail/123 的时候：
+
+//==========================================（2）
+//==========================================（2）
+
+
+这里的 :id 就是动态参数。
+
+当你访问 /target-object/detail/123 的时候：
+
+import { useParams } from '@umijs/max';
+
+const TargetObjectDetail = () => {
+  const { id } = useParams<{ id: string }>();
+
+  return <div>当前ID是 {id}</div>;
+};
+
+结果会显示：
+
+当前ID是 123

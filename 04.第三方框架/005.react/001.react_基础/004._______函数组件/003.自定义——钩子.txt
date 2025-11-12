@@ -1,0 +1,56 @@
+
+
+//=======================================================================（1）原函数
+//=======================================================================（1）原函数
+
+
+/**
+ * @description 所有审核策略
+ * @returns 审核策略列表
+ * @returns 加载状态
+ */
+export function useAuditStrategicList() {
+  const {
+    data = {},
+    loading,
+    run: runAuditStrategic,
+  } = useRequest(
+    (realType = 1, auditSubType = 1) =>
+      //@ts-ignore
+      listAuditStrategic({ pageNum: 1, pageSize: 1000000, realType, auditSubType }),
+    {
+      manual: true,
+    },
+  );
+  return {
+    runAuditStrategic,
+    auditStrategicList: data?.records || [],
+    auditStrategicLoading: loading,
+  };
+}
+
+
+//=======================================================================（2）引入函数
+//=======================================================================（2）引入函数
+
+
+import { useAuditStrategicList } from '@/hooks/useAuditStrategicList';
+
+
+//=======================================================================（3）定义钩子变量
+//=======================================================================（3）定义钩子变量
+
+const { auditStrategicList, auditStrategicLoading, runAuditStrategic } = useAuditStrategicList();
+
+			//manual: true,
+			//是 @umijs/max（或 ahooks）库中 useRequest 的配置项，表示：
+			//“不自动请求，必须手动调用 run 才会发请求。”
+
+//=======================================================================（4）调用
+//=======================================================================（4）调用
+
+onChange: (val) => {
+	formRef.current?.setFieldValue('auditStrategicId', undefined);
+	runAuditStrategic(val, formRef.current?.getFieldValue('auditSubType'));
+},
+

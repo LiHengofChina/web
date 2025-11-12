@@ -1,0 +1,80 @@
+
+
+
+这两种语法都能定义逻辑复用，但区别在于 功能和调用方式 👇
+
+//================================================================= 自定义函数
+//================================================================= 自定义函数
+
+
+/**
+ *定义：普通函数（事件处理函数）
+ 只在组件内部执行一次逻辑，不涉及 React 状态或生命周期。常用于按钮点击、表格操作。
+ */
+const handleDelete = async (row: API.RuleResponse) => {
+	Modal.confirm({
+		  title: '确认删除',
+		  content: `您确定要删除“${row.ruleName!}”吗?`,
+		  okText: '确认',
+		  cancelText: '取消',
+		  onOk: async () => {
+			deleteRecord({ id: row.id });
+		  },
+	});
+};
+
+
+//================================================================= 自定义钩子
+//================================================================= 自定义钩子
+
+在 React 中，自定义钩子（Custom Hook） 必须以 use 开头，比如：
+
+/**
+ * @description 所有审核策略
+ * @returns 审核策略列表
+ * @returns 加载状态
+ */
+export function useAuditStrategicList() {
+  const {
+    data = {},
+    loading,
+    run: runAuditStrategic,
+  } = useRequest(
+    (realType = 1, auditSubType = 1) =>
+      //@ts-ignore
+      listAuditStrategic({ pageNum: 1, pageSize: 1000000, realType, auditSubType }),
+    {
+      manual: true,
+    },
+  );
+  return {
+    runAuditStrategic,
+    auditStrategicList: data?.records || [],
+    auditStrategicLoading: loading,
+  };
+}
+
+/**
+ * 自定义 Hook（useXXX）
+ 用来封装可复用的逻辑（通常包含 state、useEffect、接口请求等）。必须在组件最外层调用，不能放在事件里。
+ */
+const { auditStrategicList, auditStrategicLoading, runAuditStrategic } = useAuditStrategicList();
+
+像 useAuditStrategicList 这种里面封装了 异步请求（axios / useRequest）、
+再加上 加载状态（loading） 和 返回数据（result） 的过程，
+就是一个 自定义 Hook（钩子） ——
+
+
+//================================================================= 自定义函数 与 自定义函数组件的区别
+//================================================================= 自定义函数 与 自定义函数组件的区别
+
+// 自定义函数（逻辑）
+const sayHi = (name: string) => {
+  console.log(`Hi, ${name}`);
+};
+
+// 自定义函数组件（UI）
+const Hello = ({ name }: { name: string }) => {
+  return <div>Hello, {name}</div>;
+};
+
