@@ -1,8 +1,31 @@
 
+//=======================================================================（1）函数
+//=======================================================================（1）函数
 
-//=======================================================================（1）原函数
-//=======================================================================（1）原函数
+/** 策略列表 GET /api/v1/sqlaudit/audit_strategic/list_audit_strategic */
+export async function listAuditStrategic(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.listAuditStrategicParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResultIPageAuditStrategicResponse>(
+    '/api/v1/sqlaudit/audit_strategic/list_audit_strategic',
+    {
+      method: 'GET',
+      params: {
+        // pageNum has a default value: 1
+        pageNum: '1',
+        // pageSize has a default value: 10
+        pageSize: '10',
+        ...params,
+      },
+      ...(options || {}),
+    },
+  );
+}
 
+//=======================================================================（2）定义钩子
+//=======================================================================（2）定义钩子
 
 /**
  * @description 所有审核策略
@@ -17,7 +40,7 @@ export function useAuditStrategicList() {
   } = useRequest(
     (realType = 1, auditSubType = 1) =>
       //@ts-ignore
-      listAuditStrategic({ pageNum: 1, pageSize: 1000000, realType, auditSubType }),
+      listAuditStrategic({ pageNum: 1, pageSize: 1000000, realType, auditSubType }),  //listAuditStrategic 是一个函数  
     {
       manual: true,
     },
@@ -30,24 +53,27 @@ export function useAuditStrategicList() {
 }
 
 
-//=======================================================================（2）引入函数
-//=======================================================================（2）引入函数
+//=======================================================================（3）使用钩子
+//=======================================================================（3）使用钩子
 
 
 import { useAuditStrategicList } from '@/hooks/useAuditStrategicList';
 
-
-//=======================================================================（3）定义钩子变量
-//=======================================================================（3）定义钩子变量
-
 const { auditStrategicList, auditStrategicLoading, runAuditStrategic } = useAuditStrategicList();
 
-			//manual: true,
-			//是 @umijs/max（或 ahooks）库中 useRequest 的配置项，表示：
-			//“不自动请求，必须手动调用 run 才会发请求。”
+//manual: true,
+//是 @umijs/max（或 ahooks）库中 useRequest 的配置项，表示：
+//“不自动请求，必须手动调用 run 才会发请求。”
 
-//=======================================================================（4）调用
-//=======================================================================（4）调用
+✅ “看到调用 useXXX() 并结构出返回值”
+✅ 就说明这是在“使用一个自定义钩子”。
+
+
+
+
+//=======================================================================（4）真正的触发
+//=======================================================================（4）真正的触发
+
 
 onChange: (val) => {
 	formRef.current?.setFieldValue('auditStrategicId', undefined);

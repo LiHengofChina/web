@@ -1,0 +1,16 @@
+
+
+为什么 有两次渲染，而  const [cachedParams] = useState(() => { 
+
+
+主要原因是状态变量，
+状态变量一改变，就会触发重新渲染
+
+
+
+
+其实真正导致二次加载的是 setState（setCachedParams）。
+
+
+
+

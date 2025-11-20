@@ -28,11 +28,11 @@ const handleDelete = async (row: API.RuleResponse) => {
 //================================================================= 自定义钩子
 
 在 React 中，自定义钩子（Custom Hook） 必须以 use 开头，比如：
-
+ 
+ 
 /**
- * @description 所有审核策略
- * @returns 审核策略列表
- * @returns 加载状态
+ * 自定义钩子（Custom Hook），
+ * 封装了请求逻辑（useRequest）+ 数据状态 + 返回值。
  */
 export function useAuditStrategicList() {
   const {
@@ -55,8 +55,7 @@ export function useAuditStrategicList() {
 }
 
 /**
- * 自定义 Hook（useXXX）
- 用来封装可复用的逻辑（通常包含 state、useEffect、接口请求等）。必须在组件最外层调用，不能放在事件里。
+ * 在组件中使用这个自定义钩子，
  */
 const { auditStrategicList, auditStrategicLoading, runAuditStrategic } = useAuditStrategicList();
 
@@ -64,6 +63,22 @@ const { auditStrategicList, auditStrategicLoading, runAuditStrategic } = useAudi
 再加上 加载状态（loading） 和 返回数据（result） 的过程，
 就是一个 自定义 Hook（钩子） ——
 
+//================================================================= 注意：这个只是一个自定义的函数
+//================================================================= 注意：这个只是一个自定义的函数
+ 
+/** 删除规则 DELETE /api/v1/sqlaudit/rule/deleteRule/${param0} */
+export async function deleteRule(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.deleteRuleParams,
+  options?: { [key: string]: any },
+) {
+  const { id: param0, ...queryParams } = params;
+  return request<API.ResultInteger>(`/api/v1/sqlaudit/rule/deleteRule/${param0}`, {
+    method: 'DELETE',
+    params: { ...queryParams },
+    ...(options || {}),
+  });
+}
 
 //================================================================= 自定义函数 与 自定义函数组件的区别
 //================================================================= 自定义函数 与 自定义函数组件的区别

@@ -1,0 +1,40 @@
+
+
+<ProTable<API.RuleResponse>> 确实是一个
+：表格（Table）+ 表单（Form）二合一组件。
+  这是 Ant Design Pro 的核心特色之一。
+
+ProTable 实际上是对普通 Table 的高级封装，内部自动集成了：
+（1）数据表格功能（相当于 antd 的 Table）
+	1） 展示数据
+	2） 分页、排序、固定列
+	3） 自定义操作列
+
+（2）查询表单功能（相当于 antd 的 Form）
+	1） 自动渲染搜索栏（由列的 valueType、valueEnum 控制）
+	2） 自动提交触发 request() 请求
+	3） 支持重置、收起、展开等行为
+
+//============================ 举个例子：
+//============================ 举个例子：
+
+<ProTable<API.RuleResponse>
+  rowKey="id"
+  columns={columns}     // 列定义，决定表格和搜索栏显示什么
+  formRef={formRef}     // 表单引用，可手动提交或重置
+  actionRef={tableRef}  // 表格引用，可手动刷新或重置
+  request={listRules}   // 请求数据的函数
+/>
+
+🔹 表格部分展示数据
+🔹 搜索栏部分由列配置自动生成
+🔹 request 是两者的 "连接桥梁"
+
+ProTable = Table + Form + useRequest 三合一组件。
+
+
+
+
+ProTable 组件的 request 属性本身就支持一个 "异步函数" ；
+
+

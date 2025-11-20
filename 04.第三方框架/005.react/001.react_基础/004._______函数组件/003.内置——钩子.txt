@@ -1,0 +1,39 @@
+
+//=======================================================================（1）函数 
+//=======================================================================（1）函数 
+
+		export async function deleteRule(
+		  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+		  params: API.deleteRuleParams,
+		  options?: { [key: string]: any },
+		) {
+		  const { id: param0, ...queryParams } = params;
+		  return request<API.ResultInteger>(`/api/v1/sqlaudit/rule/deleteRule/${param0}`, {
+			method: 'DELETE',
+			params: { ...queryParams },
+			...(options || {}),
+		  });
+		}
+
+
+//=======================================================================（2）定义钩子，（使用内置的）（省略）
+//=======================================================================（2）定义钩子，（使用内置的）（省略）
+
+//=======================================================================（3）使用钩子
+//=======================================================================（3）使用钩子
+		const { run: deleteRecord } = useRequest((id) => deleteRule(id), {
+			manual: true,
+			onSuccess: (res) => {
+				if (res.code !== 200) return;
+					message.success(res.message);
+					tableRef.current?.reloadAndRest?.();
+			},
+			formatResult: (res) => res,
+		});
+
+//=======================================================================（4）触发位置
+//=======================================================================（4）触发位置
+      onOk: async () => {
+        deleteRecord({ id: row.id });
+      },
+
